@@ -1,43 +1,102 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="container" style="height: 100vh;">
+  <div class="row d-flex justify-content-center align-items-center pt-3">
+    <div class="col-lg-5 my-3">
+      <div class="card px-5">
+        <div class="card-body">
+          <div class="d-flex justify-content-center gap-2 align-items-center">
+            <img src="<%#= current_logo %>" style="<%#= current_setting.plmhealthoneapp? ? 'height: 100%;' : 'width:100%;'%>" class="mt-3">
+          </div>
+          <div class="d-flex justify-content-center my-3">
+            <h3>Edit <%= current_user.full_name.to_s.humanize %></h3>
+          </div>
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+              <%= render "users/shared/error_messages", resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+              <div class="row">
+                <div class="col-lg-6 form-group">
+                  <%= f.label :first_name %>
+                  <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class: 'form-control mt-2 mb-2' %>
+                </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+                <div class="col-lg-6 form-group">
+                  <%= f.label :last_name %>
+                  <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class: 'form-control mt-2 mb-2' %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6 form-group">
+                  <%= f.label :city %>
+                  <%= f.text_field :city, autofocus: true, autocomplete: "city", class: 'form-control mt-2 mb-2' %>
+                </div>
+
+                <div class="col-lg-6 form-group">
+                  <%= f.label :country %>
+                  <%= f.text_field :country, autofocus: true, autocomplete: "country", class: 'form-control mt-2 mb-2' %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6 form-group">
+                  <%= f.label :postal_code %>
+                  <%= f.text_field :postal_code, autofocus: true, autocomplete: "postal_code", class: 'form-control mt-2 mb-2' %>
+                </div>
+
+                <div class="col-lg-6 form-group">
+                  <%= f.label :phone_number %>
+                  <%= f.text_field :phone_number, autofocus: true, autocomplete: "phone_number", class: 'form-control mt-2 mb-2' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control mt-2 mb-2' %>
+              </div>
+
+              <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+              <% end %>
+
+              <div class="form-group">
+                <%= f.label :password %> <i class="text-danger">(*enter new password)</i>
+                <%= f.password_field :password, autocomplete: "new-password", class: 'form-control mt-2' %>
+                <% if @minimum_password_length %>
+                  <em class="text-danger"><%= @minimum_password_length %> characters minimum</em>
+                <% end %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :password_confirmation %><br />
+                <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control mt-2 mb-2' %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :current_password %> <i class="text-danger">(*enter current password)</i><br />
+                <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control mt-2 mb-2' %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :profile_picture %>
+                <%= f.file_field :profile_picture, class: 'form-control mt-2 mb-2' %>
+                <% if @user.profile_picture.attached? %>
+                  <div>
+                    <%= image_tag @user.profile_picture.variant(resize: "100x100") %> <!-- resize the image -->
+                  </div>
+                <% end %>
+              </div>
+
+              <div class="actions">
+                <%= f.submit "Update", class: 'btn btn-primary mt-2' %>
+                <%= link_to "Back", :back, class: 'btn btn-primary mt-2' %>
+              </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
