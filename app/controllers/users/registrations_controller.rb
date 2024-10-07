@@ -23,6 +23,69 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = current_user  # Fetch the currently logged-in user
   end
 
+  def edit_profile_picture
+    @user = current_user
+  end
+
+  def update_profile_picture
+    @user = current_user
+    if @user.update(profile_picture_params)
+      redirect_to user_profile_path, notice: 'Profile picture updated successfully.'
+    else
+      render :edit_profile_picture
+    end
+  end
+
+  def verify_document
+    @user = current_user
+  end
+
+  def upload_passport
+    @user = current_user
+  end
+
+  def upload_identity_card
+    @user = current_user
+  end
+
+  def update_passport
+    @user = current_user
+    if @user.update(passport_document_params)
+      redirect_to user_profile_path(@user), notice: 'Passport uploaded successfully.'
+    else
+      render :upload_passport
+    end
+  end
+
+  def update_identity_card
+    @user = current_user
+    if @user.update(identity_card_document_params)
+      redirect_to user_profile_path(@user), notice: 'Identity card uploaded successfully.'
+    else
+      render :upload_identity_card
+    end
+  end
+
+  def remove_passport
+    @user = current_user
+    if @user.passport_document.attached?
+      @user.passport_document.purge  # Removes the attached document
+      redirect_to user_profile_path(@user), notice: 'Passport removed successfully.'
+    else
+      redirect_to user_profile_path(@user), alert: 'No passport found to remove.'
+    end
+  end
+
+  def remove_identity_card
+    @user = current_user
+    if @user.identity_card_document.attached?
+      @user.identity_card_document.purge  # Removes the attached document
+      redirect_to user_profile_path(@user), notice: 'Identity card removed successfully.'
+    else
+      redirect_to user_profile_path(@user), alert: 'No identity card found to remove.'
+    end
+  end
+
   # PUT /resource
   # def update
   #   super
@@ -43,6 +106,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   protected
+
+  def profile_picture_params
+    params.require(:user).permit(:profile_picture)
+  end
+
+  def passport_document_params
+    params.require(:user).permit(:passport_document)
+  end
+
+  def identity_card_document_params
+    params.require(:user).permit(:identity_card_document)
+  end
 
   def after_update_path_for(resource)
     user_profile_path(resource)  # Redirect to the show action

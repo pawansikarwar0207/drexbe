@@ -75,16 +75,6 @@
                 <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control mt-2 mb-2' %>
               </div>
 
-              <div class="form-group">
-                <%= f.label :profile_picture %>
-                <%= f.file_field :profile_picture, class: 'form-control mt-2 mb-2' %>
-                <% if @user.profile_picture.attached? %>
-                  <div>
-                    <%= image_tag @user.profile_picture.variant(resize: "100x100") %> <!-- resize the image -->
-                  </div>
-                <% end %>
-              </div>
-
               <div class="actions">
                 <%= f.submit "Update", class: 'btn btn-primary mt-2' %>
                 <%= link_to "Back", :back, class: 'btn btn-primary mt-2' %>

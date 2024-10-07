@@ -1,82 +1,116 @@
+<% if @user.present? %>
+  <% if @user.profile_completion < 100 %>
+    <div class="alert alert-warning mt-2">
+      Your profile is only <%= @user.profile_completion %>% complete. Please complete your profile for better experience.
+    </div>
+  <% end %>
+<% end %>
 <div class="container mt-3">
-  <div class="main-body">
-
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="main-breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-      </ol>
-    </nav>
-    <!-- /Breadcrumb -->
-
-    <div class="row gutters-sm">
-      <div class="col-md-4 mb-3">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex flex-column align-items-center text-center">
-              <% if @user.present? %>
-                <% if @user.profile_picture.attached?  %>
-                  <%= image_tag @user.profile_picture, size: "150x170", class: "rounded-circle" %>
-                <% else %>
-                  <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                <% end %>
-              <% end %>
-              <div class="mt-3">
-                <h4><%= current_user.full_name %></h4>
-                <p class="text-muted font-size-sm"><%= current_user.address %></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-8">
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Full Name</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <%= current_user.full_name %>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Email</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <%= current_user.email %>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Phone</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <%= current_user.phone_number %>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Address</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-               <%= current_user.address %> - <%= current_user.postal_code %>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-12">
-                <%= link_to 'Edit', edit_user_registration_path, target: '__blank', class: 'btn btn-info' %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+ <div class="profile-header">
+   <% if @user.present? %>
+      <% if @user.profile_picture.attached?  %>
+        <%= image_tag @user.profile_picture, height:"100", width:"100" %>
+      <% else %>
+        <img alt="Profile picture placeholder" height="100" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="100"/>
+      <% end %>
+    <% end %>  
+  <h2>
+   <%= current_user.full_name %> 
+  </h2>
+  <div class="progress col-lg-3 mx-auto fw-bold">
+    <div class="progress-bar" role="progressbar" style="width: <%= @user.profile_completion %>%;" aria-valuenow="<%= @user.profile_completion %>" aria-valuemin="0" aria-valuemax="100">
+      <%= @user.profile_completion %>% Complete
     </div>
   </div>
+ </div>
+ <div class="profile-actions">
+  <%= link_to edit_profile_picture_path(@user.id) do %>
+    <i class="fas fa-plus-circle"></i> Add a profile picture
+  <% end %>
+
+  <%= link_to 'Edit personal information', edit_user_registration_path, target: '__blank' %>
+ </div>
+ <hr/>
+ <div class="profile-check">
+  <h4>
+   Check your profile
+  </h4>
+  <%= link_to verify_document_path do %>
+    <i class="fas fa-plus-circle"></i> Verify an ID
+  <% end %>
+
+  <% if current_user.confirmed? %>
+    <p><i class="fas fa-check-circle"></i> Your email <strong><%= current_user.email %></strong> is confirmed.</p>
+  <% else %>
+    <a href="#">
+      <i class="fas fa-plus-circle"></i>
+      Confirm address <%= current_user.email %>
+    </a>
+  <% end %>
+
+  <a href="#">
+   <i class="fas fa-plus-circle">
+   </i>
+   Verify a phone number
+  </a>
+ </div>
 </div>
+<style>
+ 
+.nav-tabs .nav-link.active {
+  border-color: #dee2e6 #dee2e6 #fff;
+  color: #007bff;
+}
+.nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  color: #6c757d;
+}
+.profile-header {
+  text-align: center;
+  margin-top: 20px;
+}
+.profile-header img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.profile-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.profile-header p {
+  color: #6c757d;
+}
+.profile-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+.profile-actions a {
+  display: block;
+  color: #007bff;
+  margin: 5px 0;
+  text-decoration: none;
+}
+.profile-actions a:hover {
+  text-decoration: underline;
+}
+.profile-check {
+  margin-top: 30px;
+}
+.profile-check h5 {
+  font-size: 18px;
+  font-weight: bold;
+}
+.profile-check a {
+  display: block;
+  color: #007bff;
+  margin: 5px 0;
+  text-decoration: none;
+}
+.profile-check a:hover {
+  text-decoration: underline;
+}
+</style>

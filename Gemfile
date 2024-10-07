@@ -74,6 +74,7 @@ end
 
 gem 'cssbundling-rails'
 gem 'devise'
+gem "letter_opener"
 
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
