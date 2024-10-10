@@ -1,0 +1,29 @@
+<section class="search-results py-5">
+  <div class="container">
+    <h2 class="mb-4">Search Results</h2>
+    <% if @travelers.present? %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Traveler Name</th>
+            <th>From City</th>
+            <th>To City</th>
+            <th>Travel Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @travelers.each do |traveler| %>
+            <tr>
+              <td><%= traveler.name %></td>
+              <td><%= traveler.from_city %></td>
+              <td><%= traveler.to_city %></td>
+              <td><%= traveler.travel_date %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class= "border text-danger fw-bold p-3">No travelers found for the selected cities and date.</p>
+    <% end %>
+  </div>
+</section>

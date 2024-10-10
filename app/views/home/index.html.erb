@@ -1,27 +1,157 @@
-<div class="container text-center my-5">
-  <h1 class="display-4">Welcome <%= current_user.email %> to DREXBE</h1>
-  <p class="lead">Fast, Reliable, and Secure Courier Services</p>
-
-  <!-- Section for Service Introduction -->
-  <div class="row my-5">
-    <div class="col-md-6">
-      <h3 class="animate__animated animate__fadeInUp">Our Services</h3>
-      <p>We offer a range of courier services to meet your needs, including express delivery, international shipping, and package tracking.</p>
+<!-- Hero Section -->
+  <section class="hero">
+    <video autoplay muted loop playsinline class="video-background">
+      <source src="<%= asset_path('banner-video.mp4') %>" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-content text-white">
+      <h1 class="display-3 fw-bold">Welcome to DREXBE</h1>
+      <p class="lead">Discover how we can help you with our exceptional services.</p>
+      <a href="#services" class="btn btn-primary btn-lg mt-4 rounded-0">Learn More</a>
     </div>
-    <div class="col-md-6">
-      <!-- Placeholder for an animation or video -->
-      <div id="service-animation">
-        <!-- Here you can include animations, illustrations, or avatars -->
+  </section>
+
+  <!-- Search Section -->
+  <section class="search-section py-5 bg-light">
+    <div class="container">
+      <h2 class="text-center mb-4">Find Travelers</h2>
+      <%= form_with url: search_travelers_path, method: :get, local: true, class: "search-form row g-3" do |form| %>
+        <div class="col-md-4">
+          <%= form.label :from_city, 'From City', class: 'form-label' %>
+          <%= form.select :from_city, options_for_select(Traveler::CITIES_IN_MP, params[:from_city]), { prompt: 'Select a city' }, class: 'form-select' %>
+
+        </div>
+        <div class="col-md-4">
+          <%= form.label :to_city, 'To City', class: 'form-label' %>
+           <%= form.select :to_city, options_for_select(Traveler::CITIES_IN_MP, params[:from_city]), { prompt: 'Select a city' }, class: 'form-select' %>
+        </div>
+        <div class="col-md-4">
+          <%= form.label :travel_date, 'Travel Date', class: 'form-label' %>
+          <%= form.date_field :travel_date, value: params[:travel_date], class: 'form-control' %>
+        </div>
+        <div class="col-12 text-center mt-3">
+          <%= form.submit 'Search', class: 'btn btn-primary px-5' %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+
+  <!-- Services Section -->
+  <section id="services" class="services-section text-center">
+    <div class="container">
+      <h2 class="mb-5">Our Services</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Service 1</h5>
+              <p class="card-text">A brief description of the first service we offer.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Service 2</h5>
+              <p class="card-text">A brief description of the second service we offer.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Service 3</h5>
+              <p class="card-text">A brief description of the third service we offer.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Section for 'How It Works' -->
-  <div class="my-5">
-    <h3 class="animate__animated animate__fadeInUp">How It Works</h3>
-    <p>Learn how our service works, from booking your delivery to tracking your packages in real-time.</p>
-    <div id="how-it-works-animation">
-      <!-- Placeholder for future animation or illustration -->
+  <!-- How It Works Section (Video Animation Placeholder) -->
+  <section class="how-it-works text-center">
+    <div class="container">
+      <h2 class="mb-5">How It Works</h2>
+      <div class="row">
+        <div class="col-lg-6">
+          <!-- Replace this with actual video animation -->
+          <div class="video-placeholder">[Video Animation - Step 1]</div>
+          <p class="mt-3">Step 1: Describe the first step of how the service works.</p>
+        </div>
+        <div class="col-lg-6">
+          <div class="video-placeholder">[Video Animation - Step 2]</div>
+          <p class="mt-3">Step 2: Describe the second step of how the service works.</p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </section>
+
+  <!-- Partners Section -->
+  <section class="partners text-center">
+    <div class="container">
+      <h2 class="mb-5">Our Partners</h2>
+      <div class="d-flex justify-content-center flex-wrap">
+        <%# <img src="partner1-logo.png" alt="Partner 1" class="partner-logo">
+        <img src="partner2-logo.png" alt="Partner 2" class="partner-logo">
+        <img src="partner3-logo.png" alt="Partner 3" class="partner-logo">
+        <img src="partner4-logo.png" alt="Partner 4" class="partner-logo"> %>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* Custom Styles */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Video Styles */
+    .video-background {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+
+    /* Content overlay on top of video */
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .services-section {
+      padding: 80px 0;
+    }
+    .how-it-works {
+      background-color: #f8f9fa;
+      padding: 80px 0;
+    }
+    .partners {
+      padding: 60px 0;
+    }
+    .partner-logo {
+      max-width: 150px;
+      margin: 20px;
+    }
+    .video-placeholder {
+      background-color: #ccc;
+      width: 100%;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      font-size: 24px;
+    }
+  </style>

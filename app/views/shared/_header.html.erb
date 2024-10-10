@@ -9,21 +9,41 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Our Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Contact Us</a>
+        </li>
       </ul>
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item dropdown">
-          <a class="nav-link active dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-regular fa-user mx-1"></i> Sign In or Register
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end mt-1">
-            <% if user_signed_in? %>
-              <li>
-                <%= link_to 'My Profile', user_profile_path, class: 'dropdown-item' %>
-              </li>
-              <li>
-                <%= link_to 'Sign Out', destroy_user_session_path, class: 'dropdown-item' %>
-              </li>
-            <% else %>
+      <% if user_signed_in? %>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link active dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <% if current_user.present? %>
+                <% if current_user.profile_picture.attached?  %>
+                  <%= image_tag current_user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"30", width:"30" %>
+                <% else %>
+                  <img alt="Profile picture placeholder" height="30" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="30", class="rounded-circle">
+                <% end %>
+              <% end %> 
+              <span class="ms-2"><%= current_user.full_name %></span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <li class="dropdown-item-text"><%= current_user.email %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><%= link_to 'My Profile', user_profile_path, class: 'dropdown-item' %></li>
+              <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %></li>
+            </ul>
+          </li>
+        </ul>
+      <% else %>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link active dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-regular fa-user mx-1"></i> Sign In or Register
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end mt-1">
               <li>
                 <%= link_to 'Sign In', new_user_session_path, class: 'dropdown-item' %>
               </li>
@@ -32,12 +52,11 @@
               </li>
               <li>
                 <%= button_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: 'dropdown-item' %>
-              </li>
-            <% end %>
-            
-          </ul>
-        </li>
-      </ul>
+              </li> 
+            </ul>
+          </li>
+        </ul>
+      <% end %>
     </div>
   </div>
 </nav>

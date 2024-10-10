@@ -22,6 +22,12 @@ Rails.application.routes.draw do
     delete 'remove_identity_card', to: 'users/registrations#remove_identity_card', as: :remove_identity_card
   end
 
-  get 'search_travelers', to: 'search#index'
+  # get 'search_travelers', to: 'search#index'
+
+  resources :travelers, only: [:index] do
+    collection do
+      get 'search', to: 'travelers#search'
+    end
+  end
   
 end
