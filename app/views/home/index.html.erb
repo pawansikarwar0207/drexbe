@@ -7,7 +7,7 @@
     <div class="hero-content text-white">
       <h1 class="display-3 fw-bold">Welcome to DREXBE</h1>
       <p class="lead">Discover how we can help you with our exceptional services.</p>
-      <a href="#services" class="btn btn-primary btn-lg mt-4 rounded-0">Learn More</a>
+      <a href="#services" class="btn btn-primary btn-lg mt-4 rounded-pill">Learn More</a>
     </div>
   </section>
 
@@ -30,7 +30,7 @@
           <%= form.date_field :travel_date, value: params[:travel_date], class: 'form-control' %>
         </div>
         <div class="col-12 text-center mt-3">
-          <%= form.submit 'Search', class: 'btn btn-primary px-5' %>
+          <%= form.submit 'Search', class: 'btn btn-primary px-5 rounded-pill' %>
         </div>
       <% end %>
     </div>
@@ -40,68 +40,215 @@
   <!-- Services Section -->
   <section id="services" class="services-section text-center">
     <div class="container">
-      <h2 class="mb-5">Our Services</h2>
+      <%# <h2 class="mb-5">Our Services</h2> %>
       <div class="row">
         <div class="col-md-4">
-          <div class="card shadow-sm">
+          <div class="card shadow p-4 mt-2" style="height: 20rem;">
             <div class="card-body">
-              <h5 class="card-title">Service 1</h5>
-              <p class="card-text">A brief description of the first service we offer.</p>
+              <img src="https://live.templately.com/wp-content/uploads/2022/08/4aa9ada6-deilbox-icon-01.png">
+              <h3 class="card-title mt-3 fw-bold">Fast Delivery</h3>
+              <p class="card-text text-muted mt-3">Quick delivery with real-time tracking, updates and notifications</p>
             </div>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card shadow-sm">
+          <div class="card shadow p-4 mt-2" style="height: 20rem;">
             <div class="card-body">
-              <h5 class="card-title">Service 2</h5>
-              <p class="card-text">A brief description of the second service we offer.</p>
+              <img src="https://live.templately.com/wp-content/uploads/2022/08/4aa9ada6-deilbox-icon-01.png">
+              <h3 class="card-title mt-3 fw-bold">Secure Service</h3>
+              <p class="card-text text-muted mt-3">100% reliable service. We deliver your packages safely and securely.</p>
             </div>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card shadow-sm">
+          <div class="card shadow p-4 mt-2" style="height: 20rem;">
             <div class="card-body">
-              <h5 class="card-title">Service 3</h5>
-              <p class="card-text">A brief description of the third service we offer.</p>
+              <img src="https://live.templately.com/wp-content/uploads/2022/08/4aa9ada6-deilbox-icon-01.png">
+              <h3 class="card-title mt-3 fw-bold">Worldwide Shipping</h3>
+              <p class="card-text text-muted mt-3">Get your packages delivered anywhere with worldwide shipping</p>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </section>
 
   <!-- How It Works Section (Video Animation Placeholder) -->
-  <section class="how-it-works text-center">
-    <div class="container">
-      <h2 class="mb-5">How It Works</h2>
-      <div class="row">
-        <div class="col-lg-6">
-          <!-- Replace this with actual video animation -->
-          <div class="video-placeholder">[Video Animation - Step 1]</div>
-          <p class="mt-3">Step 1: Describe the first step of how the service works.</p>
-        </div>
-        <div class="col-lg-6">
-          <div class="video-placeholder">[Video Animation - Step 2]</div>
-          <p class="mt-3">Step 2: Describe the second step of how the service works.</p>
-        </div>
-      </div>
+  <div class="container-2">
+   <div class="title">
+    How It Works
+   </div>
+   <div class="subtitle">
+    Have your products delivered anywhere in 3 easy steps
+   </div>
+   <div class="content">
+    <img alt="Illustration of a delivery person holding a package" height="400" src="https://live.templately.com/wp-content/uploads/2022/08/31a7e1e2-dbox-subject-1.png" width="400"/>
+    <div class="text-content">
+     <h2>
+      Submit Request For Shipment
+     </h2>
+     <p>
+      Fill up the form for shipment and handover your package to our delivery men
+     </p>
+     <a class="btn-learn-more" href="#">
+      Learn More
+     </a>
     </div>
-  </section>
+   </div>
+  </div>
 
-  <!-- Partners Section -->
-  <section class="partners text-center">
-    <div class="container">
-      <h2 class="mb-5">Our Partners</h2>
-      <div class="d-flex justify-content-center flex-wrap">
-        <%# <img src="partner1-logo.png" alt="Partner 1" class="partner-logo">
-        <img src="partner2-logo.png" alt="Partner 2" class="partner-logo">
-        <img src="partner3-logo.png" alt="Partner 3" class="partner-logo">
-        <img src="partner4-logo.png" alt="Partner 4" class="partner-logo"> %>
-      </div>
+  <!-- Track Shipment Section (Video Animation Placeholder) -->
+   <div class="container-3">
+     <div class="content-2">
+      <h1>
+       Track Your Shipment In Real-Time
+      </h1>
+      <p>
+       Get real-time updates about your package and track your shipment progress
+      </p>
+      <button class="btn-learn-more-2">
+       Learn More
+      </button>
+     </div>
+     <div class="image-container-2">
+      <img alt="Illustration of a person riding a scooter with packages" height="527" src="https://live.templately.com/wp-content/uploads/2022/08/445e3e4a-dboxc-subject-2-600x527.png" width="600"/>
+     </div>
+  </div>
+
+  <!--  Package Delivered Section (Video Animation Placeholder) -->
+  <div class="container-1">
+   <div class="content">
+    <img alt="Illustration of a delivery person holding a package" height="600" src="https://img.freepik.com/premium-photo/happy-delivery-man-handing-package-woman-her-doorstep_1198884-62737.jpg?ga=GA1.1.590165737.1721391013" width="600"/>
+    <div class="text-content">
+     <h2>Have Your Package Delivered To Your Doorstep</h2>
+     <p>
+      Your packages will be delivered right on time on your receiver’s doorstep
+     </p>
+     <a class="btn-learn-more" href="#">
+      Learn More
+     </a>
     </div>
-  </section>
+   </div>
+  </div>
+
+  <!-- Track Shipment Section (Video Animation Placeholder) -->
+   <div class="container-3">
+     <div class="content-2">
+      <h1>Stay Updated With Our Latest News</h1>
+      <p>
+       Get our latest updates, news, blog posts and much more directly to your inbox. Subscribe and join our mailing list today.
+      </p>
+      <div class="col-lg-6 d-flex input-form">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Your Email Address" aria-label="Recipient's username" aria-describedby="button-addon2">
+          <button class="btn btn-danger" type="button" id="button-addon2">Subscribe</button>
+        </div>
+      </div>
+     </div>
+     <div class="image-container">
+      <img alt="Illustration of a person riding a scooter with packages" height="527" src="https://img.freepik.com/premium-photo/flatstyle-illustration-woman-focused-her-laptop-ideal-workfromhome-business-tech_1045902-1229.jpg?ga=GA1.1.590165737.1721391013" width="600"/>
+     </div>
+  </div>
 
   <style>
+
+    .input-form {
+      margin-left: 13%;
+    }
+
+    .form-control{
+      padding: 10px;
+    }
+
+    .container-3 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 50px;
+      background-color: #ffffff;
+      color: #333333;
+    }
+    .content-2 {
+      max-width: 50%;
+    }
+    .content-2 h1 {
+      font-size: 2.9rem;
+      font-weight: 700;
+      color: #333333;
+      margin-left: 100px;
+    }
+    .content-2 p {
+      font-size: 1rem;
+      color: #666666;
+      margin-top: 10px;
+      margin-left: 100px;
+    }
+    .btn-learn-more-2 {
+      background-color: #0d6efd;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      margin-top: 20px;
+      font-size: 1rem;
+      margin-left: 100px;
+      font-weight: bold;
+    }
+    .image-container-2 {
+      max-width: 50%;
+    }
+    .image-container-2 img {
+      width: 100%;
+    }
+
+   .container-2 {
+    padding: 50px 0;
+    background-color: #fff7f7;
+  }
+  .title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .subtitle {
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #666;
+  }
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .content img {
+    max-width: 100%;
+    height: auto;
+  }
+  .text-content {
+    max-width: 500px;
+    margin-left: 50px;
+  }
+  .text-content h2 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .text-content p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .btn-learn-more {
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: bold;
+  }
     /* Custom Styles */
     .hero {
       position: relative;
@@ -137,13 +284,7 @@
       background-color: #f8f9fa;
       padding: 80px 0;
     }
-    .partners {
-      padding: 60px 0;
-    }
-    .partner-logo {
-      max-width: 150px;
-      margin: 20px;
-    }
+
     .video-placeholder {
       background-color: #ccc;
       width: 100%;

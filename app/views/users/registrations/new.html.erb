@@ -1,7 +1,7 @@
 <div class="container" style="height: 100vh;">
 	 <div class="row d-flex justify-content-center align-items-center pt-2">
 			<div class="col-lg-5 my-3">
-				 <div class="card  px-5">
+				 <div class="card shadow px-5">
 						<div class="card-body">
 							 <div class="d-flex justify-content-center gap-2 align-items-center">
 									<img src="<%#= current_logo %>" style="height: 100%;" class="mt-3">
@@ -23,6 +23,16 @@
 										 </div>
 										</div>
 								 </div>
+
+								 <div class="row">
+	                <div class="col-lg-6 form-group mt-2 mb-2">
+	                  <%= f.text_field :address_1, autofocus: true, autocomplete: "address_1", class: 'form-control mt-1', placeholder: 'Address Line 1'  %>
+	                </div>
+
+	                <div class="col-lg-6 form-group mt-2 mb-2">
+	                  <%= f.text_field :address_2, autofocus: true, autocomplete: "address_2", class: 'form-control mt-1', placeholder: 'Address Line 2' %>
+	                </div>
+	              </div>
 
 								 <div class="row">
 									<div class="col-lg-6">
