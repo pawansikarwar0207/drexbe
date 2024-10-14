@@ -9,15 +9,21 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
-        <li class="nav-item">
+       <%#  <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Our Services</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Contact Us</a>
-        </li>
+        </li> %>
       </ul>
       <% if user_signed_in? %>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item active">
+            <%= link_to 'View Published add', parcel_ads_path, class: "nav-link active" %>
+          </li>
+          <li class="nav-item active">
+            <%= link_to 'Publish an add', new_parcel_ad_path, class: "nav-link active" %>
+          </li>
           <li class="nav-item dropdown">
             <a href="#" class="nav-link active dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <% if current_user.present? %>
@@ -29,7 +35,7 @@
               <% end %> 
               <span class="ms-2"><%= current_user.full_name %></span>
             </a>
-            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <ul class="dropdown-menu menu-list" aria-labelledby="userDropdown">
               <li class="dropdown-item-text"><%= current_user.email %></li>
               <li><hr class="dropdown-divider"></li>
               <li><%= link_to 'My Profile', user_profile_path, class: 'dropdown-item' %></li>
@@ -51,7 +57,7 @@
                 <%= link_to 'Register', new_user_registration_path, class: 'dropdown-item' %>
               </li>
               <li>
-                <%= button_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: 'dropdown-item' %>
+                <%#= button_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: 'dropdown-item' %>
               </li> 
             </ul>
           </li>
@@ -60,3 +66,9 @@
     </div>
   </div>
 </nav>
+
+<style type="text/css">
+  .menu-list {
+
+  }
+</style>

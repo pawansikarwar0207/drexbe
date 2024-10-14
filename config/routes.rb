@@ -29,5 +29,7 @@ Rails.application.routes.draw do
       get 'search', to: 'travelers#search'
     end
   end
+
+  resources :parcel_ads
   
 end

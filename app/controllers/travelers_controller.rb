@@ -1,4 +1,5 @@
 class TravelersController < ApplicationController
+  before_action :authenticate_user!
 	def index
     @travelers = Traveler.all
   end

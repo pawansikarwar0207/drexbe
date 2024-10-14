@@ -1,0 +1,2 @@
+module ParcelAdsHelper
+end

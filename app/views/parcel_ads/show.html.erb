@@ -1,0 +1,18 @@
+<h1>Parcel Ad Details</h1>
+
+<p><strong>From:</strong> <%= @parcel_ad.departure_city %></p>
+<p><strong>To:</strong> <%= @parcel_ad.arrival_city %></p>
+<p><strong>Date to Send:</strong> <%= @parcel_ad.send_date %></p>
+<p><strong>Parcel Type:</strong> <%= @parcel_ad.parcel_type %></p>
+<p><strong>Weight:</strong> <%= @parcel_ad.parcel_weight %></p>
+<p><strong>Dimension:</strong> <%= @parcel_ad.parcel_dimension %></p>
+<p><strong>Description:</strong> <%= @parcel_ad.description %></p>
+<p><strong>Service Type:</strong> <%= @parcel_ad.service_type %></p>
+<p><strong>Bonus for Traveler:</strong> <%= number_to_currency(@parcel_ad.bonus) %></p>
+
+<% if @parcel_ad.photo.attached? %>
+  <p><strong>Photo of the Parcel:</strong></p>
+  <%= image_tag @parcel_ad.photo %>
+<% end %>
+
+<%= link_to 'Back to Ad List', parcel_ads_path, class: "btn btn-secondary" %>

@@ -1,0 +1,79 @@
+<div class="container mb-5">
+  <h1 class="text-center mt-4 mb-4">Create an Ad for Sending a Parcel</h1>
+
+  <%= form_with(model: @parcel_ad, local: true) do |f| %>
+    <div class="row bg-light border p-4 mb-3">
+      <div class="col-lg-4 mt-4 mb-3">
+        <%= f.text_field :departure_city, class: "form-control p-3", placeholder: 'Departure Location' %>
+      </div>
+      <div class="col-lg-4 mt-4 mb-3">
+        <%= f.text_field :arrival_city, class: "form-control p-3", placeholder: 'Place of arrival' %>
+      </div>
+
+      <div class="col-lg-4 mt-4 mb-3">
+        <%= f.date_field :send_date, class: "form-control p-3" %>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-lg-3">
+          <p class="fs-4 fw-bold">Type of Service:</p>
+        </div>
+        <div class="col-lg-3 mt-2">
+          <div class="form-check">
+            <%= f.radio_button :service_type, 'send_parcel', id: "send_parcel", checked: true %>
+            <label class="form-check-label" for="send_parcel">
+              I want to send a parcel
+            </label>
+          </div>
+        </div>
+        <div class="col-lg-4 mt-2">
+          <div class="form-check">
+            <%= f.radio_button :service_type, 'buy_receive_product', id: "buy_receive_product" %>
+            <label class="form-check-label" for="buy_receive_product">
+              I want to buy and receive a product
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row py-4">
+      <div class="col-lg-4 mb-3">
+        <%= f.select :parcel_type, ['Document', 'Clothes', 'Keys', 'Books', 'Electronic Items', 'Other'], { prompt: 'Please select parcel type' }, class: "form-control p-3" %>
+      </div>
+
+      <div class="col-lg-4 mb-3">
+        <%= f.select :parcel_weight, ['500g - 1kg', '1kg - 2kg', 'More than 2kg'], {  prompt: 'Please select parcel weight' }, class: "form-control p-3" %>
+      </div>
+
+      <div class="col-lg-4 mb-3">
+        <%= f.file_field :photo, class: "form-control p-3" %>
+      </div>
+      
+    </div>
+
+
+    <div class="mb-5">
+      <%= f.select :parcel_dimension, ['Little', 'Average', 'Big', 'Very Large'], { prompt: 'Please select parcel dimension' }, class: "form-control p-3" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.text_area :description, class: "form-control", rows: 3, placeholder: 'Describe the item to be sent as precisely as possible (nature of the item, weight, dimensions, etc.) and give details on the preferred transport methods (meeting place, drop-off place, etc.)' %>
+    </div>
+
+    <div class="mb-3 row bg-light border m-0 p-4">
+      <div class="col-lg-2">
+        <%= f.label :bonus, "Traveler Bonus : ", class: 'mt-2' %>
+      </div>
+      <div class="col-lg-1">
+        <%= f.number_field :bonus, class: "form-control p-2", step: 0 %>
+      </div>
+    </div>
+
+    
+
+    <%= f.submit "Publish Ad", class: "btn btn-primary" %>
+  <% end %>
+
+</div>

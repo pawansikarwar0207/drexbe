@@ -17,6 +17,15 @@
   <h2>
    <%= current_user.full_name %> 
   </h2>
+
+  <div class="profile-status">
+    <% if @user.verified? %>
+      <p class="text-success"><i class="fas fa-check-circle"></i> Your profile is 100% complete and verified!</p>
+    <% else %>
+      <p class="text-danger">Your profile is not complete. Please fill the missing information or complete your information.</p>
+    <% end %>
+  </div>
+
   <div class="progress col-lg-3 mx-auto fw-bold">
     <div class="progress-bar" role="progressbar" style="width: <%= @user.profile_completion %>%;" aria-valuenow="<%= @user.profile_completion %>" aria-valuemin="0" aria-valuemax="100">
       <%= @user.profile_completion %>% Complete
@@ -35,9 +44,15 @@
   <h4>
    Check your profile
   </h4>
-  <%= link_to verify_document_path do %>
-    <i class="fas fa-plus-circle"></i> Verify an ID
+
+  <% if current_user.passport_document.attached? || current_user.identity_card_document.attached? %>
+    <p><i class="fas fa-check-circle"></i> You have uploaded your document successfully.</p>
+  <% else %>
+    <%= link_to verify_document_path do %>
+      <i class="fas fa-plus-circle"></i> Verify an ID
+    <% end %>
   <% end %>
+
 
   <% if current_user.confirmed? %>
     <p><i class="fas fa-check-circle"></i> Your email <strong><%= current_user.email %></strong> is confirmed.</p>
@@ -48,11 +63,18 @@
     </a>
   <% end %>
 
-  <a href="#">
-   <i class="fas fa-plus-circle">
-   </i>
-   Verify a phone number
-  </a>
+  <% if current_user.phone_number.present? %>
+    <p>
+      <i class="fas fa-check-circle"></i> 
+      Your contact number <strong><%= current_user.masked_phone_number %></strong> is confirmed.
+    </p>
+  <% else %>
+    <a href="#">
+      <i class="fas fa-plus-circle"></i>
+      Verify a phone number
+    </a>
+  <% end %>
+
  </div>
 </div>
 <style>

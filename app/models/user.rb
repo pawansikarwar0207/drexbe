@@ -2,7 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :trackable, :confirmable,
+         :recoverable, :rememberable, :validatable, :trackable, 
+         # :confirmable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   # validates :first_name, :last_name, :city, :country, presence: true
@@ -13,12 +14,14 @@ class User < ApplicationRecord
   has_one_attached :passport_document
   has_one_attached :identity_card_document
 
+  has_many :parcel_ads, dependent: :destroy
+
   def profile_completion
     completion = 0
 
     completion += 20 if profile_picture.attached?
-    # completion += 20 if phone_number.present?
-    completion += 20 if passport_document.attached? || identity_card_document.attached?
+    completion += 30 if phone_number.present?
+    completion += 30 if passport_document.attached? || identity_card_document.attached?
 
     # Add 20% if the email is confirmed
     completion += 20 if confirmed?
@@ -26,8 +29,21 @@ class User < ApplicationRecord
     completion
   end
 
+  def verified?
+    profile_completion == 100
+  end
+
   def confirmed?
     self.confirmed_at.present?
+  end
+
+  def masked_phone_number
+    if phone_number.present?
+      # Assuming phone number has at least 10 digits, you can adjust this as needed
+      phone_number.gsub(/.(?=.{4})/, 'X') # Mask all but the last 4 digits
+    else
+      nil
+    end
   end
 
   # omniauth login using google

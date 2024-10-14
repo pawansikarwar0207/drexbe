@@ -1,0 +1,122 @@
+<div class="container mt-4 mb-5">
+  <% @parcel_ads.each do |parcel| %>
+    <div class="card parcel-card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="badge bg-warning text-dark">Transportation</div>
+        <div class="badge bg-light text-muted"><%= parcel.parcel_type %></div>
+      </div>
+      <div class="card-body row">
+        <div class="col-8 d-flex align-items-center">
+          <div class="avatar-container me-3">
+            <div class="avatar-circle">
+              <span class="initials"><%= parcel.user.full_name[0].upcase %></span>
+              <%# <i class="fa fa-check-circle verification-icon" aria-hidden="true"></i> %>
+            </div>
+          </div>
+          <div>
+            <h5 class="mb-0"><%= parcel.user.full_name %></h5>
+            <div class="contact-info">
+             <i class="fa fa-phone" data-bs-toggle="tooltip" data-bs-placement="top" title="<%= parcel.user.phone_number %>"></i>
+              <i class="fa fa-address-card"></i>
+
+              <i class="fa fa-envelope" data-bs-toggle="tooltip" data-bs-placement="top" title="<%= parcel.user.email %>"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 text-end">
+          <p class="mb-0"><strong><%= parcel.departure_city %></strong> <i class="fa fa-arrow-right"></i> <strong><%= parcel.arrival_city %></strong></p>
+          <p class="mb-0">Weight: <strong><%= parcel.parcel_weight %></strong></p>
+          <p class="mb-0">Dimension: <strong><%= parcel.parcel_dimension %></strong></p>
+          <p class="mb-0">Proposed commission: <strong>€ <%= parcel.bonus %></strong></p>
+        </div>
+      </div>
+      <div class="card-footer text-end">
+        <button id="contact-button-<%= parcel.id %>" class="btn btn-warning py-3" onclick="showContact('<%= parcel.id %>', '<%= parcel.user.phone_number %>')">
+          CONTACT
+        </button>
+        <%#= link_to 'Edit', edit_parcel_ad_url(parcel), class: "btn btn-warning py-3" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<style type="text/css">
+  .parcel-card {
+    border: none;
+  }
+
+  .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  .badge {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .avatar-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .avatar-circle {
+    width: 60px;
+    height: 60px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .initials {
+    font-size: 24px;
+    color: #333;
+  }
+
+  .verification-icon {
+    color: #28a745;
+    font-size: 18px;
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+  }
+
+  .contact-info i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    color: #6c757d;
+  }
+
+  .card-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .btn-warning {
+    color: #fff;
+    background-color: #ffc107;
+    border-color: #ffc107;
+  }
+
+  .btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+  }
+</style>
+
+<script>
+  function showContact(parcelId, phoneNumber) {
+    const buttonElement = document.getElementById(`contact-button-${parcelId}`);
+    buttonElement.textContent = phoneNumber;  // Replace the text with the phone number
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  });
+</script>
