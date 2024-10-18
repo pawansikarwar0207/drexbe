@@ -31,5 +31,8 @@ Rails.application.routes.draw do
   end
 
   resources :parcel_ads
+
+  get 'get_cities', to: 'parcel_ads#get_cities'
   
 end
+

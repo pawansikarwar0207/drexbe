@@ -1,41 +1,82 @@
 <div class="container mt-4 mb-5">
   <% @parcel_ads.each do |parcel| %>
-    <div class="card parcel-card mb-4">
+    <div class="card parcel-card mb-4 border">
       <div class="card-header d-flex justify-content-between align-items-center">
         <div class="badge bg-warning text-dark">Transportation</div>
         <div class="badge bg-light text-muted"><%= parcel.parcel_type %></div>
       </div>
       <div class="card-body row">
-        <div class="col-8 d-flex align-items-center">
+        <div class="col-md-8 mb-3 d-flex align-items-center">
           <div class="avatar-container me-3">
-            <div class="avatar-circle">
+            <div class="avatar-circle position-relative">
               <span class="initials"><%= parcel.user.full_name[0].upcase %></span>
-              <%# <i class="fa fa-check-circle verification-icon" aria-hidden="true"></i> %>
+              <% if parcel.user.verified? %>
+                <i class="fas fa-check-circle verification-icon position-absolute" aria-hidden="true"></i>
+              <% end %>
             </div>
           </div>
-          <div>
-            <h5 class="mb-0"><%= parcel.user.full_name %></h5>
-            <div class="contact-info">
-             <i class="fa fa-phone" data-bs-toggle="tooltip" data-bs-placement="top" title="<%= parcel.user.phone_number %>"></i>
-              <i class="fa fa-address-card"></i>
 
-              <i class="fa fa-envelope" data-bs-toggle="tooltip" data-bs-placement="top" title="<%= parcel.user.email %>"></i>
+          <div>
+            <h5 class="mb-2">
+              <% if parcel.user == current_user %>
+                <%= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %>
+              <% else %>
+                <%= parcel.user.full_name %> 
+              <% end %>
+            </h5>
+            <div class="contact-info">
+              <!-- Phone Number Icon -->
+              <% if parcel.user.phone_number.present? %>
+                <i class="fa fa-phone" 
+                   data-bs-toggle="tooltip" 
+                   data-bs-placement="top" 
+                   data-bs-title="<%= parcel.user.phone_number.present? ? 'Phone number is verified' : 'Phone number not verified' %>">
+                </i>
+              <% end %>
+              
+              <!-- ID Card Icon -->
+              <% if parcel.user.identity_card_document.attached? %>
+                <i class="fa fa-address-card" 
+                   data-bs-toggle="tooltip" 
+                   data-bs-placement="top" 
+                   title="<%= parcel.user.identity_card_document.attached? ? 'ID card is verified' : 'ID card not verified' %>">
+                </i>
+              <% end %>
+
+              <!-- Email Icon -->
+              <% if parcel.user.confirmed? %>
+                <i class="fa fa-envelope" 
+                   data-bs-toggle="tooltip" 
+                   data-bs-placement="top" 
+                   title="<%= parcel.user.confirmed? ? 'Email is verified' : 'Email not verified' %>">
+                </i>
+              <% end %>
             </div>
           </div>
         </div>
-        <div class="col-4 text-end">
-          <p class="mb-0"><strong><%= parcel.departure_city %></strong> <i class="fa fa-arrow-right"></i> <strong><%= parcel.arrival_city %></strong></p>
-          <p class="mb-0">Weight: <strong><%= parcel.parcel_weight %></strong></p>
-          <p class="mb-0">Dimension: <strong><%= parcel.parcel_dimension %></strong></p>
-          <p class="mb-0">Proposed commission: <strong>€ <%= parcel.bonus %></strong></p>
+        <div class="col-md-4 mt-2 text-end">
+          <%= link_to parcel_ad_path(parcel), class: 'text-dark' do %>
+            <p class="mb-0"><strong><%= parcel.departure_city %> - <%= parcel.departure_country %></strong> <i class="fa fa-arrow-right"></i> <strong><%= parcel.arrival_city %> - <%= parcel.arrival_country %></strong></p>
+          <% end %>
+          <p class="mb-0">Weight : <strong> <%= parcel.parcel_weight %> kg </strong></p>
+          <p class="mb-0">Height : <strong> <%= parcel.parcel_height %> cm </strong></p>
+          <p class="mb-0">Length : <strong> <%= parcel.parcel_length %> cm </strong></p>
+          <p class="mb-0">Quantity : <strong> <%= parcel.parcel_quantity %></strong></p>
+          <p class="mb-0">Date to Send : <strong> <%= parcel.shipment_date %></strong></p>
+          <p class="mb-0">Recommended commission fee : <strong> <%= number_to_currency(parcel.recommended_fee) %></strong></p>
+          <p class="mb-0">Proposed commission fee : <strong> <%= number_to_currency(parcel.proposed_fee) %></strong></p>
         </div>
       </div>
-      <div class="card-footer text-end">
-        <button id="contact-button-<%= parcel.id %>" class="btn btn-warning py-3" onclick="showContact('<%= parcel.id %>', '<%= parcel.user.phone_number %>')">
-          CONTACT
-        </button>
-        <%#= link_to 'Edit', edit_parcel_ad_url(parcel), class: "btn btn-warning py-3" %>
-      </div>
+        <div class="card-footer text-end">
+          <%= link_to parcel_ad_path(parcel), class: 'btn btn-primary py-2 fw-bold' do %>
+            More Info <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+          <% if parcel.user.verified? %>
+          <button id="contact-button-<%= parcel.id %>" class="btn btn-warning py-2 fw-bold" onclick="showContact('<%= parcel.id %>', '<%= parcel.user.phone_number %>')">
+            CONTACT
+          </button>
+        <% end %>
+        </div>
     </div>
   <% end %>
 </div>
@@ -105,6 +146,30 @@
     background-color: #e0a800;
     border-color: #d39e00;
   }
+
+  .avatar-circle {
+    position: relative;
+    width: 60px; /* Adjust the size as needed */
+    height: 60px; /* Adjust the size as needed */
+    border-radius: 50%;
+    background-color: #e0e0e0; /* Background color for the avatar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em; /* Adjust the font size for initials */
+  }
+
+  .verification-icon {
+    position: absolute;
+    bottom: 2px; /* Adjust the position vertically */
+    right: 40px; /* Adjust the position horizontally */
+    font-size: 1em; /* Adjust the size of the check icon */
+    color: green; /* Change this to your preferred color */
+    background-color: white; /* Optional: add a background */
+    border-radius: 50%; /* Optional: make it circular */
+    padding: 2px; /* Optional: add some padding around the icon */
+  }
+
 </style>
 
 <script>
@@ -114,9 +179,9 @@
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
   });
 </script>
