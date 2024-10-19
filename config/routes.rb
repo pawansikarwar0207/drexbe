@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   # get 'search_travelers', to: 'search#index'
 
-  resources :travelers, only: [:index] do
+  resources :travelers do
     collection do
       get 'search', to: 'travelers#search'
     end

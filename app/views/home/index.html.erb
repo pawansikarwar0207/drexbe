@@ -1,298 +1,137 @@
 <!-- Hero Section -->
-  <section class="hero">
-    <video autoplay muted loop playsinline class="video-background">
-      <source src="<%= asset_path('banner-video.mp4') %>" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <div class="hero-content text-white">
-      <h1 class="display-3 fw-bold">Welcome to DREXBE</h1>
-      <p class="lead">Discover how we can help you with our exceptional services.</p>
-      <a href="#services" class="btn btn-primary btn-lg mt-4 rounded-pill">Learn More</a>
-    </div>
-  </section>
+<section class="hero">
+  <video autoplay muted loop playsinline class="video-background">
+    <source src="<%= asset_path('banner-video.mp4') %>" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div class="hero-content text-white">
+    <h1 class="display-3 fw-bold">Welcome to DREXBE</h1>
+    <p class="lead">Discover how we can help you with our exceptional services.</p>
+    <a href="#services" class="btn btn-primary btn-lg mt-4 rounded-pill btn-learn-more">Learn More</a>
+  </div>
+</section>
 
-  <!-- Search Section -->
-  <section class="search-section py-5 bg-light">
-    <div class="container">
-      <h2 class="text-center mb-4">Find Travelers</h2>
-      <%= form_with url: search_travelers_path, method: :get, local: true, class: "search-form row g-3" do |form| %>
-        <div class="col-md-4">
-          <%= form.label :from_city, 'From City', class: 'form-label' %>
-          <%= form.select :from_city, options_for_select(Traveler::CITIES_IN_MP, params[:from_city]), { prompt: 'Select a city' }, class: 'form-select' %>
-
-        </div>
-        <div class="col-md-4">
-          <%= form.label :to_city, 'To City', class: 'form-label' %>
-           <%= form.select :to_city, options_for_select(Traveler::CITIES_IN_MP, params[:from_city]), { prompt: 'Select a city' }, class: 'form-select' %>
-        </div>
-        <div class="col-md-4">
-          <%= form.label :travel_date, 'Travel Date', class: 'form-label' %>
-          <%= form.date_field :travel_date, value: params[:travel_date], class: 'form-control' %>
-        </div>
-        <div class="col-12 text-center mt-3">
-          <%= form.submit 'Search', class: 'btn btn-primary px-5 rounded-pill' %>
-        </div>
-      <% end %>
-    </div>
-  </section>
-
-
-  <!-- Services Section -->
-  <section id="services" class="services-section text-center">
-    <div class="container">
-      <%# <h2 class="mb-5">Our Services</h2> %>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card shadow p-4 mt-2" style="height: 20rem;">
-            <div class="card-body">
-              <img src="https://live.templately.com/wp-content/uploads/2022/08/4aa9ada6-deilbox-icon-01.png">
-              <h3 class="card-title mt-3 fw-bold">Fast Delivery</h3>
-              <p class="card-text text-muted mt-3">Quick delivery with real-time tracking, updates and notifications</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card shadow p-4 mt-2" style="height: 20rem;">
-            <div class="card-body">
-              <img src="https://live.templately.com/wp-content/uploads/2022/08/4aa9ada6-deilbox-icon-01.png">
-              <h3 class="card-title mt-3 fw-bold">Secure Service</h3>
-              <p class="card-text text-muted mt-3">100% reliable service. We deliver your packages safely and securely.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card shadow p-4 mt-2" style="height: 20rem;">
-            <div class="card-body">
-              <img src="https://live.templately.com/wp-content/uploads/2022/08/4aa9ada6-deilbox-icon-01.png">
-              <h3 class="card-title mt-3 fw-bold">Worldwide Shipping</h3>
-              <p class="card-text text-muted mt-3">Get your packages delivered anywhere with worldwide shipping</p>
-            </div>
-          </div>
+<!-- Search Section -->
+<section class="search-section py-5 bg-light">
+  <div class="container mt-1 mb-4">
+    <h2 class="text-center mb-4 fw-bold">Find Travelers</h2>
+    <%= form_with url: search_travelers_path, method: :get, local: true, class: "search-form row g-3" do |form| %>
+      <div class="col-md-4">
+        <%= form.label :from_city, 'From City', class: 'form-label' %>
+        <%= form.select :from_city, options_for_select(Traveler::CITIES_IN_MP, params[:from_city]), { prompt: 'Select a city' }, class: 'form-select' %>
       </div>
-    </div>
-  </section>
-
-  <!-- How It Works Section (Video Animation Placeholder) -->
-  <div class="container-2">
-   <div class="title">
-    How It Works
-   </div>
-   <div class="subtitle">
-    Have your products delivered anywhere in 3 easy steps
-   </div>
-   <div class="content">
-    <img alt="Illustration of a delivery person holding a package" height="400" src="https://live.templately.com/wp-content/uploads/2022/08/31a7e1e2-dbox-subject-1.png" width="400"/>
-    <div class="text-content">
-     <h2>
-      Submit Request For Shipment
-     </h2>
-     <p>
-      Fill up the form for shipment and handover your package to our delivery men
-     </p>
-     <a class="btn-learn-more" href="#">
-      Learn More
-     </a>
-    </div>
-   </div>
+      <div class="col-md-4">
+        <%= form.label :to_city, 'To City', class: 'form-label' %>
+        <%= form.select :to_city, options_for_select(Traveler::CITIES_IN_MP, params[:from_city]), { prompt: 'Select a city' }, class: 'form-select' %>
+      </div>
+      <div class="col-md-4">
+        <%= form.label :travel_date, 'Travel Date', class: 'form-label' %>
+        <%= form.date_field :travel_date, value: params[:travel_date], class: 'form-control' %>
+      </div>
+      <div class="col-12 text-center mt-5">
+        <%= form.submit 'Search', class: 'btn btn-primary px-5 rounded-pill btn-learn-more ' %>
+      </div>
+    <% end %>
   </div>
+</section>
 
-  <!-- Track Shipment Section (Video Animation Placeholder) -->
-   <div class="container-3">
-     <div class="content-2">
-      <h1>
-       Track Your Shipment In Real-Time
-      </h1>
-      <p>
-       Get real-time updates about your package and track your shipment progress
-      </p>
-      <button class="btn-learn-more-2">
-       Learn More
-      </button>
-     </div>
-     <div class="image-container-2">
-      <img alt="Illustration of a person riding a scooter with packages" height="527" src="https://live.templately.com/wp-content/uploads/2022/08/445e3e4a-dboxc-subject-2-600x527.png" width="600"/>
-     </div>
-  </div>
-
-  <!--  Package Delivered Section (Video Animation Placeholder) -->
-  <div class="container-1">
-   <div class="content">
-    <img alt="Illustration of a delivery person holding a package" height="600" src="https://img.freepik.com/premium-photo/happy-delivery-man-handing-package-woman-her-doorstep_1198884-62737.jpg?ga=GA1.1.590165737.1721391013" width="600"/>
-    <div class="text-content">
-     <h2>Have Your Package Delivered To Your Doorstep</h2>
-     <p>
-      Your packages will be delivered right on time on your receiver’s doorstep
-     </p>
-     <a class="btn-learn-more" href="#">
-      Learn More
-     </a>
-    </div>
-   </div>
-  </div>
-
-  <!-- Track Shipment Section (Video Animation Placeholder) -->
-   <div class="container-3">
-     <div class="content-2">
-      <h1>Stay Updated With Our Latest News</h1>
-      <p>
-       Get our latest updates, news, blog posts and much more directly to your inbox. Subscribe and join our mailing list today.
-      </p>
-      <div class="col-lg-6 d-flex input-form">
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Your Email Address" aria-label="Recipient's username" aria-describedby="button-addon2">
-          <button class="btn btn-danger" type="button" id="button-addon2">Subscribe</button>
+<!-- Services Section -->
+<section id="services" class="services-section text-center hover-effect-combined">
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-4  mb-4">
+        <div class="card shadow p-1 mt-2">
+          <div class="card-body">
+            <img src="https://live.templately.com/wp-content/uploads/2022/08/4aa9ada6-deilbox-icon-01.png" class="img-fluid" alt="Fast Delivery">
+            <h3 class="card-title mt-3 fw-bold">Fast Delivery</h3>
+            <p class="card-text text-muted mt-3">Quick delivery with real-time tracking, updates and notifications</p>
+          </div>
         </div>
       </div>
-     </div>
-     <div class="image-container">
-      <img alt="Illustration of a person riding a scooter with packages" height="527" src="https://img.freepik.com/premium-photo/flatstyle-illustration-woman-focused-her-laptop-ideal-workfromhome-business-tech_1045902-1229.jpg?ga=GA1.1.590165737.1721391013" width="600"/>
-     </div>
+      <div class="col-md-4  mb-4">
+        <div class="card shadow p-1 mt-2">
+          <div class="card-body">
+            <img src="https://live.templately.com/wp-content/uploads/2022/08/4aa9ada6-deilbox-icon-01.png" class="img-fluid" alt="Secure Service" >
+            <h3 class="card-title mt-3 fw-bold">Secure Service</h3>
+            <p class="card-text text-muted mt-3">100% reliable service. We deliver your packages safely and securely.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4  mb-4">
+        <div class="card shadow p-1 mt-2">
+          <div class="card-body">
+            <img src="https://live.templately.com/wp-content/uploads/2022/08/4aa9ada6-deilbox-icon-01.png" class="img-fluid" alt="Worldwide Shipping">
+            <h3 class="card-title mt-3 fw-bold">Worldwide Shipping</h3>
+            <p class="card-text text-muted mt-3">Get your packages delivered anywhere with worldwide shipping</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <style>
 
-    .input-form {
-      margin-left: 13%;
-    }
+<!-- How It Works Section -->
+<div class="container-2 text-center py-5">
+  <div class="title">How It Works</div>
+  <div class="subtitle">Have your products delivered anywhere in 3 easy steps</div>
+  <div class="row content">
+    <!-- Image Section -->
+    <div class="col-lg-6 col-md-12 order-1 order-md-1">
+      <img alt="Illustration of a delivery person holding a package" src="https://live.templately.com/wp-content/uploads/2022/08/31a7e1e2-dbox-subject-1.png" class="img-fluid" width="300">
+    </div>
+    <!-- Text Section -->
+    <div class="text-content col-lg-6 col-md-12 mt-4 order-2 order-md-2">
+      <h2>Submit Request For Shipment</h2>
+      <p>Fill up the form for shipment and handover your package to our delivery men.</p>
+      <a class="btn-learn-more rounded-pill" href="#">Learn More</a>
+    </div>
+  </div>
+</div>
 
-    .form-control{
-      padding: 10px;
-    }
 
-    .container-3 {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 50px;
-      background-color: #ffffff;
-      color: #333333;
-    }
-    .content-2 {
-      max-width: 50%;
-    }
-    .content-2 h1 {
-      font-size: 2.9rem;
-      font-weight: 700;
-      color: #333333;
-      margin-left: 100px;
-    }
-    .content-2 p {
-      font-size: 1rem;
-      color: #666666;
-      margin-top: 10px;
-      margin-left: 100px;
-    }
-    .btn-learn-more-2 {
-      background-color: #0d6efd;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      margin-top: 20px;
-      font-size: 1rem;
-      margin-left: 100px;
-      font-weight: bold;
-    }
-    .image-container-2 {
-      max-width: 50%;
-    }
-    .image-container-2 img {
-      width: 100%;
-    }
+<!-- Track Shipment Section -->
+<div class="container-3 row shadow py-5 border ">
+  <div class="col-md-12 col-lg-6  text-center mb-4 mx-md-auto mt-5">
+    <h1 class="fw-bold mt-5">Track Your Shipment In Real-Time</h1>
+    <p>Get real-time updates about your package and track your shipment progress</p>
+    <button class="btn-learn-more rounded-pill">Learn More</button>
+  </div>
+  <div class="image-container-2 col-md-12 col-lg-6 text-center  mx-md-auto">
+    <img alt="Illustration of a person riding a scooter with packages" src="https://live.templately.com/wp-content/uploads/2022/08/445e3e4a-dboxc-subject-2-600x527.png" class="img-fluid" width="450">
+  </div>
+</div>
 
-   .container-2 {
-    padding: 50px 0;
-    background-color: #fff7f7;
-  }
-  .title {
-    font-size: 2.8rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  .subtitle {
-    font-size: 1rem;
-    text-align: center;
-    margin-bottom: 50px;
-    color: #666;
-  }
-  .content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .content img {
-    max-width: 100%;
-    height: auto;
-  }
-  .text-content {
-    max-width: 500px;
-    margin-left: 50px;
-  }
-  .text-content h2 {
-    font-size: 3rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-  }
-  .text-content p {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 20px;
-  }
-  .btn-learn-more {
-    background-color: #0d6efd;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 1rem;
-    text-decoration: none;
-    font-weight: bold;
-  }
-    /* Custom Styles */
-    .hero {
-      position: relative;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+<!-- Package Delivered Section -->
+<div class="container-3 text-center py-5">
+  <div class="content row">
+    <div class="col-md-6 ">
+      <img alt="Delivery person" src="https://img.freepik.com/premium-photo/happy-delivery-man-handing-package-woman-her-doorstep_1198884-62737.jpg?ga=GA1.1.590165737.1721391013" class="img-fluid">
+    </div>
+    <div class="text-content col-md-6 mt-4">
+      <h2>Have Your Package Delivered To Your Doorstep</h2>
+      <p>Your packages will be delivered right on time on your receiver’s doorstep</p>
+      <a class="btn-learn-more rounded-pill" href="#">Learn More</a>
+    </div>
+  </div>
+</div>
 
-    /* Video Styles */
-    .video-background {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: translate(-50%, -50%);
-      z-index: -1;
-    }
+<!-- Subscribe Section -->
+<div class="container-3 row py-5">
+  <!-- Image Section -->
+  <div class="image-container-2 col-lg-6 col-md-12 text-center order-1 order-lg-2">
+    <img alt="News illustration" src="https://img.freepik.com/premium-photo/flatstyle-illustration-woman-focused-her-laptop-ideal-workfromhome-business-tech_1045902-1229.jpg?ga=GA1.1.590165737.1721391013" class="img-fluid mx-lg-5" width="450">
+  </div>
+  <!-- Text Section -->
+  <div class="content-2 col-lg-6 col-md-12 mb-4 mt-5 text-center order-2 order-lg-1">
+    <h1 class="mt-5">Stay Updated With Our Latest News</h1>
+    <p>Get our latest updates, news, blog posts and much more directly to your inbox. Subscribe and join our mailing list today.</p>
+    <div class="input-form">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Your Email Address">
+        <button class="btn btn-danger" type="button">Subscribe</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    /* Content overlay on top of video */
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-    }
-    .services-section {
-      padding: 80px 0;
-    }
-    .how-it-works {
-      background-color: #f8f9fa;
-      padding: 80px 0;
-    }
-
-    .video-placeholder {
-      background-color: #ccc;
-      width: 100%;
-      height: 300px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #333;
-      font-size: 24px;
-    }
-  </style>

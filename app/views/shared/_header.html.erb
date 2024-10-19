@@ -13,6 +13,9 @@
       <% if user_signed_in? %>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item active">
+            <%= link_to 'Are you traveling?', new_traveler_path, class: "nav-link active" %>
+          </li>
+          <li class="nav-item active">
             <%= link_to 'View Published add', parcel_ads_path, class: "nav-link active" %>
           </li>
           <li class="nav-item active">

@@ -1,0 +1,332 @@
+<div class="container shadow-sm border p-4 rounded bg-white mt-5 mb-5">
+  <h1 class="text-center mb-4">Add Post: Need to carry</h1>
+
+  <%= form_with(model: @traveler, local: true) do |form| %>
+    <% if @traveler.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@traveler.errors.count, "error") %> prohibited this parcel from being saved:</h2>
+
+        <ul>
+          <% @traveler.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+
+    <!-- Row for Departure and Arrival -->
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <%= form.label :departure_country, "Departure Country", class: 'form-label' %>
+        <%= form.select :departure_country, ISO3166::Country.all.map { |c| [c.translations['en'], c.alpha2] }, 
+          { prompt: 'Select a country' }, { id: 'departure_country_select', class: 'form-select' } %>
+      </div>
+
+      <div class="col-md-3">
+        <%= form.label :departure_city, "Departure City", class: 'form-label' %>
+        <%= form.select :departure_city, [], { prompt: 'Select a city' }, { id: 'departure_city_select', class: 'form-select' } %>
+      </div>
+
+      <div class="col-md-3">
+        <%= form.label :arrival_country, "Arrival Country", class: 'form-label' %>
+        <%= form.select :arrival_country, ISO3166::Country.all.map { |c| [c.translations['en'], c.alpha2] }, 
+          { prompt: 'Select a country' }, { id: 'arrival_country_select', class: 'form-select' } %>
+      </div>
+
+      <div class="col-md-3">
+        <%= form.label :arrival_city, "Arrival City", class: 'form-label' %>
+        <%= form.select :arrival_city, [], { prompt: 'Select a city' }, { id: 'arrival_city_select', class: 'form-select' } %>
+      </div>
+    </div>
+
+    <!-- Row for Parcel Date -->
+    <div class="col-md-12 mb-3">
+      <%= form.label :shipment_date, "Shipment Date", class: 'form-label' %>
+      <%= form.date_field :shipment_date, class: 'form-control' %>
+    </div>
+
+    <!-- Row for Parcel Type -->
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <%= form.label :parcel_type, "Shipment Type", class: 'form-label' %>
+        
+        <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
+          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button" data-value="Document">
+            <%= image_tag "document.png", class:"icon-class" %>
+             Document
+          </button>
+          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button active" data-value="Parcel">
+            <%= image_tag "parcel.png", class:"icon-class" %> Parcel
+          </button>
+          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button" data-value="Pallet">
+            <%= image_tag "pallet.png", class:"icon-class" %> Pallet
+          </button>
+        </div>
+
+        <!-- Hidden field to store the selected parcel type -->
+        <%= form.hidden_field :parcel_type, id: 'selected_parcel_type' %>
+      </div>
+    </div>
+
+    <!-- Row for Parcel Dimensions -->
+    <div class="row mb-4">
+      <div class="col-md-2">
+        <%= form.label :parcel_length, "Length (cm)", class: 'form-label' %>
+        <%= form.number_field :parcel_length, class: 'form-control', placeholder: 'cm', min: 0  %>
+      </div>
+
+      <div class="col-md-2">
+        <%= form.label :parcel_width, "Width (cm)", class: 'form-label' %>
+        <%= form.number_field :parcel_width, class: 'form-control', placeholder: 'cm', min: 0  %>
+      </div>
+
+      <div class="col-md-2">
+        <%= form.label :parcel_height, "Height (cm)", class: 'form-label' %>
+        <%= form.number_field :parcel_height, class: 'form-control', placeholder: 'cm', min: 0  %>
+      </div>
+
+      <div class="col-md-2">
+        <%= form.label :parcel_weight, "Weight (kg)", class: 'form-label' %>
+        <%= form.number_field :parcel_weight, class: 'form-control', placeholder: 'kg', min: 0  %>
+      </div>
+
+      <div class="col-md-2">
+        <%= form.label :parcel_quantity, "Quantity", class: 'form-label' %>
+        <%= form.number_field :parcel_quantity, class: 'form-control', placeholder: 'pcs', min: 0 , id: 'parcel_quantity' %>
+        <div id="quantity_display" class="mt-2 fw-bold">Quantity: 0</div>
+      </div>
+    </div>
+
+    <!-- Add Another Parcel -->
+    <div class="mb-4">
+      <a class="text-primary" href="#">+ Add another parcel</a>
+    </div>
+
+    <!-- Insurance -->
+    <div class="mb-4">
+      <div class="row">
+        <div class="col-md-5">
+          <%= form.label :insure_shipment, "Would you like to insure your shipment?", class: 'form-label' %>
+        </div>
+
+        <div class="col-md-4">
+          <%= form.radio_button :insure_shipment, true, class: 'form-check-input', id: 'insure_shipment_yes' %>
+          <%= form.label :insure_shipment, 'Yes', value: true, class: 'form-check-label mx-2', for: 'insure_shipment_yes' %>
+
+          <%= form.radio_button :insure_shipment, false, class: 'form-check-input', id: 'insure_shipment_no' %>
+          <%= form.label :insure_shipment, 'No', value: false, class: 'form-check-label mx-2', for: 'insure_shipment_no' %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row for Fees -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <%= form.label :recommended_fee, "Recommended Fee", class: 'form-label' %>
+        <div class="input-group">
+          <span class="input-group-text">$</span> <!-- Currency symbol -->
+          <%= form.number_field :recommended_fee, class: 'form-control', placeholder: 'Recommended fee' %>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <%= form.label :proposed_fee, "Proposed Fee", class: 'form-label' %>
+        <div class="input-group">
+          <span class="input-group-text">$</span> <!-- Currency symbol -->
+          <%= form.number_field :proposed_fee, class: 'form-control', placeholder: 'Proposal fee' %>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- File Upload -->
+    <div class="mb-4">
+      <%= form.label :parcel_images, "Parcel Images" %> <small class="text-danger">(You can upload multiple images)</small>
+      <%= form.file_field :parcel_images, multiple: true, class: 'form-control', id: 'parcel_images_input' %>
+    </div>
+
+    <div id="parcel_images_preview" class="mt-3"></div>
+
+    <!-- Submit Button -->
+    <div class="d-grid">
+      <%= form.submit "Publish Ad", class: "btn btn-primary mt-2" %>
+    </div>
+  <% end %>
+</div>
+
+<!-- CSS -->
+<style>
+  .container {
+    max-width: 900px;
+    background-color: #f9f9f9;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .form-label {
+    font-weight: bold;
+    color: #555;
+  }
+
+  .btn-group .btn {
+    width: 100px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .form-control, .form-select {
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .form-check-input {
+    width: 20px;
+    height: 20px;
+  }
+
+  .text-primary {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .text-primary:hover {
+    text-decoration: underline;
+  }
+
+  #parcel_type_buttons .parcel-type-button {
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  #parcel_type_buttons .parcel-type-button img.icon-class {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+
+  #parcel_type_buttons .parcel-type-button:hover {
+    border-color: orange;
+    background-color: #f7f7f7;
+  }
+
+  #parcel_type_buttons .parcel-type-button.active {
+    border-color: orange;
+    background-color: white;
+  }
+
+  #parcel_type_buttons .parcel-type-button:focus {
+    outline: none;
+  }
+
+</style>
+
+
+<script>
+  //for selecting the cities based on country
+  document.addEventListener('turbo:load', () => {
+  // Function to fetch and populate cities for a selected country
+  const fetchCities = (countrySelectId, citySelectId) => {
+    const countrySelect = document.getElementById(countrySelectId);
+    const citySelect = document.getElementById(citySelectId);
+
+    if (countrySelect) {
+      countrySelect.addEventListener('change', function() {
+        const selectedCountry = this.value;
+
+        if (selectedCountry) {
+          fetch(`/get_cities?country=${selectedCountry}`)
+            .then(response => response.json())
+            .then(data => {
+              citySelect.innerHTML = '<option value="">Select a city</option>';
+
+              data.cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.text = city;
+                citySelect.appendChild(option);
+              });
+            })
+            .catch(error => console.error('Error fetching cities:', error));
+        } else {
+          // Clear the cities dropdown if no country is selected
+          citySelect.innerHTML = '<option value="">Select a city</option>';
+        }
+      });
+    }
+  };
+
+  // Initialize for both departure and arrival selects
+  fetchCities('departure_country_select', 'departure_city_select');
+  fetchCities('arrival_country_select', 'arrival_city_select');
+
+  //for selecting the parcel type
+  const buttons = document.querySelectorAll(".parcel-type-button");
+  const hiddenField = document.getElementById("selected_parcel_type");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", function() {
+      // Remove active class from all buttons
+      buttons.forEach(btn => btn.classList.remove("active"));
+
+      // Add active class to the clicked button
+      this.classList.add("active");
+
+      // Update the hidden field with the selected value
+      hiddenField.value = this.getAttribute("data-value");
+    });
+  });
+
+  // Get the number input and display element for parcel quantity
+  const quantityInput = document.getElementById("parcel_quantity");
+  const quantityDisplay = document.getElementById("quantity_display");
+
+  // Update the quantity display when the input changes
+  quantityInput.addEventListener("input", function() {
+    const quantityValue = quantityInput.value || 0; // Default to 0 if empty
+    quantityDisplay.textContent = `Qty: ${quantityValue}`;
+  });
+
+  //for showing the parcel image below the parcel image file field
+  const parcelImagesInput = document.getElementById('parcel_images_input');
+  const previewContainer = document.getElementById('parcel_images_preview');
+
+  parcelImagesInput.addEventListener('change', function(event) {
+    previewContainer.innerHTML = ''; // Clear previous previews
+    const files = event.target.files;
+
+    if (files.length > 0) {
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.classList.add('img-thumbnail', 'mr-2', 'mx-2', 'mb-2');
+          img.style.width = '100px';
+          previewContainer.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+      });
+    }
+  });
+});
+</script>
