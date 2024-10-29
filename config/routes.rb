@@ -31,8 +31,10 @@ Rails.application.routes.draw do
   end
 
   resources :parcel_ads
+  resources :buy_for_mes
 
-  get 'get_cities', to: 'parcel_ads#get_cities'
+  get 'get_cities', to: 'home#get_cities'
+  get '/search_results', to: 'home#search_results'
   
 end
 

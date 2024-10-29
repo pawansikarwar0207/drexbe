@@ -1,0 +1,63 @@
+<section class="traveler-show py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Traveler Details</h2>
+    
+    <% if @traveler %>
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="card-title text-center"><%= @traveler.name %></h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <% if @traveler.trip_type.present? %>
+                <h6 class="font-weight-bold">Trip Type:</h6>
+                <p><%= @traveler.trip_type.humanize %></p>
+              <% end %>
+              
+              <% if @traveler.transportation.present? %>
+                <h6 class="font-weight-bold">Transportation:</h6>
+                <p><%= @traveler.transportation.humanize %></p>
+              <% end %>
+              <h6 class="font-weight-bold">Travel Date:</h6>
+              <p><%= @traveler.travel_date.strftime("%B %d, %Y") %></p>
+            </div>
+            <div class="col-md-6">
+            <% if  @traveler.departure_city.present? || @traveler.departure_country.present? %>
+              <h6 class="font-weight-bold">Departure:</h6>
+              <p><%= @traveler.departure_city %>, <%= @traveler.departure_country %></p>
+            <% end %>
+
+            <% if  @traveler.arrival_city.present? || @traveler.arrival_country.present? %> 
+              <h6 class="font-weight-bold">Arrival:</h6>
+              <p><%= @traveler.arrival_city %>, <%= @traveler.arrival_country %></p>
+            <% end %>
+
+              <% if @traveler.parcel_qty.present? %>
+                <h6 class="font-weight-bold">Parcel Info:</h6>
+                <p><%= @traveler.parcel_qty %> parcels, each
+                </p>
+              <% end %>
+
+              <h6 class="font-weight-bold">Ready to Buy for You:</h6>
+              <p><%= @traveler.ready_to_buy_for_you? ? 'Yes' : 'No' %></p>
+
+              <h6 class="font-weight-bold">Parcel Collection Mode:</h6>
+              <p><%= @traveler.parcel_collection_mode&.humanize || 'N/A' %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <%= link_to 'Edit Traveler', edit_traveler_path(@traveler), class: 'btn btn-primary' %>
+        <%= link_to 'Delete Traveler', traveler_path(@traveler), data: { turbo_method: :delete, turbo_confirm: "Are You Sure to delete traveler?" }, class: 'btn btn-danger' %>
+        <%= link_to 'Back to Travelers', travelers_path, class: 'btn btn-secondary' %>
+      </div>
+    <% else %>
+      <div class="alert alert-danger text-center" role="alert">
+        Traveler not found.
+      </div>
+    <% end %>
+  </div>
+</section>

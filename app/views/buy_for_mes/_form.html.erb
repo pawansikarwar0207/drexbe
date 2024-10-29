@@ -1,0 +1,269 @@
+<div class="container shadow-sm border p-4 rounded bg-white mt-5 mb-5">
+  <h1 class="text-center mb-4">Buy For Me or Shop And Ship</h1>
+
+	 <%= form_with model: @buy_for_me, local: true do |f| %>
+	  <!-- Row for Departure and Arrival -->
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <%= f.label :departure_country, "Departure Country", class: 'form-label' %>
+        <%= f.select :departure_country, ISO3166::Country.all.map { |c| [c.translations['en'], c.alpha2] }, 
+          { prompt: 'Select a country' }, { id: 'departure_country_select', class: 'form-select' } %>
+      </div>
+
+      <div class="col-md-3">
+        <%= f.label :departure_city, "Departure City", class: 'form-label' %>
+        <%= f.select :departure_city, [], { prompt: 'Select a city' }, { id: 'departure_city_select', class: 'form-select' } %>
+      </div>
+
+      <div class="col-md-3">
+        <%= f.label :arrival_country, "Arrival Country", class: 'form-label' %>
+        <%= f.select :arrival_country, ISO3166::Country.all.map { |c| [c.translations['en'], c.alpha2] }, 
+          { prompt: 'Select a country' }, { id: 'arrival_country_select', class: 'form-select' } %>
+      </div>
+
+      <div class="col-md-3">
+        <%= f.label :arrival_city, "Arrival City", class: 'form-label' %>
+        <%= f.select :arrival_city, [], { prompt: 'Select a city' }, { id: 'arrival_city_select', class: 'form-select' } %>
+      </div>
+    </div>
+
+
+	  <div class="form-group mb-4">
+	    <%= f.label :shopping_date, class: 'form-label' %>
+	    <%= f.date_field :shopping_date, class: 'form-select' %>
+	  </div>
+
+	  <div class="form-group mb-4">
+	    <%= f.label :product_link, class: 'form-label' %>
+	    <%= f.text_field :product_link, class: 'form-control', placeholder: 'www.example.com' %>
+	  </div>
+
+	  <div class="row mb-4">
+		  <div class="col-md-6 form-group">
+		    <%= f.label :shop_name %>
+		    <%= f.text_field :shop_name, class: 'form-control' %>
+		  </div>
+
+		  <div class="col-md-6 form-group">
+		    <%= f.label :shop_address %>
+		    <%= f.text_area :shop_address, class: 'form-control' %>
+		  </div>
+	  </div>
+
+	  <div class="form-group mb-4">
+	    <%= f.label :category, class: 'form-label' %>
+	    <%= f.select :category, options_for_select(['Electronics', 'Clothing', 'Groceries']), { prompt: 'Select Category' }, class: 'form-select' %>
+	  </div>
+
+	  <div class="form-group mb-4">
+	    <%= f.label :product_name, class: 'form-label' %>
+	    <%= f.text_field :product_name, class: 'form-control' %>
+	  </div>
+
+	  <div class="form-group mb-4">
+	    <%= f.label :product_quantity, class: 'form-label' %>
+	    <%= f.number_field :product_quantity, class: 'form-control', min: 0 %>
+	  </div>
+
+	  <div class="form-group mb-4">
+	    <%= f.label :parcel_type, class: 'form-label' %>
+	    <%= f.select :parcel_type, options_for_select(['small', 'medium', 'large']), { prompt: 'Select Parcel Type' }, class: 'form-control' %>
+	  </div>
+
+	  <div class="form-group mb-4">
+	    <%= f.label :product_price, class: 'form-label' %>
+	    <%= f.number_field :product_price, step: '0.01', class: 'form-control', min: 0 %>
+	  </div>
+
+	  <div class="form-group mb-4">
+	    <%= f.label :buy_for_me_fee, class: 'form-label' %>
+	    <%= f.number_field :buy_for_me_fee, step: '0.01', class: 'form-control', min: 0 %>
+	  </div>
+
+	  <div class="form-group mb-4">
+	    <%= f.label :total_price, class: 'form-label' %>
+	    <%= f.number_field :total_price, step: '0.01', class: 'form-control', min: 0 %>
+	  </div>
+
+	  <div class="d-grid">
+	    <%= f.submit 'Create Buy For Me', class: 'btn btn-primary' %>
+	  </div>
+	<% end %>
+
+</div>
+
+<!-- CSS -->
+<style>
+  .container {
+    max-width: 900px;
+    background-color: #f9f9f9;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .form-label {
+    font-weight: bold;
+    color: #555;
+  }
+
+  .btn-group .btn {
+    width: 100px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .form-control, .form-select {
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .form-check-input {
+    width: 20px;
+    height: 20px;
+  }
+
+  .text-primary {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .text-primary:hover {
+    text-decoration: underline;
+  }
+
+  #parcel_type_buttons .parcel-type-button {
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  #parcel_type_buttons .parcel-type-button img.icon-class {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+
+  #parcel_type_buttons .parcel-type-button:hover {
+    border-color: orange;
+    background-color: #f7f7f7;
+  }
+
+  #parcel_type_buttons .parcel-type-button.active {
+    border-color: orange;
+    background-color: white;
+  }
+
+  #parcel_type_buttons .parcel-type-button:focus {
+    outline: none;
+  }
+
+</style>
+
+
+<script>
+  //for selecting the cities based on country
+  document.addEventListener('turbo:load', () => {
+  // Function to fetch and populate cities for a selected country
+  const fetchCities = (countrySelectId, citySelectId) => {
+    const countrySelect = document.getElementById(countrySelectId);
+    const citySelect = document.getElementById(citySelectId);
+
+    if (countrySelect) {
+      countrySelect.addEventListener('change', function() {
+        const selectedCountry = this.value;
+
+        if (selectedCountry) {
+          fetch(`/get_cities?country=${selectedCountry}`)
+            .then(response => response.json())
+            .then(data => {
+              citySelect.innerHTML = '<option value="">Select a city</option>';
+
+              data.cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.text = city;
+                citySelect.appendChild(option);
+              });
+            })
+            .catch(error => console.error('Error fetching cities:', error));
+        } else {
+          // Clear the cities dropdown if no country is selected
+          citySelect.innerHTML = '<option value="">Select a city</option>';
+        }
+      });
+    }
+  };
+
+  // Initialize for both departure and arrival selects
+  fetchCities('departure_country_select', 'departure_city_select');
+  fetchCities('arrival_country_select', 'arrival_city_select');
+
+  //for selecting the parcel type
+  const buttons = document.querySelectorAll(".parcel-type-button");
+  const hiddenField = document.getElementById("selected_parcel_type");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", function() {
+      // Remove active class from all buttons
+      buttons.forEach(btn => btn.classList.remove("active"));
+
+      // Add active class to the clicked button
+      this.classList.add("active");
+
+      // Update the hidden field with the selected value
+      hiddenField.value = this.getAttribute("data-value");
+    });
+  });
+
+  // Get the number input and display element for parcel quantity
+  const quantityInput = document.getElementById("parcel_quantity");
+  const quantityDisplay = document.getElementById("quantity_display");
+
+  // Update the quantity display when the input changes
+  quantityInput.addEventListener("input", function() {
+    const quantityValue = quantityInput.value || 0; // Default to 0 if empty
+    quantityDisplay.textContent = `Qty: ${quantityValue}`;
+  });
+
+  //for showing the parcel image below the parcel image file field
+  const parcelImagesInput = document.getElementById('parcel_images_input');
+  const previewContainer = document.getElementById('parcel_images_preview');
+
+  parcelImagesInput.addEventListener('change', function(event) {
+    previewContainer.innerHTML = ''; // Clear previous previews
+    const files = event.target.files;
+
+    if (files.length > 0) {
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.classList.add('img-thumbnail', 'mr-2', 'mx-2', 'mb-2');
+          img.style.width = '100px';
+          previewContainer.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+      });
+    }
+  });
+});
+</script>

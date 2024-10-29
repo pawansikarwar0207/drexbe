@@ -71,12 +71,36 @@ class ParcelAdsController < ApplicationController
 		)
 	end
 
-	def get_cities_by_country(country_code)
+	# def get_cities_by_country(country_code)
+  #   username = 'pawansikarwar'
+  #   uri = URI("http://api.geonames.org/searchJSON?country=#{country_code}&featureClass=P&maxRows=1000&username=#{username}")
+  #   response = Net::HTTP.get(uri)
+  #   json_response = JSON.parse(response)
+  #   cities = json_response['geonames'].map { |city| city['name'] }
+  #   cities
+  # end
+
+  def get_cities
+    query = params[:query]
+    country = params[:country]
+
     username = 'pawansikarwar'
-    uri = URI("http://api.geonames.org/searchJSON?country=#{country_code}&featureClass=P&maxRows=1000&username=#{username}")
+    uri = URI("http://api.geonames.org/searchJSON?name=#{query}&featureClass=P&maxRows=10&username=#{username}")
+    uri.query += "&country=#{country}" if country.present?
+
     response = Net::HTTP.get(uri)
     json_response = JSON.parse(response)
-    cities = json_response['geonames'].map { |city| city['name'] }
-    cities
+
+    locations = json_response['geonames'].map do |location|
+      {
+        name: location['name'],
+        area: location['adminName1'],
+        country: location['countryName'],
+        type: location['featureCode'],
+      }
+    end
+
+    render json: { locations: locations }
   end
+
 end

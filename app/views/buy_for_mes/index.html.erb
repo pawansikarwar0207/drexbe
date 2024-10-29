@@ -1,0 +1,45 @@
+<div class="container mt-5 mb-5">
+	<!-- app/views/buy_for_mes/index.html.erb -->
+
+	<h1>Buy for Me Products</h1>
+
+	<table class="table">
+	 	<thead>
+	    <tr>
+	      <th>Departure Country</th>
+	      <th>Departure City</th>
+	      <th>Arrival Country</th>
+	      <th>Arrival City</th>
+	      <th>Product Name</th>
+	      <th>Product Quantity</th>
+	      <th>Product Price</th>
+	      <th>Buy for Me Fee</th>
+	      <th>Total Price</th>
+	      <th>Actions</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @buy_for_mes.each do |product| %>
+	      <tr>
+	        <td><%= product.departure_country %></td>
+	        <td><%= product.departure_city %></td>
+	        <td><%= product.arrival_country %></td>
+	        <td><%= product.arrival_city %></td>
+	        <td><%= product.product_name %></td>
+	        <td><%= product.product_quantity %></td>
+	        <td><%= number_to_currency(product.product_price) %></td>
+	        <td><%= number_to_currency(product.buy_for_me_fee) %></td>
+	        <td><%= number_to_currency(product.total_price) %></td>
+	        <td>
+	          <%= link_to 'Show', buy_for_me_path(product) %>
+	          <%= link_to 'Edit', edit_buy_for_me_path(product) %>
+	          <%= link_to 'Delete', buy_for_me_path(product), method: :delete, data: { confirm: 'Are you sure?' } %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+
+	<%= link_to 'New Buy for Me', new_buy_for_me_path, class: 'btn btn-primary' %>
+
+</div>

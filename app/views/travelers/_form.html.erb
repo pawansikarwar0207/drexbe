@@ -1,20 +1,8 @@
 <div class="container shadow-sm border p-4 rounded bg-white mt-5 mb-5">
-  <h1 class="text-center mb-4">Add Post: Need to carry</h1>
+  <h1 class="text-center mb-4">Traveler, Carry For You</h1>
 
   <%= form_with(model: @traveler, local: true) do |form| %>
-    <% if @traveler.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@traveler.errors.count, "error") %> prohibited this parcel from being saved:</h2>
-
-        <ul>
-          <% @traveler.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-
+   
     <!-- Row for Departure and Arrival -->
     <div class="row mb-4">
       <div class="col-md-3">
@@ -40,10 +28,33 @@
       </div>
     </div>
 
-    <!-- Row for Parcel Date -->
+    <!-- Row for Trip Type -->
+    <div class="row mt-4">
+      <div class="col-md-12 mb-3">
+        <%= form.label :trip_type, "Trip Type", class: 'form-label' %>
+
+        <div id="trip_type_buttons" class="btn-group d-flex flex-wrap justify-content-center" role="group" aria-label="Trip Type">
+          <button type="button" class="btn btn-outline-primary mx-1 trip-type-button active" data-value="one_way">
+            <%= image_tag "one-way.png", class:"icon-class" %> One Way
+          </button>
+          <button type="button" class="btn btn-outline-primary mx-1 trip-type-button" data-value="round_trip">
+            <%= image_tag "two-way-street.png", class:"icon-class" %> Round Trip
+          </button>
+        </div>
+
+        <!-- Hidden field to store the selected trip type -->
+        <%= form.hidden_field :trip_type, id: 'selected_trip_type', value: @traveler.trip_type %>
+      </div>
+    </div>
+
+    <!-- Row for Travel Date & Travel Return Date -->
     <div class="col-md-12 mb-3">
-      <%= form.label :shipment_date, "Shipment Date", class: 'form-label' %>
-      <%= form.date_field :shipment_date, class: 'form-control' %>
+      <%= form.label :travel_date, "Travel Date", class: 'form-label' %>
+      <%= form.date_field :travel_date, class: 'form-control' %>
+    </div>
+    <div class="col-md-12 mb-3" id="return_date_container" style="display: none;">
+      <%= form.label :travel_return_date, "Travel Return Date", class: 'form-label' %>
+      <%= form.date_field :travel_return_date, class: 'form-control' %>
     </div>
 
     <!-- Row for Parcel Type -->
@@ -69,88 +80,90 @@
       </div>
     </div>
 
-    <!-- Row for Parcel Dimensions -->
-    <div class="row mb-4">
-      <div class="col-md-2">
-        <%= form.label :parcel_length, "Length (cm)", class: 'form-label' %>
-        <%= form.number_field :parcel_length, class: 'form-control', placeholder: 'cm', min: 0  %>
-      </div>
+    <!-- Row for Parcel Qty. -->
+    <div class="col-md-6 mt-2 mb-4">
+      <%= form.label :parcel_qty, "Quantity", class: 'form-label' %>
+      <%= form.number_field :parcel_qty, class: 'form-control', placeholder: 'pcs', min: 0 , id: 'parcel_qty' %>
+      <div id="quantity_display" class="mt-2 fw-bold">Quantity: 0</div>
+    </div>
 
-      <div class="col-md-2">
-        <%= form.label :parcel_width, "Width (cm)", class: 'form-label' %>
-        <%= form.number_field :parcel_width, class: 'form-control', placeholder: 'cm', min: 0  %>
-      </div>
+    <!-- Row for Transportation -->
+    <div class="row">
+      <div class="col-lg-12 mb-3">
+        <%= form.label :transportation, "Mode of Transportation", class: 'form-label' %>
+        
+        <div id="transportation_buttons" class="btn-group d-flex flex-wrap justify-content-center" role="group" aria-label="Transportation">
+          <button type="button" class="btn btn-outline-primary mx-1 transportation-button" data-value="flight">
+            <%= image_tag "plane.png", class:"icon-class" %>
+             Flight
+          </button>
+          <button type="button" class="btn btn-outline-primary mx-1 transportation-button" data-value="car">
+            <%= image_tag "car.png", class:"icon-class" %> Car
+          </button>
+          <button type="button" class="btn btn-outline-primary mx-1 transportation-button" data-value="bus">
+            <%= image_tag "bus.png", class:"icon-class" %> Bus
+          </button>
+          <button type="button" class="btn btn-outline-primary mx-1 transportation-button" data-value="train">
+            <%= image_tag "train.png", class:"icon-class" %> Train
+          </button>
+          <button type="button" class="btn btn-outline-primary mx-1 transportation-button active" data-value="van">
+            <%= image_tag "delivery-van.png", class:"icon-class" %> Van
+          </button>
+          <button type="button" class="btn btn-outline-primary mx-1 transportation-button" data-value="ship">
+            <%= image_tag "boat-with-containers.png", class:"icon-class" %> Ship
+          </button>
+        </div>
 
-      <div class="col-md-2">
-        <%= form.label :parcel_height, "Height (cm)", class: 'form-label' %>
-        <%= form.number_field :parcel_height, class: 'form-control', placeholder: 'cm', min: 0  %>
-      </div>
-
-      <div class="col-md-2">
-        <%= form.label :parcel_weight, "Weight (kg)", class: 'form-label' %>
-        <%= form.number_field :parcel_weight, class: 'form-control', placeholder: 'kg', min: 0  %>
-      </div>
-
-      <div class="col-md-2">
-        <%= form.label :parcel_quantity, "Quantity", class: 'form-label' %>
-        <%= form.number_field :parcel_quantity, class: 'form-control', placeholder: 'pcs', min: 0 , id: 'parcel_quantity' %>
-        <div id="quantity_display" class="mt-2 fw-bold">Quantity: 0</div>
+        <!-- Hidden field to store the selected parcel type -->
+        <%= form.hidden_field :transportation, id: 'selected_transportation' %>
       </div>
     </div>
 
     <!-- Add Another Parcel -->
-    <div class="mb-4">
+    <%# <div class="mb-4">
       <a class="text-primary" href="#">+ Add another parcel</a>
-    </div>
+    </div> %>
 
-    <!-- Insurance -->
-    <div class="mb-4">
+    <!-- ready_to_buy_for_you -->
+    <div class="mb-4 mt-4">
       <div class="row">
         <div class="col-md-5">
-          <%= form.label :insure_shipment, "Would you like to insure your shipment?", class: 'form-label' %>
+          <%= form.label :ready_to_buy_for_you, "Ready to buy for you ?", class: 'form-label' %>
         </div>
 
         <div class="col-md-4">
-          <%= form.radio_button :insure_shipment, true, class: 'form-check-input', id: 'insure_shipment_yes' %>
-          <%= form.label :insure_shipment, 'Yes', value: true, class: 'form-check-label mx-2', for: 'insure_shipment_yes' %>
+          <%= form.radio_button :ready_to_buy_for_you, true, class: 'form-check-input', id: 'ready_to_buy_for_you_yes' %>
+          <%= form.label :ready_to_buy_for_you, 'Yes', value: true, class: 'form-check-label mx-2', for: 'ready_to_buy_for_you_yes' %>
 
-          <%= form.radio_button :insure_shipment, false, class: 'form-check-input', id: 'insure_shipment_no' %>
-          <%= form.label :insure_shipment, 'No', value: false, class: 'form-check-label mx-2', for: 'insure_shipment_no' %>
+          <%= form.radio_button :ready_to_buy_for_you, false, class: 'form-check-input', id: 'ready_to_buy_for_you_no' %>
+          <%= form.label :ready_to_buy_for_you, 'No', value: false, class: 'form-check-label mx-2', for: 'ready_to_buy_for_you_no' %>
         </div>
       </div>
     </div>
 
-    <!-- Row for Fees -->
-    <div class="row mb-4">
-      <div class="col-md-6">
-        <%= form.label :recommended_fee, "Recommended Fee", class: 'form-label' %>
-        <div class="input-group">
-          <span class="input-group-text">$</span> <!-- Currency symbol -->
-          <%= form.number_field :recommended_fee, class: 'form-control', placeholder: 'Recommended fee' %>
+    <!-- Row for parcel collection mode -->
+    <div class="row mt-4">
+      <div class="col-md-12 mb-3">
+        <%= form.label :parcel_collection_mode, "Model of Collection", class: 'form-label' %>
+        
+        <div id="parcel_collection_mode_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Collection Mode">
+          <button type="button" class="btn btn-outline-primary mx-1 parcel-collection-mode-button" data-value="Hand to Hand My Place">
+            <%= image_tag "box.png", class:"icon-class" %>
+              Hand to Hand My Place
+          </button>
+          <button type="button" class="btn btn-outline-primary mx-1 parcel-collection-mode-button active" data-value="Hand to Hand Your Place">
+            <%= image_tag "box.png", class:"icon-class" %> Hand to Hand Your Place
+          </button>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <%= form.label :proposed_fee, "Proposed Fee", class: 'form-label' %>
-        <div class="input-group">
-          <span class="input-group-text">$</span> <!-- Currency symbol -->
-          <%= form.number_field :proposed_fee, class: 'form-control', placeholder: 'Proposal fee' %>
-        </div>
+        <!-- Hidden field to store the selected parcel type -->
+        <%= form.hidden_field :parcel_collection_mode, id: 'selected_parcel_collection_mode' %>
       </div>
     </div>
-
-
-    <!-- File Upload -->
-    <div class="mb-4">
-      <%= form.label :parcel_images, "Parcel Images" %> <small class="text-danger">(You can upload multiple images)</small>
-      <%= form.file_field :parcel_images, multiple: true, class: 'form-control', id: 'parcel_images_input' %>
-    </div>
-
-    <div id="parcel_images_preview" class="mt-3"></div>
 
     <!-- Submit Button -->
     <div class="d-grid">
-      <%= form.submit "Publish Ad", class: "btn btn-primary mt-2" %>
+      <%= form.submit "Post", class: "btn btn-primary mt-2 fw-bold" %>
     </div>
   <% end %>
 </div>
@@ -206,6 +219,92 @@
     text-decoration: underline;
   }
 
+  #trip_type_buttons .trip-type-button {
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  #trip_type_buttons .trip-type-button img.icon-class {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+
+  #trip_type_buttons .trip-type-button:hover {
+    border-color: orange;
+    background-color: #f7f7f7;
+  }
+
+  #trip_type_buttons .trip-type-button.active {
+    border-color: orange;
+    background-color: white;
+  }
+
+  #trip_type_buttons .trip-type-button:focus {
+    outline: none;
+  }
+
+  #transportation_buttons .transportation-button {
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  #transportation_buttons .transportation-button img.icon-class {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+
+  #transportation_buttons .transportation-button:hover {
+    border-color: orange;
+    background-color: #f7f7f7;
+  }
+
+  #transportation_buttons .transportation-button.active {
+    border-color: orange;
+    background-color: white;
+  }
+
+
+  <%#  for parcel collection mode  %>
+  #parcel_collection_mode_buttons .parcel-collection-mode-button {
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  #parcel_collection_mode_buttons .parcel-collection-mode-button img.icon-class {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+
+  #parcel_collection_mode_buttons .parcel-collection-mode-button:hover {
+    border-color: orange;
+    background-color: #f7f7f7;
+  }
+
+  #parcel_collection_mode_buttons .parcel-collection-mode-button.active {
+    border-color: orange;
+    background-color: white;
+  }
+
+
+  <%#  for parcel type  %>
   #parcel_type_buttons .parcel-type-button {
     border-radius: 30px;
     padding: 10px 20px;
@@ -232,22 +331,17 @@
     background-color: white;
   }
 
-  #parcel_type_buttons .parcel-type-button:focus {
-    outline: none;
-  }
-
 </style>
 
 
 <script>
-  //for selecting the cities based on country
   document.addEventListener('turbo:load', () => {
   // Function to fetch and populate cities for a selected country
   const fetchCities = (countrySelectId, citySelectId) => {
     const countrySelect = document.getElementById(countrySelectId);
     const citySelect = document.getElementById(citySelectId);
 
-    if (countrySelect) {
+    if (countrySelect && citySelect) {
       countrySelect.addEventListener('change', function() {
         const selectedCountry = this.value;
 
@@ -256,7 +350,6 @@
             .then(response => response.json())
             .then(data => {
               citySelect.innerHTML = '<option value="">Select a city</option>';
-
               data.cities.forEach(city => {
                 const option = document.createElement('option');
                 option.value = city;
@@ -277,56 +370,56 @@
   fetchCities('departure_country_select', 'departure_city_select');
   fetchCities('arrival_country_select', 'arrival_city_select');
 
-  //for selecting the parcel type
-  const buttons = document.querySelectorAll(".parcel-type-button");
-  const hiddenField = document.getElementById("selected_parcel_type");
+  // Function to handle selection buttons
+  const handleSelection = (buttonClass, hiddenFieldId) => {
+    const buttons = document.querySelectorAll(buttonClass);
+    const hiddenField = document.getElementById(hiddenFieldId);
 
-  buttons.forEach(button => {
-    button.addEventListener("click", function() {
-      // Remove active class from all buttons
-      buttons.forEach(btn => btn.classList.remove("active"));
-
-      // Add active class to the clicked button
-      this.classList.add("active");
-
-      // Update the hidden field with the selected value
-      hiddenField.value = this.getAttribute("data-value");
-    });
-  });
-
-  // Get the number input and display element for parcel quantity
-  const quantityInput = document.getElementById("parcel_quantity");
-  const quantityDisplay = document.getElementById("quantity_display");
-
-  // Update the quantity display when the input changes
-  quantityInput.addEventListener("input", function() {
-    const quantityValue = quantityInput.value || 0; // Default to 0 if empty
-    quantityDisplay.textContent = `Qty: ${quantityValue}`;
-  });
-
-  //for showing the parcel image below the parcel image file field
-  const parcelImagesInput = document.getElementById('parcel_images_input');
-  const previewContainer = document.getElementById('parcel_images_preview');
-
-  parcelImagesInput.addEventListener('change', function(event) {
-    previewContainer.innerHTML = ''; // Clear previous previews
-    const files = event.target.files;
-
-    if (files.length > 0) {
-      Array.from(files).forEach(file => {
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-          const img = document.createElement('img');
-          img.src = e.target.result;
-          img.classList.add('img-thumbnail', 'mr-2', 'mx-2', 'mb-2');
-          img.style.width = '100px';
-          previewContainer.appendChild(img);
-        };
-
-        reader.readAsDataURL(file);
+    if (buttons.length > 0 && hiddenField) {
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          buttons.forEach(btn => btn.classList.remove('active')); // Remove active class
+          this.classList.add('active'); // Add active class
+          hiddenField.value = this.getAttribute('data-value'); // Update hidden field
+        });
       });
     }
-  });
+  };
+
+  // Initialize trip type, transportation, and parcel collection modes
+  handleSelection(".trip-type-button", "selected_trip_type");
+  handleSelection(".transportation-button", "selected_transportation");
+  handleSelection(".parcel-collection-mode-button", "selected_parcel_collection_mode");
+  handleSelection(".parcel-type-button", "selected_parcel_type");
+
+  // Handle parcel quantity display
+  const quantityInput = document.getElementById("parcel_qty");
+  const quantityDisplay = document.getElementById("quantity_display");
+
+  if (quantityInput && quantityDisplay) {
+    quantityInput.addEventListener('input', function() {
+      const quantityValue = quantityInput.value || 0; // Default to 0 if empty
+      quantityDisplay.textContent = `Qty: ${quantityValue}`;
+    });
+  }
+
+  // Handle trip type and show/hide return date based on selection
+  const returnDateContainer = document.getElementById("return_date_container");
+  const selectedTripTypeField = document.getElementById("selected_trip_type");
+
+  if (returnDateContainer && selectedTripTypeField) {
+    const tripTypeButtons = document.querySelectorAll(".trip-type-button");
+
+    tripTypeButtons.forEach(button => {
+      button.addEventListener("click", function() {
+        const selectedValue = this.getAttribute("data-value");
+        selectedTripTypeField.value = selectedValue;
+
+        // Show/hide return date based on trip type
+        returnDateContainer.style.display = selectedValue === "round_trip" ? "block" : "none";
+      });
+    });
+  }
 });
+
 </script>

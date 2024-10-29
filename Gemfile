@@ -83,3 +83,4 @@ gem 'meta-tags'
 gem 'dotenv-rails', groups: [:development, :test]
 
 gem 'countries'
+

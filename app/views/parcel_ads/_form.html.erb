@@ -2,18 +2,6 @@
   <h1 class="text-center mb-4">Add Post: Need to carry</h1>
 
   <%= form_with(model: @parcel_ad, local: true) do |form| %>
-    <% if @parcel_ad.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@parcel_ad.errors.count, "error") %> prohibited this parcel from being saved:</h2>
-
-        <ul>
-          <% @parcel_ad.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
 
     <!-- Row for Departure and Arrival -->
     <div class="row mb-4">
@@ -235,7 +223,6 @@
   #parcel_type_buttons .parcel-type-button:focus {
     outline: none;
   }
-
 </style>
 
 

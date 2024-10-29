@@ -1,0 +1,43 @@
+<%# app/views/buy_for_mes/show.html.erb %>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Buy For Me Request</h3>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"><%= @buy_for_me.product_name %></h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            <%= @buy_for_me.category %> | Quantity: <%= @buy_for_me.product_quantity %>
+          </h6>
+
+          <p><strong>Departure:</strong> <%= @buy_for_me.departure_city %>, <%= @buy_for_me.departure_country %></p>
+          <p><strong>Arrival:</strong> <%= @buy_for_me.arrival_city %>, <%= @buy_for_me.arrival_country %></p>
+          <p><strong>Shopping Date:</strong> <%= @buy_for_me.shopping_date.strftime("%B %d, %Y") %></p>
+          <p><strong>Shop Name:</strong> <%= @buy_for_me.shop_name %></p>
+          <p><strong>Shop Address:</strong> <%= @buy_for_me.shop_address %></p>
+          <p><strong>Product Link:</strong> <a href="<%= @buy_for_me.product_link %>" target="_blank">View Product</a></p>
+
+          <hr>
+
+          <h5>Pricing Details</h5>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Product Price:</strong> <%= number_to_currency(@buy_for_me.product_price) %>
+            </li>
+            <li class="list-group-item">
+              <strong>Buy For Me Fee:</strong> <%= number_to_currency(@buy_for_me.buy_for_me_fee) %>
+            </li>
+            <li class="list-group-item">
+              <strong>Total Price:</strong> <%= number_to_currency(@buy_for_me.total_price) %>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer text-muted text-center">
+          <%= link_to 'Back to Requests', buy_for_mes_path, class: 'btn btn-secondary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
