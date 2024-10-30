@@ -96,6 +96,106 @@ h1, h2, h3, .btn-learn-more {
   padding: 2px; /* Optional: add some padding around the icon */
 }
 
-/*style for parcel ads form page*/
+/*style for home page*/
+.flatpickr-input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+  }
 
+  .flatpickr-input:focus {
+    border-color: #1D2EF4;
+    outline: none;
+    box-shadow: 0 0 4px rgba(29, 46, 244, 0.3);
+  }
+
+  .search-bar {
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .search-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-right: 1px solid #e0e0e0;
+    flex: 1 1 100%;
+  }
+  .search-item:last-child {
+    border-right: none;
+  }
+  .search-item i {
+    margin-right: 8px;
+    color: #4a4a4a;
+  }
+  .search-item span {
+    color: #4a4a4a;
+    font-size: 14px;
+    flex: 1;
+  }
+  .search-item .form-control, .search-item .form-select {
+    border: none;
+    box-shadow: none;
+    font-size: 16px;
+  }
+  .search-button {
+    background-color: #1D2EF4;
+    color: white;
+    border-radius: 0 25px 25px 0;
+    padding: 10px 20px;
+    border: none;
+    font-size: 14px;
+    flex: 1 1 100%;
+    text-align: center;
+  }
+  @media (min-width: 576px) {
+    .search-item {
+      flex: 1 1 auto;
+    }
+    .search-button {
+      flex: 0 0 auto;
+    }
+  }
+
+  .autocomplete-dropdown {
+    position: absolute;
+    background-color: white;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+
+  .autocomplete-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .autocomplete-item:hover {
+    background-color: #f0f0f0;
+  }
+  .autocomplete-item .location {
+    font-weight: bold;
+  }
+  .autocomplete-item .address {
+    color: #6c757d;
+  }
+  .autocomplete-item .arrow {
+    color: #6c757d;
+  }
 

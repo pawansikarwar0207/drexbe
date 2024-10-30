@@ -5,7 +5,7 @@
     </div>
   <% end %>
 <% end %>
-<div class="container mt-3">
+<div class="col-lg-8 mx-auto mt-3">
  <div class="profile-header">
    <% if @user.present? %>
       <% if @user.profile_picture.attached?  %>
@@ -74,65 +74,5 @@
       Verify a phone number
     </a>
   <% end %>
-
  </div>
 </div>
-<style>
- 
-.nav-tabs .nav-link.active {
-  border-color: #dee2e6 #dee2e6 #fff;
-  color: #007bff;
-}
-.nav-tabs .nav-link {
-  border: 1px solid transparent;
-  border-top-left-radius: .25rem;
-  border-top-right-radius: .25rem;
-  color: #6c757d;
-}
-.profile-header {
-  text-align: center;
-  margin-top: 20px;
-}
-.profile-header img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-}
-.profile-header h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-.profile-header p {
-  color: #6c757d;
-}
-.profile-actions {
-  text-align: center;
-  margin-top: 20px;
-}
-.profile-actions a {
-  display: block;
-  color: #007bff;
-  margin: 5px 0;
-  text-decoration: none;
-}
-.profile-actions a:hover {
-  text-decoration: underline;
-}
-.profile-check {
-  margin-top: 30px;
-}
-.profile-check h5 {
-  font-size: 18px;
-  font-weight: bold;
-}
-.profile-check a {
-  display: block;
-  color: #007bff;
-  margin: 5px 0;
-  text-decoration: none;
-}
-.profile-check a:hover {
-  text-decoration: underline;
-}
-</style>

@@ -1,0 +1,387 @@
+.container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transportation-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.transportation img.transportation-class {
+  width: 35px;
+  height: 35px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+#parcel_type_buttons .parcel-type-button {
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: black;
+  background-color: white;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+#parcel_type_buttons .parcel-type-button img.icon-class {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+}
+
+#parcel_type_buttons .parcel-type-button:hover {
+  border-color: orange;
+  background-color: #f7f7f7;
+}
+
+#parcel_type_buttons .parcel-type-button.active {
+  border-color: orange;
+  background-color: white;
+}
+
+#parcel_type_buttons .parcel-type-button:focus {
+  outline: none;
+}
+.travel-date {
+  color: #008080;
+  font-weight: bold;
+}
+.travel-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.travel-info img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+.travel-info .name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+.travel-info .rating {
+  color: #008080;
+  margin-right: 10px;
+}
+.travel-info .icons i {
+  font-size: 24px;
+  margin-right: 10px;
+  color: #008080;
+}
+.contact-button {
+  text-align: right;
+  margin-top: 60px;
+}
+.contact-button a {
+  background-color: #f0f8ff;
+  border: 1px solid #008080;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: #008080;
+  text-decoration: none;
+}
+.contact-button a:hover {
+  background-color: #008080;
+  color: white;
+}
+.carry-for-you, .buy-for-you {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.carry-for-you label, .buy-for-you label {
+  margin-right: 10px;
+}
+.carry-for-you .btn-group, .buy-for-you .btn-group {
+  margin-right: 20px;
+}
+@media (max-width: 768px) {
+  .travel-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .contact-button {
+    text-align: left;
+    
+  }
+  .row {
+    flex-direction: column;
+  }
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+.col-left, .col-right {
+  flex: 1;
+  margin: 10px;
+}
+
+/* style for buy for me new form */
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.form-control, .form-select {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.form-check-input {
+  width: 20px;
+  height: 20px;
+}
+
+.text-primary {
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* style for navbar/header  */
+#bars-button {
+  color: #1D2EF4;
+}
+
+.navbar-brand {
+  color: #1D2EF4;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+.nav-link {
+  padding: 10px 20px;
+  color: #1D2EF4;
+  font-weight: bold;
+}
+
+.nav-link.send {
+  background-color: #FFD966;
+}
+.nav-link.buy {
+  background-color: #D9D9D9;
+}
+.nav-link.track {
+  background-color: #FF0000;
+  color: white;
+}
+.nav-link.how-it-works {
+  display: flex;
+  align-items: center;
+}
+.nav-link.how-it-works img {
+  margin-right: 5px;
+}
+.navbar-toggler {
+  border: none;
+}
+.navbar-toggler-icon {
+  color: black;
+}
+
+/* style for travelers form */
+
+#trip_type_buttons .trip-type-button {
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: black;
+  background-color: white;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+#trip_type_buttons .trip-type-button img.icon-class {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+#trip_type_buttons .trip-type-button:hover {
+  border-color: orange;
+  background-color: #f7f7f7;
+}
+
+#trip_type_buttons .trip-type-button.active {
+  border-color: orange;
+  background-color: white;
+}
+
+#trip_type_buttons .trip-type-button:focus {
+  outline: none;
+}
+
+#transportation_buttons .transportation-button {
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: black;
+  background-color: white;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+#transportation_buttons .transportation-button img.icon-class {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+#transportation_buttons .transportation-button:hover {
+  border-color: orange;
+  background-color: #f7f7f7;
+}
+
+#transportation_buttons .transportation-button.active {
+  border-color: orange;
+  background-color: white;
+}
+
+#parcel_collection_mode_buttons .parcel-collection-mode-button {
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: black;
+  background-color: white;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+#parcel_collection_mode_buttons .parcel-collection-mode-button img.icon-class {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+#parcel_collection_mode_buttons .parcel-collection-mode-button:hover {
+  border-color: orange;
+  background-color: #f7f7f7;
+}
+
+#parcel_collection_mode_buttons .parcel-collection-mode-button.active {
+  border-color: orange;
+  background-color: white;
+}
+
+/* style for user profile page  */
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.instruction {
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+  color: #004d40;
+  margin-top: 20px;
+}
+
+.nav-tabs .nav-link.active {
+  border-color: #dee2e6 #dee2e6 #fff;
+  color: #007bff;
+}
+.nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  color: #6c757d;
+}
+.profile-header {
+  text-align: center;
+  margin-top: 20px;
+}
+.profile-header img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.profile-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.profile-header p {
+  color: #6c757d;
+}
+.profile-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+.profile-actions a {
+  display: block;
+  color: #007bff;
+  margin: 5px 0;
+  text-decoration: none;
+}
+.profile-actions a:hover {
+  text-decoration: underline;
+}
+.profile-check {
+  margin-top: 30px;
+}
+.profile-check h5 {
+  font-size: 18px;
+  font-weight: bold;
+}
+.profile-check a {
+  display: block;
+  color: #007bff;
+  margin: 5px 0;
+  text-decoration: none;
+}
+.profile-check a:hover {
+  text-decoration: underline;
+}
+
+/* style for verify_document page  */
+
+.document-option {
+  text-align: left;
+  margin: 0 auto;
+  max-width: 400px;
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.document-option:last-child {
+  border-bottom: none;
+}
+.document-option h2 {
+  font-size: 1.25rem;
+  color: #004d40;
+  margin: 0;
+}
+.document-option p {
+  font-size: 1rem;
+  color: #757575;
+  margin: 0;
+}
+.document-option .arrow {
+  float: right;
+  font-size: 1.5rem;
+  color: #004d40;
+}
+.privacy-policy {
+  font-size: 0.875rem;
+  color: #757575;
+  margin-top: 30px;
+}
+.privacy-policy a {
+  color: #004d40;
+  text-decoration: none;
+}

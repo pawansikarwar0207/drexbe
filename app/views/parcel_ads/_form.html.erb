@@ -1,4 +1,4 @@
-<div class="container shadow-sm border p-4 rounded bg-white mt-5 mb-5">
+<div class="col-lg-8 mx-auto shadow-sm border p-4 rounded bg-white mt-5 mb-5">
   <h1 class="text-center mb-4">Add Post: Need to carry</h1>
 
   <%= form_with(model: @parcel_ad, local: true) do |form| %>
@@ -142,89 +142,6 @@
     </div>
   <% end %>
 </div>
-
-<!-- CSS -->
-<style>
-  .container {
-    max-width: 900px;
-    background-color: #f9f9f9;
-  }
-
-  h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-  }
-
-  .form-label {
-    font-weight: bold;
-    color: #555;
-  }
-
-  .btn-group .btn {
-    width: 100px;
-  }
-
-  .btn-primary {
-    background-color: #007bff;
-    color: white;
-    border: none;
-  }
-
-  .btn-primary:hover {
-    background-color: #0056b3;
-  }
-
-  .form-control, .form-select {
-    border-radius: 8px;
-    padding: 10px;
-  }
-
-  .form-check-input {
-    width: 20px;
-    height: 20px;
-  }
-
-  .text-primary {
-    color: #007bff;
-    text-decoration: none;
-  }
-
-  .text-primary:hover {
-    text-decoration: underline;
-  }
-
-  #parcel_type_buttons .parcel-type-button {
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-weight: bold;
-    color: black;
-    background-color: white;
-    border: 2px solid transparent;
-    transition: all 0.3s ease;
-  }
-
-  #parcel_type_buttons .parcel-type-button img.icon-class {
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-  }
-
-  #parcel_type_buttons .parcel-type-button:hover {
-    border-color: orange;
-    background-color: #f7f7f7;
-  }
-
-  #parcel_type_buttons .parcel-type-button.active {
-    border-color: orange;
-    background-color: white;
-  }
-
-  #parcel_type_buttons .parcel-type-button:focus {
-    outline: none;
-  }
-</style>
-
 
 <script>
   //for selecting the cities based on country
