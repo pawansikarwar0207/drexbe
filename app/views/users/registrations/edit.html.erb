@@ -1,6 +1,6 @@
 <div style="height: 100vh;">
-  <div class="row d-flex justify-content-center align-items-center pt-3">
-    <div class="col-lg-5 my-3">
+  <div class="col-lg-5 mx-auto">
+    <div class="row d-flex justify-content-center align-items-center pt-3">
       <div class="card px-5">
         <div class="card-body">
           <div class="d-flex justify-content-center gap-2 align-items-center">
@@ -54,8 +54,9 @@
               </div>
 
               <div class="form-group mt-2 mb-2">
-                <%= f.label :phone_number, class: 'mb-1' %>
-                <%= f.text_field :phone_number, id: "phone_number", class: 'form-control mt-1' %>
+                <%= f.label :phone_number, class: 'mb-1' %><br>
+                <input id="phone_number" type="tel" value="<%= resource.phone_number %>" class="form-control mt-2 mb-2">
+                <%= f.hidden_field :phone_number, id: "hidden_phone_number", class: 'mt-2 mb-2' %>
               </div>
 
               <div class="form-group mt-2 mb-2 mt-2">
@@ -68,7 +69,7 @@
               <% end %>
 
               <div class="form-group mt-2 mb-2">
-                <%= f.label :password %> <i class="text-danger">(*enter new password)</i>
+                <%= f.label :password %> <i class="text-danger">(*a mix of uppercase and lowercase letters, numbers, and special symbols like %$! )</i>
                 <%= f.password_field :password, autocomplete: "new-password", class: 'form-control mt-1 mt-2' %>
                 <% if @minimum_password_length %>
                   <em class="text-danger"><%= @minimum_password_length %> characters minimum</em>
@@ -81,7 +82,7 @@
               </div>
 
               <div class="form-group mt-2 mb-2">
-                <%= f.label :current_password %> <i class="text-danger">(*enter current password)</i><br />
+                <%= f.label :current_password %> <i class="text-danger">(*a mix of uppercase and lowercase letters, numbers, and special symbols like %$! )</i><br />
                 <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control mt-1' %>
               </div>
 
@@ -96,46 +97,7 @@
   </div>
 </div>
 
-<script type="text/javascript">
-  document.addEventListener('DOMContentLoaded', function() {
-    const input = document.querySelector("#phone_number");
-    const hiddenPhoneNumber = document.querySelector("#hidden_phone_number");
 
-    const iti = intlTelInput(input, {
-      initialCountry: "auto",
-      geoIpLookup: function(callback) {
-        fetch('https://ipinfo.io', { method: 'GET', headers: { 'Accept': 'application/json' } })
-          .then(resp => resp.json())
-          .then(data => {
-            const countryCode = (data && data.country) ? data.country : "us";
-            callback(countryCode);
-          })
-          .catch(() => {
-            callback('us');
-          });
-      },
-      separateDialCode: true,  // This displays the country code separately
-      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js" // for formatting/validation etc
-    });
-
-    // Set the initial country code when the page loads
-    countryCodeField.value = `+${iti.getSelectedCountryData().dialCode}`;
-
-    // Update country code field when the country flag is changed
-    input.addEventListener('countrychange', function() {
-      const selectedCountryData = iti.getSelectedCountryData();
-      const countryCode = selectedCountryData.dialCode;
-      
-      // Display country code in the separate column
-      countryCodeField.value = `+${countryCode}`;
-    });
-
-    // When the form is submitted, update the hidden phone number input with the full phone number (with country code)
-    document.querySelector('form').addEventListener('submit', function() {
-      hiddenPhoneNumber.value = iti.getNumber();  // Full number with country code for submission
-    });
-  });
-</script>
 
 
 

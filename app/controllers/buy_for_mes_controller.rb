@@ -1,5 +1,6 @@
 class BuyForMesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_buy_for_me, only: %i[show edit update]
 
   def index
   	@buy_for_mes = BuyForMe.all
@@ -18,11 +19,25 @@ class BuyForMesController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+     if @buy_for_me.update(buy_for_me_params)
+      redirect_to buy_for_mes_path, notice: "Your 'Buy for Me' request has been successfully updated."
+    else
+      render :edit
+    end
+  end
+
   def show
-	  @buy_for_me = BuyForMe.find(params[:id])
 	end
 
   private
+
+  def set_buy_for_me
+    @buy_for_me = BuyForMe.find(params[:id])
+  end
 
   def get_cities_by_country(country_code)
     username = 'pawansikarwar'

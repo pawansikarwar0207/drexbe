@@ -1,5 +1,5 @@
 <%# app/views/buy_for_mes/show.html.erb %>
-<div class="container mt-5">
+<div class="col-lg-10 mx-auto mt-5">
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <div class="card">
@@ -31,6 +31,9 @@
             </li>
             <li class="list-group-item">
               <strong>Total Price:</strong> <%= number_to_currency(@buy_for_me.total_price) %>
+            </li>
+            <li class="list-group-item">
+              <strong>Parcel Type:</strong> <%= @buy_for_me.parcel_type %>
             </li>
           </ul>
         </div>

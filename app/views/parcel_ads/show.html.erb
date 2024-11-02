@@ -1,4 +1,4 @@
-<div class="container col-lg-8 mx-auto mt-4 mb-5">
+<div class="col-lg-8 mx-auto mt-4 mb-5">
   <div class="card shadow">
     <h1 class="card-title text-center p-3 border-bottom">Parcel Ad Details</h1>
     <div class="card-body">
@@ -11,12 +11,15 @@
           <p><strong>To Country : </strong> <%= @parcel_ad.arrival_country %></p>
           <p><strong>TO City : </strong> <%= @parcel_ad.arrival_city %></p>
         </div>
-        <div class="col-md-6">
-          <h5 class="fw-bold">Parcel Dimension :</h5>
-          <p><strong>Weight : </strong> <%= @parcel_ad.parcel_weight %> kg</p>
-          <p><strong>Height : </strong> <%= @parcel_ad.parcel_height %> cm</p>
-          <p><strong>Length : </strong> <%= @parcel_ad.parcel_length %> cm</p>
-        </div>
+        <% if @parcel_ad.parcel_weight.present? || @parcel_ad.parcel_height.present? || @parcel_ad.parcel_length.present? || @parcel_ad.parcel_width.present? %>
+          <div class="col-md-6">
+            <h5 class="fw-bold">Parcel Dimension :</h5>
+            <p><strong>Weight : </strong> <%= @parcel_ad.parcel_weight %> kg</p>
+            <p><strong>Height : </strong> <%= @parcel_ad.parcel_height %> cm</p>
+            <p><strong>Length : </strong> <%= @parcel_ad.parcel_length %> cm</p>
+            <p><strong>Widht : </strong> <%= @parcel_ad.parcel_width %> cm</p>
+          </div>
+        <% end %>
       </div>
       
       <hr>

@@ -3,35 +3,20 @@
 
 	 <%= form_with model: @buy_for_me, local: true do |f| %>
 	  <!-- Row for Departure and Arrival -->
-    <div class="row mb-4">
-      <div class="col-md-3">
-        <%= f.label :departure_country, "Departure Country", class: 'form-label' %>
-        <%= f.select :departure_country, ISO3166::Country.all.map { |c| [c.translations['en'], c.alpha2] }, 
-          { prompt: 'Select a country' }, { id: 'departure_country_select', class: 'form-select' } %>
+    <div class="row g-0 mb-5 form-control">
+      <div class="search-item col-md-3">
+        <%= f.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off' %>
+        <%= f.hidden_field :departure_country, id: 'departure_country' %>
       </div>
-
-      <div class="col-md-3">
-        <%= f.label :departure_city, "Departure City", class: 'form-label' %>
-        <%= f.select :departure_city, [], { prompt: 'Select a city' }, { id: 'departure_city_select', class: 'form-select' } %>
+      <div class="search-item col-md-3">
+        <%= f.text_field :arrival_city, class: 'form-control fw-bold', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off' %>
+        <%= f.hidden_field :arrival_country, id: 'arrival_country' %>
       </div>
-
-      <div class="col-md-3">
-        <%= f.label :arrival_country, "Arrival Country", class: 'form-label' %>
-        <%= f.select :arrival_country, ISO3166::Country.all.map { |c| [c.translations['en'], c.alpha2] }, 
-          { prompt: 'Select a country' }, { id: 'arrival_country_select', class: 'form-select' } %>
-      </div>
-
-      <div class="col-md-3">
-        <%= f.label :arrival_city, "Arrival City", class: 'form-label' %>
-        <%= f.select :arrival_city, [], { prompt: 'Select a city' }, { id: 'arrival_city_select', class: 'form-select' } %>
+      <div class="search-item col-md-3">
+        <%# <i class="fas fa-calendar-alt"></i> %>
+        <%= f.date_field :shopping_date, class: 'form-control flatpickr fw-bold', id: 'date_field', placeholder: 'Shipment Date' %>
       </div>
     </div>
-
-
-	  <div class="form-group mb-4">
-	    <%= f.label :shopping_date, class: 'form-label' %>
-	    <%= f.date_field :shopping_date, class: 'form-select' %>
-	  </div>
 
 	  <div class="form-group mb-4">
 	    <%= f.label :product_link, class: 'form-label' %>
@@ -86,100 +71,8 @@
 	  </div>
 
 	  <div class="d-grid">
-	    <%= f.submit 'Create Buy For Me', class: 'btn btn-primary' %>
+	    <%= f.submit class: 'btn btn-primary' %>
 	  </div>
 	<% end %>
-
 </div>
 
-<script>
-  //for selecting the cities based on country
-  document.addEventListener('turbo:load', () => {
-  // Function to fetch and populate cities for a selected country
-  const fetchCities = (countrySelectId, citySelectId) => {
-    const countrySelect = document.getElementById(countrySelectId);
-    const citySelect = document.getElementById(citySelectId);
-
-    if (countrySelect) {
-      countrySelect.addEventListener('change', function() {
-        const selectedCountry = this.value;
-
-        if (selectedCountry) {
-          fetch(`/get_cities?country=${selectedCountry}`)
-            .then(response => response.json())
-            .then(data => {
-              citySelect.innerHTML = '<option value="">Select a city</option>';
-
-              data.cities.forEach(city => {
-                const option = document.createElement('option');
-                option.value = city;
-                option.text = city;
-                citySelect.appendChild(option);
-              });
-            })
-            .catch(error => console.error('Error fetching cities:', error));
-        } else {
-          // Clear the cities dropdown if no country is selected
-          citySelect.innerHTML = '<option value="">Select a city</option>';
-        }
-      });
-    }
-  };
-
-  // Initialize for both departure and arrival selects
-  fetchCities('departure_country_select', 'departure_city_select');
-  fetchCities('arrival_country_select', 'arrival_city_select');
-
-  //for selecting the parcel type
-  const buttons = document.querySelectorAll(".parcel-type-button");
-  const hiddenField = document.getElementById("selected_parcel_type");
-
-  buttons.forEach(button => {
-    button.addEventListener("click", function() {
-      // Remove active class from all buttons
-      buttons.forEach(btn => btn.classList.remove("active"));
-
-      // Add active class to the clicked button
-      this.classList.add("active");
-
-      // Update the hidden field with the selected value
-      hiddenField.value = this.getAttribute("data-value");
-    });
-  });
-
-  // Get the number input and display element for parcel quantity
-  const quantityInput = document.getElementById("parcel_quantity");
-  const quantityDisplay = document.getElementById("quantity_display");
-
-  // Update the quantity display when the input changes
-  quantityInput.addEventListener("input", function() {
-    const quantityValue = quantityInput.value || 0; // Default to 0 if empty
-    quantityDisplay.textContent = `Qty: ${quantityValue}`;
-  });
-
-  //for showing the parcel image below the parcel image file field
-  const parcelImagesInput = document.getElementById('parcel_images_input');
-  const previewContainer = document.getElementById('parcel_images_preview');
-
-  parcelImagesInput.addEventListener('change', function(event) {
-    previewContainer.innerHTML = ''; // Clear previous previews
-    const files = event.target.files;
-
-    if (files.length > 0) {
-      Array.from(files).forEach(file => {
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-          const img = document.createElement('img');
-          img.src = e.target.result;
-          img.classList.add('img-thumbnail', 'mr-2', 'mx-2', 'mb-2');
-          img.style.width = '100px';
-          previewContainer.appendChild(img);
-        };
-
-        reader.readAsDataURL(file);
-      });
-    }
-  });
-});
-</script>

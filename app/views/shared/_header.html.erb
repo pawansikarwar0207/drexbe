@@ -34,21 +34,15 @@
       How does it work?
      </a>
     </li>
-    <li class="nav-item">
-     <a class="nav-link" href="#">
-      <i class="fas fa-globe">
-      </i>
-     </a>
-    </li>
+
     <li class="nav-item dropdown">
      <a class="nav-link active" id="bars-button" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-      <i class="fas fa-bars">
-      </i>
+      <i class="fas fa-bars"></i>
       <% if current_user.present? %>
         <% if current_user.profile_picture.attached?  %>
-          <%= image_tag current_user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"30", width:"30" %>
+          <%= image_tag current_user.profile_picture, class: 'rounded-circle border', alt: 'User Avatar', height:"30", width:"30" %>
         <% else %>
-          <img alt="Profile picture placeholder" height="30" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="30", class="rounded-circle">
+          <i class="fas fa-globe"></i>
         <% end %>
       <% end %> 
      </a>
@@ -59,6 +53,7 @@
           <li><%= link_to 'My Profile', user_profile_path, class: 'dropdown-item' %></li>
           <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %></li>
         <% else %>
+          <li><%= link_to 'Sign Up', new_user_registration_path, class: 'dropdown-item' %></li>
           <li><%= link_to 'Sign In', new_user_session_path, method: :delete, class: 'dropdown-item' %></li>
         <% end %>
       </ul>

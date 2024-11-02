@@ -1,366 +1,389 @@
-<h1 class="text-center mb-4 mt-5">Search Results</h1>
-  <%# Traveler Section %>
-  <% if @travelers.present? %>
-    <% @travelers.each do |traveler| %>
-      <div class="container mt-2">
-         <div class="row">
-            <div class="col-left">
-              <h5 class="fw-bold badge bg-primary rounded-pill mb-3">Traveler</h5>
-              <div class="travel-info">
-                <div>
-                  <span class="travel-date">
-                    <% if traveler.travel_date.present? || traveler.travel_return_date.present? %>
-                      <p class="mb-0">
-                        <strong><%= traveler.travel_date %></strong> 
-                        <i class="fa-solid fa-arrow-right-arrow-left mx-2"></i>
-                        <strong><%= traveler.travel_return_date %></strong>
-                      </p>
-                    <% end %>
-                  </span>
-
-                  <div>
-                    <%= link_to traveler_path(traveler), class: 'text-decoration-none' do %>
-                      <% if traveler.departure_city.present? || traveler.departure_country.present? || traveler.arrival_city.present? || traveler.arrival_country.present? %>
-                        <p class="mb-0"><strong><%= traveler.departure_city %> - <%= traveler.departure_country %></strong> <i class="fa fa-arrow-right"></i> <strong><%= traveler.arrival_city %> - <%= traveler.arrival_country %></strong></p>
-                      <% end %>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-right">
-              <% if traveler.parcel_type.present? %>
-                <div class="carry-for-you">
-                  <h6 class="mt-2 me-2 fw-bold">Carry For You:</h6>
-                    <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-                      <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Document' %> " data-value="Document">
-                        <%= image_tag "document.png", class:"icon-class" %>
-                         Document
-                      </button>
-                      <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Parcel' %>" data-value="Parcel">
-                        <%= image_tag "parcel.png", class:"icon-class" %> Parcel
-                      </button>
-                      <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Pallet' %>" data-value="Pallet">
-                        <%= image_tag "pallet.png", class:"icon-class" %> Pallet
-                      </button>
-                    </div>
-                </div>
-              <% end %>
-
-              <% if traveler.ready_to_buy_for_you.present? %>
-                <div class="buy-for-you">
-                  <h6 class="mt-2 me-5 fw-bold">Buy For You:</h6>
-                  <div aria-label="Buy For You" class="btn-group" role="group">
-                    <%= radio_button_tag "ready_to_buy_for_you_#{traveler.id}", 'yes', traveler.ready_to_buy_for_you %>
-                    <%= label_tag "ready_to_buy_for_you_#{traveler.id}_yes", "Yes", class: 'mx-2' %>
-
-                    <!-- Radio button for "No" -->
-                    <%= radio_button_tag "ready_to_buy_for_you_#{traveler.id}", 'no', !traveler.ready_to_buy_for_you %>
-                    <%= label_tag "ready_to_buy_for_you_#{traveler.id}_no", "No", class: 'mx-2' %>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-left">
-              <div class="travel-info">
-                <div class="name">
-                  <% if current_user.present? %>
-                    <% if current_user.profile_picture.attached?  %>
-                      <%= image_tag current_user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"50", width:"50" %>
-                    <% else %>
-                      <img alt="Profile picture placeholder" height="50" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="50", class="rounded-circle">
-                    <% end %>
-                  <% end %> 
-
-                  <% if traveler == current_user %>
-                    <%= link_to traveler.name, user_profile_path(traveler.user), class: 'text-dark' %>
-                  <% else %>
-                    <%= traveler.name %> 
-                  <% end %>
-                  <div class="icon-row d-flex align-items-center mt-3">
-                    <!-- Transportation Icon -->
-                    <% transportation_images = {
-                      'flight' => 'plane.png',
-                      'car' => 'car.png',
-                      'bus' => 'bus.png',
-                      'train' => 'train.png',
-                      'van' => 'delivery-van.png',
-                      'ship' => 'boat-with-containers.png'
-                    } %>
-
-                    <% if traveler.transportation.present? && transportation_images[traveler.transportation] %>
-                      <%= image_tag transportation_images[traveler.transportation], class: "transportation-icon me-3", alt: traveler.transportation %>
-                    <% end %>
-
-                    <!-- Additional Contact Icons -->
-                    <i class="fas fa-mobile-alt me-3 text-secondary fa-xl "></i>
-                    <i class="fas fa-address-card me-3 text-secondary fa-xl"></i>
-                    <i class="fas fa-envelope text-secondary fa-xl"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-right">
-              <div class="contact-button mb-2">
-                <a href="#">Contacter 
-                  <% if traveler == current_user %>
-                    <%= link_to traveler.name, user_profile_path(traveler.user), class: 'text-dark' %>
-                  <% else %>
-                    <%= traveler.name %> 
-                  <% end %>
-                </a>
-              </div>
-            </div>
-         </div>
-      </div> 
-    <% end %>
-  <% else %>
-  <div class="alert alert-danger text-center" role="alert">
-    No travelers found for your search criteria.
-  </div>
-<% end %>
-
-<%# Sender Section %>
-<% if @parcel_ads.present? %>
-  <% @parcel_ads.each do |parcel| %>
-    <div class="container mt-2">
-       <div class="row">
-          <div class="col-left">
-            <h5 class="fw-bold badge bg-warning rounded-pill mb-3">Sender</h5>
-            <div class="travel-info">
-              <div>
-                <span class="travel-date">
-                  <% if parcel.shipment_date.present? %>
-                    <p class="mb-0">
-                      <strong><%= parcel.shipment_date %></strong> 
-                    </p>
-                  <% end %>
-                </span>
-
-                <div>
-                  <%= link_to parcel_ad_path(parcel), class: 'text-decoration-none' do %>
-                    <% if parcel.departure_city.present? || parcel.departure_country.present? || parcel.arrival_city.present? || parcel.arrival_country.present? %>
-                      <p class="mb-0"><strong><%= parcel.departure_city %> - <%= parcel.departure_country %></strong> <i class="fa fa-arrow-right"></i> <strong><%= parcel.arrival_city %> - <%= parcel.arrival_country %></strong></p>
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
+<div class="col-lg-11 mx-auto">
+	<h1 class="text-center mb-4 mt-5">Search Results</h1>
+	<div class="row">
+		<div class="col-md-3">
+	   <div class="card shadow mt-2 sort-by">
+        <h5>Sort by</h5>
+        <% sort_options = ['Earliest departure', 'Lowest price', 'Close to the starting point', 'Close to the arrival point', 'Shortest route'] %>
+        <% sort_options.each do |option| %>
+          <div class="form-check">
+            <input class="form-check-input" id="<%= option.parameterize %>" name="sortOptions" type="radio" <%= 'checked' if option == 'Earliest departure' %> />
+            <label class="form-check-label" for="<%= option.parameterize %>">
+              <%= option %>
+            </label>
           </div>
-          <div class="col-right">
-            <% if parcel.parcel_type.present? %>
-              <div class="carry-for-you">
-                <h6 class="mt-2 me-2 fw-bold">Carry For Me:</h6>
-                  <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Document' %> " data-value="Document">
-                      <%= image_tag "document.png", class:"icon-class" %>
-                       Document
-                    </button>
-                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Parcel' %>" data-value="Parcel">
-                      <%= image_tag "parcel.png", class:"icon-class" %> Parcel
-                    </button>
-                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Pallet' %>" data-value="Pallet">
-                      <%= image_tag "pallet.png", class:"icon-class" %> Pallet
-                    </button>
-                  </div>
-              </div>
-            <% end %>
+        <% end %>
+        <div class="clear-all">
+          <%= link_to 'Clear All', search_results_path, class: 'btn btn-danger mt-3' %>
+        </div>
+      </div>
+	  </div>
+		<div class="col-md-9">
+			  <%# Traveler Section %>
+			  <% if @travelers.present? %>
+			    <% @travelers.each do |traveler| %>
+			      <div class="container mt-2">
+			         <div class="row">
+			            <div class="col-left">
+			              <h5 class="fw-bold badge bg-primary rounded-pill mb-3">Traveler</h5>
+			              <div class="travel-info">
+			                <div>
+			                  <span class="travel-date">
+			                    <% if traveler.travel_date.present? || traveler.travel_return_date.present? %>
+			                      <p class="mb-0">
+			                        <strong><%= traveler.travel_date %></strong> 
+			                        <i class="fa-solid fa-arrow-right-arrow-left mx-2"></i>
+			                        <strong><%= traveler.travel_return_date %></strong>
+			                      </p>
+			                    <% end %>
+			                  </span>
 
-            <% if parcel.parcel_weight.present? %>
-              <div class="buy-for-you">
-                <h6 class="mt-2 me-5 fw-bold">Parcel Weight:</h6>
-                <div aria-label="Buy For You" class="btn-group" role="group">
-                  <%= parcel.parcel_weight %> kg
-                </div>
-              </div>
-            <% end %>
+			                  <div>
+			                    <%= link_to traveler_path(traveler), class: 'text-decoration-none' do %>
+			                      <% if traveler.departure_city.present? || traveler.departure_country.present? || traveler.arrival_city.present? || traveler.arrival_country.present? %>
+			                        <p class="mb-0"><strong><%= traveler.departure_city %> - <%= traveler.departure_country %></strong> <i class="fa fa-arrow-right"></i> <strong><%= traveler.arrival_city %> - <%= traveler.arrival_country %></strong></p>
+			                      <% end %>
+			                    <% end %>
+			                  </div>
+			                </div>
+			              </div>
+			            </div>
+			            <div class="col-right">
+			              <% if traveler.parcel_type.present? %>
+			                <div class="carry-for-you">
+			                  <h6 class="mt-2 me-2 fw-bold">Carry For You:</h6>
+			                    <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
+			                      <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Document' %> " data-value="Document">
+			                        <%= image_tag "document.png", class:"icon-class" %>
+			                         Document
+			                      </button>
+			                      <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Parcel' %>" data-value="Parcel">
+			                        <%= image_tag "parcel.png", class:"icon-class" %> Parcel
+			                      </button>
+			                      <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Pallet' %>" data-value="Pallet">
+			                        <%= image_tag "pallet.png", class:"icon-class" %> Pallet
+			                      </button>
+			                    </div>
+			                </div>
+			              <% end %>
 
-            <% if parcel.proposed_fee.present? %>
-              <div class="buy-for-you">
-                <h6 class="mt-2 me-5 fw-bold">Proposed Fee:</h6>
-                <div aria-label="Buy For You" class="btn-group" role="group">
-                  <%= number_to_currency(parcel.proposed_fee) %>
-                </div>
-              </div>
-            <% end %>
-          </div>
+			              <% if traveler.ready_to_buy_for_you.present? %>
+			                <div class="buy-for-you">
+			                  <h6 class="mt-2 me-5 fw-bold">Buy For You:</h6>
+			                  <div aria-label="Buy For You" class="btn-group" role="group">
+			                    <%= radio_button_tag "ready_to_buy_for_you_#{traveler.id}", 'yes', traveler.ready_to_buy_for_you %>
+			                    <%= label_tag "ready_to_buy_for_you_#{traveler.id}_yes", "Yes", class: 'mx-2' %>
 
-          <div class="row">
-            <div class="col-left">
-              <div class="travel-info">
-                <div class="name">
-                  <% if current_user.present? %>
-                    <% if current_user.profile_picture.attached?  %>
-                      <%= image_tag current_user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"50", width:"50" %>
-                    <% else %>
-                      <img alt="Profile picture placeholder" height="50" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="50", class="rounded-circle">
-                    <% end %>
-                  <% end %> 
+			                    <!-- Radio button for "No" -->
+			                    <%= radio_button_tag "ready_to_buy_for_you_#{traveler.id}", 'no', !traveler.ready_to_buy_for_you %>
+			                    <%= label_tag "ready_to_buy_for_you_#{traveler.id}_no", "No", class: 'mx-2' %>
+			                  </div>
+			                </div>
+			              <% end %>
+			            </div>
+			         </div>
+			         <div class="row">
+			            <div class="col-left">
+			              <div class="travel-info">
+			                <div class="name">
+			                  <% if current_user.present? %>
+			                    <% if current_user.profile_picture.attached?  %>
+			                      <%= image_tag current_user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"50", width:"50" %>
+			                    <% else %>
+			                      <img alt="Profile picture placeholder" height="50" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="50", class="rounded-circle">
+			                    <% end %>
+			                  <% end %> 
 
-                  <% if parcel.user == current_user %>
-                    <%= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %>
-                  <% else %>
-                    <%= parcel.user.full_name %> 
-                  <% end %>
-                  
-                  <div class="icons mt-3 mx-5">
-                    <% if parcel.user.phone_number.present? %>
-                      <i class="fas fa-mobile-alt" 
-                         data-bs-toggle="tooltip" 
-                         data-bs-placement="top" 
-                         data-bs-title="<%= parcel.user.phone_number.present? ? 'Phone number is verified' : 'Phone number not verified' %>">
-                      </i>
-                    <% end %>
+			                  <% if traveler == current_user %>
+			                    <%= link_to traveler.name, user_profile_path(traveler.user), class: 'text-dark' %>
+			                  <% else %>
+			                    <%= traveler.name %> 
+			                  <% end %>
+			                  <div class="icon-row d-flex align-items-center mt-3">
+			                    <!-- Transportation Icon -->
+			                    <% transportation_images = {
+			                      'flight' => 'plane.png',
+			                      'car' => 'car.png',
+			                      'bus' => 'bus.png',
+			                      'train' => 'train.png',
+			                      'van' => 'delivery-van.png',
+			                      'ship' => 'boat-with-containers.png'
+			                    } %>
 
-                    <!-- ID Card Icon -->
-                    <% if parcel.user.identity_card_document.attached? %>
-                      <i class="fa fa-address-card" 
-                         data-bs-toggle="tooltip" 
-                         data-bs-placement="top" 
-                         title="<%= parcel.user.identity_card_document.attached? ? 'ID card is verified' : 'ID card not verified' %>">
-                      </i>
-                    <% end %>
+			                    <% if traveler.transportation.present? && transportation_images[traveler.transportation] %>
+			                      <%= image_tag transportation_images[traveler.transportation], class: "transportation-icon me-3", alt: traveler.transportation %>
+			                    <% end %>
 
-                    <!-- Email Icon -->
-                    <% if parcel.user.confirmed? %>
-                      <i class="fa fa-envelope" 
-                         data-bs-toggle="tooltip" 
-                         data-bs-placement="top" 
-                         title="<%= parcel.user.confirmed? ? 'Email is verified' : 'Email not verified' %>">
-                      </i>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-right">
-              <div class="contact-button mb-2">
-                <a href="#">Contacter 
-                  <%# if parcel.user == current_user %>
-                    <%#= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %>
-                  <%# else %>
-                    <%= parcel.user.full_name %> 
-                  <%# end %>
-                </a>
-              </div>
-            </div>
-          </div>
+			                    <!-- Additional Contact Icons -->
+			                    <i class="fas fa-mobile-alt me-3 text-secondary fa-xl "></i>
+			                    <i class="fas fa-address-card me-3 text-secondary fa-xl"></i>
+			                    <i class="fas fa-envelope text-secondary fa-xl"></i>
+			                  </div>
+			                </div>
+			              </div>
+			            </div>
+			            <div class="col-right">
+			              <div class="contact-button mb-2">
+			                <a href="#">Contacter 
+			                  <% if traveler == current_user %>
+			                    <%= link_to traveler.name, user_profile_path(traveler.user), class: 'text-dark' %>
+			                  <% else %>
+			                    <%= traveler.name %> 
+			                  <% end %>
+			                </a>
+			              </div>
+			            </div>
+			         </div>
+			      </div> 
+			    <% end %>
+			  <% else %>
+			  <div class="alert alert-danger text-center" role="alert">
+			    No travelers found for your search criteria.
+			  </div>
+			<% end %>
 
-       </div>
-    </div> 
-  <% end %>
-<% else %>
-<div class="alert alert-danger text-center" role="alert">
-  No sender is found for your search criteria.
+			<%# Sender Section %>
+			<% if @parcel_ads.present? %>
+			  <% @parcel_ads.each do |parcel| %>
+			    <div class="container mt-2">
+			       <div class="row">
+			          <div class="col-left">
+			            <h5 class="fw-bold badge bg-warning rounded-pill mb-3">Sender</h5>
+			            <div class="travel-info">
+			              <div>
+			                <span class="travel-date">
+			                  <% if parcel.shipment_date.present? %>
+			                    <p class="mb-0">
+			                      <strong><%= parcel.shipment_date %></strong> 
+			                    </p>
+			                  <% end %>
+			                </span>
+
+			                <div>
+			                  <%= link_to parcel_ad_path(parcel), class: 'text-decoration-none' do %>
+			                    <% if parcel.departure_city.present? || parcel.departure_country.present? || parcel.arrival_city.present? || parcel.arrival_country.present? %>
+			                      <p class="mb-0"><strong><%= parcel.departure_city %> - <%= parcel.departure_country %></strong> <i class="fa fa-arrow-right"></i> <strong><%= parcel.arrival_city %> - <%= parcel.arrival_country %></strong></p>
+			                    <% end %>
+			                  <% end %>
+			                </div>
+			              </div>
+			            </div>
+			          </div>
+			          <div class="col-right">
+			            <% if parcel.parcel_type.present? %>
+			              <div class="carry-for-you">
+			                <h6 class="mt-2 me-2 fw-bold">Carry For Me:</h6>
+			                  <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
+			                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Document' %> " data-value="Document">
+			                      <%= image_tag "document.png", class:"icon-class" %>
+			                       Document
+			                    </button>
+			                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Parcel' %>" data-value="Parcel">
+			                      <%= image_tag "parcel.png", class:"icon-class" %> Parcel
+			                    </button>
+			                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Pallet' %>" data-value="Pallet">
+			                      <%= image_tag "pallet.png", class:"icon-class" %> Pallet
+			                    </button>
+			                  </div>
+			              </div>
+			            <% end %>
+
+			            <% if parcel.parcel_weight.present? %>
+			              <div class="buy-for-you">
+			                <h6 class="mt-2 me-5 fw-bold">Parcel Weight:</h6>
+			                <div aria-label="Buy For You" class="btn-group" role="group">
+			                  <%= parcel.parcel_weight %> kg
+			                </div>
+			              </div>
+			            <% end %>
+
+			            <% if parcel.proposed_fee.present? %>
+			              <div class="buy-for-you">
+			                <h6 class="mt-2 me-5 fw-bold">Proposed Fee:</h6>
+			                <div aria-label="Buy For You" class="btn-group" role="group">
+			                  <%= number_to_currency(parcel.proposed_fee) %>
+			                </div>
+			              </div>
+			            <% end %>
+			          </div>
+
+			          <div class="row">
+			            <div class="col-left">
+			              <div class="travel-info">
+			                <div class="name">
+			                  <% if current_user.present? %>
+			                    <% if current_user.profile_picture.attached?  %>
+			                      <%= image_tag current_user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"50", width:"50" %>
+			                    <% else %>
+			                      <img alt="Profile picture placeholder" height="50" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="50", class="rounded-circle">
+			                    <% end %>
+			                  <% end %> 
+
+			                  <% if parcel.user == current_user %>
+			                    <%= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %>
+			                  <% else %>
+			                    <%= parcel.user.full_name %> 
+			                  <% end %>
+			                  
+			                  <div class="icons mt-3 mx-5">
+			                    <% if parcel.user.phone_number.present? %>
+			                      <i class="fas fa-mobile-alt" 
+			                         data-bs-toggle="tooltip" 
+			                         data-bs-placement="top" 
+			                         data-bs-title="<%= parcel.user.phone_number.present? ? 'Phone number is verified' : 'Phone number not verified' %>">
+			                      </i>
+			                    <% end %>
+
+			                    <!-- ID Card Icon -->
+			                    <% if parcel.user.identity_card_document.attached? %>
+			                      <i class="fa fa-address-card" 
+			                         data-bs-toggle="tooltip" 
+			                         data-bs-placement="top" 
+			                         title="<%= parcel.user.identity_card_document.attached? ? 'ID card is verified' : 'ID card not verified' %>">
+			                      </i>
+			                    <% end %>
+
+			                    <!-- Email Icon -->
+			                    <% if parcel.user.confirmed? %>
+			                      <i class="fa fa-envelope" 
+			                         data-bs-toggle="tooltip" 
+			                         data-bs-placement="top" 
+			                         title="<%= parcel.user.confirmed? ? 'Email is verified' : 'Email not verified' %>">
+			                      </i>
+			                    <% end %>
+			                  </div>
+			                </div>
+			              </div>
+			            </div>
+			            <div class="col-right">
+			              <div class="contact-button mb-2">
+			                <a href="#">Contacter 
+			                  <%# if parcel.user == current_user %>
+			                    <%#= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %>
+			                  <%# else %>
+			                    <%= parcel.user.full_name %> 
+			                  <%# end %>
+			                </a>
+			              </div>
+			            </div>
+			          </div>
+
+			       </div>
+			    </div> 
+			  <% end %>
+			<% else %>
+			<div class="alert alert-danger text-center" role="alert">
+			  No sender is found for your search criteria.
+			</div>
+			<% end %>
+
+			<%# Buy for me section %>
+			<% if @buy_for_mes.present? %>
+			  <% @buy_for_mes.each do |buy_for_me| %>
+			    <div class="container mt-2">
+			       <div class="row">
+			          <div class="col-left">
+			            <h5 class="fw-bold badge bg-secondary rounded-pill mb-3">Buyer</h5>
+			            <div class="travel-info">
+			              <div>
+			                <span class="travel-date">
+			                  <% if buy_for_me.shopping_date.present? %>
+			                    <p class="mb-0">
+			                      <strong><%= buy_for_me.shopping_date %></strong> 
+			                    </p>
+			                  <% end %>
+			                </span>
+
+			                <div>
+			                  <%= link_to buy_for_me_path(buy_for_me), class: 'text-decoration-none' do %>
+			                    <% if buy_for_me.departure_city.present? || buy_for_me.departure_country.present? || buy_for_me.arrival_city.present? || buy_for_me.arrival_country.present? %>
+			                      <p class="mb-0"><strong><%= buy_for_me.departure_city %> - <%= buy_for_me.departure_country %></strong> <i class="fa fa-arrow-right"></i> <strong><%= buy_for_me.arrival_city %> - <%= buy_for_me.arrival_country %></strong></p>
+			                    <% end %>
+			                  <% end %>
+			                </div>
+			              </div>
+			            </div>
+			          </div>
+			          <div class="col-right">
+			            <% if buy_for_me.parcel_type.present? %>
+			              <div class="carry-for-you">
+			                <h6 class="mt-2 me-2 fw-bold">Buy For you:</h6>
+			                  <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
+			                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'small' %> " data-value="Small">
+			                      <%= image_tag "document.png", class:"icon-class" %>
+			                       Small
+			                    </button>
+			                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'medium' %>" data-value="Medium">
+			                      <%= image_tag "parcel.png", class:"icon-class" %> Medium
+			                    </button>
+			                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'large' %>" data-value="Large">
+			                      <%= image_tag "pallet.png", class:"icon-class" %> Large
+			                    </button>
+			                  </div>
+			              </div>
+			            <% end %>
+
+			            <% if buy_for_me.total_price.present? %>
+			              <div class="buy-for-you">
+			                <h6 class="mt-2 me-5 fw-bold">Final Product Price:</h6>
+			                <div aria-label="Buy For You" class="btn-group" role="group">
+			                  <%= number_to_currency(buy_for_me.total_price) %>
+			                </div>
+			              </div>
+			            <% end %>
+			          </div>
+			          
+			          <div class="row">
+			            <div class="col-left">
+			              <div class="travel-info">
+			                <div class="name">
+			                  <%# if current_user.present? %>
+			                    <%# if current_user.profile_picture.attached?  %>
+			                      <%#= image_tag current_user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"50", width:"50" %>
+			                    <%# else %>
+			                      <img alt="Profile picture placeholder" height="50" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="50", class="rounded-circle">
+			                    <%# end %>
+			                  <%# end %> 
+
+			                  <%# if parcel.user == current_user %>
+			                    <%#= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %>
+			                  <%# else %>
+			                    <%= buy_for_me.buyer_name %> 
+			                  <%# end %>
+			                  
+			                  <div class="icons mt-3 mx-5">
+			                    <!-- Additional Contact Icons -->
+			                    <i class="fas fa-mobile-alt me-3 text-secondary fa-xl "></i>
+			                    <i class="fas fa-address-card me-3 text-secondary fa-xl"></i>
+			                    <i class="fas fa-envelope text-secondary fa-xl"></i>
+			                  </div>
+			                </div>
+			              </div>
+			            </div>
+			            <div class="col-right">
+			              <div class="contact-button mb-2">
+			                <a href="#">Contacter 
+			                  <%# if parcel.user == current_user %>
+			                    <%#= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %>
+			                  <%# else %>
+			                    <%= buy_for_me.buyer_name %>
+			                  <%# end %>
+			                </a>
+			              </div>
+			            </div>
+			          </div>
+
+			       </div>
+			    </div> 
+			  <% end %>
+			<% else %>
+			<div class="alert alert-danger text-center" role="alert">
+			  No Buyer is found for your search criteria.
+			</div>
+			<% end %>
+		</div>
+	</div>
 </div>
-<% end %>
-
-<%# Buy for me section %>
-<% if @buy_for_mes.present? %>
-  <% @buy_for_mes.each do |buy_for_me| %>
-    <div class="container mt-2">
-       <div class="row">
-          <div class="col-left">
-            <h5 class="fw-bold badge bg-secondary rounded-pill mb-3">Buyer</h5>
-            <div class="travel-info">
-              <div>
-                <span class="travel-date">
-                  <% if buy_for_me.shopping_date.present? %>
-                    <p class="mb-0">
-                      <strong><%= buy_for_me.shopping_date %></strong> 
-                    </p>
-                  <% end %>
-                </span>
-
-                <div>
-                  <%= link_to buy_for_me_path(buy_for_me), class: 'text-decoration-none' do %>
-                    <% if buy_for_me.departure_city.present? || buy_for_me.departure_country.present? || buy_for_me.arrival_city.present? || buy_for_me.arrival_country.present? %>
-                      <p class="mb-0"><strong><%= buy_for_me.departure_city %> - <%= buy_for_me.departure_country %></strong> <i class="fa fa-arrow-right"></i> <strong><%= buy_for_me.arrival_city %> - <%= buy_for_me.arrival_country %></strong></p>
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-right">
-            <% if buy_for_me.parcel_type.present? %>
-              <div class="carry-for-you">
-                <h6 class="mt-2 me-2 fw-bold">Buy For you:</h6>
-                  <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'Small' %> " data-value="small">
-                      <%= image_tag "document.png", class:"icon-class" %>
-                       Small
-                    </button>
-                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'medium' %>" data-value="Medium">
-                      <%= image_tag "parcel.png", class:"icon-class" %> Medium
-                    </button>
-                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'large' %>" data-value="Large">
-                      <%= image_tag "pallet.png", class:"icon-class" %> Large
-                    </button>
-                  </div>
-              </div>
-            <% end %>
-
-            <% if buy_for_me.total_price.present? %>
-              <div class="buy-for-you">
-                <h6 class="mt-2 me-5 fw-bold">Final Product Price:</h6>
-                <div aria-label="Buy For You" class="btn-group" role="group">
-                  <%= number_to_currency(buy_for_me.total_price) %>
-                </div>
-              </div>
-            <% end %>
-          </div>
-          
-          <div class="row">
-            <div class="col-left">
-              <div class="travel-info">
-                <div class="name">
-                  <%# if current_user.present? %>
-                    <%# if current_user.profile_picture.attached?  %>
-                      <%#= image_tag current_user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"50", width:"50" %>
-                    <%# else %>
-                      <img alt="Profile picture placeholder" height="50" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="50", class="rounded-circle">
-                    <%# end %>
-                  <%# end %> 
-
-                  <%# if parcel.user == current_user %>
-                    <%#= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %>
-                  <%# else %>
-                    <%= buy_for_me.buyer_name %> 
-                  <%# end %>
-                  
-                  <div class="icons mt-3 mx-5">
-                    <!-- Additional Contact Icons -->
-                    <i class="fas fa-mobile-alt me-3 text-secondary fa-xl "></i>
-                    <i class="fas fa-address-card me-3 text-secondary fa-xl"></i>
-                    <i class="fas fa-envelope text-secondary fa-xl"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-right">
-              <div class="contact-button mb-2">
-                <a href="#">Contacter 
-                  <%# if parcel.user == current_user %>
-                    <%#= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %>
-                  <%# else %>
-                    <%= buy_for_me.buyer_name %>
-                  <%# end %>
-                </a>
-              </div>
-            </div>
-          </div>
-
-       </div>
-    </div> 
-  <% end %>
-<% else %>
-<div class="alert alert-danger text-center" role="alert">
-  No Buyer is found for your search criteria.
-</div>
-<% end %>
 
 <script>
   function showContact(parcelId, phoneNumber) {
@@ -375,3 +398,64 @@
     })
   });
 </script>
+
+<style>
+  
+        .sort-by {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+        .sort-by h5 {
+            font-weight: bold;
+        }
+        .sort-by .form-check {
+            margin-bottom: 10px;
+        }
+        .sort-by .form-check-label {
+            font-size: 14px;
+        }
+        .sort-by .clear-all {
+            color: #00aaff;
+            cursor: pointer;
+        }
+        .routes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .routes-header .nav-link {
+            color: #6c757d;
+            font-weight: bold;
+        }
+        .routes-header .nav-link.active {
+            color: #00aaff;
+            border-bottom: 2px solid #00aaff;
+        }
+        .route-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .route-card .route-time {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .route-card .route-info {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        .route-card .route-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00aaff;
+        }
+        .route-card .route-icons i {
+            margin-right: 10px;
+        }
+  </style>

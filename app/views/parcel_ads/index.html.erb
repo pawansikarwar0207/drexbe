@@ -1,4 +1,4 @@
-<div class="container mt-4 mb-5">
+<div class="col-lg-10 mx-auto mt-4 mb-5">
   <% @parcel_ads.each do |parcel| %>
     <div class="card parcel-card mb-4 border">
       <div class="card-header d-flex justify-content-between align-items-center">
@@ -58,9 +58,13 @@
           <%= link_to parcel_ad_path(parcel), class: 'text-dark' do %>
             <p class="mb-0"><strong><%= parcel.departure_city %> - <%= parcel.departure_country %></strong> <i class="fa fa-arrow-right"></i> <strong><%= parcel.arrival_city %> - <%= parcel.arrival_country %></strong></p>
           <% end %>
-          <p class="mb-0">Weight : <strong> <%= parcel.parcel_weight %> kg </strong></p>
-          <p class="mb-0">Height : <strong> <%= parcel.parcel_height %> cm </strong></p>
-          <p class="mb-0">Length : <strong> <%= parcel.parcel_length %> cm </strong></p>
+
+          <% if parcel.parcel_weight.present? || parcel.parcel_height.present? || parcel.parcel_length.present? %>
+            <p class="mb-0">Weight : <strong> <%= parcel.parcel_weight %> kg </strong></p>
+            <p class="mb-0">Height : <strong> <%= parcel.parcel_height %> cm </strong></p>
+            <p class="mb-0">Length : <strong> <%= parcel.parcel_length %> cm </strong></p>
+          <% end %>
+          
           <p class="mb-0">Quantity : <strong> <%= parcel.parcel_quantity %></strong></p>
           <p class="mb-0">Date to Send : <strong> <%= parcel.shipment_date %></strong></p>
           <p class="mb-0">Recommended commission fee : <strong> <%= number_to_currency(parcel.recommended_fee) %></strong></p>
