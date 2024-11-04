@@ -60,6 +60,21 @@
 									  </div>
 									</div>
 								 </div>
+									
+								<div class="form-group my-4">
+								  <h5 class="mb-3">User Type</h5>
+								  <div class="d-flex justify-content-around">
+								    <div class="form-check form-check-inline">
+								      <%= f.radio_button :user_type, 'individual', id: 'user_type_individual', class: 'form-check-input' %>
+								      <%= f.label :user_type_individual, 'Individual', class: 'form-check-label fw-bold mx-2' %>
+								    </div>
+								    <div class="form-check form-check-inline">
+								      <%= f.radio_button :user_type, 'professional', id: 'user_type_professional', class: 'form-check-input' %>
+								      <%= f.label :user_type_professional, 'Professional', class: 'form-check-label fw-bold mx-2' %>
+								    </div>
+								  </div>
+								</div>
+
 
 								 <div class="form-group my-2">
 									<%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Email' %>
@@ -91,6 +106,3 @@
 			</div>
 	 </div>
 </div>
-
-
-

@@ -14,7 +14,7 @@ class TravelersController < ApplicationController
   end
 
   def create
-    @traveler = Traveler.create(traveler_params)
+    @traveler = current_user.traveler.build(traveler_params)
 
     if @traveler.save
       redirect_to @traveler, notice: 'Traveler was successfully created.'

@@ -24,6 +24,16 @@
       
       <hr>
 
+      <div class="py-3"> 
+        <% if @parcel_ad.user.professional? %>
+          <p><strong>Calculated Cost:</strong> <%= number_to_currency(@parcel_ad.calculate_cost) %></p>
+        <% else %>
+          <p>Only professionals have cost calculations.</p>
+        <% end %>
+      </div>
+
+      <hr>
+
       <div class="row">
         <div class="col-md-6 mt-3">
           <p><strong>Date to Send : </strong> <%= @parcel_ad.shipment_date %></p>

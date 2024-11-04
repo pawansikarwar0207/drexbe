@@ -20,7 +20,7 @@
                 <p><%= @traveler.transportation.humanize %></p>
               <% end %>
               <h6 class="font-weight-bold">Travel Date:</h6>
-              <p><%= @traveler.travel_date.strftime("%B %d, %Y") %></p>
+              <p><%= @traveler.travel_date %></p>
             </div>
             <div class="col-md-6">
             <% if  @traveler.departure_city.present? || @traveler.departure_country.present? %>

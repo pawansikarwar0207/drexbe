@@ -2,7 +2,7 @@
   <% @parcel_ads.each do |parcel| %>
     <div class="card parcel-card mb-4 border">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <div class="badge bg-warning text-dark">Transportation</div>
+        <div class="badge bg-warning text-dark">Sender</div>
         <div class="badge bg-light text-muted"><%= parcel.parcel_type %></div>
       </div>
       <div class="card-body row">
@@ -64,7 +64,7 @@
             <p class="mb-0">Height : <strong> <%= parcel.parcel_height %> cm </strong></p>
             <p class="mb-0">Length : <strong> <%= parcel.parcel_length %> cm </strong></p>
           <% end %>
-          
+
           <p class="mb-0">Quantity : <strong> <%= parcel.parcel_quantity %></strong></p>
           <p class="mb-0">Date to Send : <strong> <%= parcel.shipment_date %></strong></p>
           <p class="mb-0">Recommended commission fee : <strong> <%= number_to_currency(parcel.recommended_fee) %></strong></p>

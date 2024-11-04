@@ -6,7 +6,7 @@
    </span>
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <% if user_signed_in? %>
+    <%# if user_signed_in? %>
      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item">
         <%= link_to "Travel", new_traveler_path, class: 'nav-link fs-5' %>
@@ -26,7 +26,7 @@
        </a>
       </li>
      </ul>
-    <% end %>
+    <%# end %>
    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
     <li class="nav-item">
      <a class="nav-link how-it-works" href="#">
@@ -49,9 +49,23 @@
      <ul class="dropdown-menu dropdown-menu-end menu-list" aria-labelledby="userDropdown">
         <% if user_signed_in? %>
           <li class="dropdown-item-text"><%= current_user.email if current_user.present? %></li>
+          <li><%= link_to 'Edit Your Account', user_profile_path, class: 'dropdown-item' %></li>
           <li><hr class="dropdown-divider"></li>
-          <li><%= link_to 'My Profile', user_profile_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %></li>
+          <li><%= link_to 'Verify you profile', verify_document_path, class: 'dropdown-item' %></li>
+          <li><%= link_to 'Messages', 'javascript:void(0)', class: 'dropdown-item' %></li>
+          <li><%= link_to 'History', 'javascript:void(0)', class: 'dropdown-item' %></li>
+          <li><%= link_to 'Wallet', 'javascript:void(0)', class: 'dropdown-item' %></li>
+          <li><%= link_to 'Help Center', 'javascript:void(0)', class: 'dropdown-item' %></li>
+          <li>
+            <%= link_to 'javascript:void(0)', class: 'dropdown-item' do %>
+              Get $30 credit <i class="fa-solid fa-gift mx-5"></i>
+            <% end %>
+            </li>
+          <li>
+            <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item' do %>
+              Log Out <i class="fa-solid fa-right-from-bracket mx-5"></i>
+            <% end %>
+          </li>
         <% else %>
           <li><%= link_to 'Sign Up', new_user_registration_path, class: 'dropdown-item' %></li>
           <li><%= link_to 'Sign In', new_user_session_path, method: :delete, class: 'dropdown-item' %></li>

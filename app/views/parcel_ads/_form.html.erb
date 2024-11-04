@@ -1,129 +1,132 @@
 <div class="col-lg-8 mx-auto shadow-sm border p-4 rounded bg-white mt-5 mb-5">
   <h1 class="text-center mb-5">Add Post: Need to carry</h1>
 
-  <%= form_with(model: @parcel_ad, local: true) do |form| %>
+  <% if current_user.professional? %>
+    <%= form_with(model: @parcel_ad, local: true) do |form| %>
 
-    <div class="row g-0 mb-5 form-control">
-      <div class="search-item col-md-3">
-        <%= form.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off' %>
-        <%= form.hidden_field :departure_country, id: 'departure_country' %>
-      </div>
-      <div class="search-item col-md-3">
-        <%= form.text_field :arrival_city, class: 'form-control fw-bold', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off' %>
-        <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
-      </div>
-      <div class="search-item col-md-3">
-        <%# <i class="fas fa-calendar-alt"></i> %>
-        <%= form.date_field :shipment_date, class: 'form-control flatpickr fw-bold', id: 'date_field', placeholder: 'Shipment Date' %>
-      </div>
-    </div>
-
-    <!-- Row for Parcel Type -->
-    <div class="row">
-      <div class="col-md-12 mb-3">
-        <%= form.label :parcel_type, "Shipment Type", class: 'form-label' %>
-        
-        <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button" data-value="Document">
-            <%= image_tag "document.png", class:"icon-class" %>
-             Document
-          </button>
-          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button active" data-value="Parcel">
-            <%= image_tag "parcel.png", class:"icon-class" %> Parcel
-          </button>
-          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button" data-value="Pallet">
-            <%= image_tag "pallet.png", class:"icon-class" %> Pallet
-          </button>
+      <div class="row g-0 mb-5 form-control">
+        <div class="search-item col-md-3">
+          <%= form.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off' %>
+          <%= form.hidden_field :departure_country, id: 'departure_country' %>
         </div>
-
-        <!-- Hidden field to store the selected parcel type -->
-        <%= form.hidden_field :parcel_type, id: 'selected_parcel_type' %>
-      </div>
-    </div>
-
-    <!-- Row for Parcel Dimensions -->
-    <div class="row mb-4">
-      <div class="col-md-2">
-        <%= form.label :parcel_length, "Length (cm)", class: 'form-label' %>
-        <%= form.number_field :parcel_length, class: 'form-control', placeholder: 'cm', min: 0  %>
+        <div class="search-item col-md-3">
+          <%= form.text_field :arrival_city, class: 'form-control fw-bold', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off' %>
+          <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
+        </div>
+        <div class="search-item col-md-3">
+          <%# <i class="fas fa-calendar-alt"></i> %>
+          <%= form.date_field :shipment_date, class: 'form-control flatpickr fw-bold', id: 'date_field', placeholder: 'Shipment Date' %>
+        </div>
       </div>
 
-      <div class="col-md-2">
-        <%= form.label :parcel_width, "Width (cm)", class: 'form-label' %>
-        <%= form.number_field :parcel_width, class: 'form-control', placeholder: 'cm', min: 0  %>
-      </div>
-
-      <div class="col-md-2">
-        <%= form.label :parcel_height, "Height (cm)", class: 'form-label' %>
-        <%= form.number_field :parcel_height, class: 'form-control', placeholder: 'cm', min: 0  %>
-      </div>
-
-      <div class="col-md-2">
-        <%= form.label :parcel_weight, "Weight (kg)", class: 'form-label' %>
-        <%= form.number_field :parcel_weight, class: 'form-control', placeholder: 'kg', min: 0  %>
-      </div>
-
-      <div class="col-md-2">
-        <%= form.label :parcel_quantity, "Quantity", class: 'form-label' %>
-        <%= form.number_field :parcel_quantity, class: 'form-control', placeholder: 'pcs', min: 0 , value: @parcel_ad.parcel_quantity || 0, id: 'parcel_quantity' %>
-        <div id="quantity_display" class="mt-2 fw-bold">Quantity: 0</div>
-      </div>
-    </div>
-
-    <!-- Add Another Parcel -->
-    <div class="mb-4">
-      <a class="text-primary" href="#">+ Add another parcel</a>
-    </div>
-
-    <!-- Insurance -->
-    <div class="mb-4">
+      <!-- Row for Parcel Type -->
       <div class="row">
-        <div class="col-md-5">
-          <%= form.label :insure_shipment, "Would you like to insure your shipment?", class: 'form-label' %>
-        </div>
+        <div class="col-md-12 mb-3">
+          <%= form.label :parcel_type, "Shipment Type", class: 'form-label' %>
+          
+          <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
+            <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button" data-value="Document">
+              <%= image_tag "document.png", class:"icon-class" %>
+               Document
+            </button>
+            <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button active" data-value="Parcel">
+              <%= image_tag "parcel.png", class:"icon-class" %> Parcel
+            </button>
+            <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button" data-value="Pallet">
+              <%= image_tag "pallet.png", class:"icon-class" %> Pallet
+            </button>
+          </div>
 
-        <div class="col-md-4">
-          <%= form.radio_button :insure_shipment, true, class: 'form-check-input', id: 'insure_shipment_yes' %>
-          <%= form.label :insure_shipment, 'Yes', value: true, class: 'form-check-label mx-2', for: 'insure_shipment_yes' %>
-
-          <%= form.radio_button :insure_shipment, false, class: 'form-check-input', id: 'insure_shipment_no' %>
-          <%= form.label :insure_shipment, 'No', value: false, class: 'form-check-label mx-2', for: 'insure_shipment_no' %>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row for Fees -->
-    <div class="row mb-4">
-      <div class="col-md-6">
-        <%= form.label :recommended_fee, "Recommended Fee", class: 'form-label' %>
-        <div class="input-group">
-          <span class="input-group-text">$</span> <!-- Currency symbol -->
-          <%= form.number_field :recommended_fee, class: 'form-control', placeholder: 'Recommended fee' %>
+          <!-- Hidden field to store the selected parcel type -->
+          <%= form.hidden_field :parcel_type, id: 'selected_parcel_type' %>
         </div>
       </div>
 
-      <div class="col-md-6">
-        <%= form.label :proposed_fee, "Proposed Fee", class: 'form-label' %>
-        <div class="input-group">
-          <span class="input-group-text">$</span> <!-- Currency symbol -->
-          <%= form.number_field :proposed_fee, class: 'form-control', placeholder: 'Proposal fee' %>
+      <!-- Row for Parcel Dimensions -->
+      <div class="row mb-4">
+        <div class="col-md-2">
+          <%= form.label :parcel_length, "Length (cm)", class: 'form-label' %>
+          <%= form.number_field :parcel_length, class: 'form-control', placeholder: 'cm', min: 0  %>
+        </div>
+
+        <div class="col-md-2">
+          <%= form.label :parcel_width, "Width (cm)", class: 'form-label' %>
+          <%= form.number_field :parcel_width, class: 'form-control', placeholder: 'cm', min: 0  %>
+        </div>
+
+        <div class="col-md-2">
+          <%= form.label :parcel_height, "Height (cm)", class: 'form-label' %>
+          <%= form.number_field :parcel_height, class: 'form-control', placeholder: 'cm', min: 0  %>
+        </div>
+
+        <div class="col-md-2">
+          <%= form.label :parcel_weight, "Weight (kg)", class: 'form-label' %>
+          <%= form.number_field :parcel_weight, class: 'form-control', placeholder: 'kg', min: 0  %>
+        </div>
+
+        <div class="col-md-2">
+          <%= form.label :parcel_quantity, "Quantity", class: 'form-label' %>
+          <%= form.number_field :parcel_quantity, class: 'form-control', placeholder: 'pcs', min: 0 , value: @parcel_ad.parcel_quantity || 0, id: 'parcel_quantity' %>
+          <div id="quantity_display" class="mt-2 fw-bold">Quantity: 0</div>
         </div>
       </div>
-    </div>
+
+      <!-- Add Another Parcel -->
+      <div class="mb-4">
+        <a class="text-primary" href="#">+ Add another parcel</a>
+      </div>
+
+      <!-- Insurance -->
+      <div class="mb-4">
+        <div class="row">
+          <div class="col-md-5">
+            <%= form.label :insure_shipment, "Would you like to insure your shipment?", class: 'form-label' %>
+          </div>
+
+          <div class="col-md-4">
+            <%= form.radio_button :insure_shipment, true, class: 'form-check-input', id: 'insure_shipment_yes' %>
+            <%= form.label :insure_shipment, 'Yes', value: true, class: 'form-check-label mx-2', for: 'insure_shipment_yes' %>
+
+            <%= form.radio_button :insure_shipment, false, class: 'form-check-input', id: 'insure_shipment_no' %>
+            <%= form.label :insure_shipment, 'No', value: false, class: 'form-check-label mx-2', for: 'insure_shipment_no' %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row for Fees -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <%= form.label :proposed_fee, "Proposed Fee", class: 'form-label' %>
+          <div class="input-group">
+            <span class="input-group-text">$</span> <!-- Currency symbol -->
+            <%= form.number_field :proposed_fee, class: 'form-control', placeholder: 'Proposal fee' %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :recommended_fee, "Recommended Fee", class: 'form-label' %>
+          <div class="input-group">
+            <span class="input-group-text">$</span> <!-- Currency symbol -->
+            <%= form.number_field :recommended_fee, class: 'form-control', placeholder: 'Recommended fee' %>
+          </div>
+        </div>
+      </div>
 
 
-    <!-- File Upload -->
-    <div class="mb-4">
-      <%= form.label :parcel_images, "Parcel Images" %> <small class="text-danger">(You can upload multiple images)</small>
-      <%= form.file_field :parcel_images, multiple: true, class: 'form-control', id: 'parcel_images_input' %>
-    </div>
+      <!-- File Upload -->
+      <div class="mb-4">
+        <%= form.label :parcel_images, "Parcel Images" %> <small class="text-danger">(You can upload multiple images)</small>
+        <%= form.file_field :parcel_images, multiple: true, class: 'form-control', id: 'parcel_images_input' %>
+      </div>
 
-    <div id="parcel_images_preview" class="mt-3"></div>
+      <div id="parcel_images_preview" class="mt-3"></div>
 
-    <!-- Submit Button -->
-    <div class="d-grid">
-      <%= form.submit "Publish Ad", class: "btn btn-primary mt-2" %>
-    </div>
+      <!-- Submit Button -->
+      <div class="d-grid">
+        <%= form.submit "Publish Ad", class: "btn btn-primary mt-2" %>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="fw-bold text-center text-danger">Individuals cannot post trips. Upgrade to a professional account.</p>
   <% end %>
 </div>
 

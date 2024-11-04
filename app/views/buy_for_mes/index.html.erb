@@ -1,9 +1,7 @@
-<div class="container mt-5 mb-5">
-	<!-- app/views/buy_for_mes/index.html.erb -->
+<div class="col-lg-10 mx-auto mt-5 mb-5">
+	<h1 class="mt-2 mb-5 text-center">Buy for Me Products</h1>
 
-	<h1>Buy for Me Products</h1>
-
-	<table class="table">
+	<table class="table table-striped">
 	 	<thead>
 	    <tr>
 	      <th>Departure Country</th>
@@ -29,11 +27,24 @@
 	        <td><%= product.product_quantity %></td>
 	        <td><%= number_to_currency(product.product_price) %></td>
 	        <td><%= number_to_currency(product.buy_for_me_fee) %></td>
-	        <td><%= number_to_currency(product.total_price) %></td>
+	        <td><%= number_to_currency(product.calculate_product_cost) %></td>
 	        <td>
-	          <%= link_to 'Show', buy_for_me_path(product) %>
-	          <%= link_to 'Edit', edit_buy_for_me_path(product) %>
-	          <%= link_to 'Delete', buy_for_me_path(product), method: :delete, data: { confirm: 'Are you sure?' } %>
+	        	<div class="dropdown">
+						  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						    Actions
+						  </button>
+						  <ul class="dropdown-menu">
+						    <li>
+						    	<%= link_to 'Show', buy_for_me_path(product), class: "dropdown-item" %>
+						    </li>
+						    <li>
+						    	<%= link_to 'Edit', edit_buy_for_me_path(product), class: "dropdown-item" %>
+						    </li>
+						    <li>
+						    	<%= link_to 'Delete', buy_for_me_path(product), method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+						    </li>
+						  </ul>
+						</div>
 	        </td>
 	      </tr>
 	    <% end %>

@@ -13,4 +13,8 @@ class BuyForMe < ApplicationRecord
   validates :product_price, numericality: { greater_than_or_equal_to: 0 }
   validates :buy_for_me_fee, numericality: { greater_than_or_equal_to: 0 }
   validates :total_price, numericality: { greater_than_or_equal_to: 0 }
+
+  def calculate_product_cost
+    total_cost = product_price.to_f + buy_for_me_fee.to_f
+  end
 end

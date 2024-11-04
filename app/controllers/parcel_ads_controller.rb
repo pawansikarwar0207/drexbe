@@ -3,6 +3,7 @@ require 'json'
 
 class ParcelAdsController < ApplicationController
 	before_action :authenticate_user!
+	# before_action :check_professional_user, only: [:new, :create]
 
 	def index
 		@parcel_ads = ParcelAd.all.order(created_at: :desc)
@@ -48,6 +49,10 @@ class ParcelAdsController < ApplicationController
   end
 
 	private	
+
+	# def check_professional_user
+	# 	redirect_to root_path, alert: 'Only professional user can post trips.' unless current_user.professional?
+	# end
 
 	def parcel_ad_params
 		params.require(:parcel_ad).permit(

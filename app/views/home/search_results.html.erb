@@ -3,18 +3,42 @@
 	<div class="row">
 		<div class="col-md-3">
 	   <div class="card shadow mt-2 sort-by">
-        <h5>Sort by</h5>
-        <% sort_options = ['Earliest departure', 'Lowest price', 'Close to the starting point', 'Close to the arrival point', 'Shortest route'] %>
-        <% sort_options.each do |option| %>
-          <div class="form-check">
-            <input class="form-check-input" id="<%= option.parameterize %>" name="sortOptions" type="radio" <%= 'checked' if option == 'Earliest departure' %> />
-            <label class="form-check-label" for="<%= option.parameterize %>">
-              <%= option %>
-            </label>
-          </div>
-        <% end %>
-        <div class="clear-all">
-          <%= link_to 'Clear All', search_results_path, class: 'btn btn-danger mt-3' %>
+        <h5>Filter</h5>
+        <div>
+        	<%= form_with(url: search_results_path, method: :get, local: true) do |form| %>
+				    <div class="">
+				      <div class="search-item">
+				        <i class="fas fa-dot-circle"></i>
+				        <span>
+				          <%= form.text_field :departure_city, class: 'form-control', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off' %>
+				          <%= form.hidden_field :departure_country, id: 'departure_country' %>
+				        </span>
+				      </div>
+				      <div class="search-item">
+				        <i class="fas fa-dot-circle"></i>
+				        <span>
+				          <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off' %>
+				          <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
+				        </span>
+				      </div>
+				      <div class="search-item">
+				        <i class="fas fa-calendar-alt"></i>
+				        <span>
+				          <%= form.text_field :date, class: 'form-control flatpickr', id: 'date_field', placeholder: 'Select Date' %>
+				        </span>
+				      </div>
+
+				      <div class="">
+							  <%= form.label :filter, "Filter by:", class: 'fw-bold mt-2 mb-2'%>
+							  <%= form.select :filter, options_for_select([['All', 'all'], ['Traveler', 'traveler'], ['Sender', 'sender'], ['Buyer', 'buyer']], params[:filter]), {prompt: 'Select'}, class: 'form-select mb-3' %>
+							</div>
+							
+				      <div class="">
+				        <%= form.submit "Search", class: 'btn btn-primary' %>
+				        <%= link_to 'Clear All', search_results_path, class: 'btn btn-danger' %>
+				      </div>
+				    </div>
+				  <% end %>
         </div>
       </div>
 	  </div>
@@ -103,7 +127,7 @@
 			                    <!-- Transportation Icon -->
 			                    <% transportation_images = {
 			                      'flight' => 'plane.png',
-			                      'car' => 'car.png',
+			                      'car' => 'sedan.png',
 			                      'bus' => 'bus.png',
 			                      'train' => 'train.png',
 			                      'van' => 'delivery-van.png',
@@ -115,9 +139,9 @@
 			                    <% end %>
 
 			                    <!-- Additional Contact Icons -->
-			                    <i class="fas fa-mobile-alt me-3 text-secondary fa-xl "></i>
-			                    <i class="fas fa-address-card me-3 text-secondary fa-xl"></i>
-			                    <i class="fas fa-envelope text-secondary fa-xl"></i>
+			                    <i class="fas fa-mobile-alt me-3 fa-xl "></i>
+			                    <i class="fas fa-address-card me-3 fa-xl"></i>
+			                    <i class="fas fa-envelope fa-xl"></i>
 			                  </div>
 			                </div>
 			              </div>
@@ -307,7 +331,7 @@
 			          <div class="col-right">
 			            <% if buy_for_me.parcel_type.present? %>
 			              <div class="carry-for-you">
-			                <h6 class="mt-2 me-2 fw-bold">Buy For you:</h6>
+			                <h6 class="mt-2 me-2 fw-bold">Buy For Me:</h6>
 			                  <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
 			                    <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'small' %> " data-value="Small">
 			                      <%= image_tag "document.png", class:"icon-class" %>
@@ -353,9 +377,9 @@
 			                  
 			                  <div class="icons mt-3 mx-5">
 			                    <!-- Additional Contact Icons -->
-			                    <i class="fas fa-mobile-alt me-3 text-secondary fa-xl "></i>
-			                    <i class="fas fa-address-card me-3 text-secondary fa-xl"></i>
-			                    <i class="fas fa-envelope text-secondary fa-xl"></i>
+			                    <i class="fas fa-mobile-alt me-3 fa-xl "></i>
+			                    <i class="fas fa-address-card me-3 fa-xl"></i>
+			                    <i class="fas fa-envelope fa-xl"></i>
 			                  </div>
 			                </div>
 			              </div>

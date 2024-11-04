@@ -30,7 +30,7 @@
               <strong>Buy For Me Fee:</strong> <%= number_to_currency(@buy_for_me.buy_for_me_fee) %>
             </li>
             <li class="list-group-item">
-              <strong>Total Price:</strong> <%= number_to_currency(@buy_for_me.total_price) %>
+              <strong>Total Price:</strong> <%= number_to_currency(@buy_for_me.calculate_product_cost) %>
             </li>
             <li class="list-group-item">
               <strong>Parcel Type:</strong> <%= @buy_for_me.parcel_type %>

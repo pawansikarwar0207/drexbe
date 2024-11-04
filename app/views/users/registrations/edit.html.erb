@@ -59,6 +59,10 @@
                 <%= f.hidden_field :phone_number, id: "hidden_phone_number", class: 'mt-2 mb-2' %>
               </div>
 
+              <div class="mt-4 mb-4">
+                <p><strong>User Type : </strong><%= @current_user.user_type.upcase %></p>
+              </div>
+
               <div class="form-group mt-2 mb-2 mt-2">
                 <%= f.label :email %>
                 <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control mt-1' %>

@@ -1,0 +1,58 @@
+<div class="profile-header">
+  <%= image_tag @user.profile_picture, height: "100", width: "100" if @user.profile_picture.attached? %>
+  <h2><%= @user.full_name %></h2>
+  
+  <div class="profile-status">
+    <p class="<%= @user.verified? ? 'text-success' : 'text-danger' %>">
+      <i class="fas fa-check-circle"></i> 
+      <% if @user.verified? %>
+      Your professional profile is 100% complete and verified!
+      <% else %>
+      Your profile is not complete. Please complete the necessary fields.
+      <% end %>
+    </p>
+  </div>
+  <div class="profile-actions">
+    <%= link_to edit_profile_picture_path(@user.id) do %>
+    <i class="fas fa-plus-circle"></i> Add a profile picture
+    <% end %>
+
+    <%= link_to 'Edit professional information', edit_user_registration_path %>
+  </div>
+</div>
+<hr/>
+<div class="profile-check">
+  <h4>Professional Profile</h4>
+  <div class="profile-check">
+
+    <% if current_user.passport_document.attached? || current_user.identity_card_document.attached? %>
+      <p><i class="fas fa-check-circle"></i> You have uploaded your document successfully.</p>
+    <% else %>
+      <%= link_to verify_document_path do %>
+      <i class="fas fa-plus-circle"></i> Verify an ID
+      <% end %>
+    <% end %>
+
+
+    <% if current_user.confirmed? %>
+      <p><i class="fas fa-check-circle"></i> Your email <strong><%= current_user.email %></strong> is confirmed.</p>
+    <% else %>
+      <a href="#">
+        <i class="fas fa-plus-circle"></i>
+        Confirm address <%= current_user.email %>
+      </a>
+    <% end %>
+
+    <% if current_user.phone_number.present? %>
+      <p>
+        <i class="fas fa-check-circle"></i> 
+        Your contact number <strong><%= current_user.masked_phone_number %></strong> is confirmed.
+      </p>
+    <% else %>
+      <a href="#">
+        <i class="fas fa-plus-circle"></i>
+        Verify a phone number
+      </a>
+    <% end %>
+  </div>
+</div>

@@ -10,6 +10,10 @@ class User < ApplicationRecord
   # validates :postal_code, presence: true, numericality: true
   # validates :phone_number, presence: true, numericality: true, length: { minimum: 10, maximum: 10 }
 
+  enum user_type: { individual: 'individual', professional: 'professional' }
+
+  validates :user_type, presence: true, inclusion: { in: user_types.keys }
+
   has_one_attached :profile_picture
   has_one_attached :passport_document
   has_one_attached :identity_card_document

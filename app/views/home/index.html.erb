@@ -5,12 +5,14 @@
         <i class="fas fa-dot-circle"></i>
         <span>
           <%= form.text_field :departure_city, class: 'form-control', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off' %>
+          <%= form.hidden_field :departure_country, id: 'departure_country' %>
         </span>
       </div>
       <div class="search-item">
         <i class="fas fa-dot-circle"></i>
         <span>
           <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off' %>
+          <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
         </span>
       </div>
       <div class="search-item">

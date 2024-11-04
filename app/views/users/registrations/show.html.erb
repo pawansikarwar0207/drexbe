@@ -6,73 +6,9 @@
   <% end %>
 <% end %>
 <div class="col-lg-8 mx-auto mt-3">
- <div class="profile-header">
-   <% if @user.present? %>
-      <% if @user.profile_picture.attached?  %>
-        <%= image_tag @user.profile_picture, height:"100", width:"100" %>
-      <% else %>
-        <img alt="Profile picture placeholder" height="100" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="100"/>
-      <% end %>
-    <% end %>  
-  <h2>
-   <%= current_user.full_name  %> 
-  </h2>
-
-  <div class="profile-status">
-    <% if @user.verified? %>
-      <p class="text-success"><i class="fas fa-check-circle"></i> Your profile is 100% complete and verified!</p>
-    <% else %>
-      <p class="text-danger">Your profile is not complete. Please fill the missing information or complete your information.</p>
-    <% end %>
-  </div>
-
-  <div class="progress col-lg-3 mx-auto fw-bold">
-    <div class="progress-bar" role="progressbar" style="width: <%= @user.profile_completion %>%;" aria-valuenow="<%= @user.profile_completion %>" aria-valuemin="0" aria-valuemax="100">
-      <%= @user.profile_completion %>% Complete
-    </div>
-  </div>
- </div>
- <div class="profile-actions">
-  <%= link_to edit_profile_picture_path(@user.id) do %>
-    <i class="fas fa-plus-circle"></i> Add a profile picture
+  <% if @user.user_type == 'individual' %>
+    <%= render 'individual_profile', user: @user %>
+  <% elsif @user.user_type == 'professional' %>
+    <%= render 'professional_profile', user: @user %>
   <% end %>
-
-  <%= link_to 'Edit personal information', edit_user_registration_path, target: '__blank' %>
- </div>
- <hr/>
- <div class="profile-check">
-  <h4>
-   Check your profile
-  </h4>
-
-  <% if current_user.passport_document.attached? || current_user.identity_card_document.attached? %>
-    <p><i class="fas fa-check-circle"></i> You have uploaded your document successfully.</p>
-  <% else %>
-    <%= link_to verify_document_path do %>
-      <i class="fas fa-plus-circle"></i> Verify an ID
-    <% end %>
-  <% end %>
-
-
-  <% if current_user.confirmed? %>
-    <p><i class="fas fa-check-circle"></i> Your email <strong><%= current_user.email %></strong> is confirmed.</p>
-  <% else %>
-    <a href="#">
-      <i class="fas fa-plus-circle"></i>
-      Confirm address <%= current_user.email %>
-    </a>
-  <% end %>
-
-  <% if current_user.phone_number.present? %>
-    <p>
-      <i class="fas fa-check-circle"></i> 
-      Your contact number <strong><%= current_user.masked_phone_number %></strong> is confirmed.
-    </p>
-  <% else %>
-    <a href="#">
-      <i class="fas fa-plus-circle"></i>
-      Verify a phone number
-    </a>
-  <% end %>
- </div>
 </div>

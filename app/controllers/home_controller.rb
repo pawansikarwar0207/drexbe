@@ -10,9 +10,9 @@ class HomeController < ApplicationController
 
     # Only add search conditions if the parameters are present
     travelers_conditions[:departure_city] = params[:departure_city] if params[:departure_city].present?
-    travelers_conditions[:departure_country] = params[:departure_country] if params[:departure_country].present?
+    travelers_conditions[:departure_country] = params[:departure_country]&.upcase if params[:departure_country].present? # Ensure country code format
     travelers_conditions[:arrival_city] = params[:arrival_city] if params[:arrival_city].present?
-    travelers_conditions[:arrival_country] = params[:arrival_country] if params[:arrival_country].present?
+    travelers_conditions[:arrival_country] = params[:arrival_country]&.upcase if params[:arrival_country].present? # Ensure country code format
     travelers_conditions[:travel_date] = params[:date] if params[:date].present?
 
     # Only add search conditions if the parameters are present
@@ -31,6 +31,26 @@ class HomeController < ApplicationController
     @travelers = Traveler.where(travelers_conditions)
     @parcel_ads = ParcelAd.where(parcel_ads_conditions)
     @buy_for_mes = BuyForMe.where(buy_for_me_conditions)
+
+    # Search only the selected type, or all if 'all' is selected
+    case params[:filter]
+    when 'traveler'
+      @travelers = Traveler.where(travelers_conditions)
+      @parcel_ads = []
+      @buy_for_mes = []
+    when 'sender'
+      @travelers = []
+      @parcel_ads = ParcelAd.where(parcel_ads_conditions)
+      @buy_for_mes = []
+    when 'buyer'
+      @travelers = []
+      @parcel_ads = []
+      @buy_for_mes = BuyForMe.where(buy_for_me_conditions)
+    else
+      @travelers = Traveler.where(travelers_conditions)
+      @parcel_ads = ParcelAd.where(parcel_ads_conditions)
+      @buy_for_mes = BuyForMe.where(buy_for_me_conditions)
+    end
 
     render 'search_results'
   end

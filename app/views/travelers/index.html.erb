@@ -1,43 +1,41 @@
-<section class="search-results py-5">
-  <div class="container">
-    <h2 class="mb-4 text-center">Travelers</h2>
-    <% if @travelers.present? %>
-      <table class="table table-bordered table-striped">
-        <thead class="thead-light">
+<div class="col-lg-10 mx-auto mt-5">
+  <h2 class="mb-4 text-center">Travelers</h2>
+  <% if @travelers.present? %>
+    <table class="table table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th>Traveler Name</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Travel Date</th>
+          <th>Parcel Info</th>
+          <th>Ready to Buy</th>
+          <th>Collection Mode</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @travelers.each do |traveler| %>
           <tr>
-            <th>Traveler Name</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Travel Date</th>
-            <th>Parcel Info</th>
-            <th>Ready to Buy</th>
-            <th>Collection Mode</th>
+            <td><%= link_to traveler.name, traveler_path(traveler) %></td>
+            <td>
+              <strong>Departure:</strong> <%= traveler.departure_city %>, <%= traveler.departure_country %>
+            </td>
+            <td>
+              <strong>Arrival:</strong> <%= traveler.arrival_city %>, <%= traveler.arrival_country %>
+            </td>
+            <td><%= traveler.travel_date %></td>
+            <td>
+              <%= traveler.parcel_qty %> parcels
+            </td>
+            <td><%= traveler.ready_to_buy_for_you? ? 'Yes' : 'No' %></td>
+            <td><%= traveler.parcel_collection_mode&.humanize || 'N/A' %></td>
           </tr>
-        </thead>
-        <tbody>
-          <% @travelers.each do |traveler| %>
-            <tr>
-              <td><%= link_to traveler.name, traveler_path(traveler) %></td>
-              <td>
-                <strong>Departure:</strong> <%= traveler.departure_city %>, <%= traveler.departure_country %>
-              </td>
-              <td>
-                <strong>Arrival:</strong> <%= traveler.arrival_city %>, <%= traveler.arrival_country %>
-              </td>
-              <td><%= traveler.travel_date.strftime("%B %d, %Y") %></td>
-              <td>
-                <%= traveler.parcel_qty %> parcels
-              </td>
-              <td><%= traveler.ready_to_buy_for_you? ? 'Yes' : 'No' %></td>
-              <td><%= traveler.parcel_collection_mode&.humanize || 'N/A' %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <div class="alert alert-danger text-center" role="alert">
-        No travelers found for the selected cities and date.
-      </div>
-    <% end %>
-  </div>
-</section>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="alert alert-danger text-center" role="alert">
+      No travelers found for the selected cities and date.
+    </div>
+  <% end %>
+</div>

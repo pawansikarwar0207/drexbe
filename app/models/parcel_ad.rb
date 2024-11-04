@@ -9,11 +9,19 @@ class ParcelAd < ApplicationRecord
             numericality: { greater_than_or_equal_to: 0, 
                             message: "must be greater than or equal to 0" },
                             if: :requires_dimensions?
-                              
+
   validates :recommended_fee, :proposed_fee, 
             numericality: { greater_than_or_equal_to: 0, 
                             message: "must be greater than or equal to 0" }, 
             allow_nil: true
+
+  scope :by_professionals, -> { joins(:user).where(users: { user_type: 'professional' }) }
+
+  def calculate_cost
+    base_rate = 10
+    total_cost = parcel_weight.to_f * base_rate
+    total_cost
+  end
   
   private
 
