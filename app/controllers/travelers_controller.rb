@@ -14,12 +14,12 @@ class TravelersController < ApplicationController
   end
 
   def create
-    @traveler = current_user.traveler.build(traveler_params)
+    @traveler = Traveler.create(traveler_params)
 
     if @traveler.save
       redirect_to @traveler, notice: 'Traveler was successfully created.'
     else
-      render "parcel_ads/new"
+      render :new, status: :unprocessable_entity
     end
   end
 

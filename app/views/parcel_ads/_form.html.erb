@@ -1,8 +1,23 @@
 <div class="col-lg-8 mx-auto shadow-sm border p-4 rounded bg-white mt-5 mb-5">
   <h1 class="text-center mb-5">Add Post: Need to carry</h1>
 
-  <% if current_user.professional? %>
+  <%# if current_user.professional? %>
     <%= form_with(model: @parcel_ad, local: true) do |form| %>
+
+      <!-- Display validation errors -->
+
+      <% if @parcel_ad.errors.any? %>
+        <div class="alert alert-danger">
+          <h4 class="alert-heading">
+            Please fix the following errors:
+          </h4>
+          <ul>  
+            <% @parcel_ad.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
       <div class="row g-0 mb-5 form-control">
         <div class="search-item col-md-3">
@@ -125,8 +140,8 @@
         <%= form.submit "Publish Ad", class: "btn btn-primary mt-2" %>
       </div>
     <% end %>
-  <% else %>
-    <p class="fw-bold text-center text-danger">Individuals cannot post trips. Upgrade to a professional account.</p>
-  <% end %>
+  <%# else %>
+    <%# <p class="fw-bold text-center text-danger">Individuals cannot post trips. Upgrade to a professional account.</p> %>
+  <%# end %>
 </div>
 

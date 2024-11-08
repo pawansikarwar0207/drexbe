@@ -30,7 +30,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :parcel_ads
+  resources :parcel_ads do
+    member do
+      post :create_shipment
+      post :purchase_label
+    end
+  end
+  
   resources :buy_for_mes
 
   get 'get_cities', to: 'home#get_cities'

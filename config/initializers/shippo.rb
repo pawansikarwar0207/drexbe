@@ -1,0 +1,1 @@
+Shippo.api_key = ENV['SHIPPO_API_KEY']

@@ -1,29 +1,187 @@
-<div class="col-lg-8 mx-auto mt-5">
-  <%= form_with(url: search_results_path, method: :get, local: true) do |form| %>
-    <div class="search-bar">
-      <div class="search-item">
-        <i class="fas fa-dot-circle"></i>
-        <span>
-          <%= form.text_field :departure_city, class: 'form-control', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off' %>
-          <%= form.hidden_field :departure_country, id: 'departure_country' %>
-        </span>
-      </div>
-      <div class="search-item">
-        <i class="fas fa-dot-circle"></i>
-        <span>
-          <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off' %>
-          <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
-        </span>
-      </div>
-      <div class="search-item">
-        <i class="fas fa-calendar-alt"></i>
-        <span>
-          <%= form.text_field :date, class: 'form-control flatpickr', id: 'date_field', placeholder: 'Today' %>
-        </span>
-      </div>
-      <button class="search-button">
-        <%= form.submit "Search", class: 'btn' %>
-      </button>
+<!-- Main content -->
+<section class="col-lg-10 mx-auto card border-0 p-5">
+  <div class="row align-items-center">
+    <!-- Text Column -->
+    <div class="col-lg-6 col-md-12 text-start mb-4 mb-lg-0">
+      <h1 class="header-title" style="color: #353188; font-size: 45px;">Bringing Happiness Right to Your Doorstep!</h1>
+      <p class="header-subtitle text-secondary lead">
+        We’re here to make your moments brighter and your life easier with fast, reliable deliveries.
+        Discover the joy of convenience and satisfaction, every time you order.
+      </p>
     </div>
-  <% end %>
+    <!-- Image Column -->
+    <div class="col-lg-6 col-md-12">
+      <%= image_tag 'https://img.freepik.com/free-vector/character-illustration-people-with-global-network-concept_53876-59874.jpg?ga=GA1.1.590165737.1721391013&semt=ais_hybrid', class: 'img-fluid' %>
+    </div>
+  </div>
+
+  <!-- Search bar -->
+  <div class="mt-4">
+    <%= form_with(url: search_results_path, method: :get, local: true) do |form| %>
+      <div class="search-bar">
+        <div class="search-item">
+          <i class="fas fa-dot-circle"></i>
+          <span>
+            <%= form.text_field :departure_city, class: 'form-control', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off' %>
+            <%= form.hidden_field :departure_country, id: 'departure_country' %>
+          </span>
+        </div>
+        <div class="search-item">
+          <i class="fas fa-dot-circle"></i>
+          <span>
+            <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off' %>
+            <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
+          </span>
+        </div>
+        <div class="search-item">
+          <i class="fas fa-calendar-alt"></i>
+          <span>
+            <%= form.text_field :date, class: 'form-control flatpickr', id: 'date_field', placeholder: 'Today' %>
+          </span>
+        </div>
+        <button class="search-button">
+          <%= form.submit "Search", class: 'btn' %>
+        </button>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- quick action section -->
+  <div class="quick-actions bg-light mt-5 card border-0">
+    <h1>Quick Actions</h1>
+    <div class="">
+        <div class="row justify-content-center">
+            <div class="col-md-3 mb-2">
+                <div class="action-card text-center">
+                    <i class="fas fa-cube"></i>
+                    <p>Advanced Tracking</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="action-card text-center">
+                    <i class="fas fa-calculator"></i>
+                    <p>Get Rates</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="action-card text-center">
+                    <i class="fas fa-shipping-fast"></i>
+                    <p>Send Shipment</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row align-items-center">
+    <!-- Text Column -->
+    <div class="col-lg-6 col-md-12 text-start mb-4 mb-lg-0">
+      <h1 class="header-title" style="color: #353188; font-size: 45px;">
+        Ship up to 30kg to India, Pakistan, Philippines, or Nepal with Customs Duties Included! 
+      </h1>
+      <p class="header-subtitle lead mt-3 mb-3">
+        Send Packages up to 30kg directly to your recipient's doorstep in as little as 14 days, with custom duties covered for shipments valued up to $100. Enjoy fast, reliable shipping with Drexbe's service.  
+      </p>
+      <div style="color: #353188;">
+        <h4>Affordable Rate for 30kg Shipments:</h4>
+        <ul style="font-size:20px;">
+          <li>India: $130</li>
+          <li>Pakistan: $204</li>
+          <li>Philippines: $118</li>
+          <li>Nepal: $118</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Image Column -->
+    <div class="col-lg-6 col-md-12">
+      <%= image_tag 'https://img.freepik.com/free-vector/delivery-service-with-masks-concept_23-2148498594.jpg?ga=GA1.1.590165737.1721391013&semt=ais_hybrid', class: 'img-fluid' %>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="subscribe-section">
+      <div class="subscribe-text">
+        <p style="font-size: 23px;" class="text-start">Subscribe for Our</p>
+        <h2 style="font-size: 30px;">Latest News and Offers</h2>
+      </div>
+      <div class="subscribe-input">
+        <input type="email" placeholder="Write your email here.." class="mt-2">
+        <button type="button">Send</button>
+      </div>
+    </div>
 </div>
+</section>
+
+<style>
+ .quick-actions {
+  text-align: center;
+  padding: 50px 0;
+}
+.quick-actions h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+}
+.action-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+.action-card:hover {
+  transform: translateY(-5px);
+}
+.action-card i {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+.action-card p {
+  font-size: 1rem;
+  color: #333;
+  margin: 0;
+}
+
+  .subscribe-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      flex-wrap: wrap;
+  }
+  .subscribe-text {
+      font-family: Arial, sans-serif;
+      margin-bottom: 10px;
+  }
+  .subscribe-text h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0;
+  }
+  .subscribe-text p {
+      font-size: 16px;
+      margin: 0;
+  }
+  .subscribe-input {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+  }
+  .subscribe-input input {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      margin-right: 10px;
+      width: 250px;
+      margin-bottom: 10px;
+  }
+  .subscribe-input button {
+      background-color: #3f3d9e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+  }
+</style>

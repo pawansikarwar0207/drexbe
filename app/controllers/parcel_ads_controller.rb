@@ -19,8 +19,7 @@ class ParcelAdsController < ApplicationController
 		if @parcel_ad.save
 			redirect_to parcel_ads_path, notice: "Your add has been successfully published."
 		else
-			Rails.logger.debug(@parcel_ad.errors.full_messages)
-			render :new, alert: "Something went wrong."
+			render :new, status: :unprocessable_entity
 		end
 	end
 
@@ -37,7 +36,7 @@ class ParcelAdsController < ApplicationController
 		if @parcel_ad.update(parcel_ad_params)
 			redirect_to parcel_ads_path, notice: "Your add has been successfully updated."
 		else
-			render :new, alert: "Something went wrong."
+			render :edit, alert: "Something went wrong."
 		end
 	end
 
@@ -46,6 +45,54 @@ class ParcelAdsController < ApplicationController
     cities = get_cities_by_country(country_code)
 
     render json: { cities: cities }
+  end
+
+  #create the shipment with shippo api
+  def create_shipment
+	  @parcel_ad = ParcelAd.find(params[:id])
+	  shipment_service = ShipmentService.new
+
+	  begin
+	    shipment = shipment_service.create_shipment(@parcel_ad)
+
+	    # Check if the shipment and rates are present
+	    if shipment && shipment['rates'].present?
+	      @shipment_id = shipment['object_id']
+	      @rate_id = shipment['rates'].first['object_id'] # Get the first rate ID
+
+	      # Update the ParcelAd with shipment_id and rate_id
+	      @parcel_ad.update(shipment_id: @shipment_id, rate_id: @rate_id)
+	      flash[:notice] = "Shipment created successfully."
+	    else
+	      flash[:alert] = "Shipment created, but no rates were available. Please check the shipment details or contact support."
+	    end
+	  rescue Shippo::Exceptions::APIServerError => e
+	    flash[:alert] = "Failed to create shipment: #{e.message}"
+	  end
+
+	  redirect_to parcel_ad_path(@parcel_ad)
+	end
+
+
+  def purchase_label
+    @parcel_ad = ParcelAd.find(params[:id])
+
+    # Ensure the shipment was created beforehand
+    if @parcel_ad.shipment_id.present?
+      shipment_service = ShipmentService.new
+      result = shipment_service.purchase_label(@parcel_ad.shipment_id)
+
+      if result.success?
+        @label_url = result.label_url
+        flash[:notice] = "Label purchased successfully. Download it here: #{@label_url}"
+      else
+        flash[:alert] = "Failed to purchase label: #{result.error_message}"
+      end
+    else
+      flash[:alert] = "Shipment not found. Please create a shipment first."
+    end
+
+    redirect_to parcel_ad_path(@parcel_ad)
   end
 
 	private	

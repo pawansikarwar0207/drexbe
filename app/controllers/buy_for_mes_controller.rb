@@ -15,7 +15,7 @@ class BuyForMesController < ApplicationController
     if @buy_for_me.save
       redirect_to buy_for_mes_path, notice: "Your 'Buy for Me' request has been successfully created."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -26,7 +26,7 @@ class BuyForMesController < ApplicationController
      if @buy_for_me.update(buy_for_me_params)
       redirect_to buy_for_mes_path, notice: "Your 'Buy for Me' request has been successfully updated."
     else
-      render :edit
+      render :edit, alert: 'Something went wrong.'
     end
   end
 

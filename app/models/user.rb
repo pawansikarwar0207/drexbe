@@ -3,11 +3,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable, 
-         # :confirmable,
+         :confirmable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
-  # validates :first_name, :last_name, :city, :country, presence: true
-  # validates :postal_code, presence: true, numericality: true
+  validates :first_name, :last_name, :city, :country, presence: true
+  validates :postal_code, presence: true, numericality: true
   # validates :phone_number, presence: true, numericality: true, length: { minimum: 10, maximum: 10 }
 
   enum user_type: { individual: 'individual', professional: 'professional' }
@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_one_attached :identity_card_document
 
   has_many :parcel_ads, dependent: :destroy
+  has_many :travelers, dependent: :destroy
 
   def profile_completion
     completion = 0

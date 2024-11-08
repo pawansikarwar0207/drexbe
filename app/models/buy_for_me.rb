@@ -1,7 +1,7 @@
 class BuyForMe < ApplicationRecord
-	validates :departure_country, presence: true
+	# validates :departure_country, presence: true
   validates :departure_city, presence: true
-  validates :arrival_country, presence: true
+  # validates :arrival_country, presence: true
   validates :arrival_city, presence: true
   validates :shopping_date, presence: true
   validates :product_link, presence: true

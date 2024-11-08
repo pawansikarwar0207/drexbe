@@ -1,9 +1,11 @@
+require 'shippo'
+
 class ParcelAd < ApplicationRecord
   belongs_to :user
 
   has_many_attached :parcel_images
 
-  # validates :departure_city, :departure_country, :arrival_city, :arrival_country, :parcel_type, :parcel_quantity, presence: true
+  validates :departure_city, :arrival_city, :parcel_type, :parcel_quantity, :recommended_fee, :proposed_fee, :shipment_date, presence: true
 
   validates :parcel_length, :parcel_width, :parcel_height, :parcel_weight, 
             numericality: { greater_than_or_equal_to: 0, 
@@ -27,6 +29,111 @@ class ParcelAd < ApplicationRecord
 
   def requires_dimensions?
     parcel_type != 'Document'
+  end
+
+  # def create_shipment
+  #   shipment = Shippo::Shipment.create(
+  #     address_from: {
+  #       name: user.full_name,
+  #       street1: user.address_1,
+  #       city: departure_city,
+  #       state: departure_country,
+  #       zip: user.postal_code,
+  #       country: user.country,
+  #       email: user.email
+  #     },
+  #     address_to: {
+  #       name: "Recipient Name",
+  #       street1: "Recipient Address",
+  #       city: arrival_city,
+  #       state: arrival_country,
+  #       zip: "Recipient Postal Code",
+  #       country: arrival_country,
+  #       email: "recipient@example.com"
+  #     },
+  #     parcels: [{
+  #       length: parcel_length,
+  #       width: parcel_width,
+  #       height: parcel_height,
+  #       distance_unit: 'in', # adjust based on Shippo's requirements
+  #       weight: parcel_weight,
+  #       mass_unit: 'lb' # adjust based on Shippo's requirements
+  #     }],
+  #     async: false
+  #   )
+
+  #   shipment
+  # end
+
+  def purchase_label
+    # Replace with your actual address details or fetch from related data
+    address_from = {
+      name: "Sender Name",
+      street1: "123 Sender St",
+      city: "Bhopal",
+      state: "",
+      zip: "462001",
+      country: "IN",
+      phone: "1234567890",
+      email: "sender@example.com"
+    }
+
+    address_to = {
+      name: "Receiver Name",
+      street1: "456 Receiver Ave",
+      city: "Pune",
+      state: "",
+      zip: "411001",
+      country: "IN",
+      phone: "0987654321",
+      email: "receiver@example.com"
+    }
+
+    # Parcel details, typically from your `ParcelAd` model fields
+    parcel = {
+      length: self.parcel_length,
+      width: self.parcel_width,
+      height: self.parcel_height,
+      distance_unit: "in",
+      weight: self.parcel_weight,
+      mass_unit: "lb"
+    }
+
+    # Create shipment with Shippo
+    shipment = Shippo::Shipment.create(
+      address_from: address_from,
+      address_to: address_to,
+      parcels: [parcel],
+      async: false
+    )
+
+    if shipment["status"] == "SUCCESS"
+      # Fetch rates and select the preferred one (e.g., the lowest rate)
+      rate = shipment["rates"].min_by { |r| r["amount"].to_f }
+      
+      # Purchase the label with the selected rate
+      label = Shippo::Transaction.create(
+        rate: rate["object_id"],
+        label_file_type: "PDF", # Or "PNG" if preferred
+        async: false
+      )
+
+      if label["status"] == "SUCCESS"
+        # Return label details, such as the label URL
+        {
+          status: "SUCCESS",
+          label_url: label["label_url"],
+          tracking_number: label["tracking_number"]
+        }
+      else
+        { status: "FAILED", error: label["messages"] }
+      end
+    else
+      { status: "FAILED", error: shipment["messages"] }
+    end
+  rescue => e
+    # Handle API errors and return failure response
+    { status: "ERROR", error: e.message }
   end
 
 end

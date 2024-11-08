@@ -1,0 +1,81 @@
+<div class="container mb-5">
+	<div class="card border-0">
+	  <h1 class="card-title text-center p-3 border-bottom">Shipment Created Successfully</h1>
+	  <p class="card-title text-center p-3 border-bottom">Your shipment has been created with ID: <%= @shipment_id %></p>
+	  <div class="card-body">
+	    <div class="row">
+	      <div class="col-md-6">
+	        <h5 class="fw-bold">Parcel Location :</h5>
+	        <p><strong>From Country : </strong> <%= @parcel_ad.departure_country %></p>
+	        <p><strong>From City : </strong> <%= @parcel_ad.departure_city %></p>
+
+	        <p><strong>To Country : </strong> <%= @parcel_ad.arrival_country %></p>
+	        <p><strong>TO City : </strong> <%= @parcel_ad.arrival_city %></p>
+	      </div>
+	      <% if @parcel_ad.parcel_weight.present? || @parcel_ad.parcel_height.present? || @parcel_ad.parcel_length.present? || @parcel_ad.parcel_width.present? %>
+	        <div class="col-md-6">
+	          <h5 class="fw-bold">Parcel Dimension :</h5>
+	          <p><strong>Weight : </strong> <%= @parcel_ad.parcel_weight %> kg</p>
+	          <p><strong>Height : </strong> <%= @parcel_ad.parcel_height %> cm</p>
+	          <p><strong>Length : </strong> <%= @parcel_ad.parcel_length %> cm</p>
+	          <p><strong>Widht : </strong> <%= @parcel_ad.parcel_width %> cm</p>
+	        </div>
+	      <% end %>
+	    </div>
+	    
+	    <hr>
+
+	    <div class="py-3"> 
+	      <% if @parcel_ad.user.professional? %>
+	        <p><strong>Calculated Cost:</strong> <%= number_to_currency(@parcel_ad.calculate_cost) %></p>
+	      <% else %>
+	        <p>Only professionals have cost calculations.</p>
+	      <% end %>
+	    </div>
+
+	    <hr>
+
+	    <div class="row">
+	      <div class="col-md-6 mt-3">
+	        <p><strong>Date to Send : </strong> <%= @parcel_ad.shipment_date %></p>
+	      </div>
+	      <div class="col-md-6 mt-3">
+	        <p><strong>Parcel Type : </strong> <%= @parcel_ad.parcel_type %></p>
+	      </div>
+	    </div>
+
+	    <hr>
+	    
+	    <div class="row">
+	      <div class="col-md-6  mt-3">
+	        <p><strong>Quantity : </strong> <%= @parcel_ad.parcel_quantity %></p>
+	      </div>
+	      <div class="col-md-6  mt-3">
+	        <p><strong>Insure Shipment : </strong> <%= @parcel_ad.insure_shipment %></p>
+	      </div>
+	    </div>
+
+	    <hr>
+
+	    <div class="row">
+	      <div class="col-md-6  mt-3">
+	        <p><strong>Recommended Fee : </strong> <%= number_to_currency(@parcel_ad.recommended_fee) %></p>
+	      </div>
+	      <div class="col-md-6  mt-3">
+	        <p><strong>Proposed Fee : </strong> <%= number_to_currency(@parcel_ad.proposed_fee) %></p>
+	      </div>
+	    </div>  
+
+	    <hr>
+
+	    <% if @parcel_ad.parcel_images.attached? %>
+	      <% @parcel_ad.parcel_images.each do |image| %>
+	        <%= image_tag(image, class: 'img-thumbnail mt-3 mb-3 mx-2', style: 'width: auto; height: auto;') %>
+	      <% end %>
+	    <% end %>
+	    <div> 
+	      <%= link_to 'Back to Ad List', parcel_ads_path, class: "btn btn-secondary mt-3 mb-3" %>
+	    </div>
+	  </div>
+	</div>
+</div>

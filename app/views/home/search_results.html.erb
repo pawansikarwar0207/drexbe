@@ -28,11 +28,18 @@
 				        </span>
 				      </div>
 
+				      <div class="search-item">
+				        <i class="fas fa-dot-circle"></i>
+				        <span>
+				          <%= form.text_field :parcel_type, class: 'form-control', placeholder: 'Parcel Type', autocomplete: 'off' %>
+				        </span>
+				      </div>
+
 				      <div class="">
 							  <%= form.label :filter, "Filter by:", class: 'fw-bold mt-2 mb-2'%>
 							  <%= form.select :filter, options_for_select([['All', 'all'], ['Traveler', 'traveler'], ['Sender', 'sender'], ['Buyer', 'buyer']], params[:filter]), {prompt: 'Select'}, class: 'form-select mb-3' %>
 							</div>
-							
+
 				      <div class="">
 				        <%= form.submit "Search", class: 'btn btn-primary' %>
 				        <%= link_to 'Clear All', search_results_path, class: 'btn btn-danger' %>
@@ -121,7 +128,7 @@
 			                  <% if traveler == current_user %>
 			                    <%= link_to traveler.name, user_profile_path(traveler.user), class: 'text-dark' %>
 			                  <% else %>
-			                    <%= traveler.name %> 
+			                    <%= traveler.name %>
 			                  <% end %>
 			                  <div class="icon-row d-flex align-items-center mt-3">
 			                    <!-- Transportation Icon -->
@@ -246,7 +253,7 @@
 			                  <% if parcel.user == current_user %>
 			                    <%= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %>
 			                  <% else %>
-			                    <%= parcel.user.full_name %> 
+			                    <%= parcel.user.full_name %>
 			                  <% end %>
 			                  
 			                  <div class="icons mt-3 mx-5">
@@ -370,9 +377,9 @@
 			                  <%# end %> 
 
 			                  <%# if parcel.user == current_user %>
-			                    <%#= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %>
+			                    <%#= link_to parcel.user.full_name, user_profile_path(parcel.user), class: 'text-dark' %> <%#= current_user.user_type.upcase %>
 			                  <%# else %>
-			                    <%= buy_for_me.buyer_name %> 
+			                    <%= buy_for_me.buyer_name %>
 			                  <%# end %>
 			                  
 			                  <div class="icons mt-3 mx-5">
@@ -424,62 +431,9 @@
 </script>
 
 <style>
-  
-        .sort-by {
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-        }
-        .sort-by h5 {
-            font-weight: bold;
-        }
-        .sort-by .form-check {
-            margin-bottom: 10px;
-        }
-        .sort-by .form-check-label {
-            font-size: 14px;
-        }
-        .sort-by .clear-all {
-            color: #00aaff;
-            cursor: pointer;
-        }
-        .routes-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .routes-header .nav-link {
-            color: #6c757d;
-            font-weight: bold;
-        }
-        .routes-header .nav-link.active {
-            color: #00aaff;
-            border-bottom: 2px solid #00aaff;
-        }
-        .route-card {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .route-card .route-time {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .route-card .route-info {
-            font-size: 14px;
-            color: #6c757d;
-        }
-        .route-card .route-price {
-            font-size: 24px;
-            font-weight: bold;
-            color: #00aaff;
-        }
-        .route-card .route-icons i {
-            margin-right: 10px;
-        }
-  </style>
+	.sort-by {
+		padding: 20px;
+		background-color: #fff;
+		border-radius: 10px;
+	}
+</style>

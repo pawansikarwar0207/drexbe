@@ -19,6 +19,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
+  def create
+    @user = User.new(user_params)
+
+    respond_to do |format|
+      if @user.save
+        UserMailer.welcome_email(@user).deliver_now
+        sign_up(resource_name, @user)
+        format.html { redirect_to root_path, notice: "User was successfully created. An email has been sent" }
+        format.json { render :show, status: :created, location: @user }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def show
     @user = current_user  # Fetch the currently logged-in user
   end
@@ -106,6 +122,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   protected
+
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :phone_number, :city, :country, :address_1, :address_2, :postal_code, :user_type, :profile_picture, :email, :password, :password_confirmation)
+  end
 
   def profile_picture_params
     params.require(:user).permit(:profile_picture)

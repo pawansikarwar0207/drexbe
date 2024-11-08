@@ -10,22 +10,25 @@ class HomeController < ApplicationController
 
     # Only add search conditions if the parameters are present
     travelers_conditions[:departure_city] = params[:departure_city] if params[:departure_city].present?
-    travelers_conditions[:departure_country] = params[:departure_country]&.upcase if params[:departure_country].present? # Ensure country code format
+    travelers_conditions[:departure_country] = params[:departure_country]&.upcase if params[:departure_country].present?
     travelers_conditions[:arrival_city] = params[:arrival_city] if params[:arrival_city].present?
-    travelers_conditions[:arrival_country] = params[:arrival_country]&.upcase if params[:arrival_country].present? # Ensure country code format
+    travelers_conditions[:arrival_country] = params[:arrival_country]&.upcase if params[:arrival_country].present?
     travelers_conditions[:travel_date] = params[:date] if params[:date].present?
+    travelers_conditions[:parcel_type] = params[:parcel_type] if params[:parcel_type].present?
 
     # Only add search conditions if the parameters are present
     parcel_ads_conditions[:departure_city] = params[:departure_city] if params[:departure_city].present?
     parcel_ads_conditions[:departure_country] = params[:departure_country] if params[:departure_country].present?
     parcel_ads_conditions[:arrival_city] = params[:arrival_city] if params[:arrival_city].present?
     parcel_ads_conditions[:arrival_country] = params[:arrival_country] if params[:arrival_country].present?
+    parcel_ads_conditions[:parcel_type] = params[:parcel_type] if params[:parcel_type].present?
 
     # Only add search conditions if the parameters are present
     buy_for_me_conditions[:departure_city] = params[:departure_city] if params[:departure_city].present?
     buy_for_me_conditions[:departure_country] = params[:departure_country] if params[:departure_country].present?
     buy_for_me_conditions[:arrival_city] = params[:arrival_city] if params[:arrival_city].present?
     buy_for_me_conditions[:arrival_country] = params[:arrival_country] if params[:arrival_country].present?
+    buy_for_me_conditions[:parcel_type] = params[:parcel_type] if params[:parcel_type].present?
 
     # Perform the search with the conditions
     @travelers = Traveler.where(travelers_conditions)

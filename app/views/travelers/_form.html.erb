@@ -2,6 +2,20 @@
   <h1 class="text-center mb-5">Traveler, Carry For You</h1>
 
   <%= form_with(model: @traveler, local: true) do |form| %>
+
+    <!-- Display validation errors -->
+    <% if @traveler.errors.any? %>
+      <div class="alert alert-danger">
+        <h4 class="alert-heading">
+          Please fix the following errors:
+        </h4>
+        <ul>
+          <% @traveler.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>  
+    <% end %>
    
     <!-- Row for Departure and Arrival -->
     <div class="row g-0 mb-5 form-control">
