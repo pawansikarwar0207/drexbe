@@ -20,9 +20,15 @@ class PhoneVerificationsController < ApplicationController
     @user.update(verification_code: verification_code)
 
     # Send the verification code via Twilio SMS
-    send_sms(@user.phone_number, "Your verification code is #{verification_code}")
+    # send_sms(@user.phone_number, "Your verification code is #{verification_code}")
 
-    redirect_to phone_verification_path, notice: 'A verification code has been sent to your phone.'
+    sms_service = TwilioSmsService.new
+    if sms_service.send_sms(@user.phone_number, "Your verification code is #{verification_code}")
+      redirect_to phone_verification_path, notice: 'A verification code has been sent to your phone.'
+    else
+      flash[:alert] = 'Failed to send verification code. Please try again.'
+      redirect_to user_profile_path
+    end
   end
 
   # Show the verification form to enter the code
@@ -45,22 +51,22 @@ class PhoneVerificationsController < ApplicationController
   private
 
   # Send SMS via Twilio
-  def send_sms(phone_number, body)
-    require 'twilio-ruby'
+  # def send_sms(phone_number, body)
+  #   require 'twilio-ruby'
 
-    # Your Twilio credentials
-    account_sid = 'AC6aa0d60abf01e86f8c43253ae4005fa8'
-    auth_token = '590b26863475f70d28133431bedf6abe'
-    twilio_number = '+12184276059'
+  #   # Your Twilio credentials
+  #   account_sid = ENV['TWILIO_ACCOUNT_SID']
+  #   auth_token = ENV['TWILIO_AUTH_TOKEN']
+  #   twilio_number = ENV['TWILIO_PHONE_NUMBER']
 
-    # Initialize the Twilio client
-    client = Twilio::REST::Client.new(account_sid, auth_token)
+  #   # Initialize the Twilio client
+  #   client = Twilio::REST::Client.new(account_sid, auth_token)
 
-    # Send the message
-    client.messages.create(
-      from: twilio_number,
-      to: phone_number,
-      body: body
-    )
-  end
+  #   # Send the message
+  #   client.messages.create(
+  #     from: twilio_number,
+  #     to: phone_number,
+  #     body: body
+  #   )
+  # end
 end
