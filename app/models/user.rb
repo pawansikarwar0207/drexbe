@@ -21,6 +21,13 @@ class User < ApplicationRecord
   has_many :parcel_ads, dependent: :destroy
   has_many :travelers, dependent: :destroy
 
+
+  # for phone number verification with twilio
+  def masked_phone_number
+    return nil if phone_number.blank?
+    phone_number[0..2] + '****' + phone_number[6..-1]
+  end
+
   def profile_completion
     completion = 0
 

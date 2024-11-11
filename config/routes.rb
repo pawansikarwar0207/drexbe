@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'phone_verifications/new'
+  get 'phone_verifications/verify'
    devise_for :users, controllers: {
       sessions: 'users/sessions',
       registrations: 'users/registrations',
@@ -36,7 +38,12 @@ Rails.application.routes.draw do
       post :purchase_label
     end
   end
-  
+ 
+  resource :phone_verification, only: [:show] do
+    post 'verify', to: 'phone_verifications#verify_code', as: 'verify_code'
+    get 'send_verification_code', to: 'phone_verifications#send_verification_code'
+  end
+
   resources :buy_for_mes
 
   get 'get_cities', to: 'home#get_cities'

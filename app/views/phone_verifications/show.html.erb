@@ -1,0 +1,14 @@
+<div class="container">
+  <h1>Enter Verification Code</h1>
+
+  <%= form_with url: verify_code_phone_verification_path, method: :post do |form| %>
+    <div class="form-group">
+      <%= form.label :verification_code, 'Verification Code', class: 'form-label' %>
+      <%= form.text_field :verification_code, required: true, class: 'form-control' %>
+    </div>
+
+    <%= form.submit 'Verify', class: 'btn btn-success mt-2 mb-2' %>
+  <% end %>
+
+  <%= link_to 'Resend code', send_verification_code_phone_verification_path, class: 'btn btn-primary mt-2 mb-2' %>
+</div>

@@ -29,6 +29,13 @@
 				      </div>
 
 				      <div class="search-item">
+				      	<span>
+				      		<%= form.label :parcel_weight, "Parcel Weight", class: 'form-label' %>
+    							<%= form.text_field :parcel_weight, class: 'form-control', placeholder: 'Enter Parcel Weight' %>
+				      	</span>
+				      </div>
+
+				      <div class="search-item">
 				        <i class="fas fa-dot-circle"></i>
 				        <span>
 				          <%= form.text_field :parcel_type, class: 'form-control', placeholder: 'Parcel Type', autocomplete: 'off' %>
@@ -117,9 +124,9 @@
 			            <div class="col-left">
 			              <div class="travel-info">
 			                <div class="name">
-			                  <% if current_user.present? %>
-			                    <% if current_user.profile_picture.attached?  %>
-			                      <%= image_tag current_user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"50", width:"50" %>
+			                  <% if traveler.user.present? %>
+			                    <% if traveler.user.profile_picture.attached?  %>
+			                      <%= image_tag traveler.user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"50", width:"50" %>
 			                    <% else %>
 			                      <img alt="Profile picture placeholder" height="50" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="50", class="rounded-circle">
 			                    <% end %>
@@ -242,9 +249,9 @@
 			            <div class="col-left">
 			              <div class="travel-info">
 			                <div class="name">
-			                  <% if current_user.present? %>
-			                    <% if current_user.profile_picture.attached?  %>
-			                      <%= image_tag current_user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"50", width:"50" %>
+			                  <% if parcel.user.present? %>
+			                    <% if parcel.user.profile_picture.attached? %>
+			                      <%= image_tag parcel.user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height: "50", width: "50" %>
 			                    <% else %>
 			                      <img alt="Profile picture placeholder" height="50" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="50", class="rounded-circle">
 			                    <% end %>

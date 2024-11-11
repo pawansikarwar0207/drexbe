@@ -45,15 +45,14 @@
       </a>
     <% end %>
 
-    <% if current_user.phone_number.present? %>
+    <% if current_user.phone_verified %>
       <p>
         <i class="fas fa-check-circle"></i> 
         Your contact number <strong><%= current_user.masked_phone_number %></strong> is confirmed.
       </p>
     <% else %>
-      <a href="#">
-        <i class="fas fa-plus-circle"></i>
-        Verify a phone number
+      <a href="<%= send_verification_code_phone_verification_path %>">
+        <i class="fas fa-plus-circle"></i> Verify a phone number
       </a>
     <% end %>
   </div>

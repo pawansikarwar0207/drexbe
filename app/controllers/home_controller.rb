@@ -22,6 +22,7 @@ class HomeController < ApplicationController
     parcel_ads_conditions[:arrival_city] = params[:arrival_city] if params[:arrival_city].present?
     parcel_ads_conditions[:arrival_country] = params[:arrival_country] if params[:arrival_country].present?
     parcel_ads_conditions[:parcel_type] = params[:parcel_type] if params[:parcel_type].present?
+    parcel_ads_conditions[:parcel_weight] = params[:parcel_weight] if params[:parcel_weight].present?
 
     # Only add search conditions if the parameters are present
     buy_for_me_conditions[:departure_city] = params[:departure_city] if params[:departure_city].present?
