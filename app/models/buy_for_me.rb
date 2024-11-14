@@ -17,4 +17,9 @@ class BuyForMe < ApplicationRecord
   def calculate_product_cost
     total_cost = product_price.to_f + buy_for_me_fee.to_f
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["arrival_city", "arrival_country", "buy_for_me_fee", "buyer_contact_number", "buyer_email", "buyer_name", "category", "created_at", "departure_city", "departure_country", "id", "parcel_type", "product_link", "product_name", "product_price", "product_quantity", "shop_address", "shop_name", "shopping_date", "total_price", "updated_at"]
+  end
+
 end

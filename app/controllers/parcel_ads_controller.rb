@@ -14,7 +14,6 @@ class ParcelAdsController < ApplicationController
 	end
 
 	def create
-
 		@parcel_ad = current_user.parcel_ads.build(parcel_ad_params)
 		if @parcel_ad.save
 			redirect_to parcel_ads_path, notice: "Your add has been successfully published."

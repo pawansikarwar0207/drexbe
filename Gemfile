@@ -86,3 +86,5 @@ gem 'countries'
 
 gem 'shippo'
 gem 'twilio-ruby'
+
+gem 'ransack'

@@ -21,5 +21,13 @@ class Traveler < ApplicationRecord
   validates :parcel_qty, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   
   scope :professionals_only, -> { joins(:user).where(users: { user_type: 'professional' }) }
+  
+  def self.ransackable_attributes(auth_object = nil)
+    ["arrival_city", "arrival_country", "created_at", "departure_city", "departure_country", "email", "id", "name", "parcel_collection_mode", "parcel_qty", "parcel_type", "ready_to_buy_for_you", "transportation", "travel_date", "travel_return_date", "trip_type", "updated_at", "user_id"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["user"]
+  end
 
 end

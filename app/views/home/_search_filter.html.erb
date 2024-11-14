@@ -1,0 +1,109 @@
+<div class="card mt-2 sort-by">
+	<%# <h5>Filter</h5> %>
+	<%= form_with(url: search_results_path, method: :get, local: true) do |form| %>
+    <div class="">
+      <div class="card sort-by mb-2">
+      	<div class="search-item">
+	        <i class="fas fa-dot-circle"></i>
+	        <span>
+	          <%= form.text_field :departure_city, class: 'form-control', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off', value: params[:departure_city].present? ? params[:departure_city] : '' %>
+	          <%= form.hidden_field :departure_country, id: 'departure_country' %>
+	        </span>
+	      </div>
+	      <div class="search-item">
+	        <i class="fas fa-dot-circle"></i>
+	        <span>
+	          <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off', value: params[:arrival_city].present? ? params[:arrival_city] : '' %>
+	          <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
+	        </span>
+	      </div>
+	      <div class="search-item">
+	        <i class="fas fa-calendar-alt"></i>
+	        <span>
+	          <%= form.text_field :date, class: 'form-control flatpickr', id: 'date_field', placeholder: 'Select Date' %>
+	        </span>
+	      </div>
+
+	      <div class="">
+				  <%= form.label :filter, "Filter by:", class: 'fw-bold mt-2 mb-2'%>
+				  <%= form.select :filter, options_for_select([['All', 'all'], ['Traveler', 'traveler'], ['Sender', 'sender'], ['Buyer', 'buyer']], params[:filter]), {prompt: 'Select'}, class: 'form-select mb-3' %>
+				</div>
+      </div>
+
+			<div class="card sort-by mb-2">
+				<h6 class="font-bold">Parcel Type</h6>
+				<div class="search-item">
+				  <span>
+				    <%= form.radio_button :parcel_type, 'Document', id: 'parcel_type_document', checked: params[:parcel_type] == 'Document' ? true : false %>
+				    <%= form.label :parcel_type_document, 'Document', class: 'form-label' %><br>
+
+				    <%= form.radio_button :parcel_type, 'Parcel', id: 'parcel_type_parcel', checked: params[:parcel_type] == 'Parcel' ? true : false %>
+				    <%= form.label :parcel_type_parcel, 'Parcel', class: 'form-label' %><br>
+
+				    <%= form.radio_button :parcel_type, 'Pallet', id: 'parcel_type_pallet', checked: params[:parcel_type] == 'Pallet' ? true : false %>
+				    <%= form.label :parcel_type_pallet, 'Pallet', class: 'form-label' %><br>
+				  </span>
+				</div>
+			</div>
+
+			<div class="card sort-by mb-2">
+				<h6 class="font-bold">Parcel Size</h6>
+				<div class="search-item">
+					<span>
+						<%= form.radio_button :parcel_type, 'small', id: 'parcel_type_small', checked: params[:parcel_type] == 'small' ? true : false %>
+				    <%= form.label :parcel_type_small, 'Small', class: 'form-label' %><br>
+
+				    <%= form.radio_button :parcel_type, 'medium', id: 'parcel_type_medium', checked: params[:parcel_type] == 'medium' ? true : false %>
+				    <%= form.label :parcel_type_medium, 'Medium', class: 'form-label' %><br>
+
+				    <%= form.radio_button :parcel_type, 'large', id: 'parcel_type_large', checked: params[:parcel_type] == 'large' ? true : false %>
+				    <%= form.label :parcel_type_large, 'Large', class: 'form-label' %>
+					</span>
+				</div>
+			</div>
+			
+			<div class="card sort-by mb-2">
+				<h6 class="font-bold">Parcel Weight</h6>
+				<div class="search-item">
+			  	<span>
+			  		<%= form.radio_button :parcel_weight, '250..500', id: 'proposed_fee', checked: params[:parcel_weight] == '250..500' ? true : false %>
+			      <%= form.label :parcel_weight_250, '250g - 500g', class: 'form-label' %><br>
+
+			      <%= form.radio_button :parcel_weight, '500..1000', id: 'parcel_weight_500', checked: params[:parcel_weight] == '500..1000' ? true : false %>
+			      <%= form.label :parcel_weight_500, '500g - 1kg', class: 'form-label' %><br>
+
+			      <%= form.radio_button :parcel_weight, '1000..2000', id: 'parcel_weight_1000', checked: params[:parcel_weight] == '1000..2000' ? true : false %>
+			      <%= form.label :parcel_weight_1000, '1kg - 2kg', class: 'form-label' %><br>
+
+			      <%= form.radio_button :parcel_weight, '2000+', id: 'parcel_weight_2000', checked: params[:parcel_weight] == '2000+' ? true : false %>
+			      <%= form.label :parcel_weight_2000, '+2kg', class: 'form-label' %>
+			    </span>
+			  </div>
+			</div>
+
+			<div class="card sort-by mb-2">
+				<h6 class="font-bold">Proposed Fee</h6>
+				<div class="search-item">
+			  	<span>
+			  		<%= form.radio_button :proposed_fee, '10..100', id: 'proposed_fee_10', checked: params[:proposed_fee] == '10..100' ? true : false %>
+			      <%= form.label :proposed_fee_10, '$10 - $100', class: 'form-label' %><br>
+
+			      <%= form.radio_button :proposed_fee, '100..300', id: 'proposed_fee_100', checked: params[:proposed_fee] == '100..300' ? true : false %>
+			      <%= form.label :proposed_fee_100, '$100 - $300', class: 'form-label' %><br>
+
+			      <%= form.radio_button :proposed_fee, '300..500', id: 'proposed_fee_300', checked: params[:proposed_fee] == '300..500' ? true : false %>
+			      <%= form.label :proposed_fee_300, '$300 - $500', class: 'form-label' %><br>
+
+			      <%= form.radio_button :proposed_fee, '500+', id: 'proposed_fee_500', checked: params[:proposed_fee] == '500+' ? true : false %>
+			      <%= form.label :proposed_fee_500, '+$500', class: 'form-label' %><br>
+			    </span>
+			  </div>
+			</div>
+
+      <div class="">
+        <%= form.submit "Search", class: 'btn btn-primary mt-3' %>
+        <%= link_to 'Clear All', search_results_path, class: 'btn btn-danger mt-3' %>
+      </div>
+    </div>
+  <% end %>
+</div>

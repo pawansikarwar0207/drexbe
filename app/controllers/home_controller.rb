@@ -4,60 +4,82 @@ class HomeController < ApplicationController
   end
 
   def search_results
-    travelers_conditions = {}
-    parcel_ads_conditions = {}
-    buy_for_me_conditions = {}
+    # Build Ransack search objects for each model
+    travelers_conditions = Traveler.ransack(
+                                    departure_city_eq: params[:departure_city],
+                                    departure_country_eq: params[:departure_country],
+                                    arrival_city_eq: params[:arrival_city],
+                                    arrival_country_eq: params[:arrival_country],
+                                    travel_date_eq: params[:date],
+                                    parcel_type_eq: params[:parcel_type])
 
-    # Only add search conditions if the parameters are present
-    travelers_conditions[:departure_city] = params[:departure_city] if params[:departure_city].present?
-    travelers_conditions[:departure_country] = params[:departure_country]&.upcase if params[:departure_country].present?
-    travelers_conditions[:arrival_city] = params[:arrival_city] if params[:arrival_city].present?
-    travelers_conditions[:arrival_country] = params[:arrival_country]&.upcase if params[:arrival_country].present?
-    travelers_conditions[:travel_date] = params[:date] if params[:date].present?
-    travelers_conditions[:parcel_type] = params[:parcel_type] if params[:parcel_type].present?
+    parcel_ads_conditions = ParcelAd.ransack(
+                                    departure_city_eq: params[:departure_city],
+                                    departure_country_eq: params[:departure_country],
+                                    arrival_city_eq: params[:arrival_city],
+                                    shipment_date_eq: params[:date],
+                                    arrival_country_eq: params[:arrival_country],
+                                    parcel_type_eq: params[:parcel_type],
+                                    parcel_weight_eq: params[:parcel_weight],
+                                    recommended_fee_eq: params[:recommended_fee],
+                                    proposed_fee_eq: params[:proposed_fee])
 
-    # Only add search conditions if the parameters are present
-    parcel_ads_conditions[:departure_city] = params[:departure_city] if params[:departure_city].present?
-    parcel_ads_conditions[:departure_country] = params[:departure_country] if params[:departure_country].present?
-    parcel_ads_conditions[:arrival_city] = params[:arrival_city] if params[:arrival_city].present?
-    parcel_ads_conditions[:arrival_country] = params[:arrival_country] if params[:arrival_country].present?
-    parcel_ads_conditions[:parcel_type] = params[:parcel_type] if params[:parcel_type].present?
-    parcel_ads_conditions[:parcel_weight] = params[:parcel_weight] if params[:parcel_weight].present?
+    buy_for_me_conditions = BuyForMe.ransack(
+                                    departure_city_eq: params[:departure_city],
+                                    departure_country_eq: params[:departure_country],
+                                    arrival_city_eq: params[:arrival_city],
+                                    shopping_date_eq: params[:date],
+                                    arrival_country_eq: params[:arrival_country],
+                                    parcel_type_eq: params[:parcel_type])
 
-    # Only add search conditions if the parameters are present
-    buy_for_me_conditions[:departure_city] = params[:departure_city] if params[:departure_city].present?
-    buy_for_me_conditions[:departure_country] = params[:departure_country] if params[:departure_country].present?
-    buy_for_me_conditions[:arrival_city] = params[:arrival_city] if params[:arrival_city].present?
-    buy_for_me_conditions[:arrival_country] = params[:arrival_country] if params[:arrival_country].present?
-    buy_for_me_conditions[:parcel_type] = params[:parcel_type] if params[:parcel_type].present?
+    # Handle weight conditions for ParcelAds
+    weight_condition = case params[:parcel_weight]
+                       when '250..500' then { parcel_weight: 250..500 }
+                       when '500..1000' then { parcel_weight: 500..1000 }
+                       when '1000..2000' then { parcel_weight: 1000..2000 }
+                       when '2000+' then { parcel_weight: 2000..Float::INFINITY }
+                       else {}
+                       end
 
-    # Perform the search with the conditions
-    @travelers = Traveler.where(travelers_conditions)
-    @parcel_ads = ParcelAd.where(parcel_ads_conditions)
-    @buy_for_mes = BuyForMe.where(buy_for_me_conditions)
+    # Handle fee conditions for ParcelAds
+    fee_condition = case params[:proposed_fee]
+                    when '10..100' then { proposed_fee: 10..100 }
+                    when '100..300' then { proposed_fee: 100..300 }
+                    when '300..500' then { proposed_fee: 300..500 }
+                    when '500+' then { proposed_fee: 500..Float::INFINITY }
+                    else {}
+                    end
 
-    # Search only the selected type, or all if 'all' is selected
-    case params[:filter]
-    when 'traveler'
-      @travelers = Traveler.where(travelers_conditions)
-      @parcel_ads = []
-      @buy_for_mes = []
-    when 'sender'
+    # Filter ParcelAds by weight and fee
+    @parcel_ads = ParcelAd.where(weight_condition).where(fee_condition)
+
+    # Determine results to display based on presence of weight/fee filters
+    if params[:parcel_weight].present? || params[:proposed_fee].present?
       @travelers = []
-      @parcel_ads = ParcelAd.where(parcel_ads_conditions)
       @buy_for_mes = []
-    when 'buyer'
-      @travelers = []
-      @parcel_ads = []
-      @buy_for_mes = BuyForMe.where(buy_for_me_conditions)
     else
-      @travelers = Traveler.where(travelers_conditions)
-      @parcel_ads = ParcelAd.where(parcel_ads_conditions)
-      @buy_for_mes = BuyForMe.where(buy_for_me_conditions)
+      @travelers = travelers_conditions.result(distinct: true)
+      @parcel_ads = parcel_ads_conditions.result(distinct: true).includes(user: { profile_picture_blob: :attachments, identity_card_document_blob: :attachments })
+      @buy_for_mes = buy_for_me_conditions.result(distinct: true)
+
+      # Apply filter to limit results to one model type if specified
+      case params[:filter]
+      when 'traveler'
+        @parcel_ads = []
+        @buy_for_mes = []
+      when 'sender'
+        @travelers = []
+        @buy_for_mes = []
+      when 'buyer'
+        @travelers = []
+        @parcel_ads = []
+      end
     end
 
     render 'search_results'
   end
+
+
 
   def get_cities
     query = params[:query]

@@ -385,3 +385,10 @@ h1 {
   color: #004d40;
   text-decoration: none;
 }
+
+/*for search filter*/
+.sort-by {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+}

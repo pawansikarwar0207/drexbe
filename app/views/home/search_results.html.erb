@@ -2,59 +2,7 @@
 	<h1 class="text-center mb-4 mt-5">Search Results</h1>
 	<div class="row">
 		<div class="col-md-3">
-	   <div class="card shadow mt-2 sort-by">
-        <h5>Filter</h5>
-        <div>
-        	<%= form_with(url: search_results_path, method: :get, local: true) do |form| %>
-				    <div class="">
-				      <div class="search-item">
-				        <i class="fas fa-dot-circle"></i>
-				        <span>
-				          <%= form.text_field :departure_city, class: 'form-control', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off' %>
-				          <%= form.hidden_field :departure_country, id: 'departure_country' %>
-				        </span>
-				      </div>
-				      <div class="search-item">
-				        <i class="fas fa-dot-circle"></i>
-				        <span>
-				          <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off' %>
-				          <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
-				        </span>
-				      </div>
-				      <div class="search-item">
-				        <i class="fas fa-calendar-alt"></i>
-				        <span>
-				          <%= form.text_field :date, class: 'form-control flatpickr', id: 'date_field', placeholder: 'Select Date' %>
-				        </span>
-				      </div>
-
-				      <div class="search-item">
-				      	<span>
-				      		<%= form.label :parcel_weight, "Parcel Weight", class: 'form-label' %>
-    							<%= form.text_field :parcel_weight, class: 'form-control', placeholder: 'Enter Parcel Weight' %>
-				      	</span>
-				      </div>
-
-				      <div class="search-item">
-				        <i class="fas fa-dot-circle"></i>
-				        <span>
-				          <%= form.text_field :parcel_type, class: 'form-control', placeholder: 'Parcel Type', autocomplete: 'off' %>
-				        </span>
-				      </div>
-
-				      <div class="">
-							  <%= form.label :filter, "Filter by:", class: 'fw-bold mt-2 mb-2'%>
-							  <%= form.select :filter, options_for_select([['All', 'all'], ['Traveler', 'traveler'], ['Sender', 'sender'], ['Buyer', 'buyer']], params[:filter]), {prompt: 'Select'}, class: 'form-select mb-3' %>
-							</div>
-
-				      <div class="">
-				        <%= form.submit "Search", class: 'btn btn-primary' %>
-				        <%= link_to 'Clear All', search_results_path, class: 'btn btn-danger' %>
-				      </div>
-				    </div>
-				  <% end %>
-        </div>
-      </div>
+      <%= render 'home/search_filter' %>
 	  </div>
 		<div class="col-md-9">
 			  <%# Traveler Section %>
@@ -175,7 +123,7 @@
 			      </div> 
 			    <% end %>
 			  <% else %>
-			  <div class="alert alert-danger text-center" role="alert">
+			  <div class="alert alert-danger text-center mt-2 mb-2" role="alert">
 			    No travelers found for your search criteria.
 			  </div>
 			<% end %>
@@ -230,7 +178,7 @@
 			              <div class="buy-for-you">
 			                <h6 class="mt-2 me-5 fw-bold">Parcel Weight:</h6>
 			                <div aria-label="Buy For You" class="btn-group" role="group">
-			                  <%= parcel.parcel_weight %> kg
+			                  <%= parcel.parcel_weight %>g
 			                </div>
 			              </div>
 			            <% end %>
@@ -310,7 +258,7 @@
 			    </div> 
 			  <% end %>
 			<% else %>
-			<div class="alert alert-danger text-center" role="alert">
+			<div class="alert alert-danger text-center mt-2 mb-2" role="alert">
 			  No sender is found for your search criteria.
 			</div>
 			<% end %>
@@ -415,7 +363,7 @@
 			    </div> 
 			  <% end %>
 			<% else %>
-			<div class="alert alert-danger text-center" role="alert">
+			<div class="alert alert-danger text-center mt-2 mb-2" role="alert">
 			  No Buyer is found for your search criteria.
 			</div>
 			<% end %>
@@ -436,11 +384,3 @@
     })
   });
 </script>
-
-<style>
-	.sort-by {
-		padding: 20px;
-		background-color: #fff;
-		border-radius: 10px;
-	}
-</style>

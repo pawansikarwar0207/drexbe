@@ -48,6 +48,7 @@ Rails.application.routes.draw do
 
   get 'get_cities', to: 'home#get_cities'
   get '/search_results', to: 'home#search_results'
+  get '/filter_search_results', to: 'home#filter_search_results'
   
 end
 

@@ -5,9 +5,9 @@ class ParcelAd < ApplicationRecord
 
   has_many_attached :parcel_images
 
-  validates :departure_city, :arrival_city, :parcel_type, :parcel_quantity, :recommended_fee, :proposed_fee, :shipment_date, presence: true
+  validates :departure_city, :arrival_city, :parcel_type, :parcel_weight, :parcel_quantity, :recommended_fee, :proposed_fee, :shipment_date, presence: true
 
-  validates :parcel_length, :parcel_width, :parcel_height, :parcel_weight, 
+  validates :parcel_length, :parcel_width, :parcel_height, 
             numericality: { greater_than_or_equal_to: 0, 
                             message: "must be greater than or equal to 0" },
                             if: :requires_dimensions?
@@ -23,6 +23,10 @@ class ParcelAd < ApplicationRecord
     base_rate = 10
     total_cost = parcel_weight.to_f * base_rate
     total_cost
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["arrival_city", "arrival_country", "bonus", "created_at", "departure_city", "departure_country", "description", "id", "insure_shipment", "label_url", "parcel_height", "parcel_length", "parcel_quantity", "parcel_type", "parcel_weight", "parcel_width", "proposed_fee", "rate_id", "recommended_fee", "service_type", "shipment_date", "shipment_id", "updated_at", "user_id"]
   end
   
   private
