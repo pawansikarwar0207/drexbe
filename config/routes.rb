@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'users/show'
   get 'phone_verifications/new'
   get 'phone_verifications/verify'
    devise_for :users, controllers: {
@@ -45,6 +46,10 @@ Rails.application.routes.draw do
   end
 
   resources :buy_for_mes
+
+  resources :users do
+    resources :reviews, only: [:create, :new, :index, :destroy]
+  end
 
   get 'get_cities', to: 'home#get_cities'
   get '/search_results', to: 'home#search_results'

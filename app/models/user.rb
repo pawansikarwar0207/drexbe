@@ -20,6 +20,13 @@ class User < ApplicationRecord
 
   has_many :parcel_ads, dependent: :destroy
   has_many :travelers, dependent: :destroy
+  has_many :buy_for_mes, dependent: :destroy
+
+  # Users who give reviews
+  has_many :given_reviews, class_name: 'Review', foreign_key: 'reviewer_id', dependent: :destroy
+
+  # Users who receive reviews
+  has_many :received_reviews, class_name: 'Review', foreign_key: 'reviewee_id', dependent: :destroy 
 
 
   # for phone number verification with twilio

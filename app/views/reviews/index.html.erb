@@ -1,0 +1,73 @@
+<div class="col-lg-8 mx-auto mt-3 container p-5 mb-5 shadow-none">
+	<h2 class="mb-4"><%= @user.full_name %>'s Reviews</h2>
+
+	<h1>
+		<i class="fas fa-star fa-sm text-warning"></i> <%= @user.received_reviews.any? && @user.received_reviews.average(:rating).present? ? @user.received_reviews.average(:rating).round(1) : '0' %> / 5
+	</h1>
+
+	<% if @reviews.count > 0 %>
+		<p class="text-muted"><%= @reviews.count %> review<%= 's' if @reviews.count != 1 %></p>
+	<% end %>
+
+	<!-- Display total counts for each comment label -->
+	<% if @label_counts.present? %>
+	  <div class="review-label-counts text-muted">
+	    <hr>
+	    <ul class="list-unstyled">
+	      <li><strong>Excellent : </strong> <%= @label_counts["Excellent"] || 0 %></li>
+	      <li><strong>Good : </strong> <%= @label_counts["Good"] || 0 %></li>
+	      <li><strong>Correct : </strong> <%= @label_counts["Correct"] || 0 %></li>
+	      <li><strong>Disappointing : </strong> <%= @label_counts["Disappointing"] || 0 %></li>
+	      <li><strong>Very Disappointing : </strong> <%= @label_counts["Very Disappointing"] || 0 %></li>
+	    </ul>
+	  </div>
+	  <hr>
+  <% end %>
+
+	<div id="reviews">
+	  <% @reviews.each do |review| %>
+	    <div class="review review-card d-flex align-items-start">
+	    	<% if review.reviewer.profile_picture.present? %>
+					<%= image_tag review.reviewer.profile_picture, size: "50x50", class: 'user-icon rounded-circle border' %>
+				<% else %>
+					<img alt="Profile picture placeholder" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg", class="profile-img me-3 rounded-circle border p-1">	
+				<% end %>
+
+	      <div class="flex-grow-1">
+		      <div class="d-flex justify-content-between align-items-center">
+		        <span class="username mt-2"><%= review.reviewer.full_name %></span>
+		      </div>
+		      <p class="review-title">
+		      	<span class="star-rating-display">
+		      		<% review.rating.times do %>
+		      			<span class="star">
+		      				<i class="fas fa-star fa-sm"></i>
+		      			</span>
+		      		<% end %>
+		      		<% (5 - review.rating).times do %>
+		      			<span class="star empty">
+		      				<i class="far fa-star text-muted fa-sm"></i>
+		      			</span>
+		      		<% end %>
+		      	</span> (<%= review.rating %> / 5)
+		      </p>
+		      <p class="fw-bold"><%= review.comment %></p>
+		      
+		      <% if review.custom_comment.present? %>
+		      	<p class="text-muted"><%= review.custom_comment %></p>
+		      <% end %>
+		      
+		      <p class="review-date"><%= review.created_at.strftime("%B %d, %Y") %></p>
+
+		      <% if review.reviewer == current_user %>
+			      <%= button_to user_review_path(@user, review), method: :delete, data: { confirm: 'Are you sure you want to delete this review?' }, class: 'btn btn-danger' do %>
+			      	<i class="fas fa-trash"></i>
+			      <% end %>
+			    <% end %>
+		    </div>
+	    </div>
+	  <% end %>
+	</div>
+	<%# for leave a review %>
+	<%= render 'reviews/new' %>
+</div>

@@ -392,3 +392,105 @@ h1 {
   background-color: #fff;
   border-radius: 10px;
 }
+
+/*users/show.html.erb*/
+.profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.verified-icon {
+  color: #00b894;
+}
+.info-icon {
+  color: #636e72;
+}
+.text-primary {
+  color: #0984e3 !important;
+}
+.text-muted {
+  color: #636e72 !important;
+}
+.divider {
+  border-top: 1px solid #dfe6e9;
+  margin: 10px 0;
+}
+
+/* for reviews index page */
+.review-card {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+.review-card .user-icon {
+  font-size: 2.5rem;
+  color: #ccc;
+  margin-right: 10px;
+}
+.review-card .username {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.review-card .review-title {
+  font-weight: bold;
+  color: #004f5f;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+.review-card .review-text {
+  color: #5a5a5a;
+  font-size: 0.95rem;
+  margin-top: 5px;
+}
+.review-card .review-date {
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 5px;
+}
+.arrow-icon {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.review-label-counts {
+  margin-top: 20px;
+}
+.review-label-counts h5 {
+  font-weight: bold;
+}
+.review-label-counts ul {
+  padding-left: 0;
+}
+.review-label-counts li {
+  margin-bottom: 5px;
+}
+
+/* review new form */
+#star-rating {
+  display: inline-block;
+  cursor: pointer;
+}
+
+#star-rating .star {
+  font-size: 24px;
+  color: #ccc;
+  margin-right: 5px;
+}
+
+#star-rating .star.selected {
+  color: gold;
+}
+
+.star-rating-display {
+  display: inline-flex;
+}
+
+.star {
+  font-size: 20px;
+  color: gold;
+  margin-right: 2px;
+}
+
+.star.empty {
+  color: lightgray;
+}

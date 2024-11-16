@@ -1,0 +1,59 @@
+<div class="container col-lg-6 mx-auto mt-5">
+  <div class="card-body p-2">
+   <div class="d-flex align-items-center mb-3">
+   	<% if @user.profile_picture.attached? %>
+   		<%= image_tag @user.profile_picture, class:"profile-img me-3" %>
+   	<% else %>
+   		<img alt="Profile picture placeholder" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg", class="profile-img me-3">	
+   	<% end %>
+    <div>
+     <h5 class="mb-0">
+      <%= @user.full_name %>
+     </h5>
+
+     <% if @user.received_reviews.present? %>
+		  <p class="mb-0 mt-2 text-muted">
+		    <% average_rating = @user.received_reviews.any? ? @user.received_reviews.average(:rating).round(1) : 0 %>
+		    <% full_stars = average_rating.floor %> <!-- Full stars -->
+		    <% half_star = (average_rating % 1 >= 0.5) %> <!-- Half star -->
+		    <% empty_stars = 5 - full_stars - (half_star ? 1 : 0) %> <!-- Empty stars -->
+
+		    <!-- Render full stars -->
+		    <% full_stars.times do %>
+		      <i class="fas fa-star text-warning"></i>
+		    <% end %>
+
+		    <!-- Render half star -->
+		    <% if half_star %>
+		      <i class="fas fa-star-half-alt text-warning"></i>
+		    <% end %>
+
+		    <!-- Render empty stars -->
+		    <% empty_stars.times do %>
+		      <i class="far fa-star text-muted"></i>
+		    <% end %>
+
+		    <!-- Average rating and review count -->
+		    <%= link_to user_reviews_path(@user), class: 'text-decoration-none mx-2' do %>
+		      (<span class="text-primary"><%= average_rating %></span> / 5 - <%= @user.received_reviews.count %> reviews)
+		    <% end %>
+		  </p>
+		<% end %>
+
+	   <%#= link_to 'Give Review', new_user_review_path(@user)  %>
+    </div>
+   </div>
+   
+   <p class="mb-1 p-2">
+   	<% if @user.verified? %>
+    <i class="fas fa-check-circle verified-icon">
+    </i> Verified Profile
+    <% else %>
+      <i class="fas fa-circle-xmark text-danger">
+    </i> Unverified Profile
+    <% end %>
+   </p>
+   <div class="divider">
+   </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<h3>Leave a Review</h3>
+<%= form_with model: [@user, @review], id: 'review-form', local: true do |form| %>
+
+	<% if @review.errors.any? %>
+		<div class="alert alert-danger">
+			<h4><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h4>
+			<ul>
+				<% @review.errors.full_messages.each do |message| %>
+					<li><%= message %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+
+  <div class="form-group">
+    <label for="rating" class="form-label me-3">Rating</label>
+    <div id="star-rating" class=" mb-2 mt-2" data-rating="<%= @review.rating || 0 %>"></div>
+    <%= form.hidden_field :rating, id: 'rating-value' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :comment, class: 'form-label' %>
+    <%= form.select :comment, options_for_select(["Excellent", "Good", "Correct", "Disappointing", "Very disappointing"]), { prompt: 'Select Comment Type' }, { class: 'form-select' } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :custom_comment, class: 'form-label' %>
+    <%= form.text_area :custom_comment, class: 'form-control' %>
+  </div>
+
+  <div class="action">
+    <%= form.submit 'Submit Review', class: 'btn btn-primary mt-2' %>
+  </div>
+<% end %>
