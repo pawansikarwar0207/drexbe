@@ -28,6 +28,15 @@ class User < ApplicationRecord
   # Users who receive reviews
   has_many :received_reviews, class_name: 'Review', foreign_key: 'reviewee_id', dependent: :destroy 
 
+  # for messages
+  # has_many :chat_users
+  # has_many :chats, through: :chat_users
+  # has_many :messages, dependent: :destroy
+  validates_uniqueness_of :first_name
+  scope :all_except, ->(user) { where.not(id: user) }
+  after_create_commit { broadcast_append_to "users" }
+
+  has_many :messages
 
   # for phone number verification with twilio
   def masked_phone_number

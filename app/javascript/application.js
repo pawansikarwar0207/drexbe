@@ -10,3 +10,4 @@ import './parcel_ad_form'
 import './travelers_form'
 import './calculate_total_price_for_buyer'
 import './review_form'
+import "@rails/actioncable"

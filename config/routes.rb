@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'chat_users/create'
+  get 'messages/create'
+  get 'chats/show'
   get 'users/show'
   get 'phone_verifications/new'
   get 'phone_verifications/verify'

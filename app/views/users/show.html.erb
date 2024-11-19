@@ -11,7 +11,7 @@
       <%= @user.full_name %>
      </h5>
 
-     <% if @user.received_reviews.present? %>
+     <%# if @user.received_reviews.present? %>
 		  <p class="mb-0 mt-2 text-muted">
 		    <% average_rating = @user.received_reviews.any? ? @user.received_reviews.average(:rating).round(1) : 0 %>
 		    <% full_stars = average_rating.floor %> <!-- Full stars -->
@@ -38,7 +38,7 @@
 		      (<span class="text-primary"><%= average_rating %></span> / 5 - <%= @user.received_reviews.count %> reviews)
 		    <% end %>
 		  </p>
-		<% end %>
+		<%# end %>
 
 	   <%#= link_to 'Give Review', new_user_review_path(@user)  %>
     </div>
