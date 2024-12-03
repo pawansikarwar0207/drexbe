@@ -21,6 +21,10 @@ class User < ApplicationRecord
   has_many :parcel_ads, dependent: :destroy
   has_many :travelers, dependent: :destroy
   has_many :buy_for_mes, dependent: :destroy
+  
+  # for chat feature
+  has_and_belongs_to_many :chat_rooms
+  has_many :messages
 
   # Users who give reviews
   has_many :given_reviews, class_name: 'Review', foreign_key: 'reviewer_id', dependent: :destroy
@@ -28,15 +32,6 @@ class User < ApplicationRecord
   # Users who receive reviews
   has_many :received_reviews, class_name: 'Review', foreign_key: 'reviewee_id', dependent: :destroy 
 
-  # for messages
-  # has_many :chat_users
-  # has_many :chats, through: :chat_users
-  # has_many :messages, dependent: :destroy
-  validates_uniqueness_of :first_name
-  scope :all_except, ->(user) { where.not(id: user) }
-  after_create_commit { broadcast_append_to "users" }
-
-  has_many :messages
 
   # for phone number verification with twilio
   def masked_phone_number
@@ -97,5 +92,9 @@ class User < ApplicationRecord
     "#{city} #{country}"
   end
 
+  def find_or_create_chat_room_with(other_user)
+    chat_rooms.find_by(id: other_user.chat_rooms.pluck(:id)) || 
+      ChatRoom.create(users: [self, other_user])
+  end
 end
 

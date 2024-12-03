@@ -1,0 +1,115 @@
+<%= turbo_frame_tag "chatroom_frame" do %>
+  <div class="airbnb-chat-container rounded-0">
+    <div class="chat-messages p-3">
+      <div class="chat-header d-flex align-items-center p-3">
+        <div class="user-avatar me-3">
+          <%# Display user's avatar %>
+          <% if chat_room.other_user(current_user).profile_picture.attached? %>
+            <%= image_tag chat_room.other_user(current_user).profile_picture, class: "avatar rounded-circle" %>
+          <% else %>
+            <img src="https://storage.googleapis.com/a1aa/image/O8MiwnO96lJ0Opf2gM3iJlvzomfUBmWFPeRabNe6c6llz3UPB.jpg" alt="Avatar" class="avatar rounded-circle">
+          <% end %>
+        </div>
+        <div>
+          <h6 class="mb-0"><%= chat_room.other_user(current_user).full_name %></h6>
+          <small class="text-muted">Active now</small>
+        </div>
+      </div>
+      <%= turbo_frame_tag "message_frame" do %>
+        <div class="mt-5">
+          <% @messages.each do |message| %>
+            <div class="cont-<%= message.user.id %>">
+              <div class="message-box msg-<%= message.user.id %>">
+                <%= message.content %>
+              </div>
+            </div>
+          <% end %>
+        </div>  
+      <% end %>
+      <%= turbo_stream_from "chatroom_#{chat_room.id}" %>
+    </div>
+
+    <!-- Message Input -->
+    <div class="chat-input p-3">
+      <%= form_with model: [chat_room, Message.new], local: false, class: "d-flex", data: { action: 'turbo:submit-end->turbo-stream#reset'} do |form| %>
+        <div class="flex-grow-1 me-2">
+          <%= form.text_area :content, placeholder: "Type your message...", class: "form-control rounded-pill px-3", rows: 1, onkeypress: "if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); this.form.requestSubmit(); }" %>
+        </div>
+        <%= form.submit "Send", class: "btn btn-primary rounded-pill px-4" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>  
+
+
+<style>
+  .airbnb-chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    margin: 0 auto;
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;   
+    overflow: hidden;
+  }
+
+  .chat-header {
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .user-avatar img.avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+
+  .chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .chat-messages .message {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  .chat-messages .message.sent {
+    justify-content: flex-end;
+  }
+
+  .chat-messages .message.received {
+    justify-content: flex-start;
+  }
+
+  .chat-messages .message-bubble {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .chat-messages .message-bubble.sent {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .chat-messages .message-bubble.received {
+    background-color: #e6e6e6;
+    color: #333;
+  }
+
+  .chat-input {
+    border-top: 1px solid #e6e6e6;
+  }
+
+  .chat-input .form-control {
+    border: 1px solid #e6e6e6;
+    background-color: #f9f9f9;
+  }
+
+  .chat-input .btn {
+    font-weight: bold;
+  }
+</style>

@@ -1,20 +1,5 @@
-<div class="cont-<%= message.user.id %>">
-  <div class="message-box msg-<%= message.user.id %> " >
-    <% unless message.room.is_private %>
-      <h6 class="name"> <%= message.user.full_name %> </h6>
-    <% end %>
-  <%= message.content %>
+<div class="message cont-<%= message.user.id%>">
+  <div class="message-bubble message-box msg-<%= message.user.id %>">
+    <%= message.content %>
   </div>
 </div>
-
-<style>
-  .message-box {
-    width: fit-content;
-    max-width: 40%;
-    padding: 5px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    background-color: #555555 ;
-    padding: 10px
-  }
-</style>

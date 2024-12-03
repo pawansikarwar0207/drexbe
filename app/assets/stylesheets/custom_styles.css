@@ -199,3 +199,12 @@ h1, h2, h3, .btn-learn-more {
     color: #6c757d;
   }
 
+#messages {
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.message {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}

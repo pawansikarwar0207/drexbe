@@ -1,4 +1,4 @@
- document.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
   // Function to handle selection buttons
   const handleSelection = (buttonClass, hiddenFieldId) => {
     const buttons = document.querySelectorAll(buttonClass);

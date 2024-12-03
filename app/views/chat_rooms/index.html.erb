@@ -1,0 +1,209 @@
+<div class="container shadow-none rounded-0 mb-5" data-controller="turbo-stream">
+  <div class="row">
+    <div class="col-12 col-md-3 messages-list">
+      <div class="d-flex justify-content-between align-items-center p-3">
+        <h5>Messages</h5>
+        <div>
+          <button class="btn btn-light btn-sm">All</button>
+          <button class="btn btn-light btn-sm">Unread</button>
+        </div>
+      </div>
+      <div id="user-list">
+        <% @users.each do |user| %>
+          <% chat_room = current_user.find_or_create_chat_room_with(user) %>
+          <%= link_to chat_room_path(chat_room, recipient_user: user),
+              class: "text-decoration-none",
+              data: {
+                "turbo-stream-url-value": chat_room_path(chat_room),
+                action: "click->turbo-stream#send click->turbo-stream#showActiveUser",
+                turbo_stream_target: 'userItem'
+              } do %>
+            <div class="message-item">
+              <% if user.profile_picture.attached? %>
+                <%= image_tag user.profile_picture, size: "40x40", alt: "Profile Picture #{user.full_name}" %>
+              <% else %>
+                <img alt="Profile picture of <%= user.full_name %>" height="40" src="https://storage.googleapis.com/a1aa/image/O8MiwnO96lJ0Opf2gM3iJlvzomfUBmWFPeRabNe6c6llz3UPB.jpg" width="40"/>
+              <% end %>
+              <div class="message-info">
+                <div class="name" style="font-size: 15px;">
+                  <%= user&.full_name %>
+                  <% if user.id == session[:last_sender_id] %>
+                    <span class="active-indicator">Active</span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>  
+    <!-- Chatroom Section -->
+    <div class="col-12 col-md-9 chat-window">
+      <%= turbo_frame_tag "chatroom_frame" do %>
+        <p class="text-muted p-3">Select a chat to start messaging.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<style>
+
+  .messages-list {
+    border-right: 1px solid #ddd;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .message-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  .message-item:hover {
+    background-color: #ccc;
+    transform: scale(1.02);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .active-indicator {
+    display: inline-block;
+    background-color: #4caf50; /* Green for active */
+    color: white;
+    font-size: 12px;
+    border-radius: 10px;
+    padding: 2px 8px;
+    margin-left: 10px;
+  }
+
+  .message-item img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  .message-item .message-info {
+    flex-grow: 1;
+  }
+  .message-item .message-info .name {
+    font-weight: bold;
+  }
+  .message-item .message-info .date {
+    color: #888;
+    font-size: 12px;
+  }
+  .message-item .message-info .preview {
+    color: #555;
+    font-size: 14px;
+  }
+  .message-item.active {
+    background-color: #f0f0f0;
+  }
+  .chat-window {
+    height: 100vh;
+    overflow-y: auto;
+  }
+  #user-list .active .message-item {
+    background-color: blue;
+    color: #fff;
+  }
+  .chat-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  .chat-header img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  .chat-header .chat-info {
+    flex-grow: 1;
+  }
+  .chat-header .chat-info .name {
+    font-weight: bold;
+  }
+  .chat-header .chat-info .date {
+    color: #888;
+    font-size: 12px;
+  }
+  .chat-messages {
+    padding: 10px;
+  }
+  .chat-message {
+    margin-bottom: 10px;
+  }
+  .chat-message .message-content {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .chat-message .message-content.dark {
+    background-color: #333;
+    color: #fff;
+  }
+  .chat-footer {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+  }
+  .reservation {
+    border-left: 1px solid #ddd;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .reservation img {
+    width: 100%;
+    border-radius: 5px;
+  }
+  .reservation .unavailable {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+  }
+  .reservation .details {
+    padding: 10px;
+  }
+  .reservation .details .title {
+    font-weight: bold;
+  }
+  .reservation .details .description {
+    color: #888;
+    font-size: 14px;
+  }
+  .reservation .details .btn {
+    margin-top: 10px;
+  }
+  @media (max-width: 768px) {
+    .messages-list, .chat-window, .reservation {
+      height: auto;
+      border: none;
+    }
+    .messages-list {
+      border-bottom: 1px solid #ddd;
+    }
+    .reservation {
+      border-top: 1px solid #ddd;
+    }
+  }
+  .msg-content {
+    width: 80%;
+    margin-right: 5px;
+  }
+  .message-box {
+    word-wrap: break-word;
+    width: fit-content;
+    max-width: 40%;
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+</style>
+
+

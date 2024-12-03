@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'chat_rooms/index'
+  get 'chat_rooms/show'
   get 'chat_users/create'
   get 'messages/create'
   get 'chats/show'
@@ -58,5 +60,8 @@ Rails.application.routes.draw do
   get '/search_results', to: 'home#search_results'
   get '/filter_search_results', to: 'home#filter_search_results'
   
+  resources :chat_rooms, only: [:index, :show] do
+    resources :messages, only: [:create]
+  end
 end
 

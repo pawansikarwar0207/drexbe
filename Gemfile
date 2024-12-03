@@ -88,3 +88,4 @@ gem 'shippo'
 gem 'twilio-ruby'
 
 gem 'ransack'
+gem 'redis'
