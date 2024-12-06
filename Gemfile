@@ -89,3 +89,4 @@ gem 'twilio-ruby'
 
 gem 'ransack'
 gem 'redis'
+gem 'faker'

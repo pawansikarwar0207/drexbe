@@ -34,29 +34,22 @@ traveler3 = Traveler.create!(
   travel_date: Date.today + 7.days
 )
 
-# Create dummy announcements
-Announcement.create!(
-  announcement_type: "send_package",
-  country: "USA",
-  city: "New York",
-  date: Date.today + 5.days,
-  user_id: 1 # Assuming a user with ID 1 exists
-)
+puts "Traveler data successfully created!"
 
-Announcement.create!(
-  announcement_type: "buy_item",
-  country: "France",
-  city: "Paris",
-  date: Date.today + 3.days,
-  user_id: 1
-)
+5.times do
+  User.create!(
+    email: Faker::Internet.unique.email,
+    password: "123456", # Devise will handle the encryption
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    phone_number: Faker::PhoneNumber.cell_phone_in_e164,
+    city: Faker::Address.city,
+    country: Faker::Address.country,
+    postal_code: Faker::Number.number(digits: 5), # Generates a numeric postal code
+    address_1: Faker::Address.street_address,
+    address_2: Faker::Address.secondary_address,
+    user_type: %w[individual professional].sample
+  )
+end
 
-Announcement.create!(
-  announcement_type: "send_package",
-  country: "Germany",
-  city: "Berlin",
-  date: Date.today + 2.days,
-  user_id: 1
-)
-
-puts "Dummy data successfully created!"
+puts "5 dummy users created successfully!"

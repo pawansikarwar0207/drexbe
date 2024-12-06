@@ -1,115 +1,187 @@
 <%= turbo_frame_tag "chatroom_frame" do %>
-  <div class="airbnb-chat-container rounded-0">
-    <div class="chat-messages p-3">
-      <div class="chat-header d-flex align-items-center p-3">
-        <div class="user-avatar me-3">
-          <%# Display user's avatar %>
-          <% if chat_room.other_user(current_user).profile_picture.attached? %>
-            <%= image_tag chat_room.other_user(current_user).profile_picture, class: "avatar rounded-circle" %>
-          <% else %>
-            <img src="https://storage.googleapis.com/a1aa/image/O8MiwnO96lJ0Opf2gM3iJlvzomfUBmWFPeRabNe6c6llz3UPB.jpg" alt="Avatar" class="avatar rounded-circle">
-          <% end %>
-        </div>
-        <div>
-          <h6 class="mb-0"><%= chat_room.other_user(current_user).full_name %></h6>
-          <small class="text-muted">Active now</small>
-        </div>
+  <div class="airbnb-chat-container">
+    <!-- Chat Header -->
+    <div class="chat-header d-flex align-items-center p-3 shadow-sm bg-light">
+      <div class="user-avatar me-3">
+        <% if chat_room.other_user(current_user).profile_picture.attached? %>
+          <%= image_tag chat_room.other_user(current_user).profile_picture, class: "avatar rounded-circle" %>
+        <% else %>
+          <img src="https://storage.googleapis.com/a1aa/image/O8MiwnO96lJ0Opf2gM3iJlvzomfUBmWFPeRabNe6c6llz3UPB.jpg" alt="Avatar" class="avatar rounded-circle">
+        <% end %>
       </div>
-      <%= turbo_frame_tag "message_frame" do %>
-        <div class="mt-5">
-          <% @messages.each do |message| %>
-            <div class="cont-<%= message.user.id %>">
-              <div class="message-box msg-<%= message.user.id %>">
-                <%= message.content %>
-              </div>
-            </div>
-          <% end %>
-        </div>  
-      <% end %>
-      <%= turbo_stream_from "chatroom_#{chat_room.id}" %>
+      <div>
+        <h6 class="mb-0 fw-bold"><%= chat_room.other_user(current_user).full_name %></h6>
+        <small class="text-muted">Active now</small>
+      </div>
     </div>
 
-    <!-- Message Input -->
-    <div class="chat-input p-3">
-      <%= form_with model: [chat_room, Message.new], local: false, class: "d-flex", data: { action: 'turbo:submit-end->turbo-stream#reset'} do |form| %>
+    <!-- Chat Messages -->
+    <%= turbo_frame_tag "message_frame" do %>
+      <div class="chat-messages">
+        <% @messages.each do |message| %>
+          <div class="message d-flex <%= message.user == current_user ? 'sent' : 'received' %>">
+            <% unless message.user == current_user %>
+              <div class="avatar-container me-2">
+                <% if message.user.profile_picture.attached? %>
+                  <%= image_tag message.user.profile_picture, size: "30x30", class: "rounded-circle" %>
+                <% else %>
+                  <img src="https://storage.googleapis.com/a1aa/image/O8MiwnO96lJ0Opf2gM3iJlvzomfUBmWFPeRabNe6c6llz3UPB.jpg" alt="Avatar" class="rounded-circle" width="30">
+                <% end %>
+              </div>
+            <% end %>
+            <div class="message-content-container <%= message.user == current_user ? 'received' : 'sent' %>">
+              <div class="message-content">
+                <p class="message-text mb-1"><%= message.content %></p>
+                <small class="text-muted d-block text-end"><%= message.created_at.strftime("%I:%M %p") %></small>
+              </div>
+              <button class="copy-btn btn btn-sm btn-light position-absolute" onclick="copyToClipboard('<%= j message.content %>')">
+                Copy
+              </button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <%= turbo_stream_from "chatroom_#{chat_room.id}" %>
+
+    <!-- Chat Input -->
+    <div class="chat-input p-3 border-top">
+      <%= form_with model: [chat_room, Message.new], local: false, class: "d-flex align-items-center" do |form| %>
         <div class="flex-grow-1 me-2">
-          <%= form.text_area :content, placeholder: "Type your message...", class: "form-control rounded-pill px-3", rows: 1, onkeypress: "if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); this.form.requestSubmit(); }" %>
+          <%= form.text_area :content, placeholder: "Type a message...", class: "form-control rounded-pill px-3", rows: 1, onkeypress: "if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); this.form.requestSubmit(); }" %>
         </div>
-        <%= form.submit "Send", class: "btn btn-primary rounded-pill px-4" %>
+        <%= form.submit "Send", class: "btn btn-dark rounded-pill px-4" %>
       <% end %>
     </div>
   </div>
-<% end %>  
-
+<% end %>
 
 <style>
+  /* Copy message */
+  .message-content-container {
+    position: relative;
+  }
+
+  .message-content-container .copy-btn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+
+  /* Hover Effect */
+  .message-content-container:hover .copy-btn {
+    display: block;
+  }
+
+  /* Position for Sent Messages */
+  .message-content-container.sent .copy-btn {
+    right: -55px; /* Position on the left side of sent messages */
+  }
+
+  /* Position for Received Messages */
+  .message-content-container.received .copy-btn {
+    left: -55px; /* Position on the right side of received messages */
+  }
+
+
+  /* Chat Container */
   .airbnb-chat-container {
     display: flex;
     flex-direction: column;
-    height: 90vh;
-    margin: 0 auto;
-    border: 1px solid #e6e6e6;
-    border-radius: 12px;   
+    background-color: #f7f7f7;
     overflow: hidden;
+    margin: 0 auto;
   }
 
+  /* Header */
   .chat-header {
-    border-bottom: 1px solid #e6e6e6;
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0;
   }
 
-  .user-avatar img.avatar {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
+  .chat-header h6 {
+    margin: 0;
+    font-weight: 600;
   }
 
+  /* Messages */
   .chat-messages {
     flex-grow: 1;
     overflow-y: auto;
     padding: 20px;
+    background-color: #ffffff;
   }
 
-  .chat-messages .message {
+  .message {
     display: flex;
+    align-items: flex-start;
     margin-bottom: 15px;
+    border-bottom: none;
   }
 
-  .chat-messages .message.sent {
-    justify-content: flex-end;
+  .message.sent {
+    flex-direction: row-reverse;
   }
 
-  .chat-messages .message.received {
-    justify-content: flex-start;
+  .message.received {
+    flex-direction: row;
   }
 
-  .chat-messages .message-bubble {
-    max-width: 70%;
-    padding: 12px 16px;
-    border-radius: 20px;
+  .avatar-container img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .message-content {
+    max-width: 100%;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .message.sent .message-content {
+    background-color: #dcf8c6;
+  }
+
+  .message.received .message-content {
+    background-color: #ffffff;
+  }
+
+  .message-text {
+    margin: 0;
     font-size: 14px;
     line-height: 1.5;
   }
 
-  .chat-messages .message-bubble.sent {
-    background-color: #007bff;
-    color: #fff;
-  }
-
-  .chat-messages .message-bubble.received {
-    background-color: #e6e6e6;
-    color: #333;
-  }
-
+  /* Input */
   .chat-input {
-    border-top: 1px solid #e6e6e6;
+    background-color: #ffffff;
   }
 
   .chat-input .form-control {
-    border: 1px solid #e6e6e6;
-    background-color: #f9f9f9;
+    border: 1px solid #dcdcdc;
+    box-shadow: none;
   }
 
   .chat-input .btn {
     font-weight: bold;
   }
 </style>
+
+<script>
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Message copied to clipboard!');
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+    });
+  }
+
+</script>

@@ -4,6 +4,13 @@ class ChatRoomsController < ApplicationController
 
   def index
     @users = User.where.not(id: current_user.id).includes(profile_picture_blob: :attachments)
+
+    @last_messages = {}
+    
+    @users.each do |user|
+      chat_room = current_user.find_or_create_chat_room_with(user)
+      @last_messages[user.id] = chat_room.messages.order(created_at: :desc).first
+    end
   end
 
   def show

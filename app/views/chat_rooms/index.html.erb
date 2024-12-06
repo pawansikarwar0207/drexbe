@@ -1,5 +1,5 @@
-<div class="container shadow-none rounded-0 mb-5" data-controller="turbo-stream">
-  <div class="row">
+<div class="shadow-none rounded-0 mb-5" data-controller="turbo-stream">
+  <div class="row g-0">
     <div class="col-12 col-md-3 messages-list">
       <div class="d-flex justify-content-between align-items-center p-3">
         <h5>Messages</h5>
@@ -29,6 +29,16 @@
                   <%= user&.full_name %>
                   <% if user.id == session[:last_sender_id] %>
                     <span class="active-indicator">Active</span>
+                  <% end %>
+                </div>
+                <div class="last-message text-dark" style="font-size: 14px;">
+                  <% if @last_messages[user.id].present? %>
+                    <%= @last_messages[user.id].content.truncate(30) %>
+                    <div style="text-align: right;">
+                      <%= @last_messages[user.id].created_at.strftime("%I:%M %p") %>
+                    </div>
+                  <% else %>
+                    <em>No messages yet!</em>
                   <% end %>
                 </div>
               </div>
