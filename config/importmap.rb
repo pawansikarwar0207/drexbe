@@ -10,3 +10,4 @@ pin "@popperjs/core", to: "https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/um
 pin "@rails/actioncable", to: "@rails--actioncable.js" # @8.0.0
 pin "@rails/actioncable", to: "actioncable.esm.js"
 pin_all_from "app/javascript/channels", under: "channels"
+pin "@joeattardi/emoji-button", to: "https://ga.jspm.io/npm:@joeattardi/emoji-button@4.6.4/dist/index.js"

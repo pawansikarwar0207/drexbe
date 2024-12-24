@@ -7,32 +7,59 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 # Create dummy travelers
-traveler1 = Traveler.create!(
-  name: "John Doe",
-  email: "john@example.com",
-  country: "USA",
-  city: "New York",
-  airport: "JFK",
-  travel_date: Date.today + 10.days
-)
-
-traveler2 = Traveler.create!(
-  name: "Jane Smith",
-  email: "jane@example.com",
-  country: "France",
-  city: "Paris",
-  airport: "CDG",
-  travel_date: Date.today + 15.days
-)
-
-traveler3 = Traveler.create!(
-  name: "Emily Johnson",
-  email: "emily@example.com",
-  country: "Germany",
-  city: "Berlin",
-  airport: "BER",
-  travel_date: Date.today + 7.days
-)
+Traveler.create!([
+  {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    travel_date: Date.today + 7.days,
+    trip_type: "round_trip",
+    departure_country: "USA",
+    departure_city: "New York",
+    arrival_country: "France",
+    arrival_city: "Paris",
+    transportation: "bus",
+    parcel_type: "Documents",
+    parcel_qty: 2,
+    ready_to_buy_for_you: true,
+    parcel_collection_mode: "Pickup",
+    travel_return_date: Date.today + 14.days,
+    user_id: 1
+  },
+  {
+    name: "Jane Smith",
+    email: "jane.smith@example.com",
+    travel_date: Date.today + 10.days,
+    trip_type: "one_way",
+    departure_country: "Canada",
+    departure_city: "Toronto",
+    arrival_country: "UK",
+    arrival_city: "London",
+    transportation: "train",
+    parcel_type: "Electronics",
+    parcel_qty: 1,
+    ready_to_buy_for_you: false,
+    parcel_collection_mode: "Delivery",
+    travel_return_date: Date.today + 10.days,
+    user_id: 2
+  },
+  {
+    name: "Alice Johnson",
+    email: "alice.johnson@example.com",
+    travel_date: Date.today + 20.days,
+    trip_type: "round_trip",
+    departure_country: "Australia",
+    departure_city: "Sydney",
+    arrival_country: "Japan",
+    arrival_city: "Tokyo",
+    transportation: "ship",
+    parcel_type: "Clothing",
+    parcel_qty: 3,
+    ready_to_buy_for_you: true,
+    parcel_collection_mode: "Pickup",
+    travel_return_date: Date.today + 30.days,
+    user_id: 3
+  }
+])
 
 puts "Traveler data successfully created!"
 

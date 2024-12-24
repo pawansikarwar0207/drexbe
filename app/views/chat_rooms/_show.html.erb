@@ -1,60 +1,88 @@
-<%= turbo_frame_tag "chatroom_frame" do %>
-  <div class="airbnb-chat-container">
-    <!-- Chat Header -->
-    <div class="chat-header d-flex align-items-center p-3 shadow-sm bg-light">
-      <div class="user-avatar me-3">
-        <% if chat_room.other_user(current_user).profile_picture.attached? %>
-          <%= image_tag chat_room.other_user(current_user).profile_picture, class: "avatar rounded-circle" %>
-        <% else %>
-          <img src="https://storage.googleapis.com/a1aa/image/O8MiwnO96lJ0Opf2gM3iJlvzomfUBmWFPeRabNe6c6llz3UPB.jpg" alt="Avatar" class="avatar rounded-circle">
-        <% end %>
-      </div>
-      <div>
-        <h6 class="mb-0 fw-bold"><%= chat_room.other_user(current_user).full_name %></h6>
-        <small class="text-muted">Active now</small>
-      </div>
-    </div>
+ <!-- Chat Header -->
+<div class="chat-header d-flex align-items-center p-3 shadow-sm bg-light">
+  <div class="user-avatar me-3">
+    <% if @other_user.profile_picture.attached? %>
+      <%= image_tag @other_user.profile_picture, class: "avatar rounded-circle" %>
+    <% else %>
+      <img src="https://storage.googleapis.com/a1aa/image/O8MiwnO96lJ0Opf2gM3iJlvzomfUBmWFPeRabNe6c6llz3UPB.jpg" alt="Avatar" class="avatar rounded-circle">
+    <% end %>
+  </div>
+  <div>
+    <h6 class="mb-0 fw-bold"><%= @other_user.full_name %></h6>
+    <small class="text-muted">Active now</small>
+  </div>
+</div>
 
-    <!-- Chat Messages -->
-    <%= turbo_frame_tag "message_frame" do %>
-      <div class="chat-messages">
-        <% @messages.each do |message| %>
-          <div class="message d-flex <%= message.user == current_user ? 'sent' : 'received' %>">
-            <% unless message.user == current_user %>
-              <div class="avatar-container me-2">
-                <% if message.user.profile_picture.attached? %>
-                  <%= image_tag message.user.profile_picture, size: "30x30", class: "rounded-circle" %>
-                <% else %>
-                  <img src="https://storage.googleapis.com/a1aa/image/O8MiwnO96lJ0Opf2gM3iJlvzomfUBmWFPeRabNe6c6llz3UPB.jpg" alt="Avatar" class="rounded-circle" width="30">
-                <% end %>
-              </div>
-            <% end %>
-            <div class="message-content-container <%= message.user == current_user ? 'received' : 'sent' %>">
-              <div class="message-content">
-                <p class="message-text mb-1"><%= message.content %></p>
-                <small class="text-muted d-block text-end"><%= message.created_at.strftime("%I:%M %p") %></small>
-              </div>
-              <button class="copy-btn btn btn-sm btn-light position-absolute" onclick="copyToClipboard('<%= j message.content %>')">
-                Copy
-              </button>
-            </div>
+<!-- Chat Messages -->
+<div class="chat-messages">
+  <%= turbo_frame_tag "message_frame" do %>
+    <% @messages.each do |message| %>
+      <div class="cont-<%= message.user.id %>">
+        <div class="message-box msg-<%= message.user.id %> message-content-container">
+          <%= message.content %>
+          <!-- Timestamp -->
+          <small class="text-muted d-block text-end">
+            <%= message.created_at.strftime("%I:%M %p") %>
+          </small>
+
+          <!-- Reaction Buttons -->
+          <div
+            class="reaction-buttons <%= message.user == current_user ? 'reciver-reaction' : 'sender-reaction' %>"
+            data-controller="emoji"
+            data-emoji-chat-room-id-value="<%= chat_room.id %>"
+            data-emoji-message-id-value="<%= message.id %>"
+          >
+            <button
+              data-emoji-target="emojiButton"
+              data-action="click->emoji#togglePicker"
+              class="reaction-button"
+              aria-label="Pick an emoji"
+            >
+              😀
+            </button>
+
+            <!-- Hidden Emoji Picker -->
+            <div
+              data-emoji-target="emojiPicker"
+              style="display: none"
+              class="emoji-picker"
+            ></div>
+
+            <!-- Hidden Input to store selected emoji -->
+            <input
+              type="hidden"
+              data-emoji-target="reactionInput"
+              value=""
+            >
           </div>
-        <% end %>
+        </div>
+
+        <!-- Display Reactions -->
+        <div id="<%= dom_id(message, :reactions) %>" class="message-reactions d-flex mt-2">
+          <% if @reactions_counts.present? && @reactions_counts[message.id].present? %>
+            <% @reactions_counts[message.id].each do |emoji, count| %>
+              <span class="me-2">
+                <%= emoji %> (<%= count %>)
+              </span>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     <% end %>
-    <%= turbo_stream_from "chatroom_#{chat_room.id}" %>
+  <% end %>
+</div>
 
-    <!-- Chat Input -->
-    <div class="chat-input p-3 border-top">
-      <%= form_with model: [chat_room, Message.new], local: false, class: "d-flex align-items-center" do |form| %>
-        <div class="flex-grow-1 me-2">
-          <%= form.text_area :content, placeholder: "Type a message...", class: "form-control rounded-pill px-3", rows: 1, onkeypress: "if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); this.form.requestSubmit(); }" %>
-        </div>
-        <%= form.submit "Send", class: "btn btn-dark rounded-pill px-4" %>
-      <% end %>
+<%= turbo_stream_from "chatroom_#{chat_room.id}" %>
+
+<!-- Chat Input -->
+<div class="chat-input p-3 border-top">
+  <%= form_with model: [chat_room, Message.new], local: false, class: "d-flex align-items-center" do |form| %>
+    <div class="flex-grow-1 me-2">
+      <%= form.text_area :content, placeholder: "Type a message...", class: "form-control rounded-pill px-3", rows: 1, onkeypress: "if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); this.form.requestSubmit(); }" %>
     </div>
-  </div>
-<% end %>
+    <%= form.submit "Send", class: "btn btn-dark rounded-pill px-4" %>
+  <% end %>
+</div>
 
 <style>
   /* Copy message */
@@ -65,7 +93,7 @@
   .message-content-container .copy-btn {
     display: none;
     position: absolute;
-    top: 50%;
+    top: 20%;
     transform: translateY(-50%);
     font-size: 12px;
     padding: 5px 10px;
@@ -93,7 +121,6 @@
     display: flex;
     flex-direction: column;
     background-color: #f7f7f7;
-    overflow: hidden;
     margin: 0 auto;
   }
 
@@ -173,15 +200,39 @@
   .chat-input .btn {
     font-weight: bold;
   }
-</style>
 
-<script>
-  function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert('Message copied to clipboard!');
-    }).catch(err => {
-      console.error('Failed to copy text: ', err);
-    });
+  .chat-messages {
+    height: 71vh !important;
+    overflow-y: scroll;
+  }
+  body {
+    overflow: hidden;
+  }
+  .message-content-container .reaction-buttons {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
   }
 
-</script>
+.message-content-container:hover .reaction-buttons {
+  display: block;
+}
+
+.message-content-container {
+  position: relative;
+  padding-right: 40px; /* Adjust this for spacing */
+}
+
+.message-content {
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: #f7f7f7;
+}
+
+.message-box:hover {
+  background-color: #eef2f7; /* Subtle background change for hover */
+}
+</style>

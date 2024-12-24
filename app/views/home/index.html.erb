@@ -1,187 +1,1567 @@
-<!-- Main content -->
-<section class="col-lg-10 mx-auto card border-0 p-5">
-  <div class="row align-items-center">
-    <!-- Text Column -->
-    <div class="col-lg-6 col-md-12 text-start mb-4 mb-lg-0">
-      <h1 class="header-title" style="color: #353188; font-size: 45px;">Bringing Happiness Right to Your Doorstep!</h1>
-      <p class="header-subtitle text-secondary lead">
-        We’re here to make your moments brighter and your life easier with fast, reliable deliveries.
-        Discover the joy of convenience and satisfaction, every time you order.
-      </p>
-    </div>
-    <!-- Image Column -->
-    <div class="col-lg-6 col-md-12">
-      <%= image_tag 'https://img.freepik.com/free-vector/character-illustration-people-with-global-network-concept_53876-59874.jpg?ga=GA1.1.590165737.1721391013&semt=ais_hybrid', class: 'img-fluid' %>
-    </div>
-  </div>
-
-  <!-- Search bar -->
-  <div class="mt-4">
-    <%= form_with(url: search_results_path, method: :get, local: true) do |form| %>
-      <div class="search-bar">
-        <div class="search-item">
-          <i class="fas fa-dot-circle"></i>
-          <span>
-            <%= form.text_field :departure_city, class: 'form-control', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off', value: params[:departure_city].present? ? params[:departure_city] : '' %>
-            <%= form.hidden_field :departure_country, id: 'departure_country' %>
-          </span>
-        </div>
-        <div class="search-item">
-          <i class="fas fa-dot-circle"></i>
-          <span>
-            <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off', value: params[:arrival_city].present? ? params[:arrival_city] : ''  %>
-            <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
-          </span>
-        </div>
-        <div class="search-item">
-          <i class="fas fa-calendar-alt"></i>
-          <span>
-            <%= form.text_field :date, class: 'form-control flatpickr', id: 'date_field', placeholder: 'Today' %>
-          </span>
-        </div>
-        <button class="search-button">
-          <%= form.submit "Search", class: 'btn' %>
-        </button>
-      </div>
-    <% end %>
-  </div>
-
-  <!-- quick action section -->
-  <div class="quick-actions bg-light mt-5 card border-0">
-    <h1>Quick Actions</h1>
-    <div class="">
-        <div class="row justify-content-center">
-            <div class="col-md-3 mb-2">
-                <div class="action-card text-center">
-                    <i class="fas fa-cube"></i>
-                    <p>Advanced Tracking</p>
-                </div>
+<div class="main-wrapper">
+  <!-- Banner -->
+  <section class="banner-section banner-slider">
+    <div class="container">
+      <div class="home-banner">
+        <div class="row align-items-center">
+          <div class="col-lg-6" data-aos="fade-down">
+            <h2>Build Together, The First <br>Community of ParcelPool </h2>
+            <br>
+            <p style="color: #6562a3;">Individual, Professional, Travelers-Together,We build the First <br> Collaborative shipping Community! </p>
+            <p style="color: #6562a3;">Roles may change, but the golas remains the same:send parcels at <br> low costs while supporting a greener plant </p>
+          </div>
+          <div class="col-lg-6" data-aos="fade-down">
+            <div class="banner-imgs">
+              <%= image_tag "ban2.png", class: "img-fluid aos", alt:"bannerimage" %> 
             </div>
-            <div class="col-md-3 mb-2">
-                <div class="action-card text-center">
-                    <i class="fas fa-calculator"></i>
-                    <p>Get Rates</p>
-                </div>
-            </div>
-            <div class="col-md-3 mb-2">
-                <div class="action-card text-center">
-                    <i class="fas fa-shipping-fast"></i>
-                    <p>Send Shipment</p>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
-  </div>
-
-  <div class="row align-items-center">
-    <!-- Text Column -->
-    <div class="col-lg-6 col-md-12 text-start mb-4 mb-lg-0">
-      <h1 class="header-title" style="color: #353188; font-size: 45px;">
-        Ship up to 30kg to India, Pakistan, Philippines, or Nepal with Customs Duties Included! 
-      </h1>
-      <p class="header-subtitle lead mt-3 mb-3">
-        Send Packages up to 30kg directly to your recipient's doorstep in as little as 14 days, with custom duties covered for shipments valued up to $100. Enjoy fast, reliable shipping with Drexbe's service.  
-      </p>
-      <div style="color: #353188;">
-        <h4>Affordable Rate for 30kg Shipments:</h4>
-        <ul style="font-size:20px;">
-          <li>India: $130</li>
-          <li>Pakistan: $204</li>
-          <li>Philippines: $118</li>
-          <li>Nepal: $118</li>
-        </ul>
       </div>
     </div>
-    <!-- Image Column -->
-    <div class="col-lg-6 col-md-12">
-      <%= image_tag 'https://img.freepik.com/free-vector/delivery-service-with-masks-concept_23-2148498594.jpg?ga=GA1.1.590165737.1721391013&semt=ais_hybrid', class: 'img-fluid' %>
+  </section>
+  <!-- /Banner -->
+
+  <!-- Search -->
+  <div class="section-search">
+    <div class="container">
+      <div class="search-box-banner">
+        <%= form_with(url: search_results_path, method: :get, local: true) do |form| %>
+          <ul class="align-items-center">
+            <li class="column-group-main">
+              <br>
+              <div class="input-block-wrapp">
+                <div class="input-block date-widget">
+                  <div class="group-img">
+                    <i class="fas fa-dot-circle"></i>
+                    <span>
+                      <%= form.text_field :departure_city, class: 'form-control', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off', value: params[:departure_city].present? ? params[:departure_city] : '' %>
+                      <%= form.hidden_field :departure_country, id: 'departure_country' %>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="column-group-main">
+              <br>
+              <div class="input-block-wrapp">
+                <div class="input-block date-widget">
+                  <div class="group-img">
+                    <i class="fas fa-dot-circle"></i>
+                    <span>
+                      <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off', value: params[:arrival_city].present? ? params[:arrival_city] : ''  %>
+                      <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="column-group-main">
+              <br>
+              <div class="input-block-wrapp">
+                <div class="input-block date-widge">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>
+                      <%= form.text_field :date, class: 'form-control flatpickr', id: 'date_field', placeholder: 'Today' %>
+                    </span>
+                  <div class="group-img">
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="column-group-last">
+              <div class="input-block">
+                <div class="search-btn">
+                  <%= form.submit "Search", class: 'btn search-button' %>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!-- /Search -->
+  </div>
+  <br>
+  <br>
+  <section class="section facts-number">
+    <div class="container">
+      <!-- Heading title-->
+      <!-- /Heading title -->
+      <div class="counter-group">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down">
+            <div class="count-group flex-fill">
+              <div class="customer-count d-flex align-items-center">
+                <div class="count-img">
+                  <span class="fa fa-search" style="font-size: 20px; color: #ffff;"></span>
+                </div>
+                <div class="count-content">
+                  <h4>Simple</h4>
+                  <p>Just search, click and <br> send with ease </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down">
+            <div class="count-group flex-fill">
+              <div class="customer-count d-flex align-items-center">
+                <div class="count-img">
+                  <span class="fa fa-clock-o" style="font-size: 20px; color: #ffff;"></span>
+                </div>
+                <div class="count-content">
+                  <h4>Fast</h4>
+                  <p>Same-day delivery for <br> urgent shipments </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down">
+            <div class="count-group flex-fill">
+              <div class="customer-count d-flex align-items-center">
+                <div class="count-img">
+                  <%= image_tag "shield-check.png" %>
+                </div>
+                <div class="count-content">
+                  <h4>Trust</h4>
+                  <p>Verified carriers for <br>secure deliveries </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down">
+            <div class="count-group flex-fill">
+              <div class="customer-count d-flex align-items-center">
+                <div class="count-img">
+                  <span class="fa fa-arrow-down" style="font-size: 20px; color: #ffff;"></span>
+                </div>
+                <div class="count-content">
+                  <h4>Cheap</h4>
+                  <p>Save upto 70% oon <br>your shipping costs </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+  <br>
+  <section class="section popular-car-type">
+    <div class="container">
+      <!-- Heading title-->
+      <div class="section-heading" data-aos="fade-down">
+        <h2 style="color: black !important">Quick Actions</h2>
+      </div>
+      <div class="row mt-5" align="center">
+        <div class="col-md-3"></div>
+        <div class="col-md-2">
+        <h5>Advanced Tracking</h5><%= image_tag "Vector.png", class:"mt-4" %>
+        </div>
+        <div class="col-md-2">
+        <h5>Get Rates</h5><%= image_tag "calculator.png", class:"mt-4" %>
+        </div>
+        <div class="col-md-2">
+        <h5>Send Shipment</h5><%= image_tag 'cargo-truck.png', class: 'mt-4' %>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+  </section>
+  <section class="section popular-car-type">
+    <div class="container">
+      <!-- Heading title-->
+      <div class="row">
+        <div class="col-md-6">
+          <h3 class="parcel">To send your Parcel, and make your trip <br>profitable </h3>
+          <ul class="mt-5">
+            <li style="color: #000000">
+              <span>&#9679; &nbsp; &nbsp; &nbsp;</span>Travel Smart, Earn More-join DrexBe to Help Others <br>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;Send and Buy!
+            </li>
+            <br>
+            <li style="color: #000000">
+              <span>&#9679; &nbsp; &nbsp; &nbsp;</span>Sending Documents and Parcels Made Easy-Register <br>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;and find Your Perfect Dropper!
+            </li>
+            <br>
+            <li style="color: #000000">
+              <span>&#9679; &nbsp; &nbsp; &nbsp;</span>Buy what you love, Anywhere-Post your Link and <br>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;Find the Right Helper!
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <%= image_tag "parcel.png", class: "img-fluid" %> 
+        </div>
+      </div>
+      <div class="section-search">
+        <div class="container">
+          <div class="search-box-banner2">
+            <form action="https://dreamsrent.dreamstechnologies.com/html/template/listing-grid.html">
+              <ul class="align-items-center">
+                <li class="column-group-last">
+                  <div class="input-block">
+                    <div class="search-btn">
+                      <button class="btn search-button text-dark " type="submit"> Search &nbsp; <div style="width: 30px; height: 30px; color: #ffffff; display: inline;">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-
+</section>
+<section class="section popular-car-type">
   <div class="container">
-    <div class="subscribe-section">
-      <div class="subscribe-text">
-        <p style="font-size: 23px;" class="text-start">Subscribe for Our</p>
-        <h2 style="font-size: 30px;">Latest News and Offers</h2>
+    <!-- Heading title-->
+    <div class="section-heading" data-aos="fade-down">
+      <h2 style="color: #353188 !important">Elevate Your Experiance</h2>
+      <h3>Download Our App Today</h3>
+    </div>
+    <div class="row" align="center">
+      <div class="col-md-4"></div>
+      <div class="col-md-2">
+        <%= image_tag "google-play.png", class:"mt-4" %>
       </div>
-      <div class="subscribe-input">
-        <input type="email" placeholder="Write your email here.." class="mt-2">
-        <button type="button">Send</button>
+      <div class="col-md-2">
+        <%= image_tag "apple-store.png", class:"mt-4" %>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </div>
+  <div class="row" align="center">
+    <div class="col-md-2"></div>
+    <div class="col-md-3 mb-3">
+      <div class="elevate_experience_box" align="center">
+        <%= image_tag "thumbs.png" %>
+        <br> 10,000 <br>Orders
       </div>
     </div>
+    <div class="col-md-3 mb-3">
+      <div class="elevate_experience_box" align="center">
+        <%= image_tag "users.png" %>
+        <br> 3000 <br>Users
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="elevate_experience_box" align="center">
+        <%= image_tag "travel.png" %>
+        <br> 2000 <br>On Travel
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
 </div>
 </section>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="profile-card">
+        <div class="profile-image"><%= image_tag "ethan.png", alt: "Profile Picture" %> </div>
+        <h2 class="name">Ethan</h2>
+        <div class="location-info">
+          <div class="location">
+            <span class="city">NYC</span>
+            <span class="country">USA</span>
+          </div>
+          <div class="transport-icon">🚗</div>
+          <div class="location">
+            <span class="city">Dubai</span>
+            <span class="country">UAE</span>
+          </div>
+        </div>
+        <div class="datetime-info">
+          <div class="date-row">
+            <span class="label">Date :</span>
+            <span class="value">Dec23,2024</span>
+          </div>
+          <div class="time-row">
+            <span class="label">Time :</span>
+            <span class="value">12:00PST</span>
+          </div>
+        </div>
+        <button class="check-button">Check</button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="profile-card">
+        <div class="profile-image"><%= image_tag "ethan.png", alt: "Profile Picture" %> </div>
+        <h2 class="name">Ethan</h2>
+        <div class="location-info">
+          <div class="location">
+            <span class="city">NYC</span>
+            <span class="country">USA</span>
+          </div>
+          <div class="transport-icon">🚗</div>
+          <div class="location">
+            <span class="city">Dubai</span>
+            <span class="country">UAE</span>
+          </div>
+        </div>
+        <div class="datetime-info">
+          <div class="date-row">
+            <span class="label">Date :</span>
+            <span class="value">Dec23,2024</span>
+          </div>
+          <div class="time-row">
+            <span class="label">Time :</span>
+            <span class="value">12:00PST</span>
+          </div>
+        </div>
+        <button class="check-button">Check</button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="profile-card">
+        <div class="profile-image"><%= image_tag "ethan.png", alt: "Profile Picture" %> </div>
+        <h2 class="name">Ethan</h2>
+        <div class="location-info">
+          <div class="location">
+            <span class="city">NYC</span>
+            <span class="country">USA</span>
+          </div>
+          <div class="transport-icon">🚗</div>
+          <div class="location">
+            <span class="city">Dubai</span>
+            <span class="country">UAE</span>
+          </div>
+        </div>
+        <div class="datetime-info">
+          <div class="date-row">
+            <span class="label">Date :</span>
+            <span class="value">Dec23,2024</span>
+          </div>
+          <div class="time-row">
+            <span class="label">Time :</span>
+            <span class="value">12:00PST</span>
+          </div>
+        </div>
+        <button class="check-button">Check</button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="profile-card">
+        <div class="profile-image"><%= image_tag "ethan.png", alt: "Profile Picture" %> </div>
+        <h2 class="name">Ethan</h2>
+        <div class="location-info">
+          <div class="location">
+            <span class="city">NYC</span>
+            <span class="country">USA</span>
+          </div>
+          <div class="transport-icon">🚗</div>
+          <div class="location">
+            <span class="city">Dubai</span>
+            <span class="country">UAE</span>
+          </div>
+        </div>
+        <div class="datetime-info">
+          <div class="date-row">
+            <span class="label">Date :</span>
+            <span class="value">Dec23,2024</span>
+          </div>
+          <div class="time-row">
+            <span class="label">Time :</span>
+            <span class="value">12:00PST</span>
+          </div>
+        </div>
+        <button class="check-button">Check</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<!-- <section class="section popular-car-type"><div class="container"><header><h1>Your Global Shipping & Buying Hub</h1><p>Accelerate Your Global Business with Our Reliable Shipping and Sourcing Solutions</p></header><div class="shipping-cards"><div class="card"><div class="profile-img"><img src="assets/img/salah.png" alt="Shipper profile"></div><h3>Siah</h3><div class="route"><span>Paris</span><span class="arrow">→</span><span>Tunis</span></div><div class="date">2023-11-18</div><div class="size">Document</div><button class="check-btn">Check</button></div></div><button class="see-all-btn">See All Sender and Buyer</button></div></section> -->
+<section class="section popular-car-type">
+  <div class="testimonials-container">
+    <h2 class="testimonials-title">Hear From Our Satisfied Clients Have to Say</h2>
+    <div class="testimonials-grid">
+      <!-- First Testimonial -->
+      <div class="testimonial-card">
+        <div class="testimonial-header">
+          <%= image_tag "adriana.png", alt:"Client profile", class:"profile-image" %>
+          <div class="client-info">
+            <h3 class="client-name">Adrian</h3>
+            <p class="client-title">Expeditious Japan</p>
+          </div>
+        </div>
+        <p class="testimonial-text">"Fast, reliable, and affordable international shipping. Highly recommended!"</p>
+        <div class="testimonial-footer">
+          <span class="client-subtitle">Mona</span>
+          <div class="rating"> ★★★★★ </div>
+        </div>
+      </div>
+      <!-- Second Testimonial -->
+      <div class="testimonial-card">
+        <div class="testimonial-header">
+          <%= image_tag "anna.png", alt:"Client profile", class:"profile-image" %>
+          <div class="client-info">
+            <h3 class="client-name">Anna</h3>
+            <p class="client-title">Expeditious Japan</p>
+          </div>
+        </div>
+        <p class="testimonial-text">"Excellent service and customer support. My package arrived on time and in perfect condition."</p>
+        <div class="testimonial-footer">
+          <span class="client-subtitle">Valerie</span>
+          <div class="rating"> ★★★★★ </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section style="margin: 20px 0px 20px 0px;">
+  <div class="container" align="center">
+    <h1 style="color: #353188">Your Global Shipping & Buying Hub</h1>
+    <p class="subtitle">Accelerate Your Global Business with Our Reliable Shipping and Sourcing Solutions</p>
+    <div class="row" align="center">
+      <div class="col-md-2">
+        <div class="shipping-cards">
+          <div class="card" style="width: 18rem;">
+            <div class="profile-img">
+              <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
+            </div>
+            <h3>Siah</h3>
+            <div class="route">
+              <span>Pais</span>
+              <span class="arrow">→</span>
+              <span>Tunis</span>
+            </div>
+            <div class="date">2023-11-18</div>
+            <div class="size">Document</div>
+            <button class="check-btn">Check</button>
+          </div>
+          <!-- Repeat card div structure for other profiles -->
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="shipping-cards">
+          <div class="card">
+            <div class="profile-img">
+              <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
+            </div>
+            <h3>Siah</h3>
+            <div class="route">
+              <span>Pais</span>
+              <span class="arrow">→</span>
+              <span>Tunis</span>
+            </div>
+            <div class="date">2023-11-18</div>
+            <div class="size">Document</div>
+            <button class="check-btn">Check</button>
+          </div>
+          <!-- Repeat card div structure for other profiles -->
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="shipping-cards">
+          <div class="card">
+            <div class="profile-img">
+              <%= image_tag 'ethan.png', alt: "Shipper Profile" %>
+            </div>
+            <h3>Siah</h3>
+            <div class="route">
+              <span>Pais</span>
+              <span class="arrow">→</span>
+              <span>Tunis</span>
+            </div>
+            <div class="date">2023-11-18</div>
+            <div class="size">Document</div>
+            <button class="check-btn">Check</button>
+          </div>
+          <!-- Repeat card div structure for other profiles -->
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="shipping-cards">
+          <div class="card">
+            <div class="profile-img">
+              <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
+            </div>
+            <h3>Siah</h3>
+            <div class="route">
+              <span>Pais</span>
+              <span class="arrow">→</span>
+              <span>Tunis</span>
+            </div>
+            <div class="date">2023-11-18</div>
+            <div class="size">Document</div>
+            <button class="check-btn">Check</button>
+          </div>
+          <!-- Repeat card div structure for other profiles -->
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="shipping-cards">
+          <div class="card">
+            <div class="profile-img">
+              <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
+            </div>
+            <h3>Siah</h3>
+            <div class="route">
+              <span>Pais</span>
+              <span class="arrow">→</span>
+              <span>Tunis</span>
+            </div>
+            <div class="date">2023-11-18</div>
+            <div class="size">Document</div>
+            <button class="check-btn">Check</button>
+          </div>
+          <!-- Repeat card div structure for other profiles -->
+        </div>
+      </div>
+    </div>
+    <button class="see-all-btn">See All Sender and Buyer</button>
+  </div>
+</section>
+<section class="mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="subscribe-container">
+        <h1 class="faq-title">What Questions Do Other DrexBe's Users Ask?</h1>
+        <div class="faq-grid">
+          <!-- FAQ Card 1 -->
+          <div class="faq-card">
+            <h2 class="card-title">Which Sellers Can The Buy For Me Services Help With?</h2>
+            <p class="card-text"> The Buy For Me Service is Able to Pay For Goods On Your Behalf Only When The Seller Can't or Won't Accept Credit or Debit Cards Issued by Banks Outside Their Country. This Service Cannot Be Used to Purchase Virtual Goods (e.g. Downloadable material and Digital Subscriptions.) </p>
+            <a href="#" class="more-info">More Information</a>
+          </div>
+          <!-- FAQ Card 2 -->
+          <div class="faq-card">
+            <h2 class="card-title">Does NYBox Provide shipping tracking information?</h2>
+            <p class="card-text"> Yes! Once Your Package has been shipped out from our facility, You can track your shipment from your NYBox account or From Carrier's website using the provided tracking number. </p>
+            <a href="#" class="more-info">More Information</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container mt-5 mb-5">
+    <div class="tracking-container">
+      <div class="tracking-content">
+        <div class="tracking-icon"><%= image_tag "track_my_parcel.png", alt: "Parcel tracking globe icon" %> </div>
+        <div class="tracking-text">
+          <h2>Track my Parcel</h2>
+          <p>You no longer need to look around where is your mail or package. Our powerful parcel tracking tool will provide you with shipment info by tracking number provided.</p>
+        </div>
+        <button class="track-button">Track</button>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="contact-container">
+    <h1 style="color: #fff;">Do you have any questions or any assistance?</h1>
+    <p style="color: #fff;">Got Questions? We're Here to Help!</p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="contact-options">
+      <div class="contact-item">
+        <div class="icon">
+          <%= image_tag "headphone.png" %>
+        </div>
+        <br>
+        <h3 style="color: #fff; margin-top: 20px;">Call Us</h3>
+        <p>France: +336601034</p>
+      </div>
+      <div class="contact-item">
+        <div class="icon">
+          <%= image_tag "email.png" %>
+        </div>
+        <br>
+        <h3 style="color: #fff; margin-top: 20px;">Send use email</h3>
+        <p>Email: info@drexbe.com</p>
+      </div>
+      <div class="contact-item">
+        <div class="icon">
+          <%= image_tag "chat.png" %>
+        </div>
+        <br>
+        <h3 style="color: #fff; margin-top: 20px;">Chat with a specialist</h3>
+        <p>Start Chat</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<style>
- .quick-actions {
-  text-align: center;
-  padding: 50px 0;
-}
-.quick-actions h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 30px;
-}
-.action-card {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-}
-.action-card:hover {
-  transform: translateY(-5px);
-}
-.action-card i {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 10px;
-}
-.action-card p {
-  font-size: 1rem;
-  color: #333;
-  margin: 0;
-}
+<section class="subscribe-section py-5">
+  <div class="container">
+    <div class="row align-items-center text-center text-md-start">
+      <!-- Text Section -->
+      <div class="col-md-6">
+        <div class="subscribe-text">
+          <h2>Subscribe for Our</h2>
+          <h3>Latest News and Offers</h3>
+        </div>
+      </div>
+      <!-- Form Section -->
+      <div class="col-md-6">
+        <div class="subscribe-form d-flex flex-column flex-md-row justify-content-center justify-content-md-end">
+          <input type="email" class="form-control me-md-2 mb-3 mb-md-0" placeholder="Write your email here...">
+          <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  .subscribe-section {
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Logo Section -->
+    <div class="footer-logo"><%= image_tag "logo.png", alt: "DrexBe Logo" %> </div>
+    <!-- Company Links -->
+    <div class="footer-column">
+      <h3>DrexBe</h3>
+      <ul>
+        <li>
+          <a href="#">How DrexBe Works</a>
+        </li>
+        <li>
+          <a href="#">About us</a>
+        </li>
+        <li>
+          <a href="#">Help Centre</a>
+        </li>
+        <li>
+          <a href="#">Blog</a>
+        </li>
+        <li>
+          <a href="#">Careers</a>
+        </li>
+      </ul>
+    </div>
+    <!-- Customer Services -->
+    <div class="footer-column">
+      <h3>CUSTOMER SERVICES</h3>
+      <ul>
+        <li>
+          <a href="#">Contact Us</a>
+        </li>
+        <li>
+          <a href="#">About</a>
+        </li>
+        <li>
+          <a href="#">FAQ</a>
+        </li>
+        <li>
+          <a href="#">Important Information</a>
+        </li>
+        <li>
+          <a href="#">Terms</a>
+        </li>
+        <li>
+          <a href="#">Privacy</a>
+        </li>
+        <li>
+          <a href="#">Testimonials</a>
+        </li>
+      </ul>
+    </div>
+    <!-- Payment Options -->
+    <div class="footer-column">
+      <h3>Payment Options</h3>
+      <p>Pay your way with secure options like credit card, bank transfer, or digital wallet. Fast, easy, and convenient!</p>
+      <div class="payment-icons"><%= image_tag "visa.png", alt: "Visa" %><%= image_tag "master.png", alt: "Mastercard" %><%= image_tag "american.png", alt: "American Express" %><%= image_tag "union.png", alt: "Union Pay" %><%= image_tag "apple.png", alt: "Apple Pay" %><%= image_tag "gpay.png", alt: "Google Pay" %> </div>
+    </div>
+  </div>
+  <!-- Social Media Links -->
+  <div class="social-links">
+    <a href="#" class="social-icon"><%= image_tag "facebook.png" %></a>
+    <a href="#" class="social-icon"><%= image_tag "twitter.png" %></a>
+    <a href="#" class="social-icon"><%= image_tag "youtube.png" %></a>
+    <a href="#" class="social-icon"><%= image_tag "instagram.png" %></a>
+    </div>
+    <div class="footer1">
+      <div class="footer-content1">
+        <div class="copyright">
+          <p>2024 DrexBE.All Rights Reserved.</p>
+        </div>
+        <div class="footer-links1">
+          <a style="color: #fff !important;" href="/sitemap">Sitemap</a>
+          <span class="separator">|</span>
+          <a style="color: #fff !important;" href="/terms">Terms & Conditions</a>
+          <span class="separator">|</span>
+          <a style="color: #fff !important;" href="/privacy">Privacy Policy</a>
+          <span class="separator">|</span>
+          <a style="color: #fff !important;" href="/usage">Usage Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- scrollToTop start -->
+  <div class="progress-wrap active-progress">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919px, 307.919px; stroke-dashoffset: 228.265px;"></path>
+    </svg>
+  </div>
+  <!-- scrollToTop end -->
+  <style>
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    header h1 {
+      color: #3f1c8c;
+      margin-bottom: 1rem;
+    }
+
+    header p {
+      color: #666;
+    }
+
+    .shipping-cards {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      width: 200px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-img {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .route {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .arrow {
+      color: #999;
+    }
+
+    .date {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .size {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .check-btn {
+      background-color: #353188;
+      color: white;
+      border: none;
+      padding: 0.5rem 2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .check-btn:hover {
+      background-color: #353188;
+    }
+
+    .see-all-btn {
+      display: block;
+      margin: 0 auto;
+      background-color: #353188;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .see-all-btn:hover {
+      background-color: #353188;
+    }
+
+    @media (max-width: 768px) {
+      .shipping-cards {
+        gap: 1rem;
+      }
+
+      .card {
+        width: calc(50% - 1rem);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        width: 100%;
+      }
+    }
+
+    .profile-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      width: 316px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .profile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .name {
+      font-size: 24px;
+      margin: 0 0 20px;
+      color: #333;
+    }
+
+    .location-info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding: 15px 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+
+    .location {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .city {
+      font-size: 16px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .country {
+      font-size: 14px;
+      color: #999;
+    }
+
+    .transport-icon {
+      font-size: 20px;
+    }
+
+    .datetime-info {
+      margin-bottom: 20px;
+    }
+
+    .date-row,
+    .time-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+
+    .label {
+      color: #999;
+    }
+
+    .value {
+      color: #333;
+    }
+
+    .check-button {
+      background-color: #353188;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 0;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .check-button:hover {
+      background-color: #353188;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 350px) {
+      .profile-card {
+        width: 90%;
+        padding: 20px;
+      }
+
+      .profile-image {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
+    .testimonials-container {
+      padding: 40px 20px;
+      background-color: #1a2642;
+      color: white;
+    }
+
+    .testimonials-title {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 28px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 20px;
+      color: #333;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .testimonial-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .profile-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .client-info {
+      flex-grow: 1;
+    }
+
+    .client-name {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .client-title {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .testimonial-text {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .testimonial-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .client-subtitle {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .rating {
+      color: #ffd700;
+      font-size: 18px;
+      letter-spacing: 2px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .testimonials-title {
+        font-size: 24px;
+      }
+
+      .testimonial-card {
+        margin: 0 10px;
+      }
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .shipping-cards {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 200px;
+    }
+
+    .profile-img {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .route {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .arrow {
+      color: #666;
+    }
+
+    .date {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .size {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .check-btn {
+      background: #47276F;
+      color: white;
+      border: none;
+      padding: 8px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .check-btn:hover {
+      background: #353188;
+    }
+
+    .see-all-btn {
+      background: #353188;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+
+    .see-all-btn:hover {
+      background: #353188;
+    }
+
+    @media (max-width: 768px) {
+      .shipping-cards {
+        gap: 15px;
+      }
+
+      .card {
+        width: 180px;
+      }
+    }
+
+    .faq-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    .faq-title {
+      color: #353188;
+      font-size: 24px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .faq-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card-title {
+      color: #fff;
+      background: #353188;
+      padding: 15px;
+      margin: -20px -20px 15px -20px;
+      border-radius: 8px 8px 0 0;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .card-text {
+      color: #333;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .more-info {
+      color: #353188;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      align-self: flex-start;
+    }
+
+    .more-info:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .faq-title {
+        font-size: 20px;
+      }
+
+      .card-title {
+        font-size: 16px;
+      }
+    }
+
+    .tracking-container {
+      max-width: 90%;
+      padding: 2rem;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      margin: 2rem auto;
+    }
+
+    .tracking-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      position: relative;
+    }
+
+    .tracking-icon {
+      flex-shrink: 0;
+      width: 100px;
+      height: 100px;
+    }
+
+    .tracking-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .tracking-text {
+      flex-grow: 1;
+    }
+
+    .tracking-text h2 {
+      font-size: 24px;
+      color: #333;
+      margin: 0 0 12px 0;
+    }
+
+    .tracking-text p {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .track-button {
+      position: absolute;
+      right: 0;
+      bottom: -50px;
+      padding: 10px 32px;
+      background-color: #353188;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .track-button:hover {
+      background-color: #353188;
+    }
+
+    /* Responsive design */
+    @media (max-width: 600px) {
+      .tracking-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .track-button {
+        position: static;
+        margin-top: 1.5rem;
+      }
+    }
+
+    .contact-container {
+      background-color: #353188;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .contact-container h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+
+    .contact-options {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-item {
+      flex: 1;
+      max-width: 300px;
+    }
+
+    .icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      border: 2px solid white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Icon styles - you'll need to replace these with actual icons */
+    .headphone-icon,
+    .email-icon,
+    .chat-icon {
+      width: 30px;
+      height: 30px;
+      background-color: white;
+      /* Add your icon images or font icons here */
+    }
+
+    .contact-item h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .contact-item p {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .contact-options {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .contact-item {
+        width: 100%;
+        max-width: 250px;
+      }
+    }
+
+    .subscribe-container {
+      max-width: 80%;
+      margin: 20px auto;
+      margin-top: 90px;
+      margin-bottom: 90px;
+      padding: 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px;
-      flex-wrap: wrap;
-  }
-  .subscribe-text {
-      font-family: Arial, sans-serif;
-      margin-bottom: 10px;
-  }
-  .subscribe-text h2 {
+      gap: 20px;
+    }
+
+    .subscribe-text h2 {
       font-size: 24px;
+      color: #333;
+      margin: 0;
+      font-weight: normal;
+    }
+
+    .subscribe-text h3 {
+      font-size: 24px;
+      color: #333;
+      margin: 0;
       font-weight: bold;
-      margin: 0;
-  }
-  .subscribe-text p {
-      font-size: 16px;
-      margin: 0;
-  }
-  .subscribe-input {
+    }
+
+    .subscribe-form {
       display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-  }
-  .subscribe-input input {
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 10px;
-      margin-right: 10px;
-      width: 250px;
-      margin-bottom: 10px;
-  }
-  .subscribe-input button {
-      background-color: #3f3d9e;
+      gap: 10px;
+      flex-grow: 1;
+      max-width: 500px;
+    }
+
+    .subscribe-form input {
+      flex-grow: 1;
+      padding: 12px 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .subscribe-form input::placeholder {
+      color: #999;
+    }
+
+    .subscribe-form button {
+      padding: 12px 30px;
+      background-color: #4B2E83;
+      /* Purple color */
       color: white;
       border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-  }
-</style>
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .subscribe-form button:hover {
+      background-color: #3b2566;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .subscribe-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .subscribe-form {
+        width: 100%;
+      }
+    }
+
+    .footer {
+      background-color: #ffffff;
+      padding: 40px 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      padding: 0 20px;
+    }
+
+    .footer-logo img {
+      max-width: 120px;
+    }
+
+    .footer-column h3 {
+      color: #47277B;
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-column ul li a {
+      color: #666;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-column ul li a:hover {
+      color: #47277B;
+    }
+
+    .footer-column p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .payment-icons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .payment-icons img {
+      height: 30px;
+      object-fit: contain;
+    }
+
+    .social-links {
+      max-width: 1200px;
+      margin: 30px auto 0;
+      padding: 20px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .social-icon {
+      color: #47277B;
+      font-size: 20px;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .social-icon:hover {
+      opacity: 0.8;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+
+      .social-links {
+        justify-content: center;
+      }
+    }
+
+    .footer1 {
+      background-color: #353188;
+      /* Deep purple color */
+      color: white;
+      padding: 15px 0;
+      width: 100%;
+    }
+
+    .footer-content1 {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+    }
+
+    .copyright p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .footer-links1 {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+  </style>

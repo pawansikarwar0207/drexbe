@@ -1,79 +1,149 @@
-<nav class="navbar navbar-expand-lg">
- <div class="container-fluid">
-  <a class="navbar-brand fs-4" href="/">DREXBE</a>
-  <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
-   <span class="navbar-toggler-icon">
-   </span>
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+  <a href="<%= root_path %>" class="navbar-brand">
+    <%= image_tag "new_logo.png", style:"width 150px; height: 50px;", class:"img-fluid", alt: "Logo" %>
+  </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <%# if user_signed_in? %>
-     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <%= link_to "Travel", new_traveler_path, class: 'nav-link fs-5' %>
+        <a class="nav-link" href="<%= travelers_path %>"><small><em>i</em></small> Travel</a>
       </li>
       <li class="nav-item">
-       <%= link_to "Send", new_parcel_ad_path, class: 'nav-link fs-5' %>
+        <a class="nav-link" href="<%= parcel_ads_path %>"><small><em>i</em></small> Send</a>
       </li>
       <li class="nav-item">
-       <%= link_to "Buy", new_buy_for_me_path, class: 'nav-link fs-5' %>
+        <a class="nav-link" href="<%= buy_for_mes_path %>">Buy <small>For Me</small></a>
       </li>
-     </ul>
-
-     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-       <a class="nav-link fs-5" href="#">
-        Track
-       </a>
-      </li>
-     </ul>
-    <%# end %>
-   <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-    <li class="nav-item">
-     <a class="nav-link how-it-works" href="#">
-      <img alt="Icon representing 'How does it work?'" height="20" src="https://storage.googleapis.com/a1aa/image/Uzteufene6reeFJAuFRnBgItx8IWui8CeNk3Kz76DwSpgnfpTA.jpg" width="20"/>
-      How does it work?
-     </a>
-    </li>
-
-    <li class="nav-item dropdown">
-     <a class="nav-link active" id="bars-button" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-      <i class="fas fa-bars"></i>
-      <% if current_user.present? %>
-        <% if current_user.profile_picture.attached?  %>
-          <%= image_tag current_user.profile_picture, class: 'rounded-circle border', alt: 'User Avatar', height:"30", width:"30" %>
-        <% else %>
-          <i class="fas fa-globe"></i>
-        <% end %>
-      <% end %> 
-     </a>
-     <ul class="dropdown-menu dropdown-menu-end menu-list" aria-labelledby="userDropdown">
-        <% if user_signed_in? %>
-          <li class="dropdown-item-text"><%= current_user.email if current_user.present? %></li>
-          <li><%= link_to 'Edit Your Account', user_profile_path, class: 'dropdown-item' %></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><%= link_to 'Verify you profile', verify_document_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Messages', chat_rooms_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'History', 'javascript:void(0)', class: 'dropdown-item' %></li>
-          <li><%= link_to 'Wallet', 'javascript:void(0)', class: 'dropdown-item' %></li>
-          <li><%= link_to 'Help Center', 'javascript:void(0)', class: 'dropdown-item' %></li>
+    </ul>
+    <form class="d-flex">
+      <button class="btn btn-browse-posts" type="button">Browse Posts</button>
+    </form>
+    <div class="d-flex align-items-center">
+      <div class="dropdown">
+        <a class="nav-link " href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= image_tag "flags/us.png", alt: "Img", class: 'country-flag' %>EN
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li>
-            <%= link_to 'javascript:void(0)', class: 'dropdown-item' do %>
-              Get $30 credit <i class="fa-solid fa-gift mx-5"></i>
-            <% end %>
-            </li>
-          <li>
-            <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item' do %>
-              Log Out <i class="fa-solid fa-right-from-bracket mx-5"></i>
-            <% end %>
+            <a class="dropdown-item" href="#">
+              <%= image_tag "flags/fr.png", alt: "Img", class: 'country-flag' %>French
+            </a>
           </li>
-        <% else %>
-          <li><%= link_to 'Sign Up', new_user_registration_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Sign In', new_user_session_path, method: :delete, class: 'dropdown-item' %></li>
-        <% end %>
-      </ul>
-    </li>
-   </ul>
+          <li>
+            <a class="dropdown-item" href="#">
+              <%= image_tag "flags/es.png", alt: "Img", class: 'country-flag' %>Spanish
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">
+              <%= image_tag "flags/de.png", alt: "Img", class: 'country-flag' %>German
+            </a>
+          </li>
+        </ul>
+      </div>
+      <i class="fas fa-question-circle me-2 fs-5"></i>
+      <div class="dropdown">
+        <a
+            class="nav-link"
+            href="#"
+            id="userDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <% if current_user.present? %>
+              <% if current_user.profile_picture.attached?  %>
+                <%= image_tag current_user.profile_picture, class: 'rounded-circle border', alt: 'User Avatar', height:"30", width:"30" %>
+              <% else %>
+               <i class="fa fa-user-circle-o" style="color: #353188; font-size: 20px;"></i>
+              <% end %>
+            <% end %> 
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <% if user_signed_in? %>
+              <li class="dropdown-item-text"><%= current_user.email if current_user.present? %></li>
+              <li><%= link_to 'Edit Your Account', user_profile_path, class: 'dropdown-item' %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><%= link_to 'Verify you profile', verify_document_path, class: 'dropdown-item' %></li>
+              <li><%= link_to 'Messages', chat_rooms_path, class: 'dropdown-item' %></li>
+              <li><%= link_to 'History', 'javascript:void(0)', class: 'dropdown-item' %></li>
+              <li><%= link_to 'Wallet', 'javascript:void(0)', class: 'dropdown-item' %></li>
+              <li><%= link_to 'Help Center', 'javascript:void(0)', class: 'dropdown-item' %></li>
+              <li>
+                <%= link_to 'javascript:void(0)', class: 'dropdown-item' do %>
+                  Get $30 credit <i class="fa-solid fa-gift mx-5"></i>
+                <% end %>
+                </li>
+              <li>
+                <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item' do %>
+                  Log Out <i class="fa-solid fa-right-from-bracket mx-5"></i>
+                <% end %>
+              </li>
+            <% else %>
+              <li><%= link_to 'Sign Up', new_user_registration_path, class: 'dropdown-item' %></li>
+              <li><%= link_to 'Sign In', new_user_session_path, method: :delete, class: 'dropdown-item' %></li>
+            <% end %>
+          </ul>
+      </div>
+    </div>
   </div>
- </div>
 </nav>
 
+<style>
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4B3F72;
+  }
+  .navbar-brand span {
+    color: #E63946;
+  }
+  .nav-link {
+    color: #4B3F72;
+    font-size: 1rem;
+    margin-right: 1rem;
+  }
+  .nav-link small {
+    font-size: 0.75rem;
+  }
+  .btn-browse-posts {
+    background-color: #4B3F72;
+    color: white;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  .btn-browse-posts:hover {
+    background-color: #dddd;
+    transform: scale(1.05);
+    color: black;
+  }
+
+  .icon {
+    font-size: 1.25rem;
+    color: #4B3F72;
+    margin-left: 1rem;
+  }
+  .navbar-nav {
+    margin: 0 auto;
+  }
+
+  .country-flag {
+    width: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  .dropdown-item {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .dropdown-item:hover {
+    background-color: #4B3F72;
+    color: white;
+  }
+</style>

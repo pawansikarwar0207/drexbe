@@ -25,6 +25,7 @@ class User < ApplicationRecord
   # for chat feature
   has_and_belongs_to_many :chat_rooms
   has_many :messages
+  has_many :reactions
 
   # Users who give reviews
   has_many :given_reviews, class_name: 'Review', foreign_key: 'reviewer_id', dependent: :destroy
@@ -93,8 +94,18 @@ class User < ApplicationRecord
   end
 
   def find_or_create_chat_room_with(other_user)
-    chat_rooms.find_by(id: other_user.chat_rooms.pluck(:id)) || 
-      ChatRoom.create(users: [self, other_user])
+    # Check if the chat room already exists for the two users.
+    chat_room = chat_rooms.joins(:users)
+                          .where(users: { id: other_user.id })
+                          .first
+
+    # Return the existing chat room if found.
+    return chat_room if chat_room
+
+    # Otherwise, create a new chat room and add the users to it.
+    ChatRoom.create.tap do |room|
+      room.users << [self, other_user]
+    end
   end
 end
 

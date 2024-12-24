@@ -1,0 +1,11 @@
+<div id="<%= dom_id(@message, :reactions) %>" class="message-reactions d-flex mt-2">
+  <% if @reactions_counts.present? && @reactions_counts.any? %>
+    <% @reactions_counts.each do |emoji, count| %>
+      <span class="me-2">
+        <%= emoji %> (<%= count %>)
+      </span>
+    <% end %>
+  <% else %>
+    <span>No reactions yet</span>
+  <% end %>
+</div>

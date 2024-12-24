@@ -14,8 +14,19 @@ class ChatRoomsController < ApplicationController
   end
 
   def show
-    @chat_room = ChatRoom.includes(users: { profile_picture_attachment: :blob }).find(params[:id])
-    @messages = @chat_room.messages.includes(user: { profile_picture_attachment: :blob })
+    @chat_room = ChatRoom.includes(:users, messages: :reactions).find(params[:id])
+    @other_user = @chat_room.other_user(current_user)
+    @users = @chat_room.users.with_attached_profile_picture
+    @messages = @chat_room.messages.includes(:user).order(created_at: :asc)
+
+    # Group reactions by message
+    @reactions_counts = Message.joins(:reactions)
+                           .group('messages.id', 'reactions.emoji')
+                           .count
+                           .group_by { |(message_id, _), _| message_id }
+                           .transform_values do |values|
+                             values.to_h { |(_, emoji), count| [emoji, count] }
+                           end
   end
   
   # def authorize_chat_room

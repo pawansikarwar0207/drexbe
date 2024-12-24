@@ -61,7 +61,9 @@ Rails.application.routes.draw do
   get '/filter_search_results', to: 'home#filter_search_results'
   
   resources :chat_rooms, only: [:index, :show] do
-    resources :messages, only: [:create]
+    resources :messages, only: [:create] do
+      post :react, on: :member
+    end
   end
 end
 
