@@ -47,4 +47,16 @@ export default class extends Controller {
       .then((html) => Turbo.renderStreamMessage(html))
       .catch((error) => console.error("Error sending reaction:", error));
   }
+  copy(event) {
+    const content = event.target.dataset.clipboardContent;
+
+    navigator.clipboard.writeText(content).then(() => {
+      event.target.innerText = "Copied!";
+      setTimeout(() => {
+        event.target.innerText = "Copy";
+      }, 2000);
+    }).catch((err) => {
+      console.error("Failed to copy: ", err);
+    });
+  }
 }

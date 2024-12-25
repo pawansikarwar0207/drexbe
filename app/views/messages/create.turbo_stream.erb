@@ -1,5 +1,5 @@
 <div>
-  <%= turbo_stream.append "messages" do %>
+  <%= turbo_stream.append "chat" do %>
     <%= render partial: "messages/message", locals: { message: @message } %>
   <% end %>
 </div>  

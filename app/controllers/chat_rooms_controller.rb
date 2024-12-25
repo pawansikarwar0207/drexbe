@@ -18,6 +18,7 @@ class ChatRoomsController < ApplicationController
     @other_user = @chat_room.other_user(current_user)
     @users = @chat_room.users.with_attached_profile_picture
     @messages = @chat_room.messages.includes(:user).order(created_at: :asc)
+    @groups = grouped_messages(@messages)
 
     # Group reactions by message
     @reactions_counts = Message.joins(:reactions)
@@ -28,6 +29,19 @@ class ChatRoomsController < ApplicationController
                              values.to_h { |(_, emoji), count| [emoji, count] }
                            end
   end
+
+  def grouped_messages(messages)
+    messages.group_by do |message|
+      if message.created_at.to_date == Date.current
+        'Today'
+      elsif message.created_at.to_date == Date.yesterday
+        'Yesterday'
+      else
+        message.created_at.strftime('%B %d, %Y') # Example: "August 23, 2024"
+      end
+    end
+  end
+
   
   # def authorize_chat_room
   #   @chat_room = ChatRoom.find(params[:id])

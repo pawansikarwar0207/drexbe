@@ -1,88 +1,120 @@
  <!-- Chat Header -->
-<div class="chat-header d-flex align-items-center p-3 shadow-sm bg-light">
-  <div class="user-avatar me-3">
-    <% if @other_user.profile_picture.attached? %>
-      <%= image_tag @other_user.profile_picture, class: "avatar rounded-circle" %>
-    <% else %>
-      <img src="https://storage.googleapis.com/a1aa/image/O8MiwnO96lJ0Opf2gM3iJlvzomfUBmWFPeRabNe6c6llz3UPB.jpg" alt="Avatar" class="avatar rounded-circle">
-    <% end %>
+<%= turbo_frame_tag "chatroom_frame" do %>
+  <div class="chat-header d-flex align-items-center p-3 shadow-sm bg-light">
+    <div class="user-avatar me-3">
+      <% if @other_user.profile_picture.attached? %>
+        <%= image_tag @other_user.profile_picture, class: "avatar rounded-circle" %>
+      <% else %>
+        <img src="https://storage.googleapis.com/a1aa/image/O8MiwnO96lJ0Opf2gM3iJlvzomfUBmWFPeRabNe6c6llz3UPB.jpg" alt="Avatar" class="avatar rounded-circle">
+      <% end %>
+    </div>
+    <div>
+      <h6 class="mb-0 fw-bold"><%= @other_user.full_name %></h6>
+      <small class="text-muted">Active now</small>
+    </div>
   </div>
-  <div>
-    <h6 class="mb-0 fw-bold"><%= @other_user.full_name %></h6>
-    <small class="text-muted">Active now</small>
-  </div>
-</div>
 
-<!-- Chat Messages -->
-<div class="chat-messages">
-  <%= turbo_frame_tag "message_frame" do %>
-    <% @messages.each do |message| %>
-      <div class="cont-<%= message.user.id %>">
-        <div class="message-box msg-<%= message.user.id %> message-content-container">
-          <%= message.content %>
-          <!-- Timestamp -->
-          <small class="text-muted d-block text-end">
-            <%= message.created_at.strftime("%I:%M %p") %>
-          </small>
-
-          <!-- Reaction Buttons -->
-          <div
-            class="reaction-buttons <%= message.user == current_user ? 'reciver-reaction' : 'sender-reaction' %>"
-            data-controller="emoji"
-            data-emoji-chat-room-id-value="<%= chat_room.id %>"
-            data-emoji-message-id-value="<%= message.id %>"
-          >
-            <button
-              data-emoji-target="emojiButton"
-              data-action="click->emoji#togglePicker"
-              class="reaction-button"
-              aria-label="Pick an emoji"
-            >
-              😀
-            </button>
-
-            <!-- Hidden Emoji Picker -->
-            <div
-              data-emoji-target="emojiPicker"
-              style="display: none"
-              class="emoji-picker"
-            ></div>
-
-            <!-- Hidden Input to store selected emoji -->
-            <input
-              type="hidden"
-              data-emoji-target="reactionInput"
-              value=""
-            >
+  <!-- Chat Messages -->
+  <div class="chat-messages">
+    <%= turbo_frame_tag "message_frame" do %>
+      <div id="messages-container" class="messages-container">
+        <% @groups.each do |date, messages| %>
+          <div class="date-section">
+            <div class="date-heading">
+              <%= date %>
+            </div>
           </div>
-        </div>
 
-        <!-- Display Reactions -->
-        <div id="<%= dom_id(message, :reactions) %>" class="message-reactions d-flex mt-2">
-          <% if @reactions_counts.present? && @reactions_counts[message.id].present? %>
-            <% @reactions_counts[message.id].each do |emoji, count| %>
-              <span class="me-2">
-                <%= emoji %> (<%= count %>)
-              </span>
-            <% end %>
+          <% messages.each do |message| %>
+            <div class="cont-<%= message.user.id %>">
+              <div class="message-box msg-<%= message.user.id %> message-content-container">
+                <%= message.content %>
+                
+                <!-- Show sent status if the message is sent but not delivered -->
+                <% if message.sent? %>
+                  <span class="badge bg-secondary">Sent</span>
+                <% end %>
+
+                <!-- Show delivered status if the message is delivered -->
+                <% if message.delivered? %>
+                  <span class="badge bg-success">Delivered</span>
+                <% end %>
+
+                <!-- Timestamp -->
+                <small class="text-muted d-block text-end">
+                  <%= message.created_at.strftime("%I:%M %p") %>
+                </small>
+
+                <!-- Reaction Buttons -->
+              </div>
+
+              <!-- Display Reactions -->
+              <div
+                class="reaction-buttons <%= message.user == current_user ? 'reciver-reaction' : 'sender-reaction' %>"
+                data-controller="emoji"
+                data-emoji-chat-room-id-value="<%= chat_room.id %>"
+                data-emoji-message-id-value="<%= message.id %>"
+                >
+                <div class="hover-emoji-container">
+                  <button
+                    data-emoji-target="emojiButton"
+                    data-action="click->emoji#togglePicker"
+                    class="reaction-button"
+                    aria-label="Pick an emoji"
+                  >
+                    😀
+                  </button>
+                </div>
+
+                <!-- Hidden Emoji Picker -->
+                <div
+                  data-emoji-target="emojiPicker"
+                  style="display: none"
+                  class="emoji-picker"
+                ></div>
+
+                <!-- Hidden Input to store selected emoji -->
+                <input
+                  type="hidden"
+                  data-emoji-target="reactionInput"
+                  value=""
+                >
+                <!-- Copy Button -->
+                <button 
+                  class="copy-btn btn btn-outline-secondary btn-sm"
+                  data-action="click->emoji#copy"
+                  data-clipboard-content="<%= message.content %>"
+                >
+                  Copy
+                </button>
+                <div id="<%= dom_id(message, :reactions) %>" class="message-reactions d-flex mt-2">
+                  <% if @reactions_counts.present? && @reactions_counts[message.id].present? %>
+                    <% @reactions_counts[message.id].each do |emoji, count| %>
+                      <span class="me-2">
+                        <%= emoji %> (<%= count %>)
+                      </span>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
           <% end %>
-        </div>
+        <% end %>  
       </div>
     <% end %>
-  <% end %>
-</div>
+  </div>
 
-<%= turbo_stream_from "chatroom_#{chat_room.id}" %>
-
-<!-- Chat Input -->
-<div class="chat-input p-3 border-top">
-  <%= form_with model: [chat_room, Message.new], local: false, class: "d-flex align-items-center" do |form| %>
-    <div class="flex-grow-1 me-2">
-      <%= form.text_area :content, placeholder: "Type a message...", class: "form-control rounded-pill px-3", rows: 1, onkeypress: "if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); this.form.requestSubmit(); }" %>
-    </div>
-    <%= form.submit "Send", class: "btn btn-dark rounded-pill px-4" %>
-  <% end %>
-</div>
+  <%= turbo_stream_from "chatroom_#{chat_room.id}" %>
+  <!-- Chat Input -->
+  <div class="chat-input p-3 border-top">
+    <%= form_with model: [chat_room, Message.new], local: false, class: "d-flex align-items-center", data: { action: 'turbo:submit-end->turbo-stream#reset' } do |form| %>
+      <div class="flex-grow-1 me-2">
+        <%= form.text_area :content, placeholder: "Type a message...", class: "form-control rounded-pill px-3", rows: 1, onkeypress: "if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); this.form.requestSubmit(); }" %>
+      </div>
+      <%= form.submit "Send", class: "btn btn-dark rounded-pill px-4" %>
+    <% end %>
+  </div>
+<% end %>
 
 <style>
   /* Copy message */
@@ -206,33 +238,28 @@
     overflow-y: scroll;
   }
   body {
-    overflow: hidden;
-  }
-  .message-content-container .reaction-buttons {
-    display: none;
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-  }
-
-.message-content-container:hover .reaction-buttons {
-  display: block;
+    overflow: auto;
+  }/* Adjust spacing for Reaction Buttons */
+  .date-heading {
+      margin: 10px 0;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
+    border: #888;
+    background: #f0f0f0;
+    width: fit-content;
+    border-radius: 15px;
 }
 
 .message-content-container {
   position: relative;
-  padding-right: 40px; /* Adjust this for spacing */
-}
-
-.message-content {
+  margin: 5px 0;
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  background-color: #f7f7f7;
+  background-color: #f1f1f1;
 }
-
-.message-box:hover {
-  background-color: #eef2f7; /* Subtle background change for hover */
+.date-section {
+  margin: 0 auto;
+  width: fit-content;
 }
 </style>
