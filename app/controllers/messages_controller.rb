@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   include ActionView::RecordIdentifier # To use dom_id in the controller
+  before_action :set_message, only: [:mark_as_delivered, :mark_as_read]
   
   def create
     @chat_room = ChatRoom.find(params[:chat_room_id])
@@ -7,7 +8,7 @@ class MessagesController < ApplicationController
     @message.user = current_user
 
     if @message.save
-      # Broadcast the message to all subscribers of the chat room
+      @message.update(status: 'sent') # Default to 'sent'
       ActionCable.server.broadcast(
         "chatroom_#{@chat_room.id}", 
         turbo_stream.append(
@@ -17,6 +18,7 @@ class MessagesController < ApplicationController
         )
       )
     end
+
 
     respond_to do |format|
       format.turbo_stream
@@ -37,7 +39,6 @@ class MessagesController < ApplicationController
     else
       # Otherwise, update or create the reaction with the new emoji
       reaction.emoji = emoji
-      reaction.save
     end
 
     # Group reactions by emoji for the message

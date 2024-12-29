@@ -2,7 +2,6 @@ class ChatRoom < ApplicationRecord
   has_many :messages, dependent: :destroy
   
   has_and_belongs_to_many :users
-
   # Find or create a chat room for two users
   def self.between(user1, user2)
     # Find existing chat room with both users

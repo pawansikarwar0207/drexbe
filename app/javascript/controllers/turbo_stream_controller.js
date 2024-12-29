@@ -5,7 +5,7 @@ export default class extends Controller {
   static targets = ["userList", "userItem"]; // Add a target for user list
 
   connect() {
-    this.loadFirstUserChat(); // Automatically load the first user's chat
+    // this.loadFirstUserChat(); // Automatically load the first user's chat
   }
 
   reset() {
@@ -19,14 +19,14 @@ export default class extends Controller {
     this.handelActiveUser();
   }
 
-  loadFirstUserChat() {
-    const firstUserLink = this.element.querySelector("a"); // Get the first user link
-    if (firstUserLink) {
-      const turboUrl = firstUserLink.dataset.turboStreamUrlValue;
-      this.loadTurboStream(turboUrl);
-      this.handelActiveUser(firstUserLink);
-    }
-  }
+  // loadFirstUserChat() {
+  //   const firstUserLink = this.element.querySelector("a"); // Get the first user link
+  //   if (firstUserLink) {
+  //     const turboUrl = firstUserLink.dataset.turboStreamUrlValue;
+  //     this.loadTurboStream(turboUrl);
+  //     this.handelActiveUser(firstUserLink);
+  //   }
+  // }
 
   showActiveUser() {
   	const activeButton = event.currentTarget;

@@ -1,72 +1,64 @@
-<div class="cont-<%= message.user.id %>">
-  <div class="message-box msg-<%= message.user.id %> message-content-container">
-    <%= message.content %>
-    
-    <!-- Show sent status if the message is sent but not delivered -->
-    <% if message.sent? %>
-      <span class="badge bg-secondary">Sent</span>
-    <% end %>
-
-    <!-- Show delivered status if the message is delivered -->
-    <% if message.delivered? %>
-      <span class="badge bg-success">Delivered</span>
-    <% end %>
-
-    <!-- Timestamp -->
-    <small class="text-muted d-block text-end">
-      <%= message.created_at.strftime("%I:%M %p") %>
-    </small>
-
-    <!-- Reaction Buttons -->
-  </div>
-
-  <!-- Display Reactions -->
-  <div
-    class="reaction-buttons <%= message.user == current_user ? 'reciver-reaction' : 'sender-reaction' %>"
-    data-controller="emoji"
-    data-emoji-chat-room-id-value="<%= @chat_room.id %>"
-    data-emoji-message-id-value="<%= message.id %>"
-    >
-    <div class="hover-emoji-container">
-      <button
-        data-emoji-target="emojiButton"
-        data-action="click->emoji#togglePicker"
-        class="reaction-button"
-        aria-label="Pick an emoji"
-      >
-        😀
-      </button>
-    </div>
-
-    <!-- Hidden Emoji Picker -->
-    <div
-      data-emoji-target="emojiPicker"
-      style="display: none"
-      class="emoji-picker"
-    ></div>
-
-    <!-- Hidden Input to store selected emoji -->
-    <input
-      type="hidden"
-      data-emoji-target="reactionInput"
-      value=""
-    >
-    <!-- Copy Button -->
-    <button 
-      class="copy-btn btn btn-outline-secondary btn-sm"
-      data-action="click->emoji#copy"
-      data-clipboard-content="<%= message.content %>"
-    >
-      Copy
-    </button>
-    <div id="<%= dom_id(message, :reactions) %>" class="message-reactions d-flex mt-2">
-      <% if @reactions_counts.present? && @reactions_counts[message.id].present? %>
-        <% @reactions_counts[message.id].each do |emoji, count| %>
-          <span class="me-2">
-            <%= emoji %> (<%= count %>)
-          </span>
+<div id="message_<%= message.id %>">
+  <div class="cont-<%= message.user.id %>">
+    <div class="message-box msg-<%= message.user.id %> message-content-container">
+      <%= message.content %>
+      <div class="read-section-<%= message.user.id %> d-none">
+        <% if message.status == 'sent' %>
+          <span class="tick-icon">✔️</span>
+        <% elsif message.status == 'read' %>
+          <span class="tick-icon">✔️✔️</span>
         <% end %>
-      <% end %>
+      </div>
+
+      <!-- Timestamp -->
+      <small class="text-muted d-block text-end">
+        <%= message.created_at.strftime("%I:%M %p") %>
+      </small>
+    </div>
+
+    <!-- Reactions Section -->
+    <div class="reaction-buttons <%= message.user == current_user ? 'reciver-reaction' : 'sender-reaction' %>"
+         data-controller="emoji"
+         data-emoji-chat-room-id-value="<%= @chat_room.id %>"
+         data-emoji-message-id-value="<%= message.id %>">
+      <div class="hover-emoji-container">
+        <button
+          data-emoji-target="emojiButton"
+          data-action="click->emoji#togglePicker"
+          class="reaction-button"
+          aria-label="Pick an emoji">
+          😀
+        </button>
+      </div>
+
+      <!-- Emoji Picker -->
+      <div
+        data-emoji-target="emojiPicker"
+        style="display: none"
+        class="emoji-picker">
+      </div>
+
+      <!-- Hidden Input for Emoji -->
+      <input type="hidden" data-emoji-target="reactionInput" value="">
+
+      <!-- Copy Button -->
+      <button 
+        class="copy-btn btn btn-outline-secondary btn-sm"
+        data-action="click->emoji#copy"
+        data-clipboard-content="<%= message.content %>">
+        Copy
+      </button>
+
+      <!-- Display Reactions -->
+      <div id="<%= dom_id(message, :reactions) %>" class="message-reactions d-flex mt-2">
+        <% if @reactions_counts.present? && @reactions_counts[message.id].present? %>
+          <% @reactions_counts[message.id].each do |emoji, count| %>
+            <span class="me-2">
+              <%= emoji %> (<%= count %>)
+            </span>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
+</div>  

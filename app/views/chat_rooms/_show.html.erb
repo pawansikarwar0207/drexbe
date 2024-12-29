@@ -1,4 +1,4 @@
- <!-- Chat Header -->
+<!-- Chat Header -->
 <%= turbo_frame_tag "chatroom_frame" do %>
   <div class="chat-header d-flex align-items-center p-3 shadow-sm bg-light">
     <div class="user-avatar me-3">
@@ -26,85 +26,16 @@
           </div>
 
           <% messages.each do |message| %>
-            <div class="cont-<%= message.user.id %>">
-              <div class="message-box msg-<%= message.user.id %> message-content-container">
-                <%= message.content %>
-                
-                <!-- Show sent status if the message is sent but not delivered -->
-                <% if message.sent? %>
-                  <span class="badge bg-secondary">Sent</span>
-                <% end %>
-
-                <!-- Show delivered status if the message is delivered -->
-                <% if message.delivered? %>
-                  <span class="badge bg-success">Delivered</span>
-                <% end %>
-
-                <!-- Timestamp -->
-                <small class="text-muted d-block text-end">
-                  <%= message.created_at.strftime("%I:%M %p") %>
-                </small>
-
-                <!-- Reaction Buttons -->
-              </div>
-
-              <!-- Display Reactions -->
-              <div
-                class="reaction-buttons <%= message.user == current_user ? 'reciver-reaction' : 'sender-reaction' %>"
-                data-controller="emoji"
-                data-emoji-chat-room-id-value="<%= chat_room.id %>"
-                data-emoji-message-id-value="<%= message.id %>"
-                >
-                <div class="hover-emoji-container">
-                  <button
-                    data-emoji-target="emojiButton"
-                    data-action="click->emoji#togglePicker"
-                    class="reaction-button"
-                    aria-label="Pick an emoji"
-                  >
-                    😀
-                  </button>
-                </div>
-
-                <!-- Hidden Emoji Picker -->
-                <div
-                  data-emoji-target="emojiPicker"
-                  style="display: none"
-                  class="emoji-picker"
-                ></div>
-
-                <!-- Hidden Input to store selected emoji -->
-                <input
-                  type="hidden"
-                  data-emoji-target="reactionInput"
-                  value=""
-                >
-                <!-- Copy Button -->
-                <button 
-                  class="copy-btn btn btn-outline-secondary btn-sm"
-                  data-action="click->emoji#copy"
-                  data-clipboard-content="<%= message.content %>"
-                >
-                  Copy
-                </button>
-                <div id="<%= dom_id(message, :reactions) %>" class="message-reactions d-flex mt-2">
-                  <% if @reactions_counts.present? && @reactions_counts[message.id].present? %>
-                    <% @reactions_counts[message.id].each do |emoji, count| %>
-                      <span class="me-2">
-                        <%= emoji %> (<%= count %>)
-                      </span>
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
+            <div id="message_<%= message.id %>">
+              <%= render partial: 'messages/message', locals: { message: message } %>
             </div>
           <% end %>
-        <% end %>  
+        <% end %>
       </div>
     <% end %>
   </div>
-
   <%= turbo_stream_from "chatroom_#{chat_room.id}" %>
+
   <!-- Chat Input -->
   <div class="chat-input p-3 border-top">
     <%= form_with model: [chat_room, Message.new], local: false, class: "d-flex align-items-center", data: { action: 'turbo:submit-end->turbo-stream#reset' } do |form| %>
@@ -115,6 +46,7 @@
     <% end %>
   </div>
 <% end %>
+
 
 <style>
   /* Copy message */

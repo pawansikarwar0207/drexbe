@@ -14,21 +14,48 @@ class ChatRoomsController < ApplicationController
   end
 
   def show
-    @chat_room = ChatRoom.includes(:users, messages: :reactions).find(params[:id])
+    @chat_room = ChatRoom.includes(:users, messages: [:reactions, :user]).find(params[:id])
     @other_user = @chat_room.other_user(current_user)
     @users = @chat_room.users.with_attached_profile_picture
-    @messages = @chat_room.messages.includes(:user).order(created_at: :asc)
+    @messages = @chat_room.messages.order(:created_at)
+
+    # Group messages by date
     @groups = grouped_messages(@messages)
+
+    # Mark messages as 'read' for the recipient
+    # Find all 'sent' messages from the other user
+    unread_messages = @chat_room.messages.where(user: @other_user, status: 'sent')
+
+    unread_messages.each do |message|
+      next if message.status == 'read'  # Skip if already read
+
+      # Mark as read and broadcast the update
+      message.update(status: 'read')
+
+      # Broadcast only the updated message with Turbo Streams
+      ActionCable.server.broadcast(
+        "chatroom_#{@chat_room.id}",
+        turbo_stream.replace(
+          "#{}message_#{message.id}", 
+          partial: "messages/message", 
+          locals: { message: message }
+        )
+      )
+    end
 
     # Group reactions by message
     @reactions_counts = Message.joins(:reactions)
-                           .group('messages.id', 'reactions.emoji')
-                           .count
-                           .group_by { |(message_id, _), _| message_id }
-                           .transform_values do |values|
-                             values.to_h { |(_, emoji), count| [emoji, count] }
-                           end
+                               .group('messages.id', 'reactions.emoji')
+                               .count
+                               .group_by { |(message_id, _), _| message_id }
+                               .transform_values do |values|
+                                 values.to_h { |(_, emoji), count| [emoji, count] }
+                               end
   end
+
+
+
+
 
   def grouped_messages(messages)
     messages.group_by do |message|

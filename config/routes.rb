@@ -62,7 +62,12 @@ Rails.application.routes.draw do
   
   resources :chat_rooms, only: [:index, :show] do
     resources :messages, only: [:create] do
-      post :react, on: :member
+      member do
+        post :react
+      end
+      collection do
+        post :mark_as_read
+      end
     end
   end
 end
