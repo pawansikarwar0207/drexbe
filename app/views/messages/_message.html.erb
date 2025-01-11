@@ -2,18 +2,18 @@
   <div class="cont-<%= message.user.id %>">
     <div class="message-box msg-<%= message.user.id %> message-content-container">
       <%= message.content %>
-      <div class="read-section-<%= message.user.id %> d-none">
-        <% if message.status == 'sent' %>
-          <span class="tick-icon">✔️</span>
-        <% elsif message.status == 'read' %>
-          <span class="tick-icon">✔️✔️</span>
-        <% end %>
-      </div>
-
+      
       <!-- Timestamp -->
       <small class="text-muted d-block text-end">
         <%= message.created_at.strftime("%I:%M %p") %>
       </small>
+      <div class="read-section-<%= message.user.id %> d-none text-end">
+        <% if message.status == 'sent' %>
+          <span class="tick-icon" style="font-size: 8px;">✔️</span>
+        <% elsif message.status == 'read' %>
+          <span class="tick-icon" style="font-size: 8px;">✔️✔️</span>
+        <% end %>
+      </div>
     </div>
 
     <!-- Reactions Section -->
@@ -41,14 +41,6 @@
       <!-- Hidden Input for Emoji -->
       <input type="hidden" data-emoji-target="reactionInput" value="">
 
-      <!-- Copy Button -->
-      <button 
-        class="copy-btn btn btn-outline-secondary btn-sm"
-        data-action="click->emoji#copy"
-        data-clipboard-content="<%= message.content %>">
-        Copy
-      </button>
-
       <!-- Display Reactions -->
       <div id="<%= dom_id(message, :reactions) %>" class="message-reactions d-flex mt-2">
         <% if @reactions_counts.present? && @reactions_counts[message.id].present? %>
@@ -60,5 +52,12 @@
         <% end %>
       </div>
     </div>
+    <!-- Copy Button -->
+    <button 
+      class="copy-btn btn btn-outline-secondary btn-sm"
+      data-action="click->emoji#copy"
+      data-clipboard-content="<%= message.content %>">
+      Copy
+    </button>
   </div>
 </div>  

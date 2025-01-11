@@ -194,4 +194,27 @@
   margin: 0 auto;
   width: fit-content;
 }
+.message-box {
+  position: relative; /* Ensure it can position its children */
+}
+
+.reaction-buttons {
+  display: none;
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 100%; /* Align it to the right of the message box */
+  transform: translateY(-50%); /* Adjust to center vertically */
+  width: auto;
+  padding: 4px;
+  background-color: #f9f9f9; /* Optional: for better visibility */
+  border: 1px solid #ddd; /* Optional: border styling */
+  border-radius: 4px; /* Optional: rounded corners */
+  z-index: 10; /* Ensure it appears above other elements */
+}
+
+.message-box:hover .reaction-buttons {
+  display: block;
+}
+..reaction-buttons
+
 </style>
