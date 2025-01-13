@@ -63,14 +63,15 @@ class HomeController < ApplicationController
       @buy_for_mes = buy_for_me_conditions.result(distinct: true)
 
       # Apply filter to limit results to one model type if specified
-      case params[:filter]
-      when 'traveler'
+      filter_params = Array(params[:filter])
+      case filter_params
+      when ['traveler']
         @parcel_ads = []
         @buy_for_mes = []
-      when 'sender'
+      when ['sender']
         @travelers = []
         @buy_for_mes = []
-      when 'buyer'
+      when ['buyer']
         @travelers = []
         @parcel_ads = []
       end

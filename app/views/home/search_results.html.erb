@@ -1,6 +1,60 @@
 <div class="col-lg-11 mx-auto">
   <h1 class="text-center mb-4 mt-5">Search Results</h1>
   <div class="row">
+    <div class="col-lg-12">
+      <!-- Search -->
+      <div class="section-search">
+        <div class="">
+          <div class="search-box-banner">
+              <%= form_with(url: search_results_path, method: :get, local: true) do |form| %>
+                <div class="search-container">
+                  <div class="search-box">
+                    <div class="col-lg-3">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>
+                        <%= form.text_field :departure_city, class: 'form-control', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off', value: params[:departure_city].present? ? params[:departure_city] : '' %>
+                        <%= form.hidden_field :departure_country, id: 'departure_country' %>
+                      </span>
+                    </div>
+                    <div class="col-lg-3">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>
+                        <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off', value: params[:arrival_city].present? ? params[:arrival_city] : ''  %>
+                        <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
+                      </span>
+                    </div>
+                    <div class="col-lg-3">
+                      <i class="fas fa-calendar-alt"></i>
+                      <span>
+                        <%= form.text_field :date, class: 'form-control flatpickr', id: 'date_field', placeholder: 'Today' %>
+                      </span>
+                    </div>
+                  </div>
+                  <button class="search-button">
+                    <%= form.submit "Search", class: 'search-button' %>
+                  </button>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <!-- Search -->
+
+        <div style="background-color: #353188;" class="text-white fs-5 p-3 mt-3 mb-3">
+          <div class="row">
+            <div class="col-lg-6">
+              Total Results: 
+              <%= @travelers.size + @parcel_ads.size + @buy_for_mes.size %>
+            </div>
+            <div class="col-lg-4">
+              
+            </div>
+          </div>
+        </div>  
+
+    </div>
+
+
     <div class="col-md-3">
       <%= render 'home/search_filter' %>
     </div>
@@ -8,12 +62,19 @@
       <%# Traveler Section %>
       <% if @travelers.present? %>
         <% @travelers.each do |traveler| %>
-          <div class="container mt-2">
+          <div class="container card shadow mt-2">
              <div class="row">
                 <div class="col-left">
-                  <h5 class="fw-bold badge bg-primary rounded-pill mb-3">Traveler</h5>
+                  <h5 class="fw-bold badge bg-primary rounded-0 mb-3">Traveler</h5>
                   <div class="travel-info">
                     <div>
+                      <div>
+                        <%= link_to traveler_path(traveler), class: 'text-decoration-none' do %>
+                          <% if traveler.departure_city.present? || traveler.departure_country.present? || traveler.arrival_city.present? || traveler.arrival_country.present? %>
+                            <p class="mb-0"><strong><%= traveler.departure_city %> - <%= traveler.departure_country %></strong> <i class="fa fa-arrow-right"></i> <strong><%= traveler.arrival_city %> - <%= traveler.arrival_country %></strong></p>
+                          <% end %>
+                        <% end %>
+                      </div>
                       <span class="travel-date">
                         <% if traveler.travel_date.present? || traveler.travel_return_date.present? %>
                           <p class="mb-0">
@@ -23,14 +84,6 @@
                           </p>
                         <% end %>
                       </span>
-
-                      <div>
-                        <%= link_to traveler_path(traveler), class: 'text-decoration-none' do %>
-                          <% if traveler.departure_city.present? || traveler.departure_country.present? || traveler.arrival_city.present? || traveler.arrival_country.present? %>
-                            <p class="mb-0"><strong><%= traveler.departure_city %> - <%= traveler.departure_country %></strong> <i class="fa fa-arrow-right"></i> <strong><%= traveler.arrival_city %> - <%= traveler.arrival_country %></strong></p>
-                          <% end %>
-                        <% end %>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -39,14 +92,14 @@
                     <div class="carry-for-you">
                       <h6 class="mt-2 me-2 fw-bold">Carry For You:</h6>
                         <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-                          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Document' %> " data-value="Document">
+                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Document' %> " data-value="Document">
                             <%= image_tag "document.png", class:"icon-class" %>
                              Document
                           </button>
-                          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Parcel' %>" data-value="Parcel">
+                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Parcel' %>" data-value="Parcel">
                             <%= image_tag "parcel.png", class:"icon-class" %> Parcel
                           </button>
-                          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Pallet' %>" data-value="Pallet">
+                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Pallet' %>" data-value="Pallet">
                             <%= image_tag "pallet.png", class:"icon-class" %> Pallet
                           </button>
                         </div>
@@ -83,7 +136,7 @@
                       <%= profile_link_for(traveler) %>
                      
                      <div>
-                       <% transportation_images = {
+                       <%# transportation_images = {
                           'flight' => 'plane.png',
                           'car' => 'sedan.png',
                           'bus' => 'bus.png',
@@ -92,9 +145,9 @@
                           'ship' => 'boat-with-containers.png'
                         } %>
 
-                        <% if traveler.transportation.present? && transportation_images[traveler.transportation] %>
-                          <%= image_tag transportation_images[traveler.transportation], class: "transportation-icon me-3", alt: traveler.transportation %>
-                        <% end %>
+                        <%# if traveler.transportation.present? && transportation_images[traveler.transportation] %>
+                          <%#= image_tag transportation_images[traveler.transportation], class: "transportation-icon me-3", alt: traveler.transportation %>
+                        <%# end %>
                      </div>
                       <div class="icons mt-3 mx-5">
                         <!-- Additional Contact Icons -->
@@ -105,6 +158,7 @@
                 </div>
                 <div class="col-right">
                   <div class="contact-button mb-2">
+                    <%= link_to 'See Preview', traveler_path(traveler), class: 'btn btn-outline-secondary btn-sm text-dark' %>
                     <%= profile_link_for(traveler) %>
                   </div>
                 </div>
@@ -120,20 +174,12 @@
       <%# Sender Section %>
       <% if @parcel_ads.present? %>
         <% @parcel_ads.each do |parcel| %>
-          <div class="container mt-2">
+          <div class="container card shadow mt-2">
              <div class="row">
                 <div class="col-left">
-                  <h5 class="fw-bold badge bg-warning rounded-pill mb-3">Sender</h5>
+                  <h5 class="fw-bold badge bg-warning rounded-0 mb-3">Sender</h5>
                   <div class="travel-info">
                     <div>
-                      <span class="travel-date">
-                        <% if parcel.shipment_date.present? %>
-                          <p class="mb-0">
-                            <strong><%= parcel.shipment_date %></strong> 
-                          </p>
-                        <% end %>
-                      </span>
-
                       <div>
                         <%= link_to parcel_ad_path(parcel), class: 'text-decoration-none' do %>
                           <% if parcel.departure_city.present? || parcel.departure_country.present? || parcel.arrival_city.present? || parcel.arrival_country.present? %>
@@ -141,6 +187,13 @@
                           <% end %>
                         <% end %>
                       </div>
+                      <span class="travel-date">
+                        <% if parcel.shipment_date.present? %>
+                          <p class="mb-0">
+                            <strong><%= parcel.shipment_date %></strong> 
+                          </p>
+                        <% end %>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -149,37 +202,45 @@
                     <div class="carry-for-you">
                       <h6 class="mt-2 me-2 fw-bold">Carry For Me:</h6>
                         <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-                          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Document' %> " data-value="Document">
+                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Document' %> " data-value="Document">
                             <%= image_tag "document.png", class:"icon-class" %>
                              Document
                           </button>
-                          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Parcel' %>" data-value="Parcel">
+                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Parcel' %>" data-value="Parcel">
                             <%= image_tag "parcel.png", class:"icon-class" %> Parcel
                           </button>
-                          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Pallet' %>" data-value="Pallet">
+                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Pallet' %>" data-value="Pallet">
                             <%= image_tag "pallet.png", class:"icon-class" %> Pallet
                           </button>
                         </div>
                     </div>
                   <% end %>
 
-                  <% if parcel.parcel_weight.present? %>
-                    <div class="buy-for-you">
-                      <h6 class="mt-2 me-5 fw-bold">Parcel Weight:</h6>
-                      <div aria-label="Buy For You" class="btn-group" role="group">
-                        <%= parcel.parcel_weight %>g
-                      </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <% if parcel.parcel_weight.present? %>
+                        <div class="buy-for-you">
+                          <h6 class="mt-2 me-5 fw-bold">Parcel Weight:</h6>
+                          <div aria-label="Buy For You" class="btn-group" role="group">
+                            <%= parcel.parcel_weight %>g
+                          </div>
+                        </div>
+                      <% end %>
                     </div>
-                  <% end %>
 
-                  <% if parcel.proposed_fee.present? %>
-                    <div class="buy-for-you">
-                      <h6 class="mt-2 me-5 fw-bold">Proposed Fee:</h6>
-                      <div aria-label="Buy For You" class="btn-group" role="group">
-                        <%= number_to_currency(parcel.proposed_fee) %>
-                      </div>
+                    <div class="col-lg-6">
+                      <% if parcel.proposed_fee.present? %>
+                        <div class="buy-for-you">
+                          <h6 class="mt-2 me-5 fw-bold">Proposed Fee:</h6>
+                          <div aria-label="Buy For You" class="btn-group" role="group">
+                            <%= number_to_currency(parcel.proposed_fee) %>
+                          </div>
+                        </div>
+                      <% end %>
                     </div>
-                  <% end %>
+                  </div>
+
+
                 </div>
 
                 <div class="row">
@@ -204,6 +265,7 @@
                   </div>
                   <div class="col-right">
                     <div class="contact-button mb-2">
+                      <%= link_to 'See Preview', parcel_ad_path(parcel), class: 'btn btn-outline-secondary btn-sm text-dark' %>
                       <%= profile_link_for(parcel) %>
                     </div>
                   </div>
@@ -221,20 +283,12 @@
       <%# Buy for me section %>
       <% if @buy_for_mes.present? %>
         <% @buy_for_mes.each do |buy_for_me| %>
-          <div class="container mt-2">
+          <div class="container card shadow mt-2">
              <div class="row">
                 <div class="col-left">
-                  <h5 class="fw-bold badge bg-secondary rounded-pill mb-3">Buyer</h5>
+                  <h5 class="fw-bold badge bg-secondary rounded-0 mb-3">Buyer</h5>
                   <div class="travel-info">
                     <div>
-                      <span class="travel-date">
-                        <% if buy_for_me.shopping_date.present? %>
-                          <p class="mb-0">
-                            <strong><%= buy_for_me.shopping_date %></strong> 
-                          </p>
-                        <% end %>
-                      </span>
-
                       <div>
                         <%= link_to buy_for_me_path(buy_for_me), class: 'text-decoration-none' do %>
                           <% if buy_for_me.departure_city.present? || buy_for_me.departure_country.present? || buy_for_me.arrival_city.present? || buy_for_me.arrival_country.present? %>
@@ -242,6 +296,13 @@
                           <% end %>
                         <% end %>
                       </div>
+                      <span class="travel-date">
+                        <% if buy_for_me.shopping_date.present? %>
+                          <p class="mb-0">
+                            <strong><%= buy_for_me.shopping_date %></strong> 
+                          </p>
+                        <% end %>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -250,17 +311,26 @@
                     <div class="carry-for-you">
                       <h6 class="mt-2 me-2 fw-bold">Buy For Me:</h6>
                         <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-                          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'small' %> " data-value="Small">
+                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'small' %> " data-value="Small">
                             <%= image_tag "document.png", class:"icon-class" %>
                              Small
                           </button>
-                          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'medium' %>" data-value="Medium">
+                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'medium' %>" data-value="Medium">
                             <%= image_tag "parcel.png", class:"icon-class" %> Medium
                           </button>
-                          <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'large' %>" data-value="Large">
+                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'large' %>" data-value="Large">
                             <%= image_tag "pallet.png", class:"icon-class" %> Large
                           </button>
                         </div>
+                    </div>
+                  <% end %>
+
+                  <% if buy_for_me.category.present? %>
+                    <div class="buy-for-you">
+                      <h6 class="mt-2 me-5 fw-bold">Category:</h6>
+                      <div aria-label="Buy For You" class="btn-group" role="group">
+                        <%= buy_for_me.category %>
+                      </div>
                     </div>
                   <% end %>
 
@@ -296,6 +366,7 @@
                   </div>
                   <div class="col-right">
                     <div class="contact-button mb-2">
+                      <%= link_to 'See Preview', buy_for_me_path(buy_for_me), class: 'btn btn-outline-secondary btn-sm text-dark' %>
                       <%= profile_link_for(buy_for_me) %>
                     </div>
                   </div>
@@ -326,3 +397,60 @@
     })
   });
 </script>
+
+<style>
+<%#  for search box on index page    %>
+.search-container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.search-box {
+  background-color: #f6f6f6;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  margin-right: 10px;
+  flex-wrap: wrap;
+}
+.search-box div {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+.search-box div i {
+  color: #3f2a8d;
+  margin-right: 5px;
+}
+.search-box div:last-child {
+  margin-right: 0;
+}
+.search-button {
+  background-color: #3f2a8d;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+@media (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-box {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  .search-box div {
+    margin-right: 10px;
+  }
+}
+</style>

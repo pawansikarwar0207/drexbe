@@ -1,0 +1,131 @@
+.footer {
+    background-color: #fff;
+    padding: 40px 0 0 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-sections {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr 2fr;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-logo img {
+    max-width: 120px;
+}
+
+.footer-links h3 {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    color: #3f2b96;
+}
+
+.payment-section h3 {
+    color: #3f2b96;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.payment-section p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.payment-icons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.payment-icons img {
+    height: 30px;
+    width: auto;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.social-links a {
+    color: #3f2b96;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.footer-bottom {
+    border-top: 1px solid #eee;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #FFFBFB;
+}
+
+.footer-bottom-links a {
+    color: #FFFBFB;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-bottom-links a:hover {
+    color: #3f2b96;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .footer-sections {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .payment-section {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-sections {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-section {
+        grid-column: auto;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+}

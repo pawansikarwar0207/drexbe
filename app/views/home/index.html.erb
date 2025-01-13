@@ -3,11 +3,11 @@
   <section class="banner-section banner-slider">
     <div class="container">
       <div class="home-banner">
-        <div class="row align-items-center">
+        <div class="row align-items-center g-0">
           <div class="col-lg-6" data-aos="fade-down">
-            <h2>Build Together, The First <br>Community of ParcelPool </h2>
+            <h2 style="color: #353188 !important" class="fs-1">Build Together, The First <br>Community of ParcelPool </h2>
             <br>
-            <p style="color: #6562a3;">Individual, Professional, Travelers-Together,We build the First <br> Collaborative shipping Community! </p>
+            <p style="color: #6562a3;" class="lead">Individual, Professional, Travelers-Together,We build the First <br> Collaborative shipping Community! </p>
             <p style="color: #6562a3;">Roles may change, but the golas remains the same:send parcels at <br> low costs while supporting a greener plant </p>
           </div>
           <div class="col-lg-6" data-aos="fade-down">
@@ -25,100 +25,70 @@
   <div class="section-search">
     <div class="container">
       <div class="search-box-banner">
-        <%= form_with(url: search_results_path, method: :get, local: true) do |form| %>
-          <ul class="align-items-center">
-            <li class="column-group-main">
-              <br>
-              <div class="input-block-wrapp">
-                <div class="input-block date-widget">
-                  <div class="group-img">
-                    <i class="fas fa-dot-circle"></i>
-                    <span>
-                      <%= form.text_field :departure_city, class: 'form-control', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off', value: params[:departure_city].present? ? params[:departure_city] : '' %>
-                      <%= form.hidden_field :departure_country, id: 'departure_country' %>
-                    </span>
-                  </div>
+          <%= form_with(url: search_results_path, method: :get, local: true) do |form| %>
+            <div class="search-container">
+              <div class="search-box">
+                <div>
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>
+                    <%= form.text_field :departure_city, class: 'form-control', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off', value: params[:departure_city].present? ? params[:departure_city] : '' %>
+                    <%= form.hidden_field :departure_country, id: 'departure_country' %>
+                  </span>
+                </div>
+                <div>
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>
+                    <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off', value: params[:arrival_city].present? ? params[:arrival_city] : ''  %>
+                    <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
+                  </span>
+                </div>
+                <div>
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>
+                    <%= form.text_field :date, class: 'form-control flatpickr', id: 'date_field', placeholder: 'Today' %>
+                  </span>
                 </div>
               </div>
-            </li>
-            <li class="column-group-main">
-              <br>
-              <div class="input-block-wrapp">
-                <div class="input-block date-widget">
-                  <div class="group-img">
-                    <i class="fas fa-dot-circle"></i>
-                    <span>
-                      <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off', value: params[:arrival_city].present? ? params[:arrival_city] : ''  %>
-                      <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="column-group-main">
-              <br>
-              <div class="input-block-wrapp">
-                <div class="input-block date-widge">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>
-                      <%= form.text_field :date, class: 'form-control flatpickr', id: 'date_field', placeholder: 'Today' %>
-                    </span>
-                  <div class="group-img">
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="column-group-last">
-              <div class="input-block">
-                <div class="search-btn">
-                  <%= form.submit "Search", class: 'btn search-button' %>
-                  </div>
-                </div>
-              </li>
-            </ul>
+              <button class="search-button">
+                <%= form.submit "Search", class: 'search-button' %>
+              </button>
+            </div>
           <% end %>
         </div>
       </div>
     </div>
     <!-- /Search -->
   </div>
-  <br>
-  <br>
-  <section class="section facts-number">
-    <div class="container">
+  
+  <section class="section facts-number mt-5 mb-5" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <div class="container text-center" style="max-width: 1200px; padding: 0;">
       <!-- Heading title-->
       <!-- /Heading title -->
-      <div class="counter-group">
-        <div class="row">
-          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down">
-            <div class="count-group flex-fill">
-              <div class="customer-count d-flex align-items-center">
-                <div class="count-img">
-                  <span class="fa fa-search" style="font-size: 20px; color: #ffff;"></span>
-                </div>
+      <div class="counter-group" style="width: 100%;">
+        <div class="row g-0" style="display: flex; justify-content: center; align-items: center;">
+          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down" style="display: flex; justify-content: center; align-items: center; padding: 15px;">
+            <div class="count-group flex-fill" style="text-align: center;">
+              <div class="customer-count d-flex align-items-center" style="justify-content: center; flex-direction: column;">
                 <div class="count-content">
-                  <h4>Simple</h4>
+                  <h4><i class="fa fa-search"></i> Simple</h4>
                   <p>Just search, click and <br> send with ease </p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down">
-            <div class="count-group flex-fill">
-              <div class="customer-count d-flex align-items-center">
-                <div class="count-img">
-                  <span class="fa fa-clock-o" style="font-size: 20px; color: #ffff;"></span>
-                </div>
+          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down" style="display: flex; justify-content: center; align-items: center; padding: 15px;">
+            <div class="count-group flex-fill" style="text-align: center;">
+              <div class="customer-count d-flex align-items-center" style="justify-content: center; flex-direction: column;">
                 <div class="count-content">
-                  <h4>Fast</h4>
+                  <h4><i class="fa fa-clock-o"></i> Fast</h4>
                   <p>Same-day delivery for <br> urgent shipments </p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down">
-            <div class="count-group flex-fill">
-              <div class="customer-count d-flex align-items-center">
+          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down" style="display: flex; justify-content: center; align-items: center; padding: 15px;">
+            <div class="count-group flex-fill" style="text-align: center;">
+              <div class="customer-count d-flex align-items-center" style="justify-content: center; flex-direction: column;">
                 <div class="count-img">
                   <%= image_tag "shield-check.png" %>
                 </div>
@@ -129,15 +99,12 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down">
-            <div class="count-group flex-fill">
-              <div class="customer-count d-flex align-items-center">
-                <div class="count-img">
-                  <span class="fa fa-arrow-down" style="font-size: 20px; color: #ffff;"></span>
-                </div>
+          <div class="col-lg-3 col-md-6 col-12 d-flex" data-aos="fade-down" style="display: flex; justify-content: center; align-items: center; padding: 15px;">
+            <div class="count-group flex-fill" style="text-align: center;">
+              <div class="customer-count d-flex align-items-center" style="justify-content: center; flex-direction: column;">
                 <div class="count-content">
-                  <h4>Cheap</h4>
-                  <p>Save upto 70% oon <br>your shipping costs </p>
+                  <h4><i class="fa fa-arrow-down"></i> Cheap</h4>
+                  <p>Save upto 70% on <br>your shipping costs </p>
                 </div>
               </div>
             </div>
@@ -146,237 +113,232 @@
       </div>
     </div>
   </section>
-  <br>
-  <br>
+
+
   <section class="section popular-car-type">
-    <div class="container">
+    <div class="container mb-5">
       <!-- Heading title-->
       <div class="section-heading" data-aos="fade-down">
-        <h2 style="color: black !important">Quick Actions</h2>
+        <h2 style="color: black !important" class="text-center">Quick Actions</h2>
       </div>
-      <div class="row mt-5" align="center">
+      <div class="row g-0 mt-5" align="center">
         <div class="col-md-3"></div>
         <div class="col-md-2">
-        <h5>Advanced Tracking</h5><%= image_tag "Vector.png", class:"mt-4" %>
+          <h5>Advanced Tracking</h5><%= image_tag "Vector.png", class:"mt-4", size: "50x50" %>
         </div>
         <div class="col-md-2">
-        <h5>Get Rates</h5><%= image_tag "calculator.png", class:"mt-4" %>
+          <h5>Get Rates</h5><%= image_tag "calculator.png", class:"mt-4", size: "40x40" %>
         </div>
         <div class="col-md-2">
-        <h5>Send Shipment</h5><%= image_tag 'cargo-truck.png', class: 'mt-4' %>
+          <h5>Send Shipment</h5><%= image_tag 'cargo-truck.png', class: 'mt-4', size: "40x40" %>
         </div>
         <div class="col-md-3"></div>
       </div>
     </div>
   </section>
+
   <section class="section popular-car-type">
-    <div class="container">
-      <!-- Heading title-->
-      <div class="row">
+    <div class="container mt-3 mb-3 bg-light p-5 fs-4">
+      <div class="row g-0">
         <div class="col-md-6">
-          <h3 class="parcel">To send your Parcel, and make your trip <br>profitable </h3>
+          <h3 class="parcel">To send your Parcel, and make your trip profitable </h3>
           <ul class="mt-5">
-            <li style="color: #000000">
-              <span>&#9679; &nbsp; &nbsp; &nbsp;</span>Travel Smart, Earn More-join DrexBe to Help Others <br>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;Send and Buy!
+            <li>
+              Travel Smart, Earn More-join DrexBe to Help Others Send and Buy!
             </li>
             <br>
-            <li style="color: #000000">
-              <span>&#9679; &nbsp; &nbsp; &nbsp;</span>Sending Documents and Parcels Made Easy-Register <br>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;and find Your Perfect Dropper!
+            <li>
+              Sending Documents and Parcels Made Easy-Register and find Your Perfect Dropper!
             </li>
             <br>
-            <li style="color: #000000">
-              <span>&#9679; &nbsp; &nbsp; &nbsp;</span>Buy what you love, Anywhere-Post your Link and <br>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;Find the Right Helper!
+            <li>
+              Buy what you love, Anywhere-Post your Link and Find the Right Helper!
             </li>
           </ul>
         </div>
-        <div class="col-md-6">
-          <%= image_tag "parcel.png", class: "img-fluid" %> 
+        <div class="col-md-6 text-end">
+          <%= image_tag "parcel.png", size: "500x400", style: "max-width: 100%; height: auto;" %> 
         </div>
+        <%= link_to how_it_works_path, class: "btn search-button bg-none fw-bold mt-4 fs-5 rounded-pill border responsive-button" do %>
+          See how it works <i class="fa fa-search"></i>
+        <% end %>
       </div>
-      <div class="section-search">
-        <div class="container">
-          <div class="search-box-banner2">
-            <form action="https://dreamsrent.dreamstechnologies.com/html/template/listing-grid.html">
-              <ul class="align-items-center">
-                <li class="column-group-last">
-                  <div class="input-block">
-                    <div class="search-btn">
-                      <button class="btn search-button text-dark " type="submit"> Search &nbsp; <div style="width: 30px; height: 30px; color: #ffffff; display: inline;">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                      </div>
-                    </button>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </form>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
-<section class="section popular-car-type">
-  <div class="container">
+
+<section class="section popular-car-type" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+  <div class="container text-center mt-5 mb-5" style="max-width: 1200px; padding: 0;">
     <!-- Heading title-->
     <div class="section-heading" data-aos="fade-down">
-      <h2 style="color: #353188 !important">Elevate Your Experiance</h2>
-      <h3>Download Our App Today</h3>
+      <h2 style="color: #353188 !important;">Elevate Your Experience</h2>
+      <p class="fs-3">Download Our App Today</p>
     </div>
-    <div class="row" align="center">
-      <div class="col-md-4"></div>
-      <div class="col-md-2">
+    
+    <div class="row g-0" style="display: flex; justify-content: center; align-items: center; text-align: center;">
+      <div class="col-md-4" style="flex: 1;"></div>
+      <div class="col-md-2" style="flex: 1;">
         <%= image_tag "google-play.png", class:"mt-4" %>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2" style="flex: 1;">
         <%= image_tag "apple-store.png", class:"mt-4" %>
       </div>
-      <div class="col-md-3"></div>
+      <div class="col-md-4" style="flex: 1;"></div>
     </div>
   </div>
-  <div class="row" align="center">
-    <div class="col-md-2"></div>
-    <div class="col-md-3 mb-3">
+  
+  <div class="row g-0" style="display: flex; justify-content: center; align-items: center; text-align: center;">
+    <div class="col-md-2" style="flex: 1;"></div>
+    <div class="col-md-3 mb-3 card text-white" style="background-color: #353188; flex: 1; margin: 10px;">
       <div class="elevate_experience_box" align="center">
-        <%= image_tag "thumbs.png" %>
-        <br> 10,000 <br>Orders
+        <%= image_tag "thumbs.png", class: 'mb-2' %>
+        <span class="fs-5"><br> 10,000 <br> Orders</span>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
+    <div class="col-md-3 mb-3 card text-white" style="background-color: #353188; flex: 1; margin: 10px;">
       <div class="elevate_experience_box" align="center">
-        <%= image_tag "users.png" %>
-        <br> 3000 <br>Users
+        <%= image_tag "users.png", class: 'mb-2' %>
+        <span class="fs-5"><br> 3000 <br> Users</span>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
+    <div class="col-md-3 mb-3 card text-white" style="background-color: #353188; flex: 1; margin: 10px;">
       <div class="elevate_experience_box" align="center">
-        <%= image_tag "travel.png" %>
-        <br> 2000 <br>On Travel
+        <%= image_tag "travel.png", class: 'mb-2' %>
+        <span class="fs-5"><br> 2000 <br> On Travel</span>
       </div>
     </div>
-    <div class="col-md-1"></div>
+    <div class="col-md-1" style="flex: 1;"></div>
   </div>
-</div>
-</div>
 </section>
-<div class="container">
-  <div class="row">
-    <div class="col-md-3">
-      <div class="profile-card">
-        <div class="profile-image"><%= image_tag "ethan.png", alt: "Profile Picture" %> </div>
-        <h2 class="name">Ethan</h2>
-        <div class="location-info">
-          <div class="location">
-            <span class="city">NYC</span>
-            <span class="country">USA</span>
-          </div>
-          <div class="transport-icon">🚗</div>
-          <div class="location">
-            <span class="city">Dubai</span>
-            <span class="country">UAE</span>
-          </div>
-        </div>
-        <div class="datetime-info">
-          <div class="date-row">
-            <span class="label">Date :</span>
-            <span class="value">Dec23,2024</span>
-          </div>
-          <div class="time-row">
-            <span class="label">Time :</span>
-            <span class="value">12:00PST</span>
-          </div>
-        </div>
-        <button class="check-button">Check</button>
-      </div>
+
+
+  <div class="container mt-5 mb-5 text-center" style="max-width: 1200px; padding: 0;">
+    <div class="section-heading" data-aos="fade-down">
+      <h2 style="color: #353188 !important;">Browse Featured Travelers!</h2>
+      <h5 class="mb-5">Connect with verified travelers ready to carry for your packages to exciting destinations. Explore their profiles, choose your traveler and start shipping and buying today!</h5>
     </div>
-    <div class="col-md-3">
-      <div class="profile-card">
-        <div class="profile-image"><%= image_tag "ethan.png", alt: "Profile Picture" %> </div>
-        <h2 class="name">Ethan</h2>
-        <div class="location-info">
-          <div class="location">
-            <span class="city">NYC</span>
-            <span class="country">USA</span>
+
+    <div class="row g-0" style="display: flex; justify-content: center; align-items: center; text-align: center;">
+      <div class="col-md-3 mb-4" style="flex: 1; display: flex; justify-content: center;">
+        <div class="profile-card shadow" style="width: 100%; max-width: 250px; padding: 20px; border-radius: 10px; background-color: #fff;">
+          <div class="profile-image" style="text-align: center;">
+            <%= image_tag "ethan.png", alt: "Profile Picture", style: "width: 100%; border-radius: 50%;" %>
           </div>
-          <div class="transport-icon">🚗</div>
-          <div class="location">
-            <span class="city">Dubai</span>
-            <span class="country">UAE</span>
+          <h2 class="name" style="font-size: 1.5rem; margin-top: 10px;">Ethan</h2>
+          <div class="location-info" style="margin-top: 10px;">
+            <div class="location">
+              <span class="city">NYC</span> <span class="country">USA</span>
+            </div>
+            <div class="transport-icon" style="font-size: 1.5rem;">🚗</div>
+            <div class="location">
+              <span class="city">Dubai</span> <span class="country">UAE</span>
+            </div>
           </div>
+          <div class="datetime-info" style="margin-top: 15px;">
+            <div class="date-row">
+              <span class="label" style="font-weight: bold;">Date :</span>
+              <span class="value">Dec 23, 2024</span>
+            </div>
+            <div class="time-row">
+              <span class="label" style="font-weight: bold;">Time :</span>
+              <span class="value">12:00 PST</span>
+            </div>
+          </div>
+          <button class="check-button" style="background-color: #353188; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 15px;">Check</button>
         </div>
-        <div class="datetime-info">
-          <div class="date-row">
-            <span class="label">Date :</span>
-            <span class="value">Dec23,2024</span>
-          </div>
-          <div class="time-row">
-            <span class="label">Time :</span>
-            <span class="value">12:00PST</span>
-          </div>
-        </div>
-        <button class="check-button">Check</button>
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="profile-card">
-        <div class="profile-image"><%= image_tag "ethan.png", alt: "Profile Picture" %> </div>
-        <h2 class="name">Ethan</h2>
-        <div class="location-info">
-          <div class="location">
-            <span class="city">NYC</span>
-            <span class="country">USA</span>
+
+      <!-- Repeat the profile card structure for other travelers -->
+      <div class="col-md-3 mb-4" style="flex: 1; display: flex; justify-content: center;">
+        <div class="profile-card shadow" style="width: 100%; max-width: 250px; padding: 20px; border-radius: 10px; background-color: #fff;">
+          <div class="profile-image" style="text-align: center;">
+            <%= image_tag "ethan.png", alt: "Profile Picture", style: "width: 100%; border-radius: 50%;" %>
           </div>
-          <div class="transport-icon">🚗</div>
-          <div class="location">
-            <span class="city">Dubai</span>
-            <span class="country">UAE</span>
+          <h2 class="name" style="font-size: 1.5rem; margin-top: 10px;">Ethan</h2>
+          <div class="location-info" style="margin-top: 10px;">
+            <div class="location">
+              <span class="city">NYC</span> <span class="country">USA</span>
+            </div>
+            <div class="transport-icon" style="font-size: 1.5rem;">🚗</div>
+            <div class="location">
+              <span class="city">Dubai</span> <span class="country">UAE</span>
+            </div>
           </div>
+          <div class="datetime-info" style="margin-top: 15px;">
+            <div class="date-row">
+              <span class="label" style="font-weight: bold;">Date :</span>
+              <span class="value">Dec 23, 2024</span>
+            </div>
+            <div class="time-row">
+              <span class="label" style="font-weight: bold;">Time :</span>
+              <span class="value">12:00 PST</span>
+            </div>
+          </div>
+          <button class="check-button" style="background-color: #353188; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 15px;">Check</button>
         </div>
-        <div class="datetime-info">
-          <div class="date-row">
-            <span class="label">Date :</span>
-            <span class="value">Dec23,2024</span>
-          </div>
-          <div class="time-row">
-            <span class="label">Time :</span>
-            <span class="value">12:00PST</span>
-          </div>
-        </div>
-        <button class="check-button">Check</button>
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="profile-card">
-        <div class="profile-image"><%= image_tag "ethan.png", alt: "Profile Picture" %> </div>
-        <h2 class="name">Ethan</h2>
-        <div class="location-info">
-          <div class="location">
-            <span class="city">NYC</span>
-            <span class="country">USA</span>
+
+      <div class="col-md-3 mb-4" style="flex: 1; display: flex; justify-content: center;">
+        <div class="profile-card shadow" style="width: 100%; max-width: 250px; padding: 20px; border-radius: 10px; background-color: #fff;">
+          <div class="profile-image" style="text-align: center;">
+            <%= image_tag "ethan.png", alt: "Profile Picture", style: "width: 100%; border-radius: 50%;" %>
           </div>
-          <div class="transport-icon">🚗</div>
-          <div class="location">
-            <span class="city">Dubai</span>
-            <span class="country">UAE</span>
+          <h2 class="name" style="font-size: 1.5rem; margin-top: 10px;">Ethan</h2>
+          <div class="location-info" style="margin-top: 10px;">
+            <div class="location">
+              <span class="city">NYC</span> <span class="country">USA</span>
+            </div>
+            <div class="transport-icon" style="font-size: 1.5rem;">🚗</div>
+            <div class="location">
+              <span class="city">Dubai</span> <span class="country">UAE</span>
+            </div>
           </div>
+          <div class="datetime-info" style="margin-top: 15px;">
+            <div class="date-row">
+              <span class="label" style="font-weight: bold;">Date :</span>
+              <span class="value">Dec 23, 2024</span>
+            </div>
+            <div class="time-row">
+              <span class="label" style="font-weight: bold;">Time :</span>
+              <span class="value">12:00 PST</span>
+            </div>
+          </div>
+          <button class="check-button" style="background-color: #353188; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 15px;">Check</button>
         </div>
-        <div class="datetime-info">
-          <div class="date-row">
-            <span class="label">Date :</span>
-            <span class="value">Dec23,2024</span>
+      </div>
+
+      <div class="col-md-3 mb-4" style="flex: 1; display: flex; justify-content: center;">
+        <div class="profile-card shadow" style="width: 100%; max-width: 250px; padding: 20px; border-radius: 10px; background-color: #fff;">
+          <div class="profile-image" style="text-align: center;">
+            <%= image_tag "ethan.png", alt: "Profile Picture", style: "width: 100%; border-radius: 50%;" %>
           </div>
-          <div class="time-row">
-            <span class="label">Time :</span>
-            <span class="value">12:00PST</span>
+          <h2 class="name" style="font-size: 1.5rem; margin-top: 10px;">Ethan</h2>
+          <div class="location-info" style="margin-top: 10px;">
+            <div class="location">
+              <span class="city">NYC</span> <span class="country">USA</span>
+            </div>
+            <div class="transport-icon" style="font-size: 1.5rem;">🚗</div>
+            <div class="location">
+              <span class="city">Dubai</span> <span class="country">UAE</span>
+            </div>
           </div>
+          <div class="datetime-info" style="margin-top: 15px;">
+            <div class="date-row">
+              <span class="label" style="font-weight: bold;">Date :</span>
+              <span class="value">Dec 23, 2024</span>
+            </div>
+            <div class="time-row">
+              <span class="label" style="font-weight: bold;">Time :</span>
+              <span class="value">12:00 PST</span>
+            </div>
+          </div>
+          <button class="check-button" style="background-color: #353188; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 15px;">Check</button>
         </div>
-        <button class="check-button">Check</button>
       </div>
     </div>
   </div>
 </div>
 </div>
-</div>
-<!-- <section class="section popular-car-type"><div class="container"><header><h1>Your Global Shipping & Buying Hub</h1><p>Accelerate Your Global Business with Our Reliable Shipping and Sourcing Solutions</p></header><div class="shipping-cards"><div class="card"><div class="profile-img"><img src="assets/img/salah.png" alt="Shipper profile"></div><h3>Siah</h3><div class="route"><span>Paris</span><span class="arrow">→</span><span>Tunis</span></div><div class="date">2023-11-18</div><div class="size">Document</div><button class="check-btn">Check</button></div></div><button class="see-all-btn">See All Sender and Buyer</button></div></section> -->
+
 <section class="section popular-car-type">
   <div class="testimonials-container">
     <h2 class="testimonials-title">Hear From Our Satisfied Clients Have to Say</h2>
@@ -414,133 +376,138 @@
     </div>
   </div>
 </section>
-<section style="margin: 20px 0px 20px 0px;">
-  <div class="container" align="center">
+
+<section class="mt-5 mb-5">
+  <div class="container text-center">
     <h1 style="color: #353188">Your Global Shipping & Buying Hub</h1>
-    <p class="subtitle">Accelerate Your Global Business with Our Reliable Shipping and Sourcing Solutions</p>
-    <div class="row" align="center">
-      <div class="col-md-2">
-        <div class="shipping-cards">
-          <div class="card" style="width: 18rem;">
-            <div class="profile-img">
-              <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
-            </div>
-            <h3>Siah</h3>
-            <div class="route">
-              <span>Pais</span>
-              <span class="arrow">→</span>
-              <span>Tunis</span>
-            </div>
-            <div class="date">2023-11-18</div>
-            <div class="size">Document</div>
-            <button class="check-btn">Check</button>
+    <p class="subtitle fs-5">Accelerate Your Global Business with Our Reliable Shipping and Sourcing Solutions</p>
+    <div class="row g-0">
+      <div class="col-lg-2">
+        <div class="card" style="width: 15rem;">
+          <div class="profile-img">
+            <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
           </div>
-          <!-- Repeat card div structure for other profiles -->
+          <h3>Siah</h3>
+          <div class="route">
+            <span>Pais</span>
+            <span class="arrow">→</span>
+            <span>Tunis</span>
+          </div>
+          <div class="date">2023-11-18</div>
+          <div class="size">Document</div>
+          <button class="check-btn">Check</button>
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="shipping-cards">
-          <div class="card">
-            <div class="profile-img">
-              <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
-            </div>
-            <h3>Siah</h3>
-            <div class="route">
-              <span>Pais</span>
-              <span class="arrow">→</span>
-              <span>Tunis</span>
-            </div>
-            <div class="date">2023-11-18</div>
-            <div class="size">Document</div>
-            <button class="check-btn">Check</button>
+      <div class="col-lg-2">
+        <div class="card" style="width: 15rem;">
+          <div class="profile-img">
+            <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
           </div>
-          <!-- Repeat card div structure for other profiles -->
+          <h3>Siah</h3>
+          <div class="route">
+            <span>Pais</span>
+            <span class="arrow">→</span>
+            <span>Tunis</span>
+          </div>
+          <div class="date">2023-11-18</div>
+          <div class="size">Document</div>
+          <button class="check-btn">Check</button>
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="shipping-cards">
-          <div class="card">
-            <div class="profile-img">
-              <%= image_tag 'ethan.png', alt: "Shipper Profile" %>
-            </div>
-            <h3>Siah</h3>
-            <div class="route">
-              <span>Pais</span>
-              <span class="arrow">→</span>
-              <span>Tunis</span>
-            </div>
-            <div class="date">2023-11-18</div>
-            <div class="size">Document</div>
-            <button class="check-btn">Check</button>
+      <div class="col-lg-2">
+        <div class="card" style="width: 15rem;">
+          <div class="profile-img">
+            <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
           </div>
-          <!-- Repeat card div structure for other profiles -->
+          <h3>Siah</h3>
+          <div class="route">
+            <span>Pais</span>
+            <span class="arrow">→</span>
+            <span>Tunis</span>
+          </div>
+          <div class="date">2023-11-18</div>
+          <div class="size">Document</div>
+          <button class="check-btn">Check</button>
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="shipping-cards">
-          <div class="card">
-            <div class="profile-img">
-              <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
-            </div>
-            <h3>Siah</h3>
-            <div class="route">
-              <span>Pais</span>
-              <span class="arrow">→</span>
-              <span>Tunis</span>
-            </div>
-            <div class="date">2023-11-18</div>
-            <div class="size">Document</div>
-            <button class="check-btn">Check</button>
+      <div class="col-lg-2">
+        <div class="card" style="width: 15rem;">
+          <div class="profile-img">
+            <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
           </div>
-          <!-- Repeat card div structure for other profiles -->
+          <h3>Siah</h3>
+          <div class="route">
+            <span>Pais</span>
+            <span class="arrow">→</span>
+            <span>Tunis</span>
+          </div>
+          <div class="date">2023-11-18</div>
+          <div class="size">Document</div>
+          <button class="check-btn">Check</button>
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="shipping-cards">
-          <div class="card">
-            <div class="profile-img">
-              <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
-            </div>
-            <h3>Siah</h3>
-            <div class="route">
-              <span>Pais</span>
-              <span class="arrow">→</span>
-              <span>Tunis</span>
-            </div>
-            <div class="date">2023-11-18</div>
-            <div class="size">Document</div>
-            <button class="check-btn">Check</button>
+      <div class="col-lg-2">
+        <div class="card" style="width: 15rem;">
+          <div class="profile-img">
+            <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
           </div>
-          <!-- Repeat card div structure for other profiles -->
+          <h3>Siah</h3>
+          <div class="route">
+            <span>Pais</span>
+            <span class="arrow">→</span>
+            <span>Tunis</span>
+          </div>
+          <div class="date">2023-11-18</div>
+          <div class="size">Document</div>
+          <button class="check-btn">Check</button>
         </div>
       </div>
     </div>
-    <button class="see-all-btn">See All Sender and Buyer</button>
   </div>
 </section>
+
 <section class="mt-5">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="subscribe-container">
-        <h1 class="faq-title">What Questions Do Other DrexBe's Users Ask?</h1>
+    <div class="container bg-light p-5">
+      <div class="row g-0">
+        <div class="col-md-10">
+          <div class="">
+            <h1 class="faq-title mb-3">
+              What Questions Do Other DrexBe's Users Ask?
+            </h1>
+          </div>
+        </div>
+        <div class="col-lg-2">
+         <div class="arrow-icon">
+            <i class="fas fa-chevron-right text-dark fs-4"></i>
+          </div>  
+        </div>
+      </div>
+
+      <div class="row g-0">
         <div class="faq-grid">
           <!-- FAQ Card 1 -->
-          <div class="faq-card">
+          <div class="faq-card shadow">
             <h2 class="card-title">Which Sellers Can The Buy For Me Services Help With?</h2>
-            <p class="card-text"> The Buy For Me Service is Able to Pay For Goods On Your Behalf Only When The Seller Can't or Won't Accept Credit or Debit Cards Issued by Banks Outside Their Country. This Service Cannot Be Used to Purchase Virtual Goods (e.g. Downloadable material and Digital Subscriptions.) </p>
+            <p class="card-text mt-3 fs-5">
+              The Buy For Me Service is Able to Pay For Goods On Your Behalf Only When The Seller Can't or Won't Accept Credit or Debit Cards Issued by Banks Outside Their Country. This Service Cannot Be Used to Purchase Virtual Goods (e.g. Downloadable material and
+              Digital Subscriptions.)
+            </p>
             <a href="#" class="more-info">More Information</a>
           </div>
+
           <!-- FAQ Card 2 -->
-          <div class="faq-card">
+          <div class="faq-card shadow">
             <h2 class="card-title">Does NYBox Provide shipping tracking information?</h2>
-            <p class="card-text"> Yes! Once Your Package has been shipped out from our facility, You can track your shipment from your NYBox account or From Carrier's website using the provided tracking number. </p>
+            <p class="card-text mt-3 fs-5">
+              Yes! Once Your Package has been shipped out from our facility, You can track your shipment from your NYBox account or From Carrier's website using the provided tracking number.
+            </p>
             <a href="#" class="more-info">More Information</a>
           </div>
-        </div>
-      </div>
+        </div>  
+      </div>      
     </div>
-  </div>
-</section>
+  </section>
+
 <section>
   <div class="container mt-5 mb-5">
     <div class="tracking-container">
@@ -555,46 +522,43 @@
     </div>
   </div>
 </section>
-<section>
-  <div class="contact-container">
-    <h1 style="color: #fff;">Do you have any questions or any assistance?</h1>
+
+<section class="contact-section">
+  <div class="contact-header">
+    <h2 style="color: #fff;" class="fs-2">Do you have any questions or any assitance ?</h2>
     <p style="color: #fff;">Got Questions? We're Here to Help!</p>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div class="contact-options">
-      <div class="contact-item">
-        <div class="icon">
-          <%= image_tag "headphone.png" %>
-        </div>
-        <br>
-        <h3 style="color: #fff; margin-top: 20px;">Call Us</h3>
-        <p>France: +336601034</p>
+  </div>
+
+  <div class="contact-options">
+    <div class="contact-item">
+      <div class="icon">
+        <%= image_tag "headphone.png" %>
       </div>
-      <div class="contact-item">
-        <div class="icon">
-          <%= image_tag "email.png" %>
-        </div>
-        <br>
-        <h3 style="color: #fff; margin-top: 20px;">Send use email</h3>
-        <p>Email: info@drexbe.com</p>
+      <h3 style="color: #fff; margin-top: 20px;" class="fs-4">Call Us</h3>
+      <p style="color: #fff;" class="fs-5">France: +33366010343</p>
+    </div>
+
+    <div class="contact-item">
+      <div class="icon">
+        <%= image_tag "email.png" %>
       </div>
-      <div class="contact-item">
-        <div class="icon">
-          <%= image_tag "chat.png" %>
-        </div>
-        <br>
-        <h3 style="color: #fff; margin-top: 20px;">Chat with a specialist</h3>
-        <p>Start Chat</p>
+      <h3 style="color: #fff; margin-top: 20px;" class="fs-4">Send use email</h3>
+      <p style="color: #fff;" class="fs-5">Email: info@drexbe.com</p>
+    </div>
+
+    <div class="contact-item">
+      <div class="icon">
+        <%= image_tag "chat.png" %>
       </div>
+      <h3 style="color: #fff; margin-top: 20px;" class="fs-4">Chat with a specialist</h3>
+      <a href="#" class="start-chat fs-5" style="color: #fff;">Start Chat</a>
     </div>
   </div>
 </section>
 
 <section class="subscribe-section py-5">
   <div class="container">
-    <div class="row align-items-center text-center text-md-start">
+    <div class="row g-0 align-items-center text-center text-md-start">
       <!-- Text Section -->
       <div class="col-md-6">
         <div class="subscribe-text">
@@ -613,95 +577,6 @@
   </div>
 </section>
 
-<footer class="footer">
-  <div class="footer-container">
-    <!-- Logo Section -->
-    <div class="footer-logo"><%= image_tag "logo.png", alt: "DrexBe Logo" %> </div>
-    <!-- Company Links -->
-    <div class="footer-column">
-      <h3>DrexBe</h3>
-      <ul>
-        <li>
-          <a href="#">How DrexBe Works</a>
-        </li>
-        <li>
-          <a href="#">About us</a>
-        </li>
-        <li>
-          <a href="#">Help Centre</a>
-        </li>
-        <li>
-          <a href="#">Blog</a>
-        </li>
-        <li>
-          <a href="#">Careers</a>
-        </li>
-      </ul>
-    </div>
-    <!-- Customer Services -->
-    <div class="footer-column">
-      <h3>CUSTOMER SERVICES</h3>
-      <ul>
-        <li>
-          <a href="#">Contact Us</a>
-        </li>
-        <li>
-          <a href="#">About</a>
-        </li>
-        <li>
-          <a href="#">FAQ</a>
-        </li>
-        <li>
-          <a href="#">Important Information</a>
-        </li>
-        <li>
-          <a href="#">Terms</a>
-        </li>
-        <li>
-          <a href="#">Privacy</a>
-        </li>
-        <li>
-          <a href="#">Testimonials</a>
-        </li>
-      </ul>
-    </div>
-    <!-- Payment Options -->
-    <div class="footer-column">
-      <h3>Payment Options</h3>
-      <p>Pay your way with secure options like credit card, bank transfer, or digital wallet. Fast, easy, and convenient!</p>
-      <div class="payment-icons"><%= image_tag "visa.png", alt: "Visa" %><%= image_tag "master.png", alt: "Mastercard" %><%= image_tag "american.png", alt: "American Express" %><%= image_tag "union.png", alt: "Union Pay" %><%= image_tag "apple.png", alt: "Apple Pay" %><%= image_tag "gpay.png", alt: "Google Pay" %> </div>
-    </div>
-  </div>
-  <!-- Social Media Links -->
-  <div class="social-links">
-    <a href="#" class="social-icon"><%= image_tag "facebook.png" %></a>
-    <a href="#" class="social-icon"><%= image_tag "twitter.png" %></a>
-    <a href="#" class="social-icon"><%= image_tag "youtube.png" %></a>
-    <a href="#" class="social-icon"><%= image_tag "instagram.png" %></a>
-    </div>
-    <div class="footer1">
-      <div class="footer-content1">
-        <div class="copyright">
-          <p>2024 DrexBE.All Rights Reserved.</p>
-        </div>
-        <div class="footer-links1">
-          <a style="color: #fff !important;" href="/sitemap">Sitemap</a>
-          <span class="separator">|</span>
-          <a style="color: #fff !important;" href="/terms">Terms & Conditions</a>
-          <span class="separator">|</span>
-          <a style="color: #fff !important;" href="/privacy">Privacy Policy</a>
-          <span class="separator">|</span>
-          <a style="color: #fff !important;" href="/usage">Usage Terms</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- scrollToTop start -->
-  <div class="progress-wrap active-progress">
-    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919px, 307.919px; stroke-dashoffset: 228.265px;"></path>
-    </svg>
-  </div>
   <!-- scrollToTop end -->
   <style>
     header {
@@ -717,6 +592,110 @@
     header p {
       color: #666;
     }
+
+  <%# FAQ section  %>
+  .faq-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .faq-header h2 {
+    color: #3f2b96;
+    font-size: 32px;
+    margin: 0;
+  }
+
+  .view-all {
+    background: none;
+    border: none;
+    color: #3f2b96;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card-title{
+    background-color: #3f2b96;
+    color: #ffff;
+    padding: 10px;
+  }
+  .faq-title{
+    color: #3f2b96;
+  }
+
+
+  .faq-card {
+    background-color: #ffff;
+    color: white;
+    padding: 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-card h3 {
+    font-size: 18px;
+    margin: 0 0 15px 0;
+    line-height: 1.4;
+  }
+
+  .faq-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 20px 0;
+    flex-grow: 1;
+  }
+
+  .more-info {
+    background: none;
+    border: none;
+    color: #3f2b96;
+    text-align: left;
+    padding: 0;
+    cursor: pointer;
+    font-size: 14px;
+    width: fit-content;
+  }
+
+  .more-info:hover {
+    text-decoration: underline;
+    color: #3f2b96;
+  }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .faq-header h2 {
+    font-size: 28px;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-card {
+    padding: 20px;
+  }
+}
+
+.faq-text{
+  color: #ffff;
+  font-size: 16px;
+  font-weight: 400;
+}
 
     .shipping-cards {
       display: flex;
@@ -1135,36 +1114,6 @@
       }
     }
 
-    .faq-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-    }
-
-    .faq-title {
-      color: #353188;
-      font-size: 24px;
-      margin-bottom: 30px;
-      position: relative;
-    }
-
-    .faq-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
-    .faq-card {
-      background: #fff;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
     .card-title {
       color: #fff;
       background: #353188;
@@ -1286,82 +1235,6 @@
       }
     }
 
-    .contact-container {
-      background-color: #353188;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    .contact-container h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      font-size: 18px;
-      margin-bottom: 40px;
-      opacity: 0.9;
-    }
-
-    .contact-options {
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .contact-item {
-      flex: 1;
-      max-width: 300px;
-    }
-
-    .icon {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 20px;
-      border: 2px solid white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Icon styles - you'll need to replace these with actual icons */
-    .headphone-icon,
-    .email-icon,
-    .chat-icon {
-      width: 30px;
-      height: 30px;
-      background-color: white;
-      /* Add your icon images or font icons here */
-    }
-
-    .contact-item h3 {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    .contact-item p {
-      font-size: 16px;
-      opacity: 0.9;
-    }
-
-    /* Responsive design */
-    @media (max-width: 768px) {
-      .contact-options {
-        flex-direction: column;
-        align-items: center;
-        gap: 30px;
-      }
-
-      .contact-item {
-        width: 100%;
-        max-width: 250px;
-      }
-    }
-
     .subscribe-container {
       max-width: 80%;
       margin: 20px auto;
@@ -1436,132 +1309,175 @@
       }
     }
 
-    .footer {
-      background-color: #ffffff;
-      padding: 40px 0;
-      font-family: Arial, sans-serif;
+    <%# Contact Option Section %>
+    .contact-section {
+      background-color: #3f2b96;
+      color: white;
+      padding: 50px 20px;
+      text-align: center;
     }
 
-    .footer-container {
+    .contact-header {
+      max-width: 800px;
+      margin: 0 auto 40px;
+    }
+
+    .contact-header p {
+      font-size: 30px;
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    .contact-options {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
       max-width: 1200px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-      padding: 0 20px;
     }
 
-    .footer-logo img {
-      max-width: 120px;
+    .contact-item {
+      flex: 1;
+      max-width: 300px;
     }
 
-    .footer-column h3 {
-      color: #47277B;
+    .icon {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .contact-item h3 {
       font-size: 18px;
-      margin-bottom: 20px;
-      font-weight: 600;
+      margin: 0 0 10px 0;
     }
 
-    .footer-column ul {
-      list-style: none;
-      padding: 0;
+    .contact-item p {
+      font-size: 14px;
       margin: 0;
+      opacity: 0.9;
     }
 
-    .footer-column ul li {
+    .start-chat {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .start-chat:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-options {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .contact-item {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .contact-header h2 {
+    font-size: 24px;
+  }
+}
+
+.start-btn {
+  background-color: #3f2b96;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start-btn:hover {
+  background-color: #352380;
+}
+
+
+    <%#  for search box on index page    %>
+    .search-container {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .search-box {
+      background-color: #f6f6f6;
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+      margin-right: 10px;
+      flex-wrap: wrap;
+    }
+    .search-box div {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
       margin-bottom: 10px;
     }
-
-    .footer-column ul li a {
-      color: #666;
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.3s ease;
+    .search-box div i {
+      color: #3f2a8d;
+      margin-right: 5px;
     }
-
-    .footer-column ul li a:hover {
-      color: #47277B;
+    .search-box div:last-child {
+      margin-right: 0;
     }
-
-    .footer-column p {
-      color: #666;
-      font-size: 14px;
-      line-height: 1.5;
-      margin-bottom: 20px;
+    .search-button {
+      background-color: #3f2a8d;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
     }
-
-    .payment-icons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .payment-icons img {
-      height: 30px;
-      object-fit: contain;
-    }
-
-    .social-links {
-      max-width: 1200px;
-      margin: 30px auto 0;
-      padding: 20px;
-      display: flex;
-      gap: 20px;
-    }
-
-    .social-icon {
-      color: #47277B;
-      font-size: 20px;
-      text-decoration: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .social-icon:hover {
-      opacity: 0.8;
-    }
-
-    /* Responsive Design */
     @media (max-width: 768px) {
-      .footer-container {
-        grid-template-columns: repeat(2, 1fr);
+      .search-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-box {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+      .search-box div {
+        margin-right: 10px;
       }
     }
 
-    @media (max-width: 480px) {
-      .footer-container {
-        grid-template-columns: 1fr;
-      }
+<%# see how it works button %>
+.responsive-button {
+  width: 100%; /* Ensures the button takes up full width on smaller screens */
+  max-width: 300px; /* Limits the max-width on larger screens */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px; /* You can adjust the padding as per your design */
+}
 
-      .social-links {
-        justify-content: center;
-      }
-    }
+/* Optional: Add media queries for more control on different screen sizes */
+@media (min-width: 768px) {
+  .responsive-button {
+    width: 50%; /* Adjust width for medium screens */
+  }
+}
 
-    .footer1 {
-      background-color: #353188;
-      /* Deep purple color */
-      color: white;
-      padding: 15px 0;
-      width: 100%;
-    }
-
-    .footer-content1 {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0;
-    }
-
-    .copyright p {
-      margin: 0;
-      font-size: 14px;
-    }
-
-    .footer-links1 {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
+@media (min-width: 1200px) {
+  .responsive-button {
+    width: 30%; /* Adjust width for large screens */
+  }
+}
   </style>

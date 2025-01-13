@@ -59,7 +59,11 @@ Rails.application.routes.draw do
   get 'get_cities', to: 'home#get_cities'
   get '/search_results', to: 'home#search_results'
   get '/filter_search_results', to: 'home#filter_search_results'
-  
+  get 'how_it_works', to: 'home#how_it_works'
+  get 'sender_works', to: 'home#sender_works'
+  get 'buyer_works', to: 'home#buyer_works'
+  get 'privacy_policy', to: 'home#privacy_policy'
+
   resources :chat_rooms, only: [:index, :show] do
     resources :messages, only: [:create] do
       member do

@@ -9,6 +9,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "custom_styles", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "search_result", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "footer", "data-turbo-track": "reload" %>
     <%#= stylesheet_link_tag "style", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
@@ -37,9 +38,6 @@
 
     <%# Jquery %>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
 
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
@@ -108,7 +106,10 @@
     <%= render 'shared/header' %>
     <%= render 'shared/flash' %>
     <%= yield %>
-    <%= render 'shared/footer' %>
+    <% unless controller_name == 'chat_rooms' %>
+      <%= render 'shared/footer' %>
+    <% end %>
+
   </body>
 </html>
 
