@@ -4,5 +4,3 @@
 //= link_tree ../builds
 //= link custom_styles.css
 //= link search_result.css
-//= link style.css
-//= link footer.css

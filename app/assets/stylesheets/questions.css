@@ -1,0 +1,91 @@
+.contact-section {
+  background-color: #3f2b96;
+  color: white;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.contact-header {
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.contact-header p {
+  font-size: 30px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.contact-options {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-item {
+  flex: 1;
+  max-width: 300px;
+}
+
+.icon {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.contact-item h3 {
+  font-size: 18px;
+  margin: 0 0 10px 0;
+}
+
+.contact-item p {
+  font-size: 14px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.start-chat {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.start-chat:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-options {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .contact-item {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .contact-header h2 {
+    font-size: 24px;
+  }
+}
+
+.start-btn {
+  background-color: #3f2b96;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start-btn:hover {
+  background-color: #352380;
+}

@@ -1,0 +1,73 @@
+.slogan {
+  border: 2px solid #3f2b96;
+  padding: 15px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.slogan h2 {
+  margin: 0;
+  color: #3f2b96;
+  font-size: 20px;
+}
+
+.nav-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.travel-nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.works-btn {
+  flex: 1;
+  padding: 10px 20px;
+  border: 1px solid #3f2b96;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .travel-nav {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .works-btn {
+    width: 100%; /* Full-width buttons on smaller screens */
+  }
+
+  .slogan h2 {
+    font-size: 18px; /* Adjust the font size for smaller screens */
+  }
+
+  .nav-container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fs-1 {
+    font-size: 24px; /* Adjust heading size for smaller screens */
+  }
+
+  .works-btn {
+    font-size: 14px; /* Reduce button text size */
+    padding: 8px 15px; /* Adjust padding for smaller screens */
+  }
+
+  .slogan h2 {
+    font-size: 16px; /* Further reduce slogan font size */
+  }
+}

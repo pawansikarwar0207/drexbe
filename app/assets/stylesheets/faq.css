@@ -1,0 +1,122 @@
+.faq-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.faq-header h2 {
+  color: #3f2b96;
+  font-size: 32px;
+  margin: 0;
+}
+
+.view-all {
+  background: none;
+  border: none;
+  color: #3f2b96;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card-title{
+  background-color: #3f2b96;
+  color: #ffff;
+  padding: 10px;
+}
+.faq-title{
+  color: #3f2b96;
+}
+
+.faq-card {
+  background-color: #ffff;
+  color: white;
+  padding: 25px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-card h3 {
+  font-size: 18px;
+  margin: 0 0 15px 0;
+  line-height: 1.4;
+}
+
+.faq-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+  flex-grow: 1;
+}
+
+.more-info {
+  background: none;
+  border: none;
+  color: #3f2b96;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px;
+  width: fit-content;
+}
+
+.more-info:hover {
+  text-decoration: underline;
+  color: #3f2b96;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .faq-header h2 {
+    font-size: 28px;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-card {
+    padding: 20px;
+  }
+}
+
+.faq-text{
+  color: #ffff;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.responsive-button {
+  width: 100%; 
+  max-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+@media (min-width: 768px) {
+  .responsive-button {
+    width: 50%; /* Adjust width for medium screens */
+  }
+}
+
+@media (min-width: 1200px) {
+  .responsive-button {
+    width: 30%; /* Adjust width for large screens */
+  }
+}
