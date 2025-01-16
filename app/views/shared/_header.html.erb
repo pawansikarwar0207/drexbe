@@ -8,7 +8,28 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <a class="nav-link" href="<%= travelers_path %>"><small><em>i</em></small> Travel</a>
+
+        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#travelModal" data-bs-backdrop="false">
+          <small><em>i</em></small> Travel
+        </a>
+
+
+        <!-- Modal Template -->
+        <div id="travelModal" class="modal fade" tabindex="-1" aria-labelledby="travelModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="travelModalLabel">New Travel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%= render partial: "travelers/form", locals: { traveler: Traveler.new } %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </li>
       <li class="nav-item">
         <a class="nav-link" href="<%= parcel_ads_path %>"><small><em>i</em></small> Send</a>
@@ -92,6 +113,13 @@
 </nav>
 
 <style>
+
+  .modal-backdrop.show {
+    opacity: 0 !important;
+    display: none !important; /* Completely hide the backdrop */
+  }
+
+
   .navbar {
     padding: 0.5rem 1rem;
   }
