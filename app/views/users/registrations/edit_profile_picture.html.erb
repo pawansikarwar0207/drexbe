@@ -1,18 +1,20 @@
-<div class="text-center mt-3">
- <img alt="Profile picture of a person looking straight ahead without sunglasses and with no one next to them" class="profile-pic" height="100" src="https://storage.googleapis.com/a1aa/image/rnv0HlocfC1qYS421SND1G8FjEhI7bzExh2Rf0f1b1n9kqInA.jpg" width="100"/>
- <div class="instruction">
-  Look straight ahead, without sunglasses and with no one next to you.
-</div>
-  <button class="btn btn-primary">
-    <%= form_for @user, url: update_profile_picture_path(@user), html: { multipart: true } do |f| %>
-      <%= f.hidden_field :current_user, value: current_user.id %>
-      <div class="form-group">
-        <%= f.label :profile_picture %>
-        <%= f.file_field :profile_picture, class: 'form-control mt-2 mb-2' %>
-      </div>
+<div class="shadow col-lg-6 mx-auto">
+  <div class="text-center mt-3">
+     <img alt="Profile picture of a person looking straight ahead without sunglasses and with no one next to them" class="profile-pic mt-3" height="100" src="https://storage.googleapis.com/a1aa/image/rnv0HlocfC1qYS421SND1G8FjEhI7bzExh2Rf0f1b1n9kqInA.jpg" width="100"/>
+     <div class="instruction mb-3">
+      Look straight ahead, without sunglasses and with no one next to you.
+    </div>
+      <button class="btn btn-primary mb-4 rounded-0 w-100">
+        <%= form_for @user, url: update_profile_picture_path(@user), html: { multipart: true } do |f| %>
+          <%= f.hidden_field :current_user, value: current_user.id %>
+          <div class="form-group">
+            <%= f.label :profile_picture %>
+            <%= f.file_field :profile_picture, class: 'form-control mt-2 mb-2 rounded-0' %>
+          </div>
 
-      <%= f.submit 'Upload Picture', class: 'btn btn-success' %>
-    <% end %>
-  </button>
+          <%= f.submit 'Upload Picture', class: 'btn btn-success rounded-0' %>
+        <% end %>
+      </button>
+  </div>
 </div>
 

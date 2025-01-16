@@ -8,34 +8,13 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
       <li class="nav-item">
-
-        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#travelModal" data-bs-backdrop="false">
-          <small><em>i</em></small> Travel
-        </a>
-
-
-        <!-- Modal Template -->
-        <div id="travelModal" class="modal fade" tabindex="-1" aria-labelledby="travelModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="travelModalLabel">New Travel</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <%= render partial: "travelers/form", locals: { traveler: Traveler.new } %>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
+        <a class="nav-link" href="<%= new_traveler_path %>"><small><em>i</em></small> Traveler</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<%= parcel_ads_path %>"><small><em>i</em></small> Send</a>
+        <a class="nav-link" href="<%= new_parcel_ad_path %>"><small><em>i</em></small> Send</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<%= buy_for_mes_path %>">Buy <small>For Me</small></a>
+        <a class="nav-link" href="<%= new_buy_for_me_path %>">Buy <small>For Me</small></a>
       </li>
     </ul>
     <form class="d-flex">
@@ -67,18 +46,17 @@
       <i class="fas fa-question-circle me-2 fs-5"></i>
       <div class="dropdown">
         <a
-            class="nav-link"
+            class="nav-link fa fa-user-circle"
             href="#"
             id="userDropdown"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
+            style="color: #353188; font-size: 20px;"
           >
             <% if current_user.present? %>
               <% if current_user.profile_picture.attached?  %>
                 <%= image_tag current_user.profile_picture, class: 'rounded-circle border', alt: 'User Avatar', height:"30", width:"30" %>
-              <% else %>
-               <i class="fa fa-user-circle-o" style="color: #353188; font-size: 20px;"></i>
               <% end %>
             <% end %> 
           </a>
@@ -140,7 +118,7 @@
     font-size: 0.75rem;
   }
   .btn-browse-posts {
-    background-color: #4B3F72;
+    background-color: #353188;
     color: white;
     border-radius: 20px;
     padding: 0.5rem 1rem;

@@ -3,10 +3,8 @@
     <h2 class="text-center mb-4">Traveler Details</h2>
     
     <% if @traveler %>
-      <div class="card mb-4">
-        <div class="card-header">
-          <h5 class="card-title text-center"><%= @traveler.name %></h5>
-        </div>
+      <div class="shadow mb-4 p-5">
+          <h5 class="card-title rounded-0 text-center"><%= @traveler.name %></h5>
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
@@ -50,9 +48,9 @@
       </div>
 
       <div class="text-center">
-        <%= link_to 'Edit Traveler', edit_traveler_path(@traveler), class: 'btn btn-primary' %>
-        <%= link_to 'Delete Traveler', traveler_path(@traveler), data: { turbo_method: :delete, turbo_confirm: "Are You Sure to delete traveler?" }, class: 'btn btn-danger' %>
-        <%= link_to 'Back to Travelers', travelers_path, class: 'btn btn-secondary' %>
+        <%= link_to 'Edit Traveler', edit_traveler_path(@traveler), class: 'btn btn-primary rounded-0' %>
+        <%= link_to 'Delete Traveler', traveler_path(@traveler), data: { turbo_method: :delete, turbo_confirm: "Are You Sure to delete traveler?" }, class: 'btn btn-danger rounded-0' %>
+        <%= link_to 'Back', root_path, class: 'btn btn-secondary rounded-0' %>
       </div>
     <% else %>
       <div class="alert alert-danger text-center" role="alert">

@@ -1,9 +1,9 @@
 <div class="col-lg-8 mx-auto mt-4 mb-5">
-  <%= button_to "Create Shipment", create_shipment_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-primary btn-sm mt-2 mb-2' %>
-  <%= button_to "Purchase Label", purchase_label_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-primary btn-sm mb-2' %>
+  <%#= button_to "Create Shipment", create_shipment_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-primary btn-sm mt-2 mb-2' %>
+  <%#= button_to "Purchase Label", purchase_label_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-primary btn-sm mb-2' %>
 
-  <div class="card shadow">
-    <h1 class="card-title text-center p-3 border-bottom">Parcel Ad Details</h1>
+  <div class="shadow p-5 mt-3">
+    <h1 class="card-title text-center p-3 border-bottom rounded-0">Parcel Ad Details</h1>
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
@@ -76,7 +76,7 @@
         <% end %>
       <% end %>
       <div> 
-        <%= link_to 'Back to Ad List', parcel_ads_path, class: "btn btn-secondary mt-3 mb-3" %>
+        <%= link_to 'Back to Ad List', parcel_ads_path, class: "btn btn-secondary mt-3 mb-3 rounded-0" %>
       </div>
     </div>
   </div>

@@ -2,12 +2,10 @@
 <div class="col-lg-10 mx-auto mt-5">
   <div class="row">
     <div class="col-md-8 offset-md-2">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="text-center">Buy For Me Request</h3>
-        </div>
+      <div class="shadow p-5">
+          <h3 class="card-title text-center p-3 border-bottom rounded-0">Buy For Me Request</h3>
         <div class="card-body">
-          <h5 class="card-title"><%= @buy_for_me.product_name %></h5>
+          <h5 class=""><%= @buy_for_me.product_name %></h5>
           <h6 class="card-subtitle mb-2 text-muted">
             <%= @buy_for_me.category %> | Quantity: <%= @buy_for_me.product_quantity %>
           </h6>
@@ -22,7 +20,7 @@
           <hr>
 
           <h5>Pricing Details</h5>
-          <ul class="list-group">
+          <ul class="list-group rounded-0">
             <li class="list-group-item">
               <strong>Product Price:</strong> <%= number_to_currency(@buy_for_me.product_price) %>
             </li>
@@ -38,7 +36,7 @@
           </ul>
         </div>
         <div class="card-footer text-muted text-center">
-          <%= link_to 'Back to Requests', buy_for_mes_path, class: 'btn btn-secondary' %>
+          <%= link_to 'Back to Requests', buy_for_mes_path, class: 'btn btn-secondary rounded-0 mt-3' %>
         </div>
       </div>
     </div>

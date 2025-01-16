@@ -45,7 +45,7 @@
       </a>
     <% end %>
 
-    <% if current_user.phone_verified %>
+    <% if current_user.phone_number %>
       <p>
         <i class="fas fa-check-circle"></i> 
         Your contact number <strong><%= current_user.masked_phone_number %></strong> is confirmed.

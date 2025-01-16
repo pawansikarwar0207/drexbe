@@ -56,7 +56,7 @@
     <%= render 'shared/header' %>
     <%= render 'shared/flash' %>
     <%= yield %>
-    <% unless controller_name == 'chat_rooms' %>
+    <% unless controller_name == 'chat_rooms' || controller_name == 'sessions' || controller_name == 'registrations' %>
       <%= render 'shared/footer' %>
     <% end %>
 
