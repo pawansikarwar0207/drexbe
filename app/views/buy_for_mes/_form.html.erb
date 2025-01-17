@@ -1,4 +1,4 @@
-<div class="col-lg-8 mx-auto shadow-sm border p-4 rounded bg-white mt-5 mb-5">
+<div class="col-lg-8 mx-auto shadow-sm border p-4 rounded bg-white mt-5 mb-5" data-controller="autocomplete">
   <h1 class="text-center mb-5">Buy For Me or Shop And Ship</h1>
 
 	<%= form_with(model: @buy_for_me, local: true) do |f| %>
@@ -17,76 +17,92 @@
       </div>
      <% end %>
 
+     <%= f.hidden_field :user_id, value: current_user.id %>
+
   	  <!-- Row for Departure and Arrival -->
-      <div class="row g-0 mb-5 form-control">
+      <div class="row g-0 mb-5 form-control rounded-0">
         <div class="search-item col-md-3">
-          <%= f.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off' %>
-          <%= f.hidden_field :departure_country, id: 'departure_country' %>
+          <%= f.text_field :departure_city, class: 'form-control rounded-0 fw-bold', placeholder: 'Departure', 
+                            id: 'departure_city_select', 
+                            autocomplete: 'off', 
+                            value: params[:departure_city].present? ? params[:departure_city] : '', 
+                            data: { target: 'autocomplete.departureCity' } %>
+        <%= f.hidden_field :departure_country, id: 'departure_country', data: { target: 'autocomplete.departureCountry' } %>
         </div>
         <div class="search-item col-md-3">
-          <%= f.text_field :arrival_city, class: 'form-control fw-bold', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off' %>
-          <%= f.hidden_field :arrival_country, id: 'arrival_country' %>
+          <%= f.text_field :arrival_city, class: 'form-control rounded-0 fw-bold', placeholder: 'Arrival', 
+                            id: 'arrival_city_select', 
+                            autocomplete: 'off', 
+                            value: params[:arrival_city].present? ? params[:arrival_city] : '', 
+                            data: { target: 'autocomplete.arrivalCity' } %>
+          <%= f.hidden_field :arrival_country, id: 'arrival_country', data: { target: 'autocomplete.arrivalCountry' } %>
         </div>
         <div class="search-item col-md-3">
           <%# <i class="fas fa-calendar-alt"></i> %>
-          <%= f.date_field :shopping_date, class: 'form-control flatpickr fw-bold', id: 'date_field', placeholder: 'Shipment Date' %>
+          <%= f.date_field :shopping_date, class: 'form-control rounded-0 flatpickr fw-bold', id: 'date_field', 
+                                    placeholder: 'Shipment Date', data: { target: 'autocomplete.dateField' } %>
         </div>
       </div>
 
   	  <div class="form-group mb-4">
   	    <%= f.label :product_link, class: 'form-label' %>
-  	    <%= f.text_field :product_link, class: 'form-control', placeholder: 'www.example.com' %>
+  	    <%= f.text_field :product_link, class: 'form-control rounded-0', placeholder: 'www.example.com', autocomplete: "off" %>
   	  </div>
 
   	  <div class="row mb-4">
   		  <div class="col-md-6 form-group">
   		    <%= f.label :shop_name, class: 'form-label'  %>
-  		    <%= f.text_field :shop_name, class: 'form-control' %>
+  		    <%= f.text_field :shop_name, class: 'form-control rounded-0', autocomplete: "off" %>
   		  </div>
 
   		  <div class="col-md-6 form-group">
   		    <%= f.label :shop_address, class: 'form-label'  %>
-  		    <%= f.text_area :shop_address, class: 'form-control' %>
+  		    <%= f.text_area :shop_address, class: 'form-control rounded-0' %>
   		  </div>
   	  </div>
 
   	  <div class="form-group mb-4">
   	    <%= f.label :category, class: 'form-label' %>
-  	    <%= f.select :category, options_for_select(['Electronics', 'Clothing', 'Groceries']), { prompt: 'Select Category' }, class: 'form-select' %>
+  	    <%= f.select :category, options_for_select(['Electronics', 'Clothing', 'Groceries']), { prompt: 'Select Category' }, class: 'form-select rounded-0' %>
   	  </div>
 
   	  <div class="form-group mb-4">
   	    <%= f.label :product_name, class: 'form-label' %>
-  	    <%= f.text_field :product_name, class: 'form-control' %>
+  	    <%= f.text_field :product_name, class: 'form-control rounded-0', autocomplete: "off" %>
   	  </div>
 
   	  <div class="form-group mb-4">
   	    <%= f.label :product_quantity, class: 'form-label' %>
-  	    <%= f.number_field :product_quantity, class: 'form-control', min: 0 %>
+  	    <%= f.number_field :product_quantity, class: 'form-control rounded-0', min: 0 %>
   	  </div>
 
   	  <div class="form-group mb-4">
   	    <%= f.label :parcel_type, class: 'form-label' %>
-  	    <%= f.select :parcel_type, options_for_select(['small', 'medium', 'large']), { prompt: 'Select Parcel Type' }, class: 'form-control' %>
+  	    <%= f.select :parcel_type, options_for_select(['small', 'medium', 'large']), { prompt: 'Select Parcel Type' }, class: 'form-control rounded-0' %>
   	  </div>
 
-  	  <div class="form-group mb-4">
-  	    <%= f.label :product_price, class: 'form-label' %>
-  	    <%= f.number_field :product_price, step: '0.01', class: 'form-control', min: 0, id: 'product_price'  %>
-  	  </div>
+  	  <div data-controller="price-calculator">
+        <div class="form-group mb-4">
+          <%= f.label :product_price, class: 'form-label' %>
+          <%= f.number_field :product_price, step: '0.01', class: 'form-control rounded-0', min: 0, id: 'product_price', 
+            data: { price_calculator_target: "productPrice", action: "input->price-calculator#updateTotalPrice" } %>
+        </div>
 
-  	  <div class="form-group mb-4">
-  	    <%= f.label :buy_for_me_fee, class: 'form-label' %>
-  	    <%= f.number_field :buy_for_me_fee, step: '0.01', class: 'form-control', min: 0, id: 'buy_for_me_fee' %>
-  	  </div>
+        <div class="form-group mb-4">
+          <%= f.label :buy_for_me_fee, class: 'form-label' %>
+          <%= f.number_field :buy_for_me_fee, step: '0.01', class: 'form-control rounded-0', min: 0, id: 'buy_for_me_fee', 
+            data: { price_calculator_target: "buyForMeFee", action: "input->price-calculator#updateTotalPrice" } %>
+        </div>
 
-  	  <div class="form-group mb-4">
-  	    <%= f.label :total_price, class: 'form-label' %>
-  	    <%= f.number_field :total_price, step: '0.01', class: 'form-control', min: 0, id: 'total_price', readonly: true %>
-  	  </div>
+        <div class="form-group mb-4">
+          <%= f.label :total_price, class: 'form-label' %>
+          <%= f.number_field :total_price, step: '0.01', class: 'form-control rounded-0', min: 0, id: 'total_price', 
+            data: { price_calculator_target: "totalPrice" }, readonly: true %>
+        </div>
+      </div>
 
   	  <div class="d-grid">
-  	    <%= f.submit class: 'btn btn-primary' %>
+  	    <%= f.submit class: 'btn btn-primary rounded-0' %>
   	  </div>
 	<% end %>
 </div>

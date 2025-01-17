@@ -11,3 +11,4 @@ import './travelers_form'
 import './calculate_total_price_for_buyer'
 import './review_form'
 import "@rails/actioncable"
+import "flatpickr/dist/flatpickr.css";

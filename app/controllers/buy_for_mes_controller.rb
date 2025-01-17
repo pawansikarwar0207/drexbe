@@ -12,6 +12,7 @@ class BuyForMesController < ApplicationController
 
   def create
     @buy_for_me = BuyForMe.new(buy_for_me_params)
+    @buy_for_me.user_id = current_user.id
     if @buy_for_me.save
       redirect_to buy_for_mes_path, notice: "Your 'Buy for Me' request has been successfully created."
     else

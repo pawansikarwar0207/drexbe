@@ -1,4 +1,4 @@
-<div class="col-lg-8 mx-auto shadow-sm border p-4 rounded bg-white mt-5 mb-5">
+<div class="col-lg-8 mx-auto shadow-sm border p-4 rounded bg-white mt-5 mb-5" data-controller="autocomplete">
   <h1 class="text-center mb-5">Add Post: Need to carry</h1>
 
   <%# if current_user.professional? %>
@@ -21,16 +21,25 @@
 
       <div class="row g-0 mb-5 form-control">
         <div class="search-item col-md-3">
-          <%= form.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Departure', id: 'departure_city_select', autocomplete: 'off' %>
-          <%= form.hidden_field :departure_country, id: 'departure_country' %>
+          <%= form.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Departure', 
+                            id: 'departure_city_select', 
+                            autocomplete: 'off', 
+                            value: params[:departure_city].present? ? params[:departure_city] : '', 
+                            data: { target: 'autocomplete.departureCity' } %>
+        <%= form.hidden_field :departure_country, id: 'departure_country', data: { target: 'autocomplete.departureCountry' } %>
         </div>
         <div class="search-item col-md-3">
-          <%= form.text_field :arrival_city, class: 'form-control fw-bold', placeholder: 'Arrival', id: 'arrival_city_select', autocomplete: 'off' %>
-          <%= form.hidden_field :arrival_country, id: 'arrival_country' %>
+         <%= form.text_field :arrival_city, class: 'form-control fw-bold', placeholder: 'Arrival', 
+                            id: 'arrival_city_select', 
+                            autocomplete: 'off', 
+                            value: params[:arrival_city].present? ? params[:arrival_city] : '', 
+                            data: { target: 'autocomplete.arrivalCity' } %>
+        <%= form.hidden_field :arrival_country, id: 'arrival_country', data: { target: 'autocomplete.arrivalCountry' } %>
         </div>
         <div class="search-item col-md-3">
           <%# <i class="fas fa-calendar-alt"></i> %>
-          <%= form.date_field :shipment_date, class: 'form-control flatpickr fw-bold', id: 'date_field', placeholder: 'Shipment Date' %>
+          <%= form.date_field :shipment_date, class: 'form-control flatpickr fw-bold', id: 'date_field', 
+                                    placeholder: 'Shipment Date', data: { target: 'autocomplete.dateField' } %>
         </div>
       </div>
 
