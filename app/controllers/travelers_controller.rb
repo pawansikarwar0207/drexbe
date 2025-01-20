@@ -1,5 +1,5 @@
 class TravelersController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
 	before_action :set_traveler, only: %i[show edit update destroy]
 
   def index

@@ -12,12 +12,6 @@ class ParcelAd < ApplicationRecord
                             message: "must be greater than or equal to 0" },
                             if: :requires_dimensions?
 
-  validates :parcel_weight,
-            numericality: { greater_than: 0, message: "must be greater than 0" },
-            allow_blank: true,
-            if: :requires_weight?
-                           
-
   validates :recommended_fee, :proposed_fee, 
             numericality: { greater_than_or_equal_to: 0, 
                             message: "must be greater than or equal to 0" }, 
@@ -38,10 +32,6 @@ class ParcelAd < ApplicationRecord
   private
 
   def requires_dimensions?
-    parcel_type != 'Document'
-  end
-
-  def requires_weight?
     parcel_type != 'Document'
   end
 
