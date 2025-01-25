@@ -79,18 +79,25 @@
 								 <div class="form-group my-2">
 									<%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control rounded-0', placeholder: 'Email' %>
 								 </div>
+
 								 <div class="row">
-									<div class="col-lg-6">
-									 <div class="form-group my-2">
-										<%= f.password_field :password, autocomplete: "new-password", class: 'form-control rounded-0', placeholder: 'Password' %>
-									 </div>
-									</div>
-									<div class="col-lg-6">
-									 <div class="form-group my-2">
-										<%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control rounded-0', placeholder: 'Confirm Password' %>
-									 </div>
-									</div>
-								 </div>
+								  <div class="col-lg-6">
+								    <div class="form-group my-2 position-relative">
+								      <%= f.password_field :password, autocomplete: "new-password", id: "password_field", class: 'form-control rounded-0', placeholder: 'Password' %>
+								      <button type="button" class="btn btn-light position-absolute end-0 top-0" id="toggle_password" style="z-index: 1; height: 100%; border: none;">
+								        <i class="fa-solid fa-eye" id="password_icon"></i>
+								      </button>
+								    </div>
+								  </div>
+								  <div class="col-lg-6">
+								    <div class="form-group my-2 position-relative">
+								      <%= f.password_field :password_confirmation, autocomplete: "new-password", id: "password_confirmation_field", class: 'form-control rounded-0', placeholder: 'Confirm Password' %>
+								      <button type="button" class="btn btn-light position-absolute end-0 top-0" id="toggle_password_confirmation" style="z-index: 1; height: 100%; border: none;">
+								        <i class="fa-solid fa-eye" id="password_confirmation_icon"></i>
+								      </button>
+								    </div>
+								  </div>
+								</div>
 
 								 <div class="d-flex flex-column gap-3 justify-content-center align-items-center my-5">
 									 <div>
@@ -110,42 +117,72 @@
 
 <script>
 	document.addEventListener('turbo:load', function() {
-	  const input = document.querySelector("#phone_number");
-	  const hiddenPhoneNumber = document.querySelector("#hidden_phone_number");
+		const input = document.querySelector("#phone_number");
+		const hiddenPhoneNumber = document.querySelector("#hidden_phone_number");
 
-	    if (!input || !hiddenPhoneNumber) return;  // Ensure the elements exist before proceeding
+		if (!input || !hiddenPhoneNumber) return; 
 
-	    const iti = intlTelInput(input, {
-	      initialCountry: "auto",
-	      geoIpLookup: function(callback) {
-	        fetch('https://ipinfo.io', { method: 'GET', headers: { 'Accept': 'application/json' } })
-	        .then(resp => resp.json())
-	        .then(data => {
-	          const countryCode = (data && data.country) ? data.country : "us";
-	          callback(countryCode);
-	        })
-	        .catch(() => {
-	          callback('us');
-	        });
-	      },
-	      separateDialCode: true,
-	      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
-	    });
+		const iti = intlTelInput(input, {
+			initialCountry: "auto",
+			geoIpLookup: function(callback) {
+				fetch('https://ipinfo.io', { method: 'GET', headers: { 'Accept': 'application/json' } })
+				.then(resp => resp.json())
+				.then(data => {
+					const countryCode = (data && data.country) ? data.country : "us";
+					callback(countryCode);
+				})
+				.catch(() => {
+					callback('us');
+				});
+			},
+			separateDialCode: true,
+			utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+		});
 
-	    // Set the initial country code when the page loads
-	    hiddenPhoneNumber.value = iti.getNumber();
+    // Set the initial country code when the page loads
+		hiddenPhoneNumber.value = iti.getNumber();
 
-	    // Update the country code when the flag is changed
-	    input.addEventListener('countrychange', function() {
-	      const selectedCountryData = iti.getSelectedCountryData();
-	      const countryCode = selectedCountryData.dialCode;
-	      hiddenPhoneNumber.value = `+${countryCode}`;
-	    });
+    // Update the country code when the flag is changed
+		input.addEventListener('countrychange', function() {
+			const selectedCountryData = iti.getSelectedCountryData();
+			const countryCode = selectedCountryData.dialCode;
+			hiddenPhoneNumber.value = `+${countryCode}`;
+		});
 
-	    // When the form is submitted, set the hidden field with the full phone number
-	    document.querySelector('form').addEventListener('submit', function() {
-	      hiddenPhoneNumber.value = iti.getNumber();  // Full number with country code for submission
-	    });
-	  });
+    // When the form is submitted, set the hidden field with the full phone number
+		document.querySelector('form').addEventListener('submit', function() {
+      hiddenPhoneNumber.value = iti.getNumber();  // Full number with country code for submission
+    });
 
+    // Function to toggle password visibility
+		function setupPasswordToggle(buttonId, inputId, iconId) {
+			const toggleButton = document.getElementById(buttonId);
+			const passwordField = document.getElementById(inputId);
+			const icon = document.getElementById(iconId);
+
+			if (toggleButton && passwordField && icon) {
+				toggleButton.addEventListener('click', function () {
+					if (passwordField.type === 'password') {
+						passwordField.type = 'text';
+						icon.classList.remove('fa-eye');
+						icon.classList.add('fa-eye-slash');
+					} else {
+						passwordField.type = 'password';
+						icon.classList.remove('fa-eye-slash');
+						icon.classList.add('fa-eye');
+					}
+				});
+			}
+		}
+
+	  // Initialize toggle functionality for Password
+		setupPasswordToggle('toggle_password', 'password_field', 'password_icon');
+
+	  // Initialize toggle functionality for Confirm Password
+		setupPasswordToggle(
+			'toggle_password_confirmation',
+			'password_confirmation_field',
+			'password_confirmation_icon'
+			);
+	});
 </script>
