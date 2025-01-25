@@ -1,5 +1,5 @@
 class BuyForMesController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_buy_for_me, only: %i[show edit update]
 
   def index

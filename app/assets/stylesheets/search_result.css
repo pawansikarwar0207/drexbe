@@ -19,7 +19,7 @@
   margin-left: 10px;
 }
 
-#parcel_type_buttons .parcel-type-button {
+/*#parcel_type_buttons .parcel-type-button {
   border-radius: 30px;
   padding: 10px 20px;
   font-weight: bold;
@@ -47,7 +47,7 @@
 
 #parcel_type_buttons .parcel-type-button:focus {
   outline: none;
-}
+}*/
 .travel-date {
   color: #008080;
   font-weight: bold;
@@ -195,7 +195,7 @@ h1 {
 
 /* style for travelers form */
 
-#trip_type_buttons .trip-type-button {
+/*#trip_type_buttons .trip-type-button {
   border-radius: 30px;
   padding: 10px 20px;
   font-weight: bold;
@@ -223,9 +223,9 @@ h1 {
 
 #trip_type_buttons .trip-type-button:focus {
   outline: none;
-}
+}*/
 
-#transportation_buttons .transportation-button {
+/*#transportation_buttons .transportation-button {
   border-radius: 30px;
   padding: 10px 20px;
   font-weight: bold;
@@ -249,7 +249,7 @@ h1 {
 #transportation_buttons .transportation-button.active {
   border-color: orange;
   background-color: white;
-}
+}*/
 
 #parcel_collection_mode_buttons .parcel-collection-mode-button {
   border-radius: 30px;

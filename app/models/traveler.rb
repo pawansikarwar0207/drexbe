@@ -11,14 +11,15 @@ class Traveler < ApplicationRecord
             :arrival_country,
             :arrival_city,
             :transportation,
-            :parcel_type,
-            :parcel_qty,
-            :ready_to_buy_for_you,
-            :parcel_collection_mode,
-            :travel_return_date, 
+            :parcel_type, 
             presence: true
+            # :parcel_qty,
+            # :ready_to_buy_for_you,
+            # :parcel_collection_mode,
 
-  validates :parcel_qty, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  # validates :parcel_qty, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+
+  validates :travel_return_date, presence: true, if: :round_trip?
   
   scope :professionals_only, -> { joins(:user).where(users: { user_type: 'professional' }) }
   
@@ -28,6 +29,12 @@ class Traveler < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     ["user"]
+  end
+
+  private
+
+  def round_trip?
+    trip_type == 'round_trip'
   end
 
 end

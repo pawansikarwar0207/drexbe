@@ -2,7 +2,7 @@ require 'net/http'
 require 'json'
 
 class ParcelAdsController < ApplicationController
-	before_action :authenticate_user!
+	# before_action :authenticate_user!
 	# before_action :check_professional_user, only: [:new, :create]
 
 	def index

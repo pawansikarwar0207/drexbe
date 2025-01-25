@@ -17,7 +17,7 @@ class TravelersController < ApplicationController
     @traveler = Traveler.create(traveler_params)
 
     if @traveler.save
-      redirect_to @traveler, notice: 'Traveler was successfully created.'
+      redirect_to travelers_path, notice: 'Traveler was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
