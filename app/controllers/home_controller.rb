@@ -58,9 +58,9 @@ class HomeController < ApplicationController
       @travelers = []
       @buy_for_mes = []
     else
-      @travelers = travelers_conditions.result(distinct: true)
-      @parcel_ads = parcel_ads_conditions.result(distinct: true).includes(user: { profile_picture_blob: :attachments, identity_card_document_blob: :attachments })
-      @buy_for_mes = buy_for_me_conditions.result(distinct: true)
+      @travelers = travelers_conditions.result(distinct: true).page(params[:page]).per(10)
+      @parcel_ads = parcel_ads_conditions.result(distinct: true).includes(user: { profile_picture_blob: :attachments, identity_card_document_blob: :attachments }).page(params[:page]).per(10)
+      @buy_for_mes = buy_for_me_conditions.result(distinct: true).page(params[:page]).per(10)
 
       # Apply filter to limit results to one model type if specified
       filter_params = Array(params[:filter])

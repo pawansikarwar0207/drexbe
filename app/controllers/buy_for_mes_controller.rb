@@ -11,12 +11,15 @@ class BuyForMesController < ApplicationController
   end
 
   def create
-    @buy_for_me = BuyForMe.new(buy_for_me_params)
-    @buy_for_me.user_id = current_user.id
-    if @buy_for_me.save
-      redirect_to buy_for_mes_path, notice: "Your 'Buy for Me' request has been successfully created."
+    if user_signed_in?
+      @buy_for_me = current_user.buy_for_mes.build(buy_for_me_params)
+      if @buy_for_me.save
+        redirect_to buy_for_mes_path, notice: "Your request has been successfully created."
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
-      render :new, status: :unprocessable_entity
+      redirect_to new_user_session_path, alert: "You need to sign in to create a parcel ad."
     end
   end
 

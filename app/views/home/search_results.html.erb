@@ -23,7 +23,7 @@
     <div class="col-md-3">
       <%= render 'home/search_filter' %>
     </div>
-    
+
     <div class="col-md-9">
       <%# Traveler Section %>
       <% if @travelers.present? %>
@@ -58,15 +58,20 @@
                     <div class="carry-for-you">
                       <h6 class="mt-2 me-2 fw-bold">Carry For You:</h6>
                         <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Document' %> " data-value="Document">
-                            <%= image_tag "document.png", class:"icon-class" %>
-                             Document
+                          <button type="button" class="parcel-type-button <%= 'active' if traveler.parcel_type == 'Document' %> " data-value="Document">
+                            📄 Document
                           </button>
-                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Parcel' %>" data-value="Parcel">
-                            <%= image_tag "parcel.png", class:"icon-class" %> Parcel
+                          <button type="button" class="parcel-type-button <%= 'active' if traveler.parcel_type == 'Parcel' %>" data-value="Parcel">
+                             📦 Parcel
                           </button>
-                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if traveler.parcel_type == 'Pallet' %>" data-value="Pallet">
-                            <%= image_tag "pallet.png", class:"icon-class" %> Pallet
+                          <button type="button" class="parcel-type-button <%= 'active' if traveler.parcel_type == 'Pallet' %>" data-value="Pallet">
+                            📏 Pallet
+                          </button>
+                          <button type="button" class="parcel-type-button <%= 'active' if traveler.parcel_type == 'Electronics' %>" data-value="Electronics">
+                            💻 Electronics
+                          </button>
+                          <button type="button" class="parcel-type-button <%= 'active' if traveler.parcel_type == 'Clothing' %>" data-value="Clothing">
+                            👕 Clothing
                           </button>
                         </div>
                     </div>
@@ -168,15 +173,20 @@
                     <div class="carry-for-you">
                       <h6 class="mt-2 me-2 fw-bold">Carry For Me:</h6>
                         <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Document' %> " data-value="Document">
-                            <%= image_tag "document.png", class:"icon-class" %>
-                             Document
+                          <button type="button" class="parcel-type-button <%= 'active' if parcel.parcel_type == 'Document' %> " data-value="Document">
+                            📄 Document
                           </button>
-                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Parcel' %>" data-value="Parcel">
-                            <%= image_tag "parcel.png", class:"icon-class" %> Parcel
+                          <button type="button" class="parcel-type-button <%= 'active' if parcel.parcel_type == 'Parcel' %>" data-value="Parcel">
+                            📦 Parcel
                           </button>
-                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if parcel.parcel_type == 'Pallet' %>" data-value="Pallet">
-                            <%= image_tag "pallet.png", class:"icon-class" %> Pallet
+                          <button type="button" class="parcel-type-button <%= 'active' if parcel.parcel_type == 'Pallet' %>" data-value="Pallet">
+                            📏 Pallet
+                          </button>
+                          <button type="button" class="parcel-type-button <%= 'active' if parcel.parcel_type == 'Electronics' %>" data-value="Electronics">
+                            💻 Electronics
+                          </button>
+                          <button type="button" class="parcel-type-button <%= 'active' if parcel.parcel_type == 'Clothing' %>" data-value="Clothing">
+                            👕 Clothing
                           </button>
                         </div>
                     </div>
@@ -277,15 +287,15 @@
                     <div class="carry-for-you">
                       <h6 class="mt-2 me-2 fw-bold">Buy For Me:</h6>
                         <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'small' %> " data-value="Small">
-                            <%= image_tag "document.png", class:"icon-class" %>
+                          <button type="button" class="parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'small' %> " data-value="Small">
+                            <%#= image_tag "document.png", class:"icon-class" %>
                              Small
                           </button>
-                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'medium' %>" data-value="Medium">
-                            <%= image_tag "parcel.png", class:"icon-class" %> Medium
+                          <button type="button" class="parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'medium' %>" data-value="Medium">
+                            <%#= image_tag "parcel.png", class:"icon-class" %> Medium
                           </button>
-                          <button type="button" class="btn btn-outline-primary btn-sm mx-1 parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'large' %>" data-value="Large">
-                            <%= image_tag "pallet.png", class:"icon-class" %> Large
+                          <button type="button" class="parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'large' %>" data-value="Large">
+                            <%#= image_tag "pallet.png", class:"icon-class" %> Large
                           </button>
                         </div>
                     </div>
@@ -348,6 +358,9 @@
       <% end %>
     </div>
   </div>
+  <%= paginate @travelers if @travelers.present? %>
+  <%= paginate @parcel_ads if @parcel_ads.present? %>
+  <%= paginate @buy_for_mes if @buy_for_mes.present? %>
 </div>
 
 <section class="section facts-number mt-5 mb-5" style="display: flex; justify-content: center; align-items: center; flex-direction: column; ">
