@@ -1,233 +1,385 @@
-<div class="col-lg-8 mx-auto shadow-sm border p-4 rounded bg-white mt-5 mb-5" data-controller="autocomplete">
-  <h1 class="text-center mb-5">Add Post: Need to carry</h1>
+<div class="container py-4 shadow-sm mt-3 mb-3" style="width: 870px;" data-controller="autocomplete">
+  <!-- Page 1 -->
+  <div class="page active" id="page1">
+    <div class="bg-white rounded">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <button class="btn">
+          <a href="/"><i class="fas fa-chevron-left"></i></a>
+        </button>
+        <div class="text-center">
+          <h1 class="h4 purple-text mb-0 fw-bold">Fast, Affordable, Reliable</h1>
+          <h2 class="h5 purple-text fw-bold">Share Your Shipment</h2>
+        </div>
+        <span class="" onclick="showPage('page2')">
+          <%# Next %>
+        </span>
+      </div>
 
-  <%# if current_user.professional? %>
-    <%= form_with(model: @parcel_ad, local: true) do |form| %>
-
-      <!-- Display validation errors -->
-
-      <% if @parcel_ad.errors.any? %>
-        <div class="alert alert-danger">
-          <h4 class="alert-heading">
-            Please fix the following errors:
-          </h4>
-          <ul>  
-            <% @parcel_ad.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
+      <!-- Content -->
+      <div class="row mb-4">
+        <div class="col-md-6 hero-text">
+          <ul class="list-disc fs-5 mt-2">
+            <li class="mb-3">
+              Send,Receive,Buy and Carry become Easy and Secure.Make DrexBe
+              your first choice
+            </li>
+            <li class="mb-3">
+              Enjoy same-day delivery for urgent shipments and save other
+              70% compared to other platforms!
+            </li>
           </ul>
+          <%= link_to how_it_works_path, class: "rounded btn hero-button" do %>
+            See how it works
+            <span class="arrow">
+              <i class="bi bi-arrow-down-right"></i>
+            </span>
+          <% end %>
         </div>
-      <% end %>
-
-      <div class="row g-0 mb-5 form-control">
-        <div class="search-item col-md-3">
-          <%= form.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Departure', 
-                            id: 'departure_city_select', 
-                            autocomplete: 'off', 
-                            value: params[:departure_city].present? ? params[:departure_city] : '', 
-                            data: { target: 'autocomplete.departureCity' } %>
-        <%= form.hidden_field :departure_country, id: 'departure_country', data: { target: 'autocomplete.departureCountry' } %>
-        </div>
-        <div class="search-item col-md-3">
-         <%= form.text_field :arrival_city, class: 'form-control fw-bold', placeholder: 'Arrival', 
-                            id: 'arrival_city_select', 
-                            autocomplete: 'off', 
-                            value: params[:arrival_city].present? ? params[:arrival_city] : '', 
-                            data: { target: 'autocomplete.arrivalCity' } %>
-        <%= form.hidden_field :arrival_country, id: 'arrival_country', data: { target: 'autocomplete.arrivalCountry' } %>
-        </div>
-        <div class="search-item col-md-3">
-          <%# <i class="fas fa-calendar-alt"></i> %>
-          <%= form.date_field :shipment_date, class: 'form-control flatpickr fw-bold', id: 'date_field', 
-                                    placeholder: 'Shipment Date', data: { target: 'autocomplete.dateField' } %>
+        <div class="col-md-6 mt-2">
+          <div class="illustration">
+            <%= image_tag "sender001.png", alt:"Shopping Illustration" %>
+          </div>
         </div>
       </div>
 
-      <!-- Row for Parcel Type -->
-      <div class="row">
-        <div class="col-md-12 mb-3">
-          <%= form.label :parcel_type, "Shipment Type", class: 'form-label' %>
-          
-          <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-            <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button" data-value="Document">
-              <%= image_tag "document.png", class:"icon-class" %>
-               Document
+      <!-- Location Bar -->
+      <%= form_with(model: @parcel_ad, local: true) do |form| %>
+        <!-- Display validation errors -->
+        <% if @parcel_ad.errors.any? %>
+          <div class="alert alert-danger">
+            <h4 class="alert-heading">
+              Please fix the following errors:
+            </h4>
+            <ul>  
+              <% @parcel_ad.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="mt-5" >
+          <div class="trip-type-section">
+            <div class="mt-4 row g-0 mb-3 form-control rounded-0">
+              <div class="search-item col-md-3">
+                <%= form.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Pick up from', 
+                                  id: 'departure_city_select', 
+                                  autocomplete: 'off', 
+                                  value: params[:departure_city].present? ? params[:departure_city] : '', 
+                                  data: { target: 'autocomplete.departureCity' } %>
+              <%= form.hidden_field :departure_country, id: 'departure_country', data: { target: 'autocomplete.departureCountry' } %>
+              </div>
+              <div class="search-item col-md-3">
+               <%= form.text_field :arrival_city, class: 'form-control fw-bold', placeholder: 'Deliver to', 
+                                  id: 'arrival_city_select', 
+                                  autocomplete: 'off', 
+                                  value: params[:arrival_city].present? ? params[:arrival_city] : '', 
+                                  data: { target: 'autocomplete.arrivalCity' } %>
+              <%= form.hidden_field :arrival_country, id: 'arrival_country', data: { target: 'autocomplete.arrivalCountry' } %>
+              </div>
+              <div class="search-item col-md-3">
+                <%# <i class="fas fa-calendar-alt"></i> %>
+                <%= form.date_field :shipment_date, class: 'form-control flatpickr fw-bold', id: 'date_field', 
+                                          placeholder: 'Today', data: { target: 'autocomplete.dateField' } %>
+              </div>
+            </div>
+
+            <div class="checkbox-shift">
+              <div class="checkbox-group">
+                <input type="checkbox" id="today-morning" checked />
+                <label for="today-morning">Morning</label>
+                <input type="checkbox" id="today-night" />
+                <label for="today-night">Night</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item Types -->
+        <div class="mb-4 px-4 mt-4">
+          <h6 class="mb-3">Items Type</h6>
+          <div id="parcel_type_buttons" class="btn-group d-flex flex-wrap justify-content-between" role="group" aria-label="Parcel Type">
+            <button type="button" class="parcel-type-button" data-value="Document">
+              <i class="fas fa-file-alt"></i> Document
             </button>
-            <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button active" data-value="Parcel">
-              <%= image_tag "parcel.png", class:"icon-class" %> Parcel
+            <button type="button" class="parcel-type-button active" data-value="Parcel">
+              <i class="fas fa-box"></i> Parcel
             </button>
-            <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button" data-value="Pallet">
-              <%= image_tag "pallet.png", class:"icon-class" %> Pallet
+            <button type="button" class="parcel-type-button" data-value="Pallet">
+              <i class="fas fa-pallet"></i> Pallets
+            </button>
+            <button type="button" class="parcel-type-button" data-value="Electronics">
+              <i class="fas fa-tv"></i> Electronics
+            </button>
+            <button type="button" class="parcel-type-button" data-value="Clothing">
+              <i class="fas fa-tshirt"></i> Clothing
             </button>
           </div>
-
           <!-- Hidden field to store the selected parcel type -->
           <%= form.hidden_field :parcel_type, id: 'selected_parcel_type' %>
         </div>
+
+        <!-- Dimensions -->
+        <div class="row mb-4 row px-4">
+          <div class="col">
+            <%= form.label :parcel_length, "Length (cm)", class: 'form-label' %>
+            <%= form.number_field :parcel_length, class: 'form-control', placeholder: 'cm', min: 0  %>
+          </div>
+
+          <div class="col">
+            <%= form.label :parcel_width, "Width (cm)", class: 'form-label' %>
+            <%= form.number_field :parcel_width, class: 'form-control', placeholder: 'cm', min: 0  %>
+          </div>
+
+          <div class="col">
+            <%= form.label :parcel_height, "Height (cm)", class: 'form-label' %>
+            <%= form.number_field :parcel_height, class: 'form-control', placeholder: 'cm', min: 0  %>
+          </div>
+
+          <div class="col">
+            <%= form.label :parcel_weight, "Weight (kg)", class: 'form-label' %>
+            <%= form.number_field :parcel_weight, class: 'form-control', placeholder: 'kg', min: 0  %>
+          </div>
+
+          <div class="col">
+            <%= form.label :parcel_quantity, "Quantity", class: 'form-label' %>
+            <%= form.number_field :parcel_quantity, class: 'form-control', placeholder: 'pcs', min: 0 , value: @parcel_ad.parcel_quantity || 0, id: 'parcel_quantity' %>
+            <%# <div id="quantity_display" class="mt-2 fw-bold">Quantity: 0</div> %>
+          </div>
+        </div>
+
+        <!-- Fees -->
+        <div class="row mb-4 px-4">
+          <div class="col-md-6">
+            <%= form.label :proposed_fee, "Proposed Fee", class: 'form-label' %>
+            <div class="input-group">
+              <span class="input-group-text">$</span> <!-- Currency symbol -->
+              <%= form.number_field :proposed_fee, class: 'form-control', placeholder: 'Proposal fee' %>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <%= form.label :recommended_fee, "Recommended Fee", class: 'form-label' %>
+            <div class="input-group">
+              <span class="input-group-text">$</span> <!-- Currency symbol -->
+              <%= form.number_field :recommended_fee, class: 'form-control', placeholder: 'Recommended fee' %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Another Parcel -->
+        <div class="mb-4 mt-4 px-4">
+          <%= link_to "#", class:"add-parcel-btn rounded text-decoration-none" do %>
+            <span class="plus">+ Add Another Parcel</span>
+          <% end %>
+        </div>
+
+        <!-- File Upload -->
+        <div class="mb-4 px-4">
+          <%= form.label :parcel_images, "Parcel Images" %> <small class="text-danger fw-bold">(You can upload multiple images)</small>
+          <%= form.file_field :parcel_images, multiple: true, class: 'form-control', id: 'parcel_images_input' %>
+        </div>
+
+        <div id="parcel_images_preview" class="mt-3"></div>
+
+        <!-- Insurance -->
+        <div class="mb-4 px-4">
+          <div class="form-check">
+            <%= form.check_box :insure_shipment, { class: 'form-check-input', id: 'insurance' }, true, false %>
+            <label class="form-check-label" for="insurance"
+              >Insure my package</label
+            >
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid px-4">
+          <%= form.submit "Submit", class: "btn purple-btn mt-2 fw-bold rounded-0", style: 'background-color: #332F87;'  %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Page 2 -->
+  <div class="page" id="page2">
+    <div class="bg-white rounded p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <button class="btn" onclick="showAbandonModal()">✕</button>
+        <button class="btn purple-btn" onclick="showSubmitModal()">
+          Submit
+        </button>
       </div>
 
-      <!-- Row for Parcel Dimensions -->
-      <div class="row mb-4">
-        <div class="col-md-2">
-          <%= form.label :parcel_length, "Length (cm)", class: 'form-label' %>
-          <%= form.number_field :parcel_length, class: 'form-control', placeholder: 'cm', min: 0  %>
-        </div>
-
-        <div class="col-md-2">
-          <%= form.label :parcel_width, "Width (cm)", class: 'form-label' %>
-          <%= form.number_field :parcel_width, class: 'form-control', placeholder: 'cm', min: 0  %>
-        </div>
-
-        <div class="col-md-2">
-          <%= form.label :parcel_height, "Height (cm)", class: 'form-label' %>
-          <%= form.number_field :parcel_height, class: 'form-control', placeholder: 'cm', min: 0  %>
-        </div>
-
-        <div class="col-md-2">
-          <%= form.label :parcel_weight, "Weight (kg)", class: 'form-label' %>
-          <%= form.number_field :parcel_weight, class: 'form-control', placeholder: 'kg', min: 0  %>
-        </div>
-
-        <div class="col-md-2">
-          <%= form.label :parcel_quantity, "Quantity", class: 'form-label' %>
-          <%= form.number_field :parcel_quantity, class: 'form-control', placeholder: 'pcs', min: 0 , value: @parcel_ad.parcel_quantity || 0, id: 'parcel_quantity' %>
-          <div id="quantity_display" class="mt-2 fw-bold">Quantity: 0</div>
-        </div>
-      </div>
-
-      <!-- Add Another Parcel -->
+      <!-- Upload Section -->
       <div class="mb-4">
-        <a class="text-primary" href="#">+ Add another parcel</a>
+        <label class="form-label"
+          >Parcel images (You can upload multiple images)</label
+        >
+        <input type="file" class="form-control" multiple />
       </div>
 
       <!-- Insurance -->
       <div class="mb-4">
-        <div class="row">
-          <div class="col-md-5">
-            <%= form.label :insure_shipment, "Would you like to insure your shipment?", class: 'form-label' %>
-          </div>
-
-          <div class="col-md-4">
-            <%= form.radio_button :insure_shipment, true, class: 'form-check-input', id: 'insure_shipment_yes' %>
-            <%= form.label :insure_shipment, 'Yes', value: true, class: 'form-check-label mx-2', for: 'insure_shipment_yes' %>
-
-            <%= form.radio_button :insure_shipment, false, class: 'form-check-input', id: 'insure_shipment_no' %>
-            <%= form.label :insure_shipment, 'No', value: false, class: 'form-check-label mx-2', for: 'insure_shipment_no' %>
-          </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="insurance" />
+          <label class="form-check-label" for="insurance"
+            >Insure my package</label
+          >
         </div>
       </div>
 
-      <!-- Row for Fees -->
-      <div class="row mb-4">
-        <div class="col-md-6">
-          <%= form.label :proposed_fee, "Proposed Fee", class: 'form-label' %>
-          <div class="input-group">
-            <span class="input-group-text">$</span> <!-- Currency symbol -->
-            <%= form.number_field :proposed_fee, class: 'form-control', placeholder: 'Proposal fee' %>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <%= form.label :recommended_fee, "Recommended Fee", class: 'form-label' %>
-          <div class="input-group">
-            <span class="input-group-text">$</span> <!-- Currency symbol -->
-            <%= form.number_field :recommended_fee, class: 'form-control', placeholder: 'Recommended fee' %>
-          </div>
-        </div>
+      <!-- Special Instructions -->
+      <div>
+        <label class="form-label purple-bg p-2 rounded w-100"
+          >Special Instructions</label
+        >
+        <textarea
+          class="form-control"
+          rows="4"
+          placeholder="Enter special instructions"
+        ></textarea>
       </div>
-
-
-      <!-- File Upload -->
-      <div class="mb-4">
-        <%= form.label :parcel_images, "Parcel Images" %> <small class="text-danger">(You can upload multiple images)</small>
-        <%= form.file_field :parcel_images, multiple: true, class: 'form-control', id: 'parcel_images_input' %>
-      </div>
-
-      <div id="parcel_images_preview" class="mt-3"></div>
-
-      <!-- Submit Button -->
-      <div class="d-grid">
-        <%= form.submit "Publish Ad", class: "btn btn-primary mt-2" %>
-      </div>
-    <% end %>
-  <%# else %>
-    <%# <p class="fw-bold text-center text-danger">Individuals cannot post trips. Upgrade to a professional account.</p> %>
-  <%# end %>
+    </div>
+  </div>
 </div>
 
+<!-- Abandon Modal -->
+<div class="modal fade" id="abandonModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center p-4">
+        <h5 class="mb-3">Abandon The Post?</h5>
+        <p class="text-muted">
+          If you go back, your post will not be saved
+        </p>
+        <button
+          class="btn purple-btn w-100 mb-2"
+          onclick="showPage('page1')"
+        >
+          Abandon The Post
+        </button>
+        <button class="btn text-muted w-100" data-bs-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Submit Modal -->
+<div class="modal fade" id="submitModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center p-4">
+        <p class="purple-text mb-4">
+          Thank You For submitting your requirement. We will notify you once
+          we find suitable traveler
+        </p>
+        <button class="btn purple-btn w-100" data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   document.addEventListener('turbo:load', () => {
-  // Select parcel type buttons and hidden field
-  const buttons = document.querySelectorAll(".parcel-type-button");
-  const hiddenField = document.getElementById("selected_parcel_type");
+    // Select parcel type buttons and hidden field
+    const buttons = document.querySelectorAll(".parcel-type-button");
+    const hiddenField = document.getElementById("selected_parcel_type");
 
-  buttons.forEach(button => {
-    button.addEventListener("click", function() {
-      // Remove active class from all buttons
-      buttons.forEach(btn => btn.classList.remove("active"));
-      // Add active class to the clicked button
-      this.classList.add("active");
-      // Update the hidden field with the selected value
-      hiddenField.value = this.getAttribute("data-value");
+    buttons.forEach(button => {
+      button.addEventListener("click", function() {
+        // Remove active class from all buttons
+        buttons.forEach(btn => btn.classList.remove("active"));
+        // Add active class to the clicked button
+        this.classList.add("active");
+        // Update the hidden field with the selected value
+        hiddenField.value = this.getAttribute("data-value");
 
-      // Toggle dimension fields based on selected parcel type
-      toggleDimensionFields();
+        // Toggle dimension fields based on selected parcel type
+        toggleDimensionFields();
+      });
     });
-  });
 
-  // Toggle dimension fields visibility
-  const dimensionFields = [
-    document.querySelector('[name="parcel_ad[parcel_length]"]'),
-    document.querySelector('[name="parcel_ad[parcel_width]"]'),
-    document.querySelector('[name="parcel_ad[parcel_height]"]'),
-    document.querySelector('[name="parcel_ad[parcel_weight]"]')
-  ];
+    // Toggle dimension fields visibility
+    const dimensionFields = [
+      document.querySelector('[name="parcel_ad[parcel_length]"]'),
+      document.querySelector('[name="parcel_ad[parcel_width]"]'),
+      document.querySelector('[name="parcel_ad[parcel_height]"]'),
+      document.querySelector('[name="parcel_ad[parcel_weight]"]')
+    ];
 
-  function toggleDimensionFields() {
-    const isDocument = hiddenField.value === 'Document';
-    dimensionFields.forEach(field => {
-      field.closest('.col-md-2').style.display = isDocument ? 'none' : '';
-      if (isDocument) {
-        field.value = ''; // Clear value if 'Document' type
-      }
-    });
-  }
-
-  // Initial call to set the correct visibility on page load
-  toggleDimensionFields();
-
-  // Update the quantity display dynamically
-  const quantityInput = document.getElementById("parcel_quantity");
-  const quantityDisplay = document.getElementById("quantity_display");
-
-  quantityInput.addEventListener("input", function() {
-    const quantityValue = quantityInput.value || 0;
-    quantityDisplay.textContent = `Quantity: ${quantityValue}`;
-  });
-
-  // Preview uploaded parcel images
-  const parcelImagesInput = document.getElementById('parcel_images_input');
-  const previewContainer = document.getElementById('parcel_images_preview');
-
-  parcelImagesInput.addEventListener('change', function(event) {
-    previewContainer.innerHTML = '';
-    const files = event.target.files;
-
-    if (files.length > 0) {
-      Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const img = document.createElement('img');
-          img.src = e.target.result;
-          img.classList.add('img-thumbnail', 'mr-2', 'mx-2', 'mb-2');
-          img.style.width = '100px';
-          previewContainer.appendChild(img);
-        };
-        reader.readAsDataURL(file);
+    function toggleDimensionFields() {
+      const isDocument = hiddenField.value === 'Document';
+      dimensionFields.forEach(field => {
+        field.closest('.col-md-2').style.display = isDocument ? 'none' : '';
+        if (isDocument) {
+          field.value = ''; // Clear value if 'Document' type
+        }
       });
     }
-  });
-});
 
+    // Initial call to set the correct visibility on page load
+    toggleDimensionFields();
+
+    // Update the quantity display dynamically
+    const quantityInput = document.getElementById("parcel_quantity");
+    const quantityDisplay = document.getElementById("quantity_display");
+
+    quantityInput.addEventListener("input", function() {
+      const quantityValue = quantityInput.value || 0;
+      quantityDisplay.textContent = `Quantity: ${quantityValue}`;
+    });
+
+    // Preview uploaded parcel images
+    const parcelImagesInput = document.getElementById('parcel_images_input');
+    const previewContainer = document.getElementById('parcel_images_preview');
+
+    parcelImagesInput.addEventListener('change', function(event) {
+      previewContainer.innerHTML = '';
+      const files = event.target.files;
+
+      if (files.length > 0) {
+        Array.from(files).forEach(file => {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('img-thumbnail', 'mr-2', 'mx-2', 'mb-2');
+            img.style.width = '100px';
+            previewContainer.appendChild(img);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+    });
+  });
+  function showPage(pageId) {
+    document.querySelectorAll(".page").forEach((page) => {
+      page.classList.remove("active");
+    });
+    document.getElementById(pageId).classList.add("active");
+    if (pageId === "page1") {
+      const modal = bootstrap.Modal.getInstance(
+        document.getElementById("abandonModal")
+        );
+      if (modal) modal.hide();
+    }
+  }
+
+  function showAbandonModal() {
+    const modal = new bootstrap.Modal(
+      document.getElementById("abandonModal")
+      );
+    modal.show();
+  }
+
+  function showSubmitModal() {
+    const modal = new bootstrap.Modal(
+      document.getElementById("submitModal")
+      );
+    modal.show();
+  }
 </script>

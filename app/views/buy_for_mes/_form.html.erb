@@ -1,189 +1,341 @@
-<div class="col-lg-8 mx-auto shadow p-5 rounded-0 mt-5 mb-5" data-controller="autocomplete">
-  <div class="row">
-    <div class="col-lg-10">
-      <h1 class="text-center mb-5", style= 'color: #332F87;'>Buy What You Love,Anywhere <br> Order Now</h1>
-    </div>
-    <div class="col-lg-2">
-      <%= link_to 'Next', 'javascript:void(0)', class: "btn btn-primary btn-lg py-1", style: 'background-color: #332F87;' %>
-    </div>
-  </div>
-
-  <div class="row g-0 mb-5">
-    <div class="col-lg-6">
-      <ul class="buyer-list">
-        <li> DrexBe provides convenient and reliable shopping services, They buy products  for  you,and deliver  to your door.</li>
-        <li>Buy What You Love, Anywhere, Post Your Link and Find The RightHelper! </li>
-      </ul>
-      <div class="d-flex justify-content-center">
-        <%= link_to how_it_works_path, class: 'btn text-dark border-dark mt-3 mb-3', style: 'color: #332F87;' do %>
-          See how it works <%= image_tag 'Frame_40.png' %>
-        <% end %>
-      </div>
-    </div>
-    <div class="col-lg-6">
-      <%= image_tag "image_58.png", class: "img-fluid", size: "450x450" %>
-    </div>
-  </div>
-
-	<%= form_with(model: @buy_for_me, local: true) do |f| %>
-
-     <!-- Display validation errors -->
-     <% if @buy_for_me.errors.any? %>
-      <div class="alert alert-danger">
-        <h4 class="alert-heading">
-          Please fix the following errors:
-        </h4>
-        <ul>  
-          <% @buy_for_me.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-     <% end %>
-
-     <%= f.hidden_field :user_id, value: current_user.id %>
-
-  	  <!-- Row for Departure and Arrival -->
-      <div class="row g-0 mb-5 form-control rounded-0" style="background-color: #332F87;">
-        <div class="search-item col-md-3">
-          <%= f.text_field :departure_city, class: 'form-control rounded-0 fw-bold', placeholder: 'Departure', 
-                            id: 'departure_city_select', 
-                            autocomplete: 'off', 
-                            value: params[:departure_city].present? ? params[:departure_city] : '', 
-                            data: { target: 'autocomplete.departureCity' } %>
-        <%= f.hidden_field :departure_country, id: 'departure_country', data: { target: 'autocomplete.departureCountry' } %>
+<div class="container py-4 shadow-sm mt-3 mb-3" style="width: 870px;" data-controller="autocomplete">
+  <!-- Page 1 -->
+  <div class="page active" id="page1">
+    <div class="bg-white rounded">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center">
+        <button class="btn">
+          <a href="/"><i class="fas fa-chevron-left"></i></a>
+        </button>
+        <div class="text-center">
+          <h1 class="h4 purple-text mb-0 fw-bold">Buy What You Love,Anywhere</h1>
+          <h2 class="h5 purple-text fw-bold">Order Now</h2>
         </div>
-        <div class="search-item col-md-3">
-          <%= f.text_field :arrival_city, class: 'form-control rounded-0 fw-bold', placeholder: 'Arrival', 
-                            id: 'arrival_city_select', 
-                            autocomplete: 'off', 
-                            value: params[:arrival_city].present? ? params[:arrival_city] : '', 
-                            data: { target: 'autocomplete.arrivalCity' } %>
-          <%= f.hidden_field :arrival_country, id: 'arrival_country', data: { target: 'autocomplete.arrivalCountry' } %>
-        </div>
-        <div class="search-item col-md-3">
-          <%# <i class="fas fa-calendar-alt"></i> %>
-          <%= f.date_field :shopping_date, class: 'form-control rounded-0 flatpickr fw-bold', id: 'date_field', 
-                                    placeholder: 'Shipment Date', data: { target: 'autocomplete.dateField' } %>
-        </div>
+        <span class="" onclick="showPage('page2')"></span>
       </div>
 
-      <div class="row">
-        <div class="col-lg-6 form-group mb-4">
-          <%= f.label :category, class: 'form-label' %>
-          <%= f.select :category, options_for_select(['Electronics', 'Clothing', 'Groceries']), { prompt: 'Select Category' }, class: 'form-select rounded-0' %>
-        </div>
-
-        <div class="col-lg-6 form-group mb-4">
-          <%= f.label :product_name, "Product", class: 'form-label' %>
-          <%= f.text_field :product_name, class: 'form-control rounded-0', autocomplete: "off", placeholder: "Type here..." %>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-6 form-group mb-4">
-          <%= f.label :product_quantity, "Quantity", class: 'form-label' %>
-          <%= f.number_field :product_quantity, class: 'form-control rounded-0', min: 0 %>
-        </div>
-        <div class="col-lg-6 form-group mb-4">
-          <label></label>
-          <input type="" name="" placeholder="PCS" class="form-control rounded-0 mt-2">
-        </div>
-      </div>
-
-  	  <div class="form-group mb-4">
-  	    <%= f.label :product_link, class: 'form-label' %>
-  	    <%= f.text_field :product_link, class: 'form-control rounded-0', placeholder: 'www.example.com', autocomplete: "off" %>
-  	  </div>
-
-		  <div class="form-group mb-4">
-		    <%= f.label :shop_name, class: 'form-label'  %>
-		    <%= f.text_field :shop_name, class: 'form-control rounded-0', autocomplete: "off" %>
-		  </div>
-
-		  <div class="form-group mb-4">
-		    <%= f.label :shop_address, class: 'form-label'  %>
-		    <%= f.text_area :shop_address, class: 'form-control rounded-0' %>
-		  </div>
-
-  	 <%= link_to 'javascript:void(0)', class: 'text-decoration-none' do %>
-      <i class="fa-solid fa-plus"></i> Add Another Product
-     <% end %>
-
-      <!-- Row for Parcel Type -->
-      <div class="row mt-4 mb-4">
-        <div class="col-md-12 mb-3">
-          <%= f.label :parcel_type, "Parcel Type", class: 'form-label' %>
+      <!-- Content -->
+      <div class="row mb-4">
+        <div class="col-md-6 hero-text">
+          <ul class="list-disc fs-5 mt-2">
+            <li class="mb-3">
+              DrexBe provides convenient and reliable shipping services,
+              They buy products for you and deliver to your door.
+            </li>
+            <li class="mb-3">
+              Buy What You Love Anywhere, Post Your Link and Find The
+              RightHelper!
+            </li>
+          </ul>
           
-          <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
-            <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button" data-value="small">
-              small
-            </button>
-            <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button active" data-value="medium">
-              medium
-            </button>
-            <button type="button" class="btn btn-outline-primary mx-1 parcel-type-button" data-value="large">
-              large
-            </button>
+          <%= link_to how_it_works_path, class: "rounded btn hero-button" do %>
+            See how it works
+            <span class="arrow">
+              <i class="bi bi-arrow-down-right"></i>
+            </span>
+          <% end %>
+
+        </div>
+        <div class="col-md-6 mt-2">
+          <div class="illustration">
+            <%= image_tag "buyer.png", alt:"Shopping Illustration" %>
+          </div>
+        </div>
+      </div>
+
+      <%= form_with(model: @buy_for_me, local: true) do |f| %>
+        <!-- Display validation errors -->
+         <% if @buy_for_me.errors.any? %>
+          <div class="alert alert-danger">
+            <h4 class="alert-heading">
+              Please fix the following errors:
+            </h4>
+            <ul>  
+              <% @buy_for_me.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+         <% end %>
+
+         <%= f.hidden_field :user_id, value: current_user.id %>
+
+        <!-- Delivery Section -->
+        <div class="container mt-5">
+          <div class="trip-type-section pt-5">
+            <div class="row g-0 mb-3 form-control rounded-0">
+              <div class="search-item col-md-3">
+                <%= f.text_field :departure_city, class: 'form-control rounded-0 fw-bold', placeholder: 'Departure', 
+                                  id: 'departure_city_select', 
+                                  autocomplete: 'off', 
+                                  value: params[:departure_city].present? ? params[:departure_city] : '', 
+                                  data: { target: 'autocomplete.departureCity' } %>
+              <%= f.hidden_field :departure_country, id: 'departure_country', data: { target: 'autocomplete.departureCountry' } %>
+              </div>
+              <div class="search-item col-md-3">
+                <%= f.text_field :arrival_city, class: 'form-control rounded-0 fw-bold', placeholder: 'Arrival', 
+                                  id: 'arrival_city_select', 
+                                  autocomplete: 'off', 
+                                  value: params[:arrival_city].present? ? params[:arrival_city] : '', 
+                                  data: { target: 'autocomplete.arrivalCity' } %>
+                <%= f.hidden_field :arrival_country, id: 'arrival_country', data: { target: 'autocomplete.arrivalCountry' } %>
+              </div>
+              <div class="search-item col-md-3">
+                <%# <i class="fas fa-calendar-alt"></i> %>
+                <%= f.date_field :shopping_date, class: 'form-control rounded-0 flatpickr fw-bold', id: 'date_field', 
+                                          placeholder: 'Shipment Date', data: { target: 'autocomplete.dateField' } %>
+              </div>
+            </div>
+            <div class="checkbox-shift">
+              <div class="checkbox-group">
+                <input type="checkbox" id="today-morning" checked />
+                <label for="today-morning">Morning</label>
+                <input type="checkbox" id="today-night" />
+                <label for="today-night">Night</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Form Content -->
+        <div class="p-3 px-4">
+          <div class="category-product mb-3">
+            <div class="row-cp">
+              <%# <label class="form-label">Category</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="To Add basic category from Am"
+              /> %>
+              <%= f.label :category, class: 'form-label' %>
+              <%= f.text_field :category, class: 'form-control', placeholder:"To Add basic category from Am" %>
+            </div>
+            <div class="row-cp">
+              <label class="form-label">Product</label>
+              <%= f.text_field :product_name, class: 'form-control', autocomplete: "off", placeholder: "Smartphone Samsung S20" %>
+              <%# <input
+                type="text"
+                class="form-control"
+                placeholder="Smartphone Samsung S20"
+              /> %>
+            </div>
           </div>
 
-          <!-- Hidden field to store the selected parcel type -->
-          <%= f.hidden_field :parcel_type, id: 'selected_parcel_type' %>
+          <div class="mb-3 row-cp">
+            <label class="form-label">Quantity</label>
+            <div class="quantity-input">
+              <%= f.number_field :product_quantity, class: 'form-control', min: 0, value: "0" %>
+              <%# <input type="text" class="form-control" value="Pcs" /> %>
+            </div>
+          </div>
+
+          <div class="mb-3 row-cp">
+            <label class="form-label">Product Link</label>
+            <%= f.text_field :product_link, class: 'form-control', placeholder: 'Copy & Paste Your Product Link : https://www.amazon.com', autocomplete: "off" %>
+            <%# <input
+              type="text"
+              class="form-control"
+              placeholder="Copy & Paste Your Product Link : https://www.amazon.com"
+            /> %>
+          </div>
+
+          <div class="mb-3 row-cp">
+            <label class="form-label">Shop Name</label>
+           <%= f.text_field :shop_name, class: 'form-control', autocomplete: "off" %>
+          </div>
+
+          <div class="mb-3 row-cp">
+            <label class="form-label">Shop Address</label>
+            <%= f.text_area :shop_address, class: 'form-control' %>
+          </div>
+
+          <div class="mb-2 mt-3">
+            <%= link_to "#", class:"add-parcel-btn rounded text-decoration-none" do %>
+              <span class="plus">+ Add Another Parcel</span>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row mt-2 mb-3 px-4">
+          <div class="col-md-12 mb-3">
+            <%= f.label :parcel_type, "Parcel Type", class: 'form-label' %>
+            
+            <div id="parcel_type_buttons" class="btn-group d-flex flex-wrap justify-content-between" role="group" aria-label="Parcel Type">
+              <button type="button" class="parcel-type-button" data-value="small">
+                small
+              </button>
+              <button type="button" class="parcel-type-button active" data-value="medium">
+                medium
+              </button>
+              <button type="button" class="parcel-type-button" data-value="large">
+                large
+              </button>
+            </div>
+
+            <!-- Hidden field to store the selected parcel type -->
+            <%= f.hidden_field :parcel_type, id: 'selected_parcel_type' %>
+          </div>
+        </div>
+
+        <%# price section %>
+        <div data-controller="price-calculator" class="row px-4">
+          <div class="col-lg-4 form-group mb-4">
+            <%= f.label :product_price, class: 'form-label' %>
+            <%= f.number_field :product_price, step: '0.01', class: 'form-control', min: 0, id: 'product_price', 
+              data: { price_calculator_target: "productPrice", action: "input->price-calculator#updateTotalPrice" } %>
+          </div>
+
+          <div class="col-lg-4 form-group mb-4">
+            <%= f.label :buy_for_me_fee, class: 'form-label' %>
+            <%= f.number_field :buy_for_me_fee, step: '0.01', class: 'form-control', min: 0, id: 'buy_for_me_fee', 
+              data: { price_calculator_target: "buyForMeFee", action: "input->price-calculator#updateTotalPrice" } %>
+          </div>
+
+          <div class="col-lg-4 form-group mb-4">
+            <%= f.label :total_price, class: 'form-label' %>
+            <%= f.number_field :total_price, step: '0.01', class: 'form-control', min: 0, id: 'total_price', 
+              data: { price_calculator_target: "totalPrice" }, readonly: true %>
+          </div>
+        </div>
+
+        <div class="d-grid px-4">
+          <%= f.submit "Submit", class: 'btn btn-primary fw-bold', style: 'background-color: #332F87;' %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Page 2 -->
+  <div class="page" id="page2">
+    <div class="bg-white rounded p-4 px-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <button class="btn" onclick="showAbandonModal()">✕</button>
+        <button class="purple-btn" onclick="showSubmitModal()">
+          Submit
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Package Type:</label>
+        <div class="d-flex gap-2">
+          <button class="btn rounded border">Small</button>
+          <button class="btn rounded border">Medium</button>
+          <button class="btn rounded border">Large</button>
         </div>
       </div>
 
-  	  <div data-controller="price-calculator" class="row">
-        <div class="col-lg-4 form-group mb-4">
-          <%= f.label :product_price, class: 'form-label' %>
-          <%= f.number_field :product_price, step: '0.01', class: 'form-control rounded-0', min: 0, id: 'product_price', 
-            data: { price_calculator_target: "productPrice", action: "input->price-calculator#updateTotalPrice" } %>
+      <div class="row mb-4">
+        <div class="col">
+          <label class="form-label">Product Price:</label>
+          <input type="text" disabled class="form-control" />
         </div>
-
-        <div class="col-lg-4 form-group mb-4">
-          <%= f.label :buy_for_me_fee, class: 'form-label' %>
-          <%= f.number_field :buy_for_me_fee, step: '0.01', class: 'form-control rounded-0', min: 0, id: 'buy_for_me_fee', 
-            data: { price_calculator_target: "buyForMeFee", action: "input->price-calculator#updateTotalPrice" } %>
+        <div class="col">
+          <label class="form-label">Buy For me Fee:</label>
+          <input type="text" disabled class="form-control" />
         </div>
-
-        <div class="col-lg-4 form-group mb-4">
-          <%= f.label :total_price, class: 'form-label' %>
-          <%= f.number_field :total_price, step: '0.01', class: 'form-control rounded-0', min: 0, id: 'total_price', 
-            data: { price_calculator_target: "totalPrice" }, readonly: true %>
+        <div class="col">
+          <label class="form-label">Total Price:</label>
+          <input type="text" disabled class="form-control" />
         </div>
       </div>
 
-  	  <div class="d-grid">
-  	    <%= f.submit "Submit", class: 'btn btn-primary rounded-0', style: 'background-color: #332F87;' %>
-  	  </div>
-	<% end %>
+      <div>
+        <label class="form-label purple-bg text-white p-2 rounded w-100"
+          >Special Instructions</label
+        >
+        <textarea
+          class="form-control"
+          rows="4"
+          placeholder="Enter special instructions"
+        ></textarea>
+      </div>
+    </div>
+  </div>
 </div>
 
-<style>
-  .buyer-list {
-    margin-top: 90px;
-    font-size: 27px;
-  }
+<!-- Abandon Modal -->
+<div class="modal fade" id="abandonModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center p-4">
+        <h5 class="mb-3">Abandon The Post?</h5>
+        <p class="text-muted">
+          If you go back, your post will not be saved
+        </p>
+        <button
+          class="btn purple-btn w-100 mb-2"
+          onclick="showPage('page1')"
+        >
+          Abandon The Post
+        </button>
+        <button class="btn text-muted w-100" data-bs-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
-  #parcel_type_buttons .parcel-type-button {
-    text-transform: capitalize;
-  }
-</style>
+<!-- Submit Modal -->
+<div class="modal fade" id="submitModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center p-4">
+        <p class="purple-text mb-4">
+          Thank You For submitting your trip details. We will notify you
+          once we find suitable buyer for you.
+        </p>
+        <button class="btn purple-btn w-100" data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
- document.addEventListener('turbo:load', () => {
-  // Select parcel type buttons and hidden field
-  const buttons = document.querySelectorAll(".parcel-type-button");
-  const hiddenField = document.getElementById("selected_parcel_type");
+  document.addEventListener('turbo:load', () => {
+    // Select parcel type buttons and hidden field
+    const buttons = document.querySelectorAll(".parcel-type-button");
+    const hiddenField = document.getElementById("selected_parcel_type");
 
-  buttons.forEach(button => {
-    button.addEventListener("click", function() {
-      // Remove active class from all buttons
-      buttons.forEach(btn => btn.classList.remove("active"));
-      // Add active class to the clicked button
-      this.classList.add("active");
-      // Update the hidden field with the selected value
-      hiddenField.value = this.getAttribute("data-value");
+    buttons.forEach(button => {
+      button.addEventListener("click", function() {
+        // Remove active class from all buttons
+        buttons.forEach(btn => btn.classList.remove("active"));
+        // Add active class to the clicked button
+        this.classList.add("active");
+        // Update the hidden field with the selected value
+        hiddenField.value = this.getAttribute("data-value");
+      });
     });
   });
-});
+
+  function showPage(pageId) {
+    document.querySelectorAll(".page").forEach((page) => {
+      page.classList.remove("active");
+    });
+    document.getElementById(pageId).classList.add("active");
+    if (pageId === "page1") {
+      const modal = bootstrap.Modal.getInstance(
+        document.getElementById("abandonModal")
+      );
+      if (modal) modal.hide();
+    }
+  }
+
+  function showAbandonModal() {
+    const modal = new bootstrap.Modal(
+      document.getElementById("abandonModal")
+    );
+    modal.show();
+  }
+
+  function showSubmitModal() {
+    const modal = new bootstrap.Modal(
+      document.getElementById("submitModal")
+    );
+    modal.show();
+  }
 </script>

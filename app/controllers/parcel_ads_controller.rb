@@ -14,13 +14,18 @@ class ParcelAdsController < ApplicationController
 	end
 
 	def create
-		@parcel_ad = current_user.parcel_ads.build(parcel_ad_params)
-		if @parcel_ad.save
-			redirect_to parcel_ads_path, notice: "Your add has been successfully published."
-		else
-			render :new, status: :unprocessable_entity
-		end
+	  if user_signed_in? # Check if the user is signed in
+	    @parcel_ad = current_user.parcel_ads.build(parcel_ad_params)
+	    if @parcel_ad.save
+	      redirect_to parcel_ads_path, notice: "Your ad has been successfully published."
+	    else
+	      render :new, status: :unprocessable_entity
+	    end
+	  else
+	    redirect_to new_user_session_path, alert: "You need to sign in to create a parcel ad."
+	  end
 	end
+
 
 	def show
 		@parcel_ad = ParcelAd.find(params[:id])

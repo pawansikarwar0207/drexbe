@@ -11,9 +11,9 @@
           <h1 class="h4 purple-text mb-0 fw-bold">Travel smart, Earn More</h1>
           <h2 class="h5 purple-text fw-bold">Share Your Trip</h2>
         </div>
-        <button class="btn purple-btn" onclick="showPage('page2')">
-          Next
-        </button>
+        <span class="" onclick="showPage('page2')">
+          <%# Next %>
+        </span>
       </div>
 
       <!-- Content -->
@@ -43,149 +43,148 @@
       </div>
 
       <%= form_with(model: traveler, local: true) do |form| %>
+        <!-- Display validation errors -->
+        <% if traveler.errors.any? %>
+          <div class="alert alert-danger">
+            <h4 class="alert-heading">
+              Please fix the following errors:
+            </h4>
+            <ul>
+              <% traveler.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>  
+        <% end %>
 
-      <!-- Display validation errors -->
-      <% if traveler.errors.any? %>
-        <div class="alert alert-danger">
-          <h4 class="alert-heading">
-            Please fix the following errors:
-          </h4>
-          <ul>
-            <% traveler.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>  
-      <% end %>
-
-      <!-- Trip Type Section -->
-        <div class="container mt-5">
-          <div class="trip-type-section">
-            <div class="trip-type">
-              <%= form.label :trip_type, "Trip Type", class: 'form-label mb-0 text-white fs-5' %>
-              <div id="trip_type_buttons" role="group" aria-label="Trip Type">
-                <button type="button" class="trip-type-button active" data-value="one_way">
-                  <%= image_tag 'Vector0.png', alt: 'Vector Icon', class: 'vector-icon', style: "width: 16px; height: 16px; vertical-align: middle; margin-right: 8px; " %>
-                    One Way
-                </button>
-                <button type="button" class="trip-type-button" data-value="round_trip"> 
-                  <%= image_tag 'round-trip.png', alt: 'Vector Icon', class: 'vector-icon', style: "width: 16px; height: 16px; vertical-align: middle; margin-right: 8px; " %>
-                  Round Trip
-                </button>
+        <!-- Trip Type Section -->
+          <div class="container mt-5">
+            <div class="trip-type-section">
+              <div class="trip-type">
+                <%= form.label :trip_type, "Trip Type", class: 'form-label mb-0 text-white fs-5' %>
+                <div id="trip_type_buttons" role="group" aria-label="Trip Type">
+                  <button type="button" class="trip-type-button active" data-value="one_way">
+                    <%= image_tag 'Vector0.png', alt: 'Vector Icon', class: 'vector-icon', style: "width: 16px; height: 16px; vertical-align: middle; margin-right: 8px; " %>
+                      One Way
+                  </button>
+                  <button type="button" class="trip-type-button" data-value="round_trip"> 
+                    <%= image_tag 'round-trip.png', alt: 'Vector Icon', class: 'vector-icon', style: "width: 16px; height: 16px; vertical-align: middle; margin-right: 8px; " %>
+                    Round Trip
+                  </button>
+                </div>
+                <!-- Hidden field to store the selected trip type -->
+                <%= form.hidden_field :trip_type, id: 'selected_trip_type', value: traveler.trip_type %>
               </div>
-              <!-- Hidden field to store the selected trip type -->
-              <%= form.hidden_field :trip_type, id: 'selected_trip_type', value: traveler.trip_type %>
-            </div>
-            
-            <div class="row g-0 mb-3 form-control rounded-0">
-              <div class="search-item col-md-3">
-                <%= form.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Departure', 
-                                    id: 'departure_city_select', 
-                                    autocomplete: 'off', 
-                                    value: params[:departure_city].present? ? params[:departure_city] : '', 
-                                    data: { target: 'autocomplete.departureCity' } %>
-                <%= form.hidden_field :departure_country, id: 'departure_country', data: { target: 'autocomplete.departureCountry' } %>
+              
+              <div class="row g-0 mb-3 form-control rounded-0">
+                <div class="search-item col-md-3">
+                  <%= form.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Departure', 
+                                      id: 'departure_city_select', 
+                                      autocomplete: 'off', 
+                                      value: params[:departure_city].present? ? params[:departure_city] : '', 
+                                      data: { target: 'autocomplete.departureCity' } %>
+                  <%= form.hidden_field :departure_country, id: 'departure_country', data: { target: 'autocomplete.departureCountry' } %>
+                </div>
+                <div class="search-item col-md-3">
+                  <%= form.text_field :arrival_city, class: 'form-control fw-bold', placeholder: 'Arrival', 
+                                      id: 'arrival_city_select', 
+                                      autocomplete: 'off', 
+                                      value: params[:arrival_city].present? ? params[:arrival_city] : '', 
+                                      data: { target: 'autocomplete.arrivalCity' } %>
+                  <%= form.hidden_field :arrival_country, id: 'arrival_country', data: { target: 'autocomplete.arrivalCountry' } %>
+                </div>
+                <div class="search-item col-md-3">
+                  <%# <i class="fas fa-calendar-alt"></i> %>
+                  <%= form.date_field :travel_date, class: 'form-control flatpickr fw-bold', id: 'date_field', 
+                                              placeholder: 'Today', data: { target: 'autocomplete.dateField' } %>
+                </div>
+                <div class="search-item col-md-3" id="return_date_container" style="display: none;">
+                  <%= form.date_field :travel_return_date, class: 'form-control flatpickr fw-bold', id: 'return-date-field', placeholder: 'Return Date' %>
+                </div>
               </div>
-              <div class="search-item col-md-3">
-                <%= form.text_field :arrival_city, class: 'form-control fw-bold', placeholder: 'Arrival', 
-                                    id: 'arrival_city_select', 
-                                    autocomplete: 'off', 
-                                    value: params[:arrival_city].present? ? params[:arrival_city] : '', 
-                                    data: { target: 'autocomplete.arrivalCity' } %>
-                <%= form.hidden_field :arrival_country, id: 'arrival_country', data: { target: 'autocomplete.arrivalCountry' } %>
-              </div>
-              <div class="search-item col-md-3">
-                <%# <i class="fas fa-calendar-alt"></i> %>
-                <%= form.date_field :travel_date, class: 'form-control flatpickr fw-bold', id: 'date_field', 
-                                            placeholder: 'Today', data: { target: 'autocomplete.dateField' } %>
-              </div>
-              <div class="search-item col-md-3" id="return_date_container" style="display: none;">
-                <%= form.date_field :travel_return_date, class: 'form-control flatpickr fw-bold', id: 'return-date-field', placeholder: 'Return Date' %>
-              </div>
-            </div>
 
 
-            <div class="checkbox-shift">
-              <div class="checkbox-group">
-                <input type="checkbox" id="today-morning" checked />
-                <label for="today-morning">Morning</label>
-                <input type="checkbox" id="today-night" />
-                <label for="today-night">Night</label>
-              </div>
-              <div class="checkbox-group">
-                <input type="checkbox" id="tomorrow-morning" checked />
-                <label for="tomorrow-morning">Morning</label>
-                <input type="checkbox" id="tomorrow-night" />
-                <label for="tomorrow-night">Night</label>
+              <div class="checkbox-shift">
+                <div class="checkbox-group">
+                  <input type="checkbox" id="today-morning" checked />
+                  <label for="today-morning">Morning</label>
+                  <input type="checkbox" id="today-night" />
+                  <label for="today-night">Night</label>
+                </div>
+                <div class="checkbox-group">
+                  <input type="checkbox" id="tomorrow-morning" checked />
+                  <label for="tomorrow-morning">Morning</label>
+                  <input type="checkbox" id="tomorrow-night" />
+                  <label for="tomorrow-night">Night</label>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Transport Mode -->
-        <div class="mb-4 px-4 mt-3">
-          <h6 class="mb-3">Transport Mode</h6>
-          <div id="transportation_buttons" class="btn-group d-flex flex-wrap justify-content-between" role="group" aria-label="Transportation">
-            <button type="button" class=" transportation-button" data-value="flight">
-              ✈️ Flight
-            </button>
-            <button type="button" class=" transportation-button" data-value="car">
-              🚗 Car
-            </button>
-            <button type="button" class=" transportation-button" data-value="bus">
-              🚌 Bus
-            </button>
-            <button type="button" class=" transportation-button" data-value="train">
-              🚂 Train
-            </button>
-            <button type="button" class=" transportation-button active" data-value="van">
-              🚐 Van
-            </button>
-            <button type="button" class=" transportation-button" data-value="ship">
-              🚢 Ship
-            </button>
+          <!-- Transport Mode -->
+          <div class="mb-4 px-4 mt-3">
+            <h6 class="mb-3">Transport Mode</h6>
+            <div id="transportation_buttons" class="btn-group d-flex flex-wrap justify-content-between" role="group" aria-label="Transportation">
+              <button type="button" class=" transportation-button" data-value="flight">
+                ✈️ Flight
+              </button>
+              <button type="button" class=" transportation-button" data-value="car">
+                🚗 Car
+              </button>
+              <button type="button" class=" transportation-button" data-value="bus">
+                🚌 Bus
+              </button>
+              <button type="button" class=" transportation-button" data-value="train">
+                🚂 Train
+              </button>
+              <button type="button" class=" transportation-button active" data-value="van">
+                🚐 Van
+              </button>
+              <button type="button" class=" transportation-button" data-value="ship">
+                🚢 Ship
+              </button>
+            </div>
+
+            <!-- Hidden field to store the selected parcel type -->
+            <%= form.hidden_field :transportation, id: 'selected_transportation' %>
           </div>
 
-          <!-- Hidden field to store the selected parcel type -->
-          <%= form.hidden_field :transportation, id: 'selected_transportation' %>
-        </div>
+          <!-- Items Type -->
+          <div class="mb-4 px-4">
+            <h6 class="mb-3">Items Type</h6>
+            <div id="parcel_type_buttons" class="btn-group d-flex flex-wrap justify-content-between" role="group" aria-label="Parcel Type">
+              <button type="button" class="parcel-type-button" data-value="Document">
+                📄 Document
+              </button>
+              <button type="button" class="parcel-type-button active" data-value="Parcel">
+                📦 Parcel
+              </button>
+              <button type="button" class="parcel-type-button" data-value="Pallet">
+                📏 Pallet
+              </button>
+              <button type="button" class="parcel-type-button" data-value="Electronics">
+                💻 Electronics
+              </button>
+              <button type="button" class="parcel-type-button" data-value="Clothing">
+                👕 Clothing
+              </button>
+            </div>
 
-        <!-- Items Type -->
-        <div class="mb-4 px-4">
-          <h6 class="mb-3">Items Type</h6>
-          <div id="parcel_type_buttons" class="btn-group d-flex flex-wrap justify-content-between" role="group" aria-label="Parcel Type">
-            <button type="button" class="parcel-type-button" data-value="Document">
-              📄 Document
-            </button>
-            <button type="button" class="parcel-type-button active" data-value="Parcel">
-              📦 Parcel
-            </button>
-            <button type="button" class="parcel-type-button" data-value="Pallet">
-              📏 Pallet
-            </button>
-            <button type="button" class="parcel-type-button" data-value="Electronics">
-              💻 Electronics
-            </button>
-            <button type="button" class="parcel-type-button" data-value="Clothing">
-              👕 Clothing
-            </button>
+            <!-- Hidden field to store the selected parcel type -->
+            <%= form.hidden_field :parcel_type, id: 'selected_parcel_type' %>
+
           </div>
 
-          <!-- Hidden field to store the selected parcel type -->
-          <%= form.hidden_field :parcel_type, id: 'selected_parcel_type' %>
+          <!-- Weight Input -->
+          <div class="mb-4 px-4">
+            <h6 class="mb-2">Maximum weight you can carry</h6>
+            <input type="text" class="form-control weight-input" value="16kg" />
+          </div>
 
-        </div>
-
-        <!-- Weight Input -->
-        <div class="mb-4 px-4">
-          <h6 class="mb-2">Maximum weight you can carry</h6>
-          <input type="text" class="form-control weight-input" value="16kg" />
-        </div>
-
-        <!-- Submit Button -->
-        <div class="d-grid mt-4 mb-2">
-          <%= form.submit "Post", class: "btn btn-primary mt-2 fw-bold rounded-0", style: 'background-color: #332F87;'  %>
-        </div>
+          <!-- Submit Button -->
+          <div class="d-grid mt-4 mb-2">
+            <%= form.submit "Submit", class: "btn btn-primary mt-2 fw-bold rounded-0", style: 'background-color: #332F87;'  %>
+          </div>
       <% end %>
     </div>
   </div>
