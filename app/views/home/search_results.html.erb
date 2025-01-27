@@ -28,7 +28,7 @@
       <%# Traveler Section %>
       <% if @travelers.present? %>
         <% @travelers.each do |traveler| %>
-          <div class="border sort-by mt-2">
+          <div class="border sort-by mt-2 rounded-0">
              <div class="row">
                 <div class="col-left">
                   <h5 class="fw-bold badge bg-primary rounded-0 mb-3">Traveler</h5>
@@ -57,7 +57,7 @@
                   <% if traveler.parcel_type.present? %>
                     <div class="carry-for-you">
                       <h6 class="mt-2 me-2 fw-bold">Carry For You:</h6>
-                        <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
+                        <div id="parcel_type_buttons" class="btn-group d-flex flex-wrap justify-content-start" role="group" aria-label="Parcel Type">
                           <button type="button" class="parcel-type-button <%= 'active' if traveler.parcel_type == 'Document' %> " data-value="Document">
                             📄 Document
                           </button>
@@ -145,7 +145,7 @@
       <%# Sender Section %>
       <% if @parcel_ads.present? %>
         <% @parcel_ads.each do |parcel| %>
-          <div class="border sort-by mt-2">
+          <div class="border sort-by mt-2 rounded-0">
              <div class="row">
                 <div class="col-left">
                   <h5 class="fw-bold badge bg-warning rounded-0 mb-3">Sender</h5>
@@ -172,7 +172,7 @@
                   <% if parcel.parcel_type.present? %>
                     <div class="carry-for-you">
                       <h6 class="mt-2 me-2 fw-bold">Carry For Me:</h6>
-                        <div id="parcel_type_buttons" class="btn-group d-flex justify-content-center" role="group" aria-label="Parcel Type">
+                        <div id="parcel_type_buttons" class="btn-group d-flex flex-wrap justify-content-start" role="group" aria-label="Parcel Type">
                           <button type="button" class="parcel-type-button <%= 'active' if parcel.parcel_type == 'Document' %> " data-value="Document">
                             📄 Document
                           </button>
@@ -259,7 +259,7 @@
       <%# Buy for me section %>
       <% if @buy_for_mes.present? %>
         <% @buy_for_mes.each do |buy_for_me| %>
-          <div class="border sort-by mt-2">
+          <div class="border sort-by mt-2 rounded-0">
              <div class="row">
                 <div class="col-left">
                   <h5 class="fw-bold badge bg-secondary rounded-0 mb-3">Buyer</h5>
@@ -358,12 +358,11 @@
       <% end %>
     </div>
   </div>
-  <%= paginate @travelers if @travelers.present? %>
-  <%= paginate @parcel_ads if @parcel_ads.present? %>
-  <%= paginate @buy_for_mes if @buy_for_mes.present? %>
 </div>
 
-<section class="section facts-number mt-5 mb-5" style="display: flex; justify-content: center; align-items: center; flex-direction: column; ">
+<%# Add the pagination here %>
+
+<section class="section facts-number mt-5 mb-5 p-5" style="display: flex; justify-content: center; align-items: center; flex-direction: column; background-color: #E7E5FF; ">
     <div class="container text-center" style="max-width: 1200px; padding: 0;">
       <!-- Heading title-->
       <!-- /Heading title -->

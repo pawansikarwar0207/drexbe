@@ -1,4 +1,4 @@
-<div class="container py-4 shadow-sm mt-3 mb-3" style="width: 870px;" data-controller="autocomplete">
+<div class="container py-4 shadow-sm mt-3 mb-3" style="max-width: 870px;" data-controller="autocomplete">
   <!-- Page 1 -->
   <div class="page active" id="page1">
     <div class="bg-white rounded">
@@ -28,16 +28,16 @@
               Share Your Journey and turn it Into Profit!
             </li>
           </ul>
-          <%= link_to how_it_works_path, class: "rounded btn hero-button" do %>
+          <%= link_to how_it_works_path, class: "rounded btn hero-button " do %>
             See how it works
             <span class="arrow">
               <i class="bi bi-arrow-down-right"></i>
             </span>
           <% end %>
         </div>
-        <div class="col-md-6 mt-2">
+        <div class="col-md-6 mt-2 mt-md-0">
           <div class="illustration">
-            <%= image_tag "traveler_page.png", alt:"Shopping Illustration" %>
+            <%= image_tag "traveler_page.png", alt:"Shopping Illustration", style: "max-width: 100%; height: auto;"  %>
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@
             <div class="trip-type-section">
               <div class="trip-type">
                 <%= form.label :trip_type, "Trip Type", class: 'form-label mb-0 text-white fs-5' %>
-                <div id="trip_type_buttons" role="group" aria-label="Trip Type">
+                <div id="trip_type_buttons" role="group" aria-label="Trip Type" >
                   <button type="button" class="trip-type-button active" data-value="one_way">
                     <%= image_tag 'Vector0.png', alt: 'Vector Icon', class: 'vector-icon', style: "width: 16px; height: 16px; vertical-align: middle; margin-right: 8px; " %>
                       One Way

@@ -1,4 +1,4 @@
-<div class="container py-4 shadow-sm mt-3 mb-3" style="width: 870px;" data-controller="autocomplete">
+<div class="container py-4 shadow-sm mt-3 mb-3" style="max-width: 870px;" data-controller="autocomplete">
   <!-- Page 1 -->
   <div class="page active" id="page1">
     <div class="bg-white rounded">
@@ -38,7 +38,7 @@
         </div>
         <div class="col-md-6 mt-2">
           <div class="illustration">
-            <%= image_tag "buyer.png", alt:"Shopping Illustration" %>
+            <%= image_tag "buyer.png", alt:"Shopping Illustration", style: "max-width: 100%;" %>
           </div>
         </div>
       </div>
@@ -160,7 +160,7 @@
           <div class="col-md-12 mb-3">
             <%= f.label :parcel_type, "Parcel Type", class: 'form-label' %>
             
-            <div id="parcel_type_buttons" class="btn-group d-flex flex-wrap justify-content-between" role="group" aria-label="Parcel Type">
+            <div id="parcel_type_buttons" class="btn-group d-flex flex-wrap justify-content-start" role="group" aria-label="Parcel Type">
               <button type="button" class="parcel-type-button" data-value="small">
                 small
               </button>
