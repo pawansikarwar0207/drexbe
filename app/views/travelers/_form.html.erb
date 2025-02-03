@@ -10,7 +10,6 @@
         </span>
       </button>
 
-
         <div class="text-center">
           <h1 class="h4 purple-text mb-0 fw-bold">Travel smart, Earn More</h1>
           <h2 class="h5 purple-text fw-bold">Share Your Trip</h2>
@@ -44,22 +43,9 @@
         </div>
       </div>
 
-     <%= form_with(model: traveler, local: false, id: "traveler-form", data: { controller: "form-steps", action: "submit->form-steps#submit" }) do |form| %>
+     <%= form_with(model: traveler, local: false, data: { turbo: true }) do |form| %>
         <!-- Display validation errors -->
-        <div id="form-errors">
-          <% if traveler.errors.any? %>
-            <div class="alert alert-danger">
-              <h4 class="alert-heading">
-                Please fix the following errors:
-              </h4>
-              <ul>
-                <% traveler.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>  
-          <% end %>
-        </div>
+        <div id="form-errors"></div>
 
         <!-- Step 1 Page -->
         <!-- <div class="form-step" id="step-1"  data-controller="autocomplete"> -->
@@ -226,9 +212,7 @@
       <div class="modal-body text-center p-4">
         <h5 class="mb-3">Abandon The Post?</h5>
         <p class="text-muted">If you go back, your post will not be saved.</p>
-        <button class="btn purple-btn w-100 mt-2 mb-2" id="abandon-post" data-action="click->form-steps#abandon">
-          Abandon The Post
-        </button>
+        <%= link_to 'Abandon The Post', root_path, class:"btn purple-btn w-100 mt-2 mb-2", id:"abandon-post", data: { action: "click->form-steps#abandon" } %>
         <button class="btn text-muted w-100" data-bs-dismiss="modal">
           Cancel
         </button>
@@ -237,21 +221,9 @@
   </div>
 </div>
 
-
 <!-- ThankYou Modal -->
-<div data-target="form-steps.submitModal" id="submitModal" class="modal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Thank You!</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Your form was successfully submitted.</p>
-      </div>
-    </div>
-  </div>
-</div>
+<div id="thankyou-modal-container"></div>
+
 
 
 

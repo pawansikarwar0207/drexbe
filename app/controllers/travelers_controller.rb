@@ -17,9 +17,17 @@ class TravelersController < ApplicationController
     if user_signed_in? 
       @traveler = current_user.travelers.build(traveler_params)
       if @traveler.save
-        redirect_to travelers_path, notice: 'Traveler was successfully created.'
+        # redirect_to travelers_path, notice: 'Traveler was successfully created.'
+        respond_to do |format|
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("thankyou-modal-container", partial: "travelers/thank_you_modal") }
+          format.html { redirect_to travelers_path, notice: "Traveler was successfully created." }
+        end
       else
-        render :new, status: :unprocessable_entity
+        # render :new, status: :unprocessable_entity
+        respond_to do |format|
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("form-errors", partial: "travelers/form_errors", locals: { object: @traveler }) }
+          format.html { render :new, status: :unprocessable_entity }
+        end
       end
     else
       redirect_to new_user_session_path, alert: "You need to sign in to create a parcel ad."
