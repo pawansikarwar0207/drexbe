@@ -19,7 +19,7 @@ class TravelersController < ApplicationController
       if @traveler.save
         # redirect_to travelers_path, notice: 'Traveler was successfully created.'
         respond_to do |format|
-          format.turbo_stream { render turbo_stream: turbo_stream.replace("thankyou-modal-container", partial: "travelers/thank_you_modal") }
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("thankyou-modal-container", partial: "parcel_ads/thank_you_modal") }
           format.html { redirect_to travelers_path, notice: "Traveler was successfully created." }
         end
       else

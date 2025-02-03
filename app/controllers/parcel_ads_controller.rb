@@ -17,9 +17,17 @@ class ParcelAdsController < ApplicationController
 	  if user_signed_in? # Check if the user is signed in
 	    @parcel_ad = current_user.parcel_ads.build(parcel_ad_params)
 	    if @parcel_ad.save
-	      redirect_to parcel_ads_path, notice: "Your ad has been successfully published."
+	      # redirect_to parcel_ads_path, notice: "Your ad has been successfully published."
+				respond_to do |format|
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("thankyou-modal-container", partial: "parcel_ads/thank_you_modal") }
+          format.html { redirect_to parcel_ads_path, notice: "Your request has been successfully created." }
+        end
 	    else
-	      render :new, status: :unprocessable_entity
+	      # render :new, status: :unprocessable_entity
+				respond_to do |format|
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("form-errors", partial: "parcel_ads/parcel_form_errors", locals: { object: @parcel_ad }) }
+          format.html { render :new, status: :unprocessable_entity }
+        end
 	    end
 	  else
 	    redirect_to new_user_session_path, alert: "You need to sign in to create a parcel ad."
@@ -123,6 +131,8 @@ class ParcelAdsController < ApplicationController
 			:bonus,
 			:service_type,
 			:recommended_fee,
+			:time, 
+			:special_instructions,
 			:proposed_fee,
 		   parcel_images: []
 		)
