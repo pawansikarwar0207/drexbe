@@ -1,14 +1,16 @@
 <div class="container py-4 shadow mt-3 mb-5" style="max-width: 870px;">
   <!-- Page 1 -->
   <div class="page active" id="page1" data-controller="form-steps">
-    <div class="bg-white rounded" data-form-steps-target="step1">
+    <div class="bg-white rounded">
       <!-- Header -->
       <div class="d-flex justify-content-between align-items-center mb-4" id="header-section" data-target="form-steps.step1">
-        <button class="btn" id="back-button" data-bs-toggle="modal" data-bs-target="#abandonModal">
-          <a href="<%= root_path %>" id="back-icon" data-form-steps-target="backIcon">
-            <i class="fas fa-chevron-left"></i>
-          </a>
-        </button>
+       <button class="btn" id="back-button" data-action="click->form-steps#abandon">
+        <span>
+          <i class="fas fa-chevron-left" data-form-steps-target="backIcon" id="back-icon"></i>
+        </span>
+      </button>
+
+
         <div class="text-center">
           <h1 class="h4 purple-text mb-0 fw-bold">Travel smart, Earn More</h1>
           <h2 class="h5 purple-text fw-bold">Share Your Trip</h2>
@@ -60,10 +62,11 @@
         </div>
 
         <!-- Step 1 Page -->
-        <div class="form-step" id="step-1">
+        <!-- <div class="form-step" id="step-1"  data-controller="autocomplete"> -->
+        <div class="form-step" id="step-1" data-form-steps-target="step1">
           <!-- Trip Type Section -->
           <div class="container mt-3">
-            <div class="trip-type-section">
+            <div class="trip-type-section" data-controller="autocomplete">
               <div class="trip-type">
                 <%= form.label :trip_type, "Trip Type", class: 'form-label mb-0 text-white fs-5' %>
                 <div id="trip_type_buttons" role="group" aria-label="Trip Type" >
@@ -80,7 +83,7 @@
                 <%= form.hidden_field :trip_type, id: 'selected_trip_type', value: traveler.trip_type %>
               </div>
               
-              <div class="row g-0 mb-3 form-control rounded-0" data-controller="autocomplete">
+              <div class="row g-0 mb-3 form-control rounded-0">
                 <div class="search-item col-md-3">
                   <%= form.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Departure', 
                                       id: 'departure_city_select', 
@@ -192,30 +195,32 @@
           </div>
 
           <div class="d-flex justify-content-end">
-            <button class="btn purple-btn" id="next-button" data-action="form-steps#next">Next</button>
+            <button class="btn purple-btn" id="next-button" data-action="click->form-steps#next">Next</button>
           </div>
         </div>
         <!-- Step 1 Page end -->
 
         <!-- Step 2: Special Instructions -->
-        <div class="form-step px-4" id="step-2" style="display: none;" data-form-steps-target="step2">
+         <div class="form-step px-4" id="step-2" style="display: none;" data-form-steps-target="step2">
           <h4 class="p-3 text-white" style="background-color: #332F87;">Special Instructions</h4>
+          
           <div class="mb-4">
             <%= form.text_area :special_instructions, class: "form-control", placeholder: "Please drop your parcel to my place. 24 hours before my trip and keep it open." %>
           </div>
+
           <!-- Navigation Buttons -->
           <div class="d-flex justify-content-between">
-            <button class="btn btn-secondary" id="prev-button" data-action="form-steps#prev">Back</button>
-            <%= form.submit "Submit", class: "btn btn-primary", style:"background-color: #332F87;" %>
+            <button class="btn btn-secondary rounded-0" id="prev-button" data-action="form-steps#prev">Back</button>
+            <%= form.submit "Submit", class: "btn btn-primary rounded-0", style:"background-color: #332F87;" %>
           </div>
-        </div>        
+        </div>       
       <% end %>  
     </div>
   </div>
 </div>
 
 <!-- Abandon Confirmation Modal -->
-<div class="modal fade" id="abandonModal" tabindex="-1" aria-hidden="true" data-controller="form-steps">
+<div class="modal fade" id="abandonModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body text-center p-4">
@@ -315,46 +320,46 @@
     }
   });
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const nextButton = document.getElementById("next-button");
-    const prevButton = document.getElementById("prev-button");
-    const step1 = document.getElementById("step-1");
-    const step2 = document.getElementById("step-2");
-    const backIcon = document.getElementById("back-icon");
-    const abandonPost = document.getElementById("abandon-post");
+  // document.addEventListener("DOMContentLoaded", function () {
+  //   const nextButton = document.getElementById("next-button");
+  //   const prevButton = document.getElementById("prev-button");
+  //   const step1 = document.getElementById("step-1");
+  //   const step2 = document.getElementById("step-2");
+  //   const backIcon = document.getElementById("back-icon");
+  //   const abandonPost = document.getElementById("abandon-post");
 
-    nextButton.addEventListener("click", function (event) {
-      event.preventDefault();
-      step1.style.display = "none";
-      step2.style.display = "block";
+  //   nextButton.addEventListener("click", function (event) {
+  //     event.preventDefault();
+  //     step1.style.display = "none";
+  //     step2.style.display = "block";
 
-      // Change back arrow to cross icon and enable modal
-      backIcon.innerHTML = '<i class="fas fa-times"></i>';
-      backIcon.setAttribute("data-bs-toggle", "modal");
-      backIcon.setAttribute("data-bs-target", "#abandonModal");
-    });
+  //     // Change back arrow to cross icon and enable modal
+  //     backIcon.innerHTML = '<i class="fas fa-times"></i>';
+  //     backIcon.setAttribute("data-bs-toggle", "modal");
+  //     backIcon.setAttribute("data-bs-target", "#abandonModal");
+  //   });
 
-    prevButton.addEventListener("click", function (event) {
-      event.preventDefault();
-      step1.style.display = "block";
-      step2.style.display = "none";
+  //   prevButton.addEventListener("click", function (event) {
+  //     event.preventDefault();
+  //     step1.style.display = "block";
+  //     step2.style.display = "none";
 
-      // Change cross icon back to arrow
-      backIcon.innerHTML = '<i class="fas fa-chevron-left"></i>';
-      backIcon.removeAttribute("data-bs-toggle");
-      backIcon.removeAttribute("data-bs-target");
-    });
+  //     // Change cross icon back to arrow
+  //     backIcon.innerHTML = '<i class="fas fa-chevron-left"></i>';
+  //     backIcon.removeAttribute("data-bs-toggle");
+  //     backIcon.removeAttribute("data-bs-target");
+  //   });
 
-    // Handle "Abandon The Post" button click
-    abandonPost.addEventListener("click", function () {
-      // Redirect to the root path
-      window.location.href = '/';
+  //   // Handle "Abandon The Post" button click
+  //   abandonPost.addEventListener("click", function () {
+  //     // Redirect to the root path
+  //     window.location.href = '/';
 
-      // Optionally, close the modal (though it will likely be replaced by the redirect)
-      let modal = bootstrap.Modal.getInstance(document.getElementById("abandonModal"));
-      modal.hide();
-    });
-  });
+  //     // Optionally, close the modal (though it will likely be replaced by the redirect)
+  //     let modal = bootstrap.Modal.getInstance(document.getElementById("abandonModal"));
+  //     modal.hide();
+  //   });
+  // });
 
 
 

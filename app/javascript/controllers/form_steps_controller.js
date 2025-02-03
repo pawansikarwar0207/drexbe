@@ -1,37 +1,42 @@
-// import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus";
 
-// export default class extends Controller {
-//   static targets = ["step1", "step2", "backIcon", "submitModal"];
+export default class extends Controller {
+  static targets = ["step1", "step2", "backIcon"];
 
-//   connect() {
-//     console.log("FormStepsController connected");
-//   }
+  connect() {
+    console.log("FormStepsController connected");
+  }
 
-//   next(event) {
-//     event.preventDefault();
-//     this.step1Target.style.display = "none";
-//     this.step2Target.style.display = "block";
+  next(event) {
+    event.preventDefault();
+    this.step1Target.style.display = "none";
+    this.step2Target.style.display = "block";
 
-//     // Change back arrow to cross icon and enable modal
-//     this.backIconTarget.innerHTML = '<i class="fas fa-times"></i>';
-//     this.backIconTarget.setAttribute("data-bs-toggle", "modal");
-//     this.backIconTarget.setAttribute("data-bs-target", "#abandonModal");
-//   }
+    // ✅ Change icon to 'fa-xmark' when on Step 2
+    if (this.hasBackIconTarget) {
+      this.backIconTarget.classList.remove("fas", "fa-chevron-left");
+      this.backIconTarget.classList.add("fa-solid", "fa-xmark");
+    }
+  }
 
-//   prev(event) {
-//     event.preventDefault();
-//     this.step1Target.style.display = "block";
-//     this.step2Target.style.display = "none";
+  prev(event) {
+    event.preventDefault();
+    this.step2Target.style.display = "none";
+    this.step1Target.style.display = "block";
 
-//     // Change cross icon back to arrow
-//     this.backIconTarget.innerHTML = '<i class="fas fa-chevron-left"></i>';
-//     this.backIconTarget.removeAttribute("data-bs-toggle");
-//     this.backIconTarget.removeAttribute("data-bs-target");
-//   }
+    // ✅ Change back to 'fa-chevron-left' when returning to Step 1
+    if (this.hasBackIconTarget) {
+      this.backIconTarget.classList.remove("fa-solid", "fa-xmark");
+      this.backIconTarget.classList.add("fas", "fa-chevron-left");
+    }
+  }
 
-//   abandon() {
-//     window.location.href = "/";
-//     let modal = bootstrap.Modal.getInstance(document.getElementById("abandonModal"));
-//     if (modal) modal.hide();
-//   }
-// }
+  abandon(event) {
+    event.preventDefault();
+    console.log("Abandon post clicked");
+
+    // ✅ Show abandon confirmation modal when clicking 'xmark'
+    let abandonModal = new bootstrap.Modal(document.getElementById('abandonModal'));
+    abandonModal.show();
+  }
+}
