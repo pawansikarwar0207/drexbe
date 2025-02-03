@@ -1,4 +1,4 @@
-<div class="container py-4 shadow mt-3 mb-5" style="max-width: 870px;">
+<div class="container py-4 shadow mt-3 mb-5" style="max-width: 870px;" data-controller="form-steps autocomplete">
   <!-- Page 1 -->
   <div class="page active" id="page1" data-controller="form-steps">
     <div class="bg-white rounded">
@@ -66,7 +66,7 @@
         <div class="form-step" id="step-1" data-form-steps-target="step1">
           <!-- Trip Type Section -->
           <div class="container mt-3">
-            <div class="trip-type-section" data-controller="autocomplete">
+            <div class="trip-type-section">
               <div class="trip-type">
                 <%= form.label :trip_type, "Trip Type", class: 'form-label mb-0 text-white fs-5' %>
                 <div id="trip_type_buttons" role="group" aria-label="Trip Type" >
