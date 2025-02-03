@@ -5,12 +5,11 @@
       <div class="home-banner">
         <div class="row align-items-center g-0">
           <div class="col-lg-6" data-aos="fade-down">
-            <h2 style="color: #353188 !important" class="fs-1">Build Together, The First <br>Community of ParcelPool </h2>
-            <br>
-            <p style="color: #6562a3;" class="lead">Individual, Professional, Travelers-Together,We build the First <br> Collaborative shipping Community! </p>
-            <p style="color: #6562a3;" class="lead">Roles may change, but the golas remains the same:send parcels at <br> low costs while supporting a greener plant </p>
+            <h2 style="color: #353188 !important" class="fs-1">Build Together, The First Community of ParcelPool </h2>
+            <p class="lead text-dark">Individual, Professional, Travelers-Together, We build the First Collaborative shipping Community! </p>
+            <p class="lead text-dark">Roles may change, but the golas remains the same:send parcels at low costs while supporting a greener plant </p>
           </div>
-          <div class="col-lg-6" data-aos="fade-down">
+          <div class="col-lg-6 d-flex justify-content-center align-items-center" data-aos="fade-down">
             <div class="banner-imgs">
               <%= image_tag "ban2.png", class: "img-fluid aos", alt:"bannerimage", style: "max-width: 100%; height: auto;" %> 
             </div>
@@ -36,7 +35,7 @@
               <div class="customer-count d-flex align-items-center" style="justify-content: center; flex-direction: column;">
                 <div class="count-content">
                   <h4><i class="fa fa-search"></i> Simple</h4>
-                  <p class="text-center fs-6">Just search, click and <br> send with ease </p>
+                  <p class="text-center fs-6 text-dark">Just search, click and <br> send with ease </p>
                 </div>
               </div>
             </div>
@@ -46,7 +45,7 @@
               <div class="customer-count d-flex align-items-center" style="justify-content: center; flex-direction: column;">
                 <div class="count-content">
                   <h4><i class="fa fa-clock-o"></i> Fast</h4>
-                  <p class="text-center fs-6">Same-day delivery for <br> urgent shipments </p>
+                  <p class="text-center fs-6 text-dark">Same-day delivery for <br> urgent shipments </p>
                 </div>
               </div>
             </div>
@@ -56,7 +55,7 @@
               <div class="customer-count d-flex align-items-center" style="justify-content: center; flex-direction: column;">
                 <div class="count-content">
                   <h4><%= image_tag "check-circle.svg", class: "mx-2" %></i>Trust</h4>
-                  <p class="text-center fs-6">Verified carriers for <br>secure deliveries </p>
+                  <p class="text-center fs-6 text-dark">Verified carriers for <br>secure deliveries </p>
                 </div>
               </div>
             </div>
@@ -66,7 +65,7 @@
               <div class="customer-count d-flex align-items-center" style="justify-content: center; flex-direction: column;">
                 <div class="count-content">
                   <h4><i class="fa fa-arrow-down"></i> Cheap</h4>
-                  <p class="text-center fs-6">Save upto 70% on <br>your shipping costs </p>
+                  <p class="text-center fs-6 text-dark">Save upto 70% on <br>your shipping costs </p>
                 </div>
               </div>
             </div>
@@ -113,24 +112,22 @@
       <div class="row g-0">
         <div class="col-md-6">
           <h3 class="fs-3">To send your Parcel, and make your trip profitable </h3>
-          <ul class="mt-5">
+          <ul class="mt-3">
             <li>
               Travel Smart, Earn More-join DrexBe to Help Others Send and Buy!
             </li>
-            <br>
             <li>
               Sending Documents and Parcels Made Easy-Register and find Your Perfect Dropper!
             </li>
-            <br>
             <li>
               Buy what you love, Anywhere-Post your Link and Find the Right Helper!
             </li>
           </ul>
         </div>
-        <div class="col-md-6 text-end">
-          <%= image_tag "parcel.png", size: "500x400", style: "max-width: 100%; height: auto;" %> 
+        <div class="col-md-6 d-flex justify-content-center align-items-center mt-3">
+          <%= image_tag "parcel.png", style: "max-width: 300px; height: auto;" %> 
         </div>
-        <%= link_to how_it_works_path, class: "btn search-button fw-bold mt-4 fs-5 rounded-pill border responsive-button", style: 'background-color: #353188;' do %>
+        <%= link_to how_it_works_path, class: "rounded btn hero-button responsive-button" do %>
           See how it works <i class="fa fa-search mx-2"></i>
         <% end %>
       </div>
@@ -307,7 +304,7 @@
     </div>
   </section>
 
-  <section class="mt-5 mb-5">
+  <!-- <section class="mt-5 mb-5">
     <div class="container text-center">
       <h1 style="color: #353188">Your Global Shipping & Buying Hub</h1>
       <p class="subtitle fs-5">Accelerate Your Global Business with Our Reliable Shipping and Sourcing Solutions</p>
@@ -316,7 +313,7 @@
           <div class="col-lg-2 mt-2">
             <div class="card" style="width: 15rem;">
               <div class="profile-img">
-                <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
+                <%#= image_tag 'ethan.png', alt: "Shipper Profile" %> 
               </div>
               <h3>Siah</h3>
               <div class="route">
@@ -332,7 +329,7 @@
           <div class="col-lg-2 mt-2">
             <div class="card" style="width: 15rem;">
               <div class="profile-img">
-                <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
+                <%#= image_tag 'ethan.png', alt: "Shipper Profile" %> 
               </div>
               <h3>Siah</h3>
               <div class="route">
@@ -348,7 +345,7 @@
           <div class="col-lg-2 mt-2">
             <div class="card" style="width: 15rem;">
               <div class="profile-img">
-                <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
+                <%#= image_tag 'ethan.png', alt: "Shipper Profile" %> 
               </div>
               <h3>Siah</h3>
               <div class="route">
@@ -364,7 +361,7 @@
           <div class="col-lg-2 mt-2">
             <div class="card" style="width: 15rem;">
               <div class="profile-img">
-                <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
+                <%#= image_tag 'ethan.png', alt: "Shipper Profile" %> 
               </div>
               <h3>Siah</h3>
               <div class="route">
@@ -380,7 +377,7 @@
           <div class="col-lg-2 mt-2">
             <div class="card" style="width: 15rem;">
               <div class="profile-img">
-                <%= image_tag 'ethan.png', alt: "Shipper Profile" %> 
+                <%#= image_tag 'ethan.png', alt: "Shipper Profile" %> 
               </div>
               <h3>Siah</h3>
               <div class="route">
@@ -396,7 +393,133 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
+
+   <div class="container mt-5 mb-5 text-center" style="max-width: 1200px; padding: 0;">
+    <div class="section-heading" data-aos="fade-down">
+      <h2 style="color: #353188 !important;" class="fs-1">Your Global Shipping & Buying Hub</h2>
+      <h5 class="mb-5 fs-4">Accelerate Your Global Business with Our Reliable Shipping and Sourcing Solutions</h5>
+    </div>
+
+    <div class="row g-0" style="display: flex; justify-content: center; align-items: center; text-align: center;">
+      <div class="col-md-3 mb-4" style="flex: 1; display: flex; justify-content: center;">
+        <div class="profile-card shadow" style="width: 100%; max-width: 250px; padding: 20px; border-radius: 10px; background-color: #fff;">
+          <div class="profile-image" style="text-align: center;">
+            <%= image_tag "ethan.png", alt: "Profile Picture", style: "width: 100%; border-radius: 50%;" %>
+          </div>
+          <h2 class="name" style="font-size: 1.5rem; margin-top: 10px;">Ethan</h2>
+          <div class="location-info" style="margin-top: 10px;">
+            <div class="location">
+              <span class="city">NYC</span> <span class="country">USA</span>
+            </div>
+            <div class="transport-icon" style="font-size: 1.5rem;">🚗</div>
+            <div class="location">
+              <span class="city">Dubai</span> <span class="country">UAE</span>
+            </div>
+          </div>
+          <div class="datetime-info" style="margin-top: 15px;">
+            <div class="date-row">
+              <span class="label" style="font-weight: bold;">Date :</span>
+              <span class="value">Dec 23, 2024</span>
+            </div>
+            <div class="time-row">
+              <span class="label" style="font-weight: bold;">Time :</span>
+              <span class="value">12:00 PST</span>
+            </div>
+          </div>
+          <button class="check-button" style="background-color: #353188; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 15px;">Check</button>
+        </div>
+      </div>
+
+      <!-- Repeat the profile card structure for other travelers -->
+      <div class="col-md-3 mb-4" style="flex: 1; display: flex; justify-content: center;">
+        <div class="profile-card shadow" style="width: 100%; max-width: 250px; padding: 20px; border-radius: 10px; background-color: #fff;">
+          <div class="profile-image" style="text-align: center;">
+            <%= image_tag "ethan.png", alt: "Profile Picture", style: "width: 100%; border-radius: 50%;" %>
+          </div>
+          <h2 class="name" style="font-size: 1.5rem; margin-top: 10px;">Ethan</h2>
+          <div class="location-info" style="margin-top: 10px;">
+            <div class="location">
+              <span class="city">NYC</span> <span class="country">USA</span>
+            </div>
+            <div class="transport-icon" style="font-size: 1.5rem;">🚗</div>
+            <div class="location">
+              <span class="city">Dubai</span> <span class="country">UAE</span>
+            </div>
+          </div>
+          <div class="datetime-info" style="margin-top: 15px;">
+            <div class="date-row">
+              <span class="label" style="font-weight: bold;">Date :</span>
+              <span class="value">Dec 23, 2024</span>
+            </div>
+            <div class="time-row">
+              <span class="label" style="font-weight: bold;">Time :</span>
+              <span class="value">12:00 PST</span>
+            </div>
+          </div>
+          <button class="check-button" style="background-color: #353188; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 15px;">Check</button>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-4" style="flex: 1; display: flex; justify-content: center;">
+        <div class="profile-card shadow" style="width: 100%; max-width: 250px; padding: 20px; border-radius: 10px; background-color: #fff;">
+          <div class="profile-image" style="text-align: center;">
+            <%= image_tag "ethan.png", alt: "Profile Picture", style: "width: 100%; border-radius: 50%;" %>
+          </div>
+          <h2 class="name" style="font-size: 1.5rem; margin-top: 10px;">Ethan</h2>
+          <div class="location-info" style="margin-top: 10px;">
+            <div class="location">
+              <span class="city">NYC</span> <span class="country">USA</span>
+            </div>
+            <div class="transport-icon" style="font-size: 1.5rem;">🚗</div>
+            <div class="location">
+              <span class="city">Dubai</span> <span class="country">UAE</span>
+            </div>
+          </div>
+          <div class="datetime-info" style="margin-top: 15px;">
+            <div class="date-row">
+              <span class="label" style="font-weight: bold;">Date :</span>
+              <span class="value">Dec 23, 2024</span>
+            </div>
+            <div class="time-row">
+              <span class="label" style="font-weight: bold;">Time :</span>
+              <span class="value">12:00 PST</span>
+            </div>
+          </div>
+          <button class="check-button" style="background-color: #353188; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 15px;">Check</button>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-4" style="flex: 1; display: flex; justify-content: center;">
+        <div class="profile-card shadow" style="width: 100%; max-width: 250px; padding: 20px; border-radius: 10px; background-color: #fff;">
+          <div class="profile-image" style="text-align: center;">
+            <%= image_tag "ethan.png", alt: "Profile Picture", style: "width: 100%; border-radius: 50%;" %>
+          </div>
+          <h2 class="name" style="font-size: 1.5rem; margin-top: 10px;">Ethan</h2>
+          <div class="location-info" style="margin-top: 10px;">
+            <div class="location">
+              <span class="city">NYC</span> <span class="country">USA</span>
+            </div>
+            <div class="transport-icon" style="font-size: 1.5rem;">🚗</div>
+            <div class="location">
+              <span class="city">Dubai</span> <span class="country">UAE</span>
+            </div>
+          </div>
+          <div class="datetime-info" style="margin-top: 15px;">
+            <div class="date-row">
+              <span class="label" style="font-weight: bold;">Date :</span>
+              <span class="value">Dec 23, 2024</span>
+            </div>
+            <div class="time-row">
+              <span class="label" style="font-weight: bold;">Time :</span>
+              <span class="value">12:00 PST</span>
+            </div>
+          </div>
+          <button class="check-button" style="background-color: #353188; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 15px;">Check</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <section class="mt-5">
     <div class="container bg-light p-5">
@@ -461,3 +584,6 @@
 
   <%= render 'shared/subscribe' %>
 </div>
+<script>
+  AOS.init();
+</script>

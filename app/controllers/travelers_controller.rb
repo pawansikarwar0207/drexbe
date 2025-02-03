@@ -14,12 +14,15 @@ class TravelersController < ApplicationController
   end
 
   def create
-    @traveler = Traveler.create(traveler_params)
-
-    if @traveler.save
-      redirect_to travelers_path, notice: 'Traveler was successfully created.'
+    if user_signed_in? 
+      @traveler = current_user.travelers.build(traveler_params)
+      if @traveler.save
+        redirect_to travelers_path, notice: 'Traveler was successfully created.'
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
-      render :new, status: :unprocessable_entity
+      redirect_to new_user_session_path, alert: "You need to sign in to create a parcel ad."
     end
   end
 
@@ -62,6 +65,19 @@ class TravelersController < ApplicationController
     @buy_for_me = BuyForMe.where(departure_country: @departure_country, departure_city: @departure_city, arrival_country: @arrival_country, arrival_city: @arrival_city).presence || []
   end
 
+  def special_instruction
+    @traveler = Traveler.find(params[:id])
+  end
+
+  def update_special_instruction
+    @traveler = Traveler.find(params[:id])
+    if @traveler.update(traveler_params)
+      redirect_to travelers_path, notice: 'Special instructions successfully updated.'
+    else
+      render :special_instruction
+    end
+  end
+
   private
 
   def get_cities_by_country(country_code)
@@ -78,7 +94,7 @@ class TravelersController < ApplicationController
   end
 
   def traveler_params
-    params.require(:traveler).permit(:trip_type, :departure_country, :departure_city, :arrival_country, :arrival_city, :travel_date, :transportation, :parcel_type, :parcel_qty, :ready_to_buy_for_you, :parcel_collection_mode, :travel_return_date)
+    params.require(:traveler).permit(:trip_type, :departure_country, :departure_city, :arrival_country, :arrival_city, :travel_date, :transportation, :parcel_type, :parcel_qty, :ready_to_buy_for_you, :parcel_collection_mode, :travel_return_date, :travel_time, :special_instructions, :parcel_weight, :buy_for_you)
   end
-
 end
+

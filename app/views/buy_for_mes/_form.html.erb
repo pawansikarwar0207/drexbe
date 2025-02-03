@@ -58,7 +58,7 @@
           </div>
          <% end %>
 
-         <%= f.hidden_field :user_id, value: current_user.id %>
+         <%= f.hidden_field :user_id, value: current_user.id if current_user.present? %>
 
         <!-- Delivery Section -->
         <div class="container mt-5">

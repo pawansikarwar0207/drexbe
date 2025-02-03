@@ -32,11 +32,18 @@ Rails.application.routes.draw do
 
   # get 'search_travelers', to: 'search#index'
 
+  # get 'special_instruction', to: 'special_instruction#travelers'
+
   resources :travelers do
     collection do
       get 'search', to: 'travelers#search'
     end
+    member do
+      get :special_instruction  # This route is for GET request to display special instructions form
+      patch :update_special_instruction  # This will handle the form submission for special instructions
+    end
   end
+
 
   resources :parcel_ads do
     member do
