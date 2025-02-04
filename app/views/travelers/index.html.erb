@@ -1,4 +1,4 @@
-<div class="col-lg-10 mx-auto mt-5">
+<div class="col-lg-10 mx-auto mt-5 mb-5">
   <h2 class="mb-4 text-center">Travelers</h2>
   <% if @travelers.present? %>
     <table class="table table-striped">
@@ -10,13 +10,14 @@
           <th>Travel Date</th>
           <th>Parcel Info</th>
           <th>Ready to Buy</th>
-          <th>Collection Mode</th>
+          <th>Parcel Weight</th>
+          <th>Transportation</th>
         </tr>
       </thead>
       <tbody>
         <% @travelers.each do |traveler| %>
           <tr>
-            <td><%= link_to traveler.name, traveler_path(traveler) %></td>
+            <td><%= link_to current_user.full_name, traveler_path(traveler) %></td>
             <td>
               <strong>Departure:</strong> <%= traveler.departure_city %>, <%= traveler.departure_country %>
             </td>
@@ -25,10 +26,11 @@
             </td>
             <td><%= traveler.travel_date %></td>
             <td>
-              <%= traveler.parcel_qty %> parcels
+              <%= traveler.parcel_type || 'N/A' %> parcels
             </td>
-            <td><%= traveler.ready_to_buy_for_you? ? 'Yes' : 'No' %></td>
-            <td><%= traveler.parcel_collection_mode&.humanize || 'N/A' %></td>
+            <td><%= traveler.buy_for_you? ? 'Yes' : 'No' %></td>
+            <td><%= traveler.parcel_weight || 'N/A' %> </td>
+            <td><%= traveler.transportation || 'N/A' %> </td>
           </tr>
         <% end %>
       </tbody>

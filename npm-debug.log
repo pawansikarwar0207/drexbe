@@ -1,0 +1,148 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/hp/.nvm/v0.8.28/bin/node',
+1 verbose cli   '/home/hp/.nvm/v0.8.28/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'stimulus' ]
+2 info using npm@1.2.30
+3 info using node@v0.8.28
+4 verbose read json /home/hp/project/drexbe/package.json
+5 warn package.json app@ No repository field.
+6 verbose read json /home/hp/project/drexbe/node_modules/fraction.js/package.json
+7 verbose read json /home/hp/project/drexbe/node_modules/dependency-graph/package.json
+8 verbose read json /home/hp/project/drexbe/node_modules/concat-map/package.json
+9 verbose read json /home/hp/project/drexbe/node_modules/fs-extra/package.json
+10 verbose read json /home/hp/project/drexbe/node_modules/brace-expansion/package.json
+11 verbose read json /home/hp/project/drexbe/node_modules/minimatch/package.json
+12 verbose read json /home/hp/project/drexbe/node_modules/postcss-cli/package.json
+13 verbose read json /home/hp/project/drexbe/node_modules/color-convert/package.json
+14 verbose read json /home/hp/project/drexbe/node_modules/path-type/package.json
+15 verbose read json /home/hp/project/drexbe/node_modules/@nodelib/package.json
+16 verbose read json /home/hp/project/drexbe/node_modules/braces/package.json
+17 verbose read json /home/hp/project/drexbe/node_modules/normalize-range/package.json
+18 verbose read json /home/hp/project/drexbe/node_modules/binary-extensions/package.json
+19 verbose read json /home/hp/project/drexbe/node_modules/balanced-match/package.json
+20 verbose read json /home/hp/project/drexbe/node_modules/node-releases/package.json
+21 verbose read json /home/hp/project/drexbe/node_modules/sass/package.json
+22 verbose read json /home/hp/project/drexbe/node_modules/merge2/package.json
+23 verbose read json /home/hp/project/drexbe/node_modules/normalize-path/package.json
+24 verbose read json /home/hp/project/drexbe/node_modules/supports-color/package.json
+25 verbose read json /home/hp/project/drexbe/node_modules/unicorn-magic/package.json
+26 verbose read json /home/hp/project/drexbe/node_modules/glob-parent/package.json
+27 verbose read json /home/hp/project/drexbe/node_modules/postcss-load-config/package.json
+28 verbose read json /home/hp/project/drexbe/node_modules/ansi-regex/package.json
+29 verbose read json /home/hp/project/drexbe/node_modules/yargs-parser/package.json
+30 verbose read json /home/hp/project/drexbe/node_modules/queue-microtask/package.json
+31 verbose read json /home/hp/project/drexbe/node_modules/run-parallel/package.json
+32 verbose read json /home/hp/project/drexbe/node_modules/universalify/package.json
+33 verbose read json /home/hp/project/drexbe/node_modules/yargs/package.json
+34 verbose read json /home/hp/project/drexbe/node_modules/color-name/package.json
+35 verbose read json /home/hp/project/drexbe/node_modules/postcss-reporter/package.json
+36 verbose read json /home/hp/project/drexbe/node_modules/is-fullwidth-code-point/package.json
+37 verbose read json /home/hp/project/drexbe/node_modules/immutable/package.json
+38 verbose read json /home/hp/project/drexbe/node_modules/nodemon/package.json
+39 verbose read json /home/hp/project/drexbe/node_modules/picomatch/package.json
+40 verbose read json /home/hp/project/drexbe/node_modules/flatpickr/package.json
+41 verbose read json /home/hp/project/drexbe/node_modules/picocolors/package.json
+42 verbose read json /home/hp/project/drexbe/node_modules/source-map-js/package.json
+43 verbose read json /home/hp/project/drexbe/node_modules/touch/package.json
+44 verbose read json /home/hp/project/drexbe/node_modules/nanoid/package.json
+45 verbose read json /home/hp/project/drexbe/node_modules/fastq/package.json
+46 verbose read json /home/hp/project/drexbe/node_modules/update-browserslist-db/package.json
+47 verbose read json /home/hp/project/drexbe/node_modules/caniuse-lite/package.json
+48 verbose read json /home/hp/project/drexbe/node_modules/escalade/package.json
+49 verbose read json /home/hp/project/drexbe/node_modules/emoji-regex/package.json
+50 verbose read json /home/hp/project/drexbe/node_modules/@sindresorhus/package.json
+51 verbose read json /home/hp/project/drexbe/node_modules/get-stdin/package.json
+52 verbose read json /home/hp/project/drexbe/node_modules/is-glob/package.json
+53 verbose read json /home/hp/project/drexbe/node_modules/y18n/package.json
+54 verbose read json /home/hp/project/drexbe/node_modules/is-number/package.json
+55 verbose read json /home/hp/project/drexbe/node_modules/ansi-styles/package.json
+56 verbose read json /home/hp/project/drexbe/node_modules/pify/package.json
+57 verbose read json /home/hp/project/drexbe/node_modules/is-binary-path/package.json
+58 verbose read json /home/hp/project/drexbe/node_modules/read-cache/package.json
+59 verbose read json /home/hp/project/drexbe/node_modules/slash/package.json
+60 verbose read json /home/hp/project/drexbe/node_modules/jsonfile/package.json
+61 verbose read json /home/hp/project/drexbe/node_modules/chokidar/package.json
+62 verbose read json /home/hp/project/drexbe/node_modules/thenby/package.json
+63 verbose read json /home/hp/project/drexbe/node_modules/globby/package.json
+64 verbose read json /home/hp/project/drexbe/node_modules/postcss-value-parser/package.json
+65 verbose read json /home/hp/project/drexbe/node_modules/readdirp/package.json
+66 verbose read json /home/hp/project/drexbe/node_modules/has-flag/package.json
+67 verbose read json /home/hp/project/drexbe/node_modules/fill-range/package.json
+68 verbose read json /home/hp/project/drexbe/node_modules/browserslist/package.json
+69 verbose read json /home/hp/project/drexbe/node_modules/@popperjs/package.json
+70 verbose read json /home/hp/project/drexbe/node_modules/ignore-by-default/package.json
+71 verbose read json /home/hp/project/drexbe/node_modules/is-extglob/package.json
+72 verbose read json /home/hp/project/drexbe/node_modules/to-regex-range/package.json
+73 verbose read json /home/hp/project/drexbe/node_modules/wrap-ansi/package.json
+74 verbose read json /home/hp/project/drexbe/node_modules/cliui/package.json
+75 verbose read json /home/hp/project/drexbe/node_modules/graceful-fs/package.json
+76 verbose read json /home/hp/project/drexbe/node_modules/reusify/package.json
+77 verbose read json /home/hp/project/drexbe/node_modules/undefsafe/package.json
+78 verbose read json /home/hp/project/drexbe/node_modules/ms/package.json
+79 verbose read json /home/hp/project/drexbe/node_modules/micromatch/package.json
+80 verbose read json /home/hp/project/drexbe/node_modules/pretty-hrtime/package.json
+81 verbose read json /home/hp/project/drexbe/node_modules/debug/package.json
+82 verbose read json /home/hp/project/drexbe/node_modules/yaml/package.json
+83 verbose read json /home/hp/project/drexbe/node_modules/pstree.remy/package.json
+84 verbose read json /home/hp/project/drexbe/node_modules/simple-update-notifier/package.json
+85 verbose read json /home/hp/project/drexbe/node_modules/bootstrap-icons/package.json
+86 verbose read json /home/hp/project/drexbe/node_modules/electron-to-chromium/package.json
+87 verbose read json /home/hp/project/drexbe/node_modules/bootstrap/package.json
+88 verbose read json /home/hp/project/drexbe/node_modules/ignore/package.json
+89 verbose read json /home/hp/project/drexbe/node_modules/strip-ansi/package.json
+90 verbose read json /home/hp/project/drexbe/node_modules/lilconfig/package.json
+91 verbose read json /home/hp/project/drexbe/node_modules/anymatch/package.json
+92 verbose read json /home/hp/project/drexbe/node_modules/fast-glob/package.json
+93 verbose read json /home/hp/project/drexbe/node_modules/postcss/package.json
+94 verbose read json /home/hp/project/drexbe/node_modules/get-caller-file/package.json
+95 verbose read json /home/hp/project/drexbe/node_modules/autoprefixer/package.json
+96 verbose read json /home/hp/project/drexbe/node_modules/semver/package.json
+97 verbose read json /home/hp/project/drexbe/node_modules/require-directory/package.json
+98 verbose read json /home/hp/project/drexbe/node_modules/string-width/package.json
+99 verbose from cache /home/hp/project/drexbe/package.json
+100 verbose readDependencies using package.json deps
+101 verbose cache add [ 'stimulus', null ]
+102 verbose cache add name=undefined spec="stimulus" args=["stimulus",null]
+103 verbose parsed url { pathname: 'stimulus', path: 'stimulus', href: 'stimulus' }
+104 silly lockFile 4a7986ab-stimulus stimulus
+105 verbose lock stimulus /home/hp/.npm/4a7986ab-stimulus.lock
+106 silly lockFile 4a7986ab-stimulus stimulus
+107 silly lockFile 4a7986ab-stimulus stimulus
+108 verbose addNamed [ 'stimulus', '' ]
+109 verbose addNamed [ null, '' ]
+110 silly lockFile e462e374-stimulus stimulus@
+111 verbose lock stimulus@ /home/hp/.npm/e462e374-stimulus.lock
+112 silly addNameRange { name: 'stimulus', range: '', hasData: false }
+113 verbose url raw stimulus
+114 verbose url resolving [ 'https://registry.npmjs.org/', './stimulus' ]
+115 verbose url resolved https://registry.npmjs.org/stimulus
+116 info trying registry request attempt 1 at 00:17:40
+117 http GET https://registry.npmjs.org/stimulus
+118 info retry will retry, error on last attempt: Error: 140716155453568:error:1407742E:SSL routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol version:../deps/openssl/openssl/ssl/s23_clnt.c:658:
+119 info trying registry request attempt 2 at 00:17:50
+120 http GET https://registry.npmjs.org/stimulus
+121 info retry will retry, error on last attempt: Error: 140716155453568:error:1407742E:SSL routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol version:../deps/openssl/openssl/ssl/s23_clnt.c:658:
+122 info trying registry request attempt 3 at 00:19:01
+123 http GET https://registry.npmjs.org/stimulus
+124 silly lockFile e462e374-stimulus stimulus@
+125 silly lockFile e462e374-stimulus stimulus@
+126 error Error: 140716155453568:error:1407742E:SSL routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol version:../deps/openssl/openssl/ssl/s23_clnt.c:658:
+126 error
+126 error     at CleartextStream._puller (tls.js:670:24)
+126 error     at CleartextStream.CryptoStream._pull (tls.js:604:19)
+126 error     at SecurePair.cycle (tls.js:894:20)
+126 error     at EncryptedStream.CryptoStream.write (tls.js:285:13)
+126 error     at Socket.ondata (stream.js:38:26)
+126 error     at Socket.EventEmitter.emit (events.js:96:17)
+126 error     at TCP.onread (net.js:397:14)
+127 error If you need help, you may report this log at:
+127 error     <http://github.com/isaacs/npm/issues>
+127 error or email it to:
+127 error     <npm-@googlegroups.com>
+128 error System Linux 6.8.0-52-generic
+129 error command "/home/hp/.nvm/v0.8.28/bin/node" "/home/hp/.nvm/v0.8.28/bin/npm" "install" "stimulus"
+130 error cwd /home/hp/project/drexbe
+131 error node -v v0.8.28
+132 error npm -v 1.2.30
+133 verbose exit [ 1, true ]

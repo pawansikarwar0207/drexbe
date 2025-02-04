@@ -1,14 +1,19 @@
-<% if @user.present? %>
-  <% if @user.profile_completion < 100 %>
-    <div class="alert alert-warning mt-2">
-      Your profile is only <%= @user.profile_completion %>% complete. Please complete your profile for better experience.
-    </div>
+<div class="mb-5">
+  <% if @user.present? %>
+    <% if @user.profile_completion < 100 %>
+      <div class="alert alert-warning mt-2">
+        Your profile is only <%= @user.profile_completion %>% complete. Please complete your profile for better experience.
+      </div>
+    <% end %>
   <% end %>
-<% end %>
-<div class="col-lg-8 mx-auto mt-3">
-  <% if @user.user_type == 'individual' %>
-    <%= render 'individual_profile', user: @user %>
-  <% elsif @user.user_type == 'professional' %>
-    <%= render 'professional_profile', user: @user %>
-  <% end %>
+  <div class="col-lg-8 mx-auto mt-3">
+    <% if @user.user_type == 'individual' %>
+      <%= render 'individual_profile', user: @user %>
+    <% elsif @user.user_type == 'professional' %>
+      <%= render 'professional_profile', user: @user %>
+    <% end %>
+  </div>
+</div>
+<div class="mt-5">
+  <%= render 'shared/footer' %>
 </div>

@@ -6,12 +6,14 @@ class Traveler < ApplicationRecord
 
   validates :travel_date,
             :trip_type,
-            :departure_country,
             :departure_city,
-            :arrival_country,
             :arrival_city,
             :transportation,
             :parcel_type, 
+            :special_instructions,
+            :parcel_weight,
+            :travel_time,
+            :buy_for_you,
             presence: true
             # :parcel_qty,
             # :ready_to_buy_for_you,
