@@ -14,9 +14,17 @@ class BuyForMesController < ApplicationController
     if user_signed_in?
       @buy_for_me = current_user.buy_for_mes.build(buy_for_me_params)
       if @buy_for_me.save
-        redirect_to buy_for_mes_path, notice: "Your request has been successfully created."
+        # redirect_to buy_for_mes_path, notice: "Your request has been successfully created."
+        respond_to do |format|
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("thankyou-modal-container", partial: "buy_for_mes/thank_you_modal") }
+          format.html { redirect_to buy_for_mes_path, notice: "Your request has been successfully created." }
+        end
       else
-        render :new, status: :unprocessable_entity
+        # render :new, status: :unprocessable_entity
+        respond_to do |format|
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("form-errors", partial: "buy_for_mes/buyer_form_errors", locals: { object: @buy_for_me }) }
+          format.html { render :new, status: :unprocessable_entity }
+        end
       end
     else
       redirect_to new_user_session_path, alert: "You need to sign in to create a parcel ad."
