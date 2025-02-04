@@ -1,18 +1,38 @@
 <div id="message_<%= message.id %>">
-  <div class="cont-<%= message.user.id %>">
-    <div class="message-box msg-<%= message.user.id %> message-content-container">
+  <div class="cont-<%= message.user.id %> relative group">
+    <div class="message-box msg-<%= message.user.id %> message-content-container p-3 bg-green-100 rounded-lg relative transition duration-300 ease-in-out hover:bg-blue-50 shadow-md">
       <%= message.content %>
       
       <!-- Timestamp -->
       <small class="text-muted d-block text-end">
         <%= message.created_at.strftime("%I:%M %p") %>
       </small>
+      
+      <!-- Read Section -->
       <div class="read-section-<%= message.user.id %> d-none text-end">
         <% if message.status == 'sent' %>
           <span class="tick-icon" style="font-size: 8px;">✔️</span>
         <% elsif message.status == 'read' %>
           <span class="tick-icon" style="font-size: 8px;">✔️✔️</span>
         <% end %>
+      </div>
+
+      <!-- Hover Actions -->
+      <div class="absolute top-1/2 -translate-y-1/2 right-[-2.5rem] flex items-center space-x-2 hover-icons opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300">
+        <!-- Emoji Button -->
+        <button class="w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded-full">
+          😊
+        </button>
+        <!-- Dropdown Menu -->
+        <div class="relative">
+          <button id="dropdown-toggle-<%= message.id %>" class="w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded-full">
+            ⋮
+          </button>
+          <!-- Dropdown Options -->
+          <div id="dropdown-menu-<%= message.id %>" class="dropdown-menu absolute bg-white shadow-md rounded-md p-2 hidden">
+            <button class="w-full text-left px-2 py-1 hover:bg-gray-100" onclick="copyMessage('<%= j message.content %>')">Copy Message</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -52,12 +72,147 @@
         <% end %>
       </div>
     </div>
-    <!-- Copy Button -->
-    <button 
-      class="copy-btn btn btn-outline-secondary btn-sm"
-      data-action="click->emoji#copy"
-      data-clipboard-content="<%= message.content %>">
-      Copy
-    </button>
   </div>
-</div>  
+</div>
+
+<script>
+  // Dropdown toggle for each message
+  document.querySelectorAll("[id^=dropdown-toggle]").forEach((button) => {
+    const menuId = button.id.replace('dropdown-toggle', 'dropdown-menu');
+    const menu = document.getElementById(menuId);
+
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.classList.toggle('hidden');
+    });
+
+    // Close the menu when clicking outside
+    document.addEventListener('click', () => {
+      menu.classList.add('hidden');
+    });
+  });
+
+  // Copy message function
+  function copyMessage(message) {
+    navigator.clipboard.writeText(message).then(() => {
+      alert('Message copied to clipboard!');
+    });
+  }
+</script>
+<style>
+  /* Message Box Styling */
+.message-box {
+  position: relative;
+  padding: 12px 16px;
+  background-color: #e2f3e8; /* Light green background */
+  border-radius: 12px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.message-box:hover {
+  background-color: #d6e9f8; /* Light blue on hover */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover Icons Container */
+.hover-icons {
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transform: translateY(-50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.cont-relative:hover .hover-icons {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Emoji and Dropdown Button */
+.hover-icons button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6; /* Light gray */
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.hover-icons button:hover {
+  background-color: #e5e7eb; /* Darker gray on hover */
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+  z-index: 100;
+  display: none;
+}
+
+.dropdown-menu.active {
+  display: block;
+}
+
+.dropdown-menu button {
+  width: 100%;
+  padding: 8px 16px;
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  color: #4b5563;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f3f4f6; /* Light gray */
+}
+
+/* Emoji Picker */
+.emoji-picker {
+  position: absolute;
+  top: 50px;
+  left: -50%;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+/* Message Reactions */
+.message-reactions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.message-reactions span {
+  font-size: 14px;
+  background-color: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+</style>

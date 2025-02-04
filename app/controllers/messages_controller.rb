@@ -34,11 +34,11 @@ class MessagesController < ApplicationController
     reaction = Reaction.find_or_initialize_by(user: current_user, message: @message)
 
     if reaction.persisted? && reaction.emoji == emoji
-      # If the user clicks the same emoji, remove the reaction (toggle off)
       reaction.destroy
     else
       # Otherwise, update or create the reaction with the new emoji
       reaction.emoji = emoji
+      reaction.save!
     end
 
     # Group reactions by emoji for the message
