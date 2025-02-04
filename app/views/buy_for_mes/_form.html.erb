@@ -259,30 +259,16 @@
     });
   });
 
-  # function showPage(pageId) {
-  #   document.querySelectorAll(".page").forEach((page) => {
-  #     page.classList.remove("active");
-  #   });
-  #   document.getElementById(pageId).classList.add("active");
-  #   if (pageId === "page1") {
-  #     const modal = bootstrap.Modal.getInstance(
-  #       document.getElementById("abandonModal")
-  #     );
-  #     if (modal) modal.hide();
-  #   }
-  # }
-
-  # function showAbandonModal() {
-  #   const modal = new bootstrap.Modal(
-  #     document.getElementById("abandonModal")
-  #   );
-  #   modal.show();
-  # }
-
-  # function showSubmitModal() {
-  #   const modal = new bootstrap.Modal(
-  #     document.getElementById("submitModal")
-  #   );
-  #   modal.show();
-  # }
+  function showPage(pageId) {
+    document.querySelectorAll(".page").forEach((page) => {
+      page.classList.remove("active");
+    });
+    document.getElementById(pageId).classList.add("active");
+    if (pageId === "page1") {
+      const modal = bootstrap.Modal.getInstance(
+        document.getElementById("abandonModal")
+      );
+      if (modal) modal.hide();
+    }
+  }
 </script>
