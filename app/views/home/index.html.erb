@@ -50,7 +50,7 @@
             <div class="count-group flex-fill" style="text-align: center;">
               <div class="customer-count d-flex align-items-center" style="justify-content: center; flex-direction: column;">
                 <div class="count-content">
-                  <h4><i class="fa fa-clock-o"></i> Fast</h4>
+                  <h4><i class="fa fa-clock"></i> Fast</h4>
                   <p class="text-center fs-6 text-dark">Same-day delivery for <br> urgent shipments </p>
                 </div>
               </div>
@@ -147,47 +147,58 @@
   <%# Elevate Your Experience section %>
   <%= render 'shared/experience' %>
 
+  <!-- Browse Featured Travelers -->
   <div class="container mt-5 mb-5 text-center" style="max-width: 1200px;">
     <div class="section-heading" data-aos="fade-down">
       <h2 class="fs-1 text-primary" style="color: #353188 !important">Browse Featured Travelers!</h2>
       <h5 class="mb-5 fs-4">Connect with verified travelers ready to carry for your packages to exciting destinations. Explore their profiles, choose your traveler and start shipping and buying today!</h5>
     </div>
 
-    <div class="row justify-content-center">
-      <% 4.times do %>
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center">
-          <div class="profile-card shadow p-3 rounded bg-white text-center mb-3" style="max-width: 300px;">
-            <div class="profile-image">
-              <%= image_tag "ethan.png", alt: "Profile Picture", class: "img-fluid rounded-circle" %>
+    <div class="position-relative">
+      <!-- Prev Button -->
+      <button class="owl-prev-btn-2 position-absolute top-50 start-0 translate-middle-y btn btn-primary">❮</button>
+
+      <!-- Second Owl Carousel -->
+      <div class="owl-carousel owl-carousel-2">
+        <% 4.times do %>
+          <div class="item">
+            <div class="profile-card shadow p-3 rounded bg-white text-center mb-3" style="max-width: 300px;">
+              <div class="profile-image">
+                <%= image_tag "ethan.png", alt: "Profile Picture", class: "img-fluid rounded-circle" %>
+              </div>
+              <h2 class="name fs-4 mt-2">Ethan</h2>
+              <div class="location-info mt-2">
+                <div class="location">
+                  <span class="city">NYC</span> <span class="country text-dark">USA</span>
+                </div>
+                <div class="transport-icon fs-3">🚗</div>
+                <div class="location">
+                  <span class="city">Dubai</span> <span class="country text-dark">UAE</span>
+                </div>
+              </div>
+              <div class="datetime-info mt-3">
+                <div class="date-row">
+                  <span class="label fw-bold text-dark">Date :</span>
+                  <span class="value">Dec 23, 2024</span>
+                </div>
+                <div class="time-row">
+                  <span class="label fw-bold text-dark">Time :</span>
+                  <span class="value">12:00 PST</span>
+                </div>
+              </div>
+              <button class="btn mt-3 text-white" style="background-color: #353188 !important">Check</button>
             </div>
-            <h2 class="name fs-4 mt-2">Ethan</h2>
-            <div class="location-info mt-2">
-              <div class="location">
-                <span class="city">NYC</span> <span class="country text-dark">USA</span>
-              </div>
-              <div class="transport-icon fs-3">🚗</div>
-              <div class="location">
-                <span class="city">Dubai</span> <span class="country text-dark">UAE</span>
-              </div>
-            </div>
-            <div class="datetime-info mt-3">
-              <div class="date-row">
-                <span class="label fw-bold text-dark">Date :</span>
-                <span class="value">Dec 23, 2024</span>
-              </div>
-              <div class="time-row">
-                <span class="label fw-bold text-dark">Time :</span>
-                <span class="value">12:00 PST</span>
-              </div>
-            </div>
-            <button class="btn mt-3 text-white" style="background-color: #353188 !important">Check</button>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
+
+      <!-- Next Button -->
+      <button class="owl-next-btn-2 position-absolute top-50 end-0 translate-middle-y btn btn-primary">❯</button>
     </div>
   </div>
-</div>
-</div>
+
+  </div>
+  </div>
 
   <section class="section popular-car-type">
     <div class="testimonials-container">
@@ -227,45 +238,56 @@
     </div>
   </section>
 
-   <div class="container mt-5 mb-5 text-center" style="max-width: 1200px;">
+  <!--  Global Shipping & Buying Hub -->
+  <div class="container mt-5 mb-5 text-center" style="max-width: 1200px;">
     <div class="section-heading" data-aos="fade-down">
-      <h2 class="fs-1 text-primary" style="color: #353188 !important" >Your Global Shipping & Buying Hub</h2>
+      <h2 class="fs-1 text-primary" style="color: #353188 !important">Your Global Shipping & Buying Hub</h2>
       <h5 class="mb-5 fs-4">Accelerate Your Global Business with Our Reliable Shipping and Sourcing Solutions</h5>
     </div>
 
-    <div class="row justify-content-center">
-      <% 4.times do %>
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center">
-          <div class="profile-card shadow p-3 rounded bg-white text-center mb-3" style="max-width: 300px;">
-            <div class="profile-image">
-              <%= image_tag "ethan.png", alt: "Profile Picture", class: "img-fluid rounded-circle" %>
+    <div class="position-relative">
+      <!-- Prev Button -->
+      <button class="owl-prev-btn-1 position-absolute top-50 start-0 translate-middle-y btn btn-primary">❮</button>
+
+      <!-- First Owl Carousel -->
+      <div class="owl-carousel owl-carousel-1">
+        <% 4.times do %>
+          <div class="item">
+            <div class="profile-card shadow p-3 rounded bg-white text-center mb-3" style="max-width: 300px;">
+              <div class="profile-image">
+                <%= image_tag "ethan.png", alt: "Profile Picture", class: "img-fluid rounded-circle" %>
+              </div>
+              <h2 class="name fs-4 mt-2">Ethan</h2>
+              <div class="location-info mt-2">
+                <div class="location">
+                  <span class="city">NYC</span> <span class="country text-dark">USA</span>
+                </div>
+                <div class="transport-icon fs-3">🚗</div>
+                <div class="location">
+                  <span class="city">Dubai</span> <span class="country text-dark">UAE</span>
+                </div>
+              </div>
+              <div class="datetime-info mt-3">
+                <div class="date-row">
+                  <span class="label fw-bold text-dark">Date :</span>
+                  <span class="value">Dec 23, 2024</span>
+                </div>
+                <div class="time-row">
+                  <span class="label fw-bold text-dark">Time :</span>
+                  <span class="value">12:00 PST</span>
+                </div>
+              </div>
+              <button class="btn mt-3 text-white" style="background-color: #353188 !important">Check</button>
             </div>
-            <h2 class="name fs-4 mt-2">Ethan</h2>
-            <div class="location-info mt-2">
-              <div class="location">
-                <span class="city">NYC</span> <span class="country text-dark">USA</span>
-              </div>
-              <div class="transport-icon fs-3">🚗</div>
-              <div class="location">
-                <span class="city">Dubai</span> <span class="country text-dark">UAE</span>
-              </div>
-            </div>
-            <div class="datetime-info mt-3">
-              <div class="date-row">
-                <span class="label fw-bold text-dark">Date :</span>
-                <span class="value">Dec 23, 2024</span>
-              </div>
-              <div class="time-row">
-                <span class="label fw-bold text-dark">Time :</span>
-                <span class="value">12:00 PST</span>
-              </div>
-            </div>
-            <button class="btn mt-3 text-white" style="background-color: #353188 !important">Check</button>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
+
+      <!-- Next Button -->
+      <button class="owl-next-btn-1 position-absolute top-50 end-0 translate-middle-y btn btn-primary">❯</button>
     </div>
   </div>
+
 
 
   <section class="mt-5">
@@ -333,21 +355,39 @@
   AOS.init();
 </script>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    function initOwlCarousel(carouselClass, prevBtn, nextBtn) {
+      let $carousel = $(carouselClass);
 
-<style>
-  .faq-card {
-    transition: transform 0.3s ease-in-out;
-  }
+      if ($carousel.length > 0) {
+        $carousel.owlCarousel({
+          loop: true,
+          margin: 5, // Keep space between cards
+          center: true, // Center the single card in mobile view
+          nav: false,
+          dots: false,
+          responsive: {
+            0: { items: 1, margin: 20, center: true }, // Ensure centering in mobile view
+            576: { items: 2, margin: 15 },
+            768: { items: 3, margin: 20 },
+            992: { items: 4, margin: 25 }
+          }
+        });
 
-  .faq-card:hover {
-    transform: translateY(-5px);
-  }
+        // Custom navigation buttons
+        $(prevBtn).click(function() {
+          $carousel.trigger("prev.owl.carousel");
+        });
 
-  .more-info {
-    text-decoration: none;
-  }
+        $(nextBtn).click(function() {
+          $carousel.trigger("next.owl.carousel");
+        });
+      }
+    }
 
-  .more-info:hover {
-    text-decoration: underline;
-  }
-</style>
+    // Initialize both carousels separately
+    initOwlCarousel(".owl-carousel-1", ".owl-prev-btn-1", ".owl-next-btn-1");
+    initOwlCarousel(".owl-carousel-2", ".owl-prev-btn-2", ".owl-next-btn-2");
+  });
+</script>

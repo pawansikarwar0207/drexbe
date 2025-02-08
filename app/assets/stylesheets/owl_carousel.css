@@ -1,0 +1,88 @@
+ .faq-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.faq-card:hover {
+  transform: translateY(-5px);
+}
+
+.more-info {
+  text-decoration: none;
+}
+
+.more-info:hover {
+  text-decoration: underline;
+}
+
+/* Default Button Styles */
+.owl-prev-btn-1, .owl-next-btn-1,
+.owl-prev-btn-2, .owl-next-btn-2 {
+  display: flex !important;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px; /* Default size */
+  height: 50px;
+  background-color: #353188;
+  color: white;
+  font-size: 24px;
+  border: none;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 1;
+}
+
+/* Adjust Button Size on Small Screens (Mobile) */
+@media (max-width: 576px) {  /* Target screens smaller than 576px */
+  .owl-prev-btn-1, .owl-next-btn-1,
+  .owl-prev-btn-2, .owl-next-btn-2 {
+    width: 35px; /* Smaller button size */
+    height: 35px;
+    font-size: 18px; /* Decrease icon size */
+  }
+
+  .owl-prev-btn-1 { left: -40px; } /* Adjust positioning */
+  .owl-next-btn-1 { right: -40px; }
+  
+  .owl-prev-btn-2 { left: -40px; }
+  .owl-next-btn-2 { right: -40px; }
+}
+
+.profile-card {
+  max-width: 350px; /* Increase the width */
+  width: 100%; /* Ensure responsiveness */
+}
+
+.owl-carousel .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px; /* Add padding around each item */
+}
+
+.owl-stage {
+  display: flex !important;
+  gap: 5px !important; /* Space between cards */
+}
+
+/* Default styling for carousel items */
+.owl-carousel .item {
+  display: flex;
+  justify-content: center;
+}
+
+/* Ensure centering in mobile view */
+@media (max-width: 576px) {  /* For screens smaller than 576px */
+  .owl-carousel .owl-stage {
+    display: flex;
+    justify-content: center !important;
+  }
+
+  .owl-carousel .owl-item {
+    display: flex;
+    justify-content: center !important;
+  }
+}
