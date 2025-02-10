@@ -46,163 +46,76 @@
     </div>
   </section>
 
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4">
+        
+        <% steps = [
+          { number: 1, image: "image102.png", title: "Sign Up for Free", 
+              description: "
+                Join DrexBe Community for free,<br>
+                - verify your profile by:<br>
+                > <strong>Email</strong><br>
+                > Phone Number,<br>
+                > ID Document.<br>
+                to be able to carry all types of parcels.".html_safe 
+            },
 
-  <section>
-    <div class="steps-container">
-      <div class="step-card">
-        <div class="step-number">1</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%= image_tag "image102.png", style: "width: auto; height: auto;"%>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Sign Up for Free</h3>
-          <p class="lead fw-bold">
-            Join DrexBe Community for free, - verify your profile by:
-            <br>  
-            > Email,
-            <br>
-            > Phone Number,
-            <br>
-            > ID Document.
-            <br>
-            to be able to carry all type of parcels
-          </p>
-        </div>
-      </div>
-      
-      <div class="step-card">
-        <div class="step-number">2</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%= image_tag 'image90.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Shop & Fill out Your Requirement</h3>
-          <p class="lead fw-bold text-center">
-            Copy & Paste the Product URL Link from the Brand Website you love. - Or fill the name and address of the shop.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+          { number: 2, image: "image90.png", title: "Shop & Fill out Your Requirement", 
+            description: "Copy & Paste the Product URL Link from the Brand Website you love. - Or fill the name and address of the shop." },
 
-  <section>
-    <div class="steps-container">
-      <div class="step-card">
-        <div class="step-number">3</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%= image_tag 'img4.png' , style: "width: auto; height: auto;"%>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Find Travelers</h3>
-          <p class="lead fw-bold text-center">
-            Based on your trip criteria (departure, destination, date)
+          { number: 3, image: "img4.png", title: "Find Travelers", 
+            description: "Based on your trip criteria (departure, destination, date)
             list of people looking for service will appear and you will only have to contact them and ask them service.
             Also possibility to be contacted by users looking to provide service.
-            - To help you, refer to profile rating and comments available on Users Profile.
-          </p>
-        </div>
-      </div>
-      
-      <div class="step-card">
-        <div class="step-number">4</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-             <%= image_tag 'img102.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Contact and Negociate</h3>
-          <p class="lead fw-bold">
-            Select the suitable Traveler, contact them via DrexBe instant messenger.
-            <br>
-            Discuss with them:
-            <br>
-            > Date, Time, Place to collect the parcel
-            <br>
-            > Negociate your proposed fee.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+            - To help you, refer to profile rating and comments available on Users Profile." },
 
-  <section>
-    <div class="steps-container">
-      <div class="step-card">
-        <div class="step-number">5</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%= image_tag 'sender05.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Submit & Pay</h3>
-          <p class="lead fw-bold">
-          As soon as you agree with Travelers and accept your proposal: 
-          <br>
-          > Proceed to Pay the final amount indicate (Product Price & Travelers fees).
-          <br>
-          > Confirm Via DrexBe Plateform.
-          <br>
-          Note: The money is blocked with our payment provider and is only transferred to the traveller when you receive your product
-          </p>
-        </div>
-      </div>
-      
-      <div class="step-card">
-        <div class="step-number">6</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-             <%= image_tag 'sender06.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Buy & Ship to You</h3>
-          <p class="lead fw-bold">
+          { number: 4, image: "image102.png", title: "Sign Up for Free", 
+              description: "
+                Select the suitable Traveler, contact them via DrexBe instant messenger.<br>
+                - Discuss with them:<br>
+                > Date, Time, Place to collect the parcel<br>
+                > Negociate your proposed fee,".html_safe 
+          },
+
+          { number: 4, image: "image102.png", title: "Sign Up for Free", 
+              description: "
+                As soon as you agree with Travelers and accept your proposal:<br>
+                > Proceed to Pay the final amount indicate (Product Price & Travelers fees).<br>
+                > Confirm Via DrexBe Plateform.<br>
+                Note: The money is blocked with our payment provider and is only transferred to the traveller when you receive your product".html_safe 
+          },
+
+
+          { number: 6, image: "sender06.png", title: "Buy & Ship to You", 
+            description: "
             - The Selected traveler will buy your product. <br>
             - Via our powerful tracking tool, Now you can follow and track your package. <br>
             - You will receive your product in the date, time and place as you agree with the traveler. <br>
             - Since You, Your Parent, Your Friend collect the package, confirm by scanning QR Code provided.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+            ".html_safe },
 
-  <section>
-    <div class="steps-container">
-      <div class="step-card">
-        <div class="step-number">7</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%= image_tag 'sender08.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Rate Your Experience</h3>
-          <p class="lead fw-bold">
-            In the end don't forget to: <br>
+          { number: 7, image: "sender08.png", title: "Rate Your Experience", 
+            description: "In the end don't forget to: <br>
             -Rate your Experience.<br>
             - Visit Our social media, we are present in Facebook, X, Instagram, Linkedin. <br>
-            - If satisfied, invite your friends and enjoy our sponsorship offer.
-          </p>
-        </div>
-      </div>
-      
-      <div class="step-card">
-        <div class="step-number"></div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%#= image_tag 'sender08.png' %>
+            - If satisfied, invite your friends and enjoy our sponsorship offer.".html_safe }
+        ] %>
+
+        <% steps.each do |step| %>
+          <div class="col-md-6">
+            <div class="step-card col-md-10 mx-auto">
+              <div class="step-number fs-1 text-primary fw-bold" style="color: #353188 !important"><%= step[:number] %></div>
+              <div class="step-content text-start text-lg-center">
+                <div class="d-flex justify-content-center">
+                  <%= image_tag step[:image], class: "img-fluid" , style: "max-width: 200px; height: auto;" %>
+                </div>
+                <h3 class="fs-3 mt-3" style="color: #353188 !important"><%= step[:title] %></h3>
+                <p class="fs-5 fw-bold text-dark text-start"><%= step[:description] %></p>
+              </div>
+            </div>
           </div>
-          <%# <h3 class="fs-4 mt-3 text-center">Rate Your Experience</h3> %>
-          <%# <p class="lead text-center">
-            In the end don't forget to: <br>
-            -Rate your Experience.<br>
-            - Visit Our social media, we are present in Facebook, X, Instagram, Linkedin. <br>
-            - If satisfied, invite your friends and enjoy our sponsorship offer.
-          </p> %>
-        </div>
+        <% end %>
       </div>
     </div>
   </section>

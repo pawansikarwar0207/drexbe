@@ -1,0 +1,59 @@
+.modal-backdrop.show {
+    opacity: 0 !important;
+    display: none !important; /* Completely hide the backdrop */
+  }
+
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4B3F72;
+  }
+  .navbar-brand span {
+    color: #E63946;
+  }
+  .nav-link {
+    color: #4B3F72;
+    font-size: 1rem;
+    margin-right: 1rem;
+  }
+  .nav-link small {
+    font-size: 0.75rem;
+  }
+  .btn-browse-posts {
+    background-color: #353188;
+    color: white;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  .btn-browse-posts:hover {
+    background-color: #dddd;
+    transform: scale(1.05);
+    color: black;
+  }
+
+  .icon {
+    font-size: 1.25rem;
+    color: #4B3F72;
+    margin-left: 1rem;
+  }
+  .navbar-nav {
+    margin: 0 auto;
+  }
+
+  .country-flag {
+    width: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  .dropdown-item {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .dropdown-item:hover {
+    background-color: #4B3F72;
+    color: white;
+  }

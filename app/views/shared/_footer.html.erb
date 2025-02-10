@@ -1,50 +1,43 @@
-
-<footer class="footer">
-  <div class="footer-content">
-    <!-- Main Footer Content -->
-    <div class="footer-sections">
-      <!-- Logo Section -->
-      <div class="footer-logo">
-        <%= image_tag "logo.png", alt: "DrexBe Logo" %>
+<footer class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <div class="footer-logo">
+          <%= image_tag "logo.png", alt: "DrexBe Logo", class:"mb-3" %>
+        </div>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-dark text-decoration-none">How DrexBe Works</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">About us</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Help Centre</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Blog</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Careers</a></li>
+        </ul>
       </div>
-
-      <!-- DrexBe Links -->
-      <div class="footer-links">
-        <h3 class="fs-5">DrexBe</h3>
-        <ul>
-          <li><a href="#">How DrexBe Works</a></li>
-          <li><a href="#">About us</a></li>
-          <li><a href="#">Help Centre</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Careers</a></li>
+      <div class="col-md-3 mb-4">
+        <h5 class="fw-bold">Customer Services</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-dark text-decoration-none">Contact Us</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">About</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">FAQ</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Terms</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Privacy</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Testimonials</a></li>
         </ul>
       </div>
 
-      <!-- Customer Services -->
-      <div class="footer-links">
-        <h3 class="fs-5">CUSTOMER SERVICES</h3>
-        <ul>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Important Information</a></li>
-          <li><a href="#">Terms</a></li>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Testimonials</a></li>
-        </ul>
-      </div>
-
-      <!-- Payment Options -->
-      <div class="payment-section">
-        <h3 class="fs-5">Payment Options</h3>
-        <p class="mt-1 mb-2">Pay your way with secure options like credit card, bank transfer or digital wallet. Fast, easy, and convenient!</p>
+      <div class="col-md-6 mb-4">
+        <h5 class="fw-bold">Payment Options</h5>
+        <p class="mb-2">
+          Pay your way with secure options like credit card, bank transfer,
+          or digital wallet. Fast, easy, and convenient!
+        </p>
         <div class="payment-icons">
-          <%= image_tag "visa.png", alt: "Visa" %>
-          <%= image_tag "master.png", alt: "Mastercard" %>
-          <%= image_tag "american.png", alt: "American Express" %>
-          <%= image_tag "union.png", alt: "Union Pay" %>
-          <%= image_tag "apple.png", alt: "Apple Pay" %>
-          <%= image_tag "gpay.png", alt: "Google Pay" %>
+         <%= image_tag "visa.png", alt: "Visa", class:"me-2" %>
+         <%= image_tag "master.png", alt: "Mastercard", class:"me-2" %>
+         <%= image_tag "american.png", alt: "American Express", class:"me-2" %>
+         <%= image_tag "union.png", alt: "Union Pay", class:"me-2" %>
+         <%= image_tag "apple.png", alt: "Apple Pay", class:"me-2" %>
+         <%= image_tag "gpay.png", alt: "Google Pay", class:"me-2" %>
         </div>
       </div>
     </div>
@@ -56,16 +49,17 @@
       <a href="#" class="social-icon"><%= image_tag "youtube.png" %></a>
       <a href="#" class="social-icon"><%= image_tag "instagram.png" %></a>
     </div>
-  </div>
 
-  <!-- Footer Bottom -->
-    <div class="footer-bottom">
-      <p class="text-white">© 2024 DrexBE All Rights Reserved.</p>
-      <div class="footer-bottom-links">
-        <a href="#">Sitemap</a> |
-        <a href="#">Terms & Conditions</a> |
-        <a href="#">Privacy Policy</a> |
-        <a href="#">Usage Terms</a>
+  </div>
+    <div class="row mt-4 pt-4 border-top footer-bottom">
+      <div class="col-md-6">
+        <p>2024 DrexBE.All Rights Reserved.</p>
+      </div>
+      <div class="col-md-6 text-end">
+        <a href="#" class="text-white me-3 text-decoration-none">Sitemap</a>
+        <a href="#" class="text-white me-3 text-decoration-none">Terms & Conditions</a>
+        <a href="#" class="text-white me-3 text-decoration-none">Privacy Policy</a>
+        <a href="#" class="text-white text-decoration-none">Usage Terms</a>
       </div>
     </div>
 </footer>

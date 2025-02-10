@@ -46,161 +46,80 @@
     </div>
   </section>
 
-
-  <section>
-    <div class="steps-container">
-      <div class="step-card">
-        <div class="step-number">1</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%= image_tag "image102.png", style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Sign Up for Free</h3>
-          <p class="lead fw-bold">
-            Join DrexBe Community for free, - verify your profile by:
-            <br>  
-            > Email,
-            <br>
-            > Phone Number,
-            <br>
-            > ID Document.
-            <br>
-            to be able to carry all type of parcels
-          </p>
-        </div>
-      </div>
+ <section class="py-5">
+  <div class="container">
+    <div class="row g-4">
       
-      <div class="step-card">
-        <div class="step-number">2</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%= image_tag 'image90.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Post your Shipment </h3>
-          <p class="lead fw-bold text-center">
-            Fill out the form in I'Send Section with all details required (Parcel Type, Seize, Weight and post one picture).
-            - You are free to propose the Bonus or fee of the shippement service, to help you we implement a comparateur tool based on +40 carriers worldwide, check section: Recommanded Fee.
-            - Recommanded Fees, consider a reduction of 40% compared to others carriers.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+      <% steps = [
+        { number: 1, image: "image102.png", title: "Sign Up for Free", 
+            description: "
+              Join DrexBe Community for free,<br>
+              - verify your profile by:<br>
+              > <strong>Email</strong><br>
+              > Phone Number,<br>
+              > ID Document.<br>
+              to be able to carry all types of parcels.".html_safe 
+          },
 
-  <section>
-    <div class="steps-container">
-      <div class="step-card">
-        <div class="step-number">3</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%= image_tag 'img4.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Find Travelers</h3>
-          <p class="lead fw-bold text-center">
-            Based on your trip criteria (departure, destination, date)
+        { number: 2, image: "image90.png", title: "Post your Shipment", 
+          description: "Fill out the form in I'Send Section with all details required (Parcel Type, Seize, Weight and post one picture).
+            - You are free to propose the Bonus or fee of the shippement service, to help you we implement a comparateur tool based on +40 carriers worldwide, check section: Recommanded Fee.
+            - Recommanded Fees, consider a reduction of 40% compared to others carriers." },
+
+        { number: 3, image: "img4.png", title: "Find Travelers", 
+          description: "Based on your trip criteria (departure, destination, date)
             list of people looking for service will appear and you will only have to contact them and ask them service.
             Also possibility to be contacted by users looking to provide service.
-            - To help you, refer to profile rating and comments available on Users Profile.
-          </p>
-        </div>
-      </div>
-      
-      <div class="step-card">
-        <div class="step-number">4</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-             <%= image_tag 'img102.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Contact and Negociate</h3>
-          <p class="lead fw-bold">
+            - To help you, refer to profile rating and comments available on Users Profile." },
+
+        { number: 4, image: "img102.png", title: "Contact and Negociate", 
+          description: "
             Select the suitable Traveler, contact them via DrexBe instant messenger.
-            <br>
             Discuss with them:
-            <br>
             > Date, Time, Place to collect the parcel
-            <br>
             > Negociate your proposed fee.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+          " },
 
-  <section>
-    <div class="steps-container">
-      <div class="step-card">
-        <div class="step-number">5</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%= image_tag 'sender05.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Pay and Confirm</h3>
-          <p class="lead fw-bold text-center">
-            As soon as you agree with the traveler
+        { number: 5, image: "sender05.png", title: "Pay and Confirm", 
+          description: "As soon as you agree with the traveler
             Confirm on DrexBe Platform and proceed to pay their fees.
-            <br>
-            The money is blocked with our payment provider and is only transferred to the traveller when you confirm reception of your parcel.
-          </p>
-        </div>
-      </div>
-      
-      <div class="step-card">
-        <div class="step-number">6</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-             <%= image_tag 'sender06.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Meet & Drop</h3>
-          <p class="lead fw-bold text-center">
-            - Meet the traveler at the date, time, place agree. <br>
-            - Open The Package and let him check well and confirm it's compliant. - Drop your document, parcel, palet to the traveler.<br>
-            - Confirm on DrexBe Plateform.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+            The money is blocked with our payment provider and is only transferred to the traveller when you confirm reception of your parcel." },
 
-  <section>
-    <div class="steps-container">
-      <div class="step-card">
-        <div class="step-number">7</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%= image_tag 'sender07.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Receive & confirm</h3>
-          <p class="lead fw-bold text-center">
-            - Via our powerful tracking tool, Now you can follow and track your parcel. - Since You, Your Parent, Your Friend collect the package, confirm by scanning QR Code provided.
-          </p>
-        </div>
-      </div>
-      
-      <div class="step-card">
-        <div class="step-number">8</div>
-        <div class="step-content">
-          <div class="illustration">
-            <!-- You would replace this with your actual illustration image -->
-            <%= image_tag 'sender08.png', style: "width: auto; height: auto;" %>
-          </div>
-          <h3 class="fs-3 mt-3 text-center">Rate Your Experience</h3>
-          <p class="lead fw-bold">
-            In the end don't forget to: <br>
-            -Rate your Experience.<br>
-            - Visit Our social media, we are present in Facebook, X, Instagram, Linkedin. <br>
+        { number: 6, image: "sender06.png", title: "Meet & Drop", 
+          description: " Meet the traveler at the date, time, place agree. <br>
+            - Open The Package and let him check well and confirm it's compliant. - Drop your document, parcel, palet to the traveler.
+            - Confirm on DrexBe Plateform." },
+
+        { number: 7, image: "sender07.png", title: "Receive & confirm", 
+          description: "- Via our powerful tracking tool, Now you can follow and track your parcel. - Since You, Your Parent, Your Friend collect the package, confirm by scanning QR Code provided." },
+
+        { number: 8, image: "sender08.png", title: "Rate Your Experience", 
+          description: "
+            In the end don't forget to:
+            -Rate your Experience.
+            - Visit Our social media, we are present in Facebook, X, Instagram, Linkedin.
             - If satisfied, invite your friends and enjoy our sponsorship offer.
-          </p>
+          " }
+      ] %>
+
+      <% steps.each do |step| %>
+        <div class="col-md-6">
+          <div class="step-card col-md-10 mx-auto">
+            <div class="step-number fs-1 text-primary fw-bold" style="color: #353188 !important"><%= step[:number] %></div>
+            <div class="step-content text-start text-lg-center">
+              <div class="d-flex justify-content-center">
+                <%= image_tag step[:image], class: "img-fluid" , style: "max-width: 200px; height: auto;" %>
+              </div>
+              <h3 class="fs-3 mt-3" style="color: #353188 !important"><%= step[:title] %></h3>
+              <p class="fs-5 fw-bold text-dark text-start"><%= step[:description] %></p>
+            </div>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
-  </section>
+  </div>
+</section>
+  
 
   <%= render 'shared/privacy_policy' %>
 

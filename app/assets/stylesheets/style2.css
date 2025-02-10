@@ -123,7 +123,7 @@ header p {
   background: white;
   border-radius: 20px;
   padding: 30px;
-  width: 316px;
+  width: 400px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -219,7 +219,7 @@ header p {
 /* Responsive Design */
 @media (max-width: 350px) {
   .profile-card {
-    width: 90%;
+    width: 100%;
     padding: 20px;
   }
 
