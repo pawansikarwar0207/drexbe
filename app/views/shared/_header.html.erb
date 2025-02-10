@@ -21,7 +21,7 @@
       <%= link_to "Browse Posts", search_results_path, class: "btn btn-browse-posts" %>
     </form>
     <div class="d-flex align-items-center">
-      <!-- <div class="dropdown">
+      <div class="dropdown">
         <a class="nav-link " href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
           <%= image_tag "flags/us.png", alt: "Img", class: 'country-flag' %>EN
         </a>
@@ -42,14 +42,7 @@
             </a>
           </li>
         </ul>
-      </div> -->
-      
-      <button class="nav-link" data-action="click->language-modal#open">
-        <span style="font-size: 0.9rem; color: #3f357a">
-          <%= image_tag "flags/us.png", alt: "Img", class: 'country-flag' %> EN
-        </span>
-      </button>
-
+      </div>
       <%= link_to how_it_works_path do %>
         <i class="fas fa-question-circle me-2 fs-5" style="color: #353188;"></i>
       <% end %>
@@ -98,53 +91,3 @@
     </div>
   </div>
 </nav>
-
-<!-- !-- Language Modal -->
-<div class="language-modal" id="languageModal" data-controller="language-modal" data-language-modal-target="modal">
-  <div class="modal-dialog">
-    <button class="close-button" data-action="click->language-modal#close">×</button>
-    <div class="modal-content">
-      <!-- Tabs -->
-      <ul class="nav nav-tabs border-0 px-3">
-        <li class="nav-item">
-          <a class="nav-link llanguage active" href="#" 
-             data-action="click->language-modal#switchTab"
-             data-tab="language"
-             data-language-modal-target="languageTab">
-            Language and region
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link ccurrency" href="#" 
-             data-action="click->language-modal#switchTab"
-             data-tab="currency"
-             data-language-modal-target="currencyTab">
-            Currency
-          </a>
-        </li>
-      </ul>
-
-      <div class="modal-body">
-        <!-- Translation Toggle -->
-        <div id="languageContent" data-language-modal-target="languageContent" style="display: block;">
-          <h6 class="mb-3">Suggested languages and regions</h6>
-          <div class="row g-2">
-            <div class="col-md-4"><div class="language-item">English (UK)</div></div>
-            <div class="col-md-4"><div class="language-item">English (US)</div></div>
-            <div class="col-md-4"><div class="language-item">हिन्दी (भारत)</div></div>
-          </div>
-        </div>
-
-        <div id="currencyContent" data-language-modal-target="currencyContent" style="display: none;">
-          <h5 class="mb-4">Choose a currency</h5>
-          <div class="row g-2">
-            <div class="col-md-4"><div class="currency-item">INR – ₹</div></div>
-            <div class="col-md-4"><div class="currency-item">USD – $</div></div>
-            <div class="col-md-4"><div class="currency-item">EUR – €</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
