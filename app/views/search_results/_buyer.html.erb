@@ -1,0 +1,94 @@
+<% if @buy_for_mes.present? %>
+  <% @buy_for_mes.each do |buy_for_me| %>
+    <div class="col-lg-12 mt-2 border">
+      <div class="card-body">
+        <h5 class="badge bg-secondary mb-2 rounded-0">Buyer</h5>
+        <div class="row g-0 mt-2 p-3">
+          <div class="col-md-6">
+            <%= link_to buy_for_me_path(buy_for_me), class: 'text-decoration-none' do %>
+              <% if buy_for_me.departure_city.present? || buy_for_me.departure_country.present? || buy_for_me.arrival_city.present? || buy_for_me.arrival_country.present? %>
+                <p class="fw-bold fs-6"><%= buy_for_me.departure_city %> - <%= buy_for_me.departure_country %> <i class="fa fa-arrow-right"></i> <%= buy_for_me.arrival_city %> - <%= buy_for_me.arrival_country %></p>
+              <% end %>
+            <% end %>
+            <span class="">
+              <% if buy_for_me.shopping_date.present? %>
+                <p class="fs-12">
+                  <strong><%= buy_for_me.shopping_date %></strong>
+                </p>
+              <% end %>
+            </span>
+          </div>
+          <div class="col-md-6">
+            <% if buy_for_me.parcel_type.present? %>
+              <div class="">
+                <h6 class="">Buy For Me:</h6>
+                  <div id="parcel_type_buttons" class="btn-group d-flex flex-wrap justify-content-start" role="group" aria-label="Parcel Type">
+                    <button type="button" class="parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'small' %> " data-value="Small">
+                       Small
+                    </button>
+                    <button type="button" class="parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'medium' %>" data-value="Medium">
+                      Medium
+                    </button>
+                    <button type="button" class="parcel-type-button <%= 'active' if buy_for_me.parcel_type == 'large' %>" data-value="Large">
+                      Large
+                    </button>
+                  </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="row g-0 mb-2 p-3">
+          <div class="col-md-6">
+            <div class="name">
+              <% if buy_for_me.user.present? %>
+                <% if buy_for_me.user.profile_picture.attached?  %>
+                  <%= image_tag buy_for_me.user.profile_picture, class: 'rounded-circle', alt: 'User Avatar', height:"70", width:"70" %>
+                <% else %>
+                  <img alt="Profile picture placeholder" height="70" src="https://storage.googleapis.com/a1aa/image/jed55Xb2pTXQA6deohLNwe2jvjqoa7HqClQTTdbTedr7VQROB.jpg" width="70", class="rounded-circle">
+                <% end %>
+              <% end %>
+              <%= profile_link_for(buy_for_me) %>
+            </div>
+            <div class="icons mt-3 fs-4 mx-2">
+              <%= verification_icons(buy_for_me.user) %>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-lg-6">
+                <% if buy_for_me.category.present? %>
+                  <div class="buy-for-you">
+                    <h6 class="me-2">Category:</h6>
+                    <div aria-label="Buy For You" class="btn-group" role="group">
+                      <span class="border p-1" style="border-radius: 5px;"><%= buy_for_me.category %></span>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+
+              <div class="col-lg-6">
+                <% if buy_for_me.total_price.present? %>
+                  <div class="buy-for-you">
+                    <h6 class="me-2">Final Product Price:</h6>
+                    <div aria-label="Buy For You" class="btn-group" role="group">
+                      <span class="border p-1" style="border-radius: 5px;"><%= number_to_currency(buy_for_me.total_price) %></span>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            
+            <div class="mt-5 d-flex justify-content-end">
+              <%= link_to 'See Preview', buy_for_me_path(buy_for_me), class: 'btn text-white rounded-pill me-2',  style:"background-color: #353188 !important" %>
+              <span class="btn btn-outline-primary rounded-pill" id="profile-button"><%= profile_link_for(buy_for_me) %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+<div class="alert alert-danger text-center mt-2 mb-2" role="alert">
+  No Buyer is found for your search criteria.
+</div>
+<% end %>

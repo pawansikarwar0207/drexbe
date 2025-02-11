@@ -1,3 +1,5 @@
+// bootstrap@5.3.3 downloaded from https://ga.jspm.io/npm:bootstrap@5.3.3/dist/js/bootstrap.esm.js
+
 import*as t from"@popperjs/core";const e=new Map;const s={set(t,s,n){e.has(t)||e.set(t,new Map);const i=e.get(t);i.has(s)||i.size===0?i.set(s,n):console.error(`Bootstrap doesn't allow more than one instance per element. Bound instance: ${Array.from(i.keys())[0]}.`)},get(t,s){return e.has(t)&&e.get(t).get(s)||null},remove(t,s){if(!e.has(t))return;const n=e.get(t);n.delete(s);n.size===0&&e.delete(t)}};const n=1e6;const i=1e3;const o="transitionend";
 /**
  * Properly escape IDs selectors to handle weird IDs
