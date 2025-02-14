@@ -21,28 +21,9 @@
       <%= link_to "Browse Posts", search_results_path, class: "btn btn-browse-posts" %>
     </form>
     <div class="d-flex align-items-center">
-      <div class="dropdown">
-        <a class="nav-link " href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          <%= image_tag "flags/us.png", alt: "Img", class: 'country-flag' %>EN
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li>
-            <a class="dropdown-item" href="#">
-              <%= image_tag "flags/fr.png", alt: "Img", class: 'country-flag' %>French
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">
-              <%= image_tag "flags/es.png", alt: "Img", class: 'country-flag' %>Spanish
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">
-              <%= image_tag "flags/de.png", alt: "Img", class: 'country-flag' %>German
-            </a>
-          </li>
-        </ul>
-      </div>
+      <button class="nav-link" onclick="openLanguageModal()">
+        <span style="font-size: 0.9rem; color: #3f357a"><%= image_tag "flags/us.png", alt: "Img", class: 'country-flag' %> EN</span>
+      </button>
       <%= link_to how_it_works_path do %>
         <i class="fas fa-question-circle me-2 fs-5" style="color: #353188;"></i>
       <% end %>
@@ -91,3 +72,422 @@
     </div>
   </div>
 </nav>
+
+
+<!-- !-- Language Modal -->
+<div class="language-modal" id="languageModal">
+  <div class="modal-dialog">
+    <button class="close-button" onclick="closeLanguageModal()">×</button>
+    <div class="drag-handle"></div>
+    <div class="modal-content">
+      <!-- Tabs -->
+      <ul class="nav nav-tabs border-0 px-3">
+        <li class="nav-item">
+          <a
+            class="nav-link llanguage active"
+            href="#"
+            onclick="switchTab('language')"
+          >
+            Language and region
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link ccurrency"
+            href="#"
+            onclick="switchTab('currency')"
+          >
+            Currency
+          </a>
+        </li>
+      </ul>
+
+      <div class="modal-body">
+        <!-- Translation Toggle -->
+        <div id="languageContent" class="active">
+          <div class="translation-toggle">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h6 class="mb-1">Translation</h6>
+                <p class="mb-0 text-muted">
+                  Automatically translate descriptions and reviews to
+                  English.
+                </p>
+              </div>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  checked
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Suggested Languages -->
+          <div class="mt-4">
+            <h6 class="mb-3">Suggested languages and regions</h6>
+            <div class="row g-2">
+              <div class="col-md-4">
+                <div class="language-item">
+                  <div>English</div>
+                  <div class="language-region">United Kingdom</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="language-item">
+                  <div>English</div>
+                  <div class="language-region">United States</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="language-item">
+                  <div>हिन्दी</div>
+                  <div class="language-region">भारत</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Choose Language -->
+          <div class="mt-4">
+            <h6 class="mb-3">Choose a language and region</h6>
+            <div class="row g-2">
+              <div class="col-md-4">
+                <div class="language-item">
+                  <div>English</div>
+                  <div class="language-region">India</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="language-item">
+                  <div>English</div>
+                  <div class="language-region">India</div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="language-item">
+                  <div>Deutsch</div>
+                  <div class="language-region">Deutschland</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="language-item">
+                  <div>Español</div>
+                  <div class="language-region">España</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="currencyContent">
+          <h5 class="mb-4">Choose a currency</h5>
+          <div class="row g-2">
+            <div class="col-12 col-md-6">
+              <div class="currency-item selected">
+                <div>Indian rupee</div>
+                <div class="currency-code">INR – ₹</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="currency-item">
+                <div>Australian dollar</div>
+                <div class="currency-code">AUD – $</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="currency-item">
+                <div>Brazilian real</div>
+                <div class="currency-code">BRL – R$</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="currency-item">
+                <div>Bulgarian lev</div>
+                <div class="currency-code">BGN – лв.</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="currency-item">
+                <div>Canadian dollar</div>
+                <div class="currency-code">CAD – $</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="currency-item">
+                <div>Chinese yuan</div>
+                <div class="currency-code">CNY – ¥</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="currency-item">
+                <div>Euro</div>
+                <div class="currency-code">EUR – €</div>
+              </div>
+            </div>
+            <!-- Add more currency items as needed -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let startY;
+  let currentY;
+  let initialTouchY;
+
+  function openLanguageModal() {
+    const modal = document.getElementById("languageModal");
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLanguageModal() {
+    const modal = document.getElementById("languageModal");
+    modal.classList.remove("show");
+    document.body.style.overflow = "auto";
+  }
+
+  // Handle drag to close
+  const modalContent = document.querySelector(".modal-content");
+  const dragHandle = document.querySelector(".drag-handle");
+
+  dragHandle.addEventListener("touchstart", (e) => {
+    startY = e.touches[0].clientY;
+    initialTouchY = startY;
+    modalContent.style.transition = "none";
+  });
+
+  dragHandle.addEventListener("touchmove", (e) => {
+    currentY = e.touches[0].clientY;
+    const deltaY = currentY - startY;
+
+    if (deltaY > 0) {
+      // Only allow dragging downwards
+      modalContent.style.transform = `translateY(${deltaY}px)`;
+    }
+  });
+
+  dragHandle.addEventListener("touchend", (e) => {
+    modalContent.style.transition = "transform 0.3s ease-in-out";
+    const deltaY = currentY - initialTouchY;
+
+    if (deltaY > 100) {
+      // If dragged down more than 100px, close the modal
+      closeLanguageModal();
+    } else {
+      modalContent.style.transform = "translateY(0)";
+    }
+  });
+
+  // Close modal when clicking backdrop
+  document
+    .getElementById("languageModal")
+    .addEventListener("click", function (e) {
+      if (e.target === this) {
+        closeLanguageModal();
+      }
+    });
+
+  function switchTab(tab) {
+    const languageContent = document.getElementById("languageContent");
+    const currencyContent = document.getElementById("currencyContent");
+    const tabs = document.querySelectorAll(".nav-link");
+
+    // Remove active class from all tabs
+    tabs.forEach((t) => t.classList.remove("active"));
+
+    // Toggle content and tab active state
+    if (tab === "currency") {
+      languageContent.classList.remove("active");
+      currencyContent.classList.add("active");
+
+      // Add active class to currency tab
+      document.querySelector(".ccurrency").classList.add("active");
+    } else {
+      currencyContent.classList.remove("active");
+      languageContent.classList.add("active");
+
+      // Add active class to language tab
+      document.querySelector(".llanguage").classList.add("active");
+    }
+  }
+
+  // Add click handler for currency items
+  document.querySelectorAll(".currency-item").forEach((item) => {
+    item.addEventListener("click", function () {
+      document.querySelectorAll(".currency-item").forEach((i) => {
+        i.classList.remove("selected");
+      });
+      this.classList.add("selected");
+    });
+  });
+</script>
+
+<style>
+  /* lanngauge model css  */
+  .language-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1050;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+  }
+
+  .language-modal.show {
+    display: block;
+    opacity: 1;
+  }
+
+  .modal-dialog {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: -100%;
+    margin: 0 9%;
+    padding: 2rem;
+    max-width: 100%;
+    transition: bottom 0.3s ease-in-out;
+    background: white;
+    border-radius: 18px;
+    min-height: 42rem;
+    max-height: 42rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .language-modal.show .modal-dialog {
+    bottom: 30px;
+  }
+
+  .modal-content {
+    border: none;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .nav-tabs {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 2;
+  }
+
+  .modal-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1rem 0;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 1060;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .drag-handle {
+    width: 40px;
+    height: 4px;
+    background-color: #ddd;
+    border-radius: 2px;
+    margin: 10px auto;
+  }
+
+  .nav-tabs {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 2;
+    border-bottom: none; /* Add this */
+  }
+
+  .nav-tabs .nav-link {
+    color: #222;
+    border: none;
+    padding: 16px;
+    position: relative; /* Add this */
+  }
+
+  .nav-tabs .nav-link.active {
+    border: none; /* Add this */
+    position: relative; /* Add this */
+  }
+
+  .nav-tabs .nav-link.active::after {
+    /* Add this new rule */
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #222;
+  }
+
+  /* Content Styles */
+  .translation-toggle {
+    padding: 16px 0;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .language-item,
+  .currency-item {
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .language-item:hover,
+  .currency-item:hover {
+    background-color: #f7f7f7;
+  }
+
+  .language-region,
+  .currency-code {
+    font-size: 14px;
+    color: #717171;
+  }
+
+  .currency-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid transparent;
+  }
+
+  /* Content Toggle */
+  #currencyContent,
+  #languageContent {
+    display: none;
+  }
+
+  #currencyContent.active,
+  #languageContent.active {
+    display: block;
+  }
+
+  /* Form Elements */
+  .form-switch .form-check-input {
+    width: 3em;
+    height: 1.5em;
+    margin-left: 0;
+  }
+</style>
