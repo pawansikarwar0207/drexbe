@@ -22,16 +22,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        UserMailer.welcome_email(@user).deliver_now
-        sign_up(resource_name, @user)
-        format.html { redirect_to root_path, notice: "User was successfully created. An email has been sent" }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    # respond_to do |format|
+    #   if @user.save
+    #     UserMailer.welcome_email(@user).deliver_now
+    #     sign_up(resource_name, @user)
+    #     format.html { redirect_to root_path, notice: "User was successfully created. An email has been sent" }
+    #     format.json { render :show, status: :created, location: @user }
+    #   else
+    #     format.html { render :new, status: :unprocessable_entity }
+    #     format.json { render json: @user.errors, status: :unprocessable_entity }
+    #   end
+    # end
+    if @user.save
+      sign_in(@user) # Directly sign in the user
+      redirect_to root_path, notice: "User registered successfully!"
+    else
+      render :new
     end
   end
 
