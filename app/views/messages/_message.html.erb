@@ -1,6 +1,6 @@
 <div id="message_<%= message.id %>">
-  <div class="cont-<%= message.user.id %> relative group">
-    <div class="message-box msg-<%= message.user.id %> message-content-container p-3 bg-green-100 rounded-lg relative transition duration-300 ease-in-out hover:bg-blue-50 shadow-md">
+  <div class="cont-<%= message.user.id %> position-relative group">
+    <div class="message-box msg-<%= message.user.id %> message-content-container p-3 bg-light rounded-lg position-relative transition-all shadow-sm">
       <%= message.content %>
       
       <!-- Timestamp -->
@@ -18,34 +18,34 @@
       </div>
 
       <!-- Hover Actions -->
-      <div class="absolute top-1/2 -translate-y-1/2 right-[-2.5rem] flex items-center space-x-2 hover-icons opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300">
+      <div class="position-absolute top-50 translate-middle-y end-0 d-flex align-items-center gap-2 hover-icons opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
         <!-- Emoji Button -->
-        <button class="w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded-full">
+        <button class="btn btn-light rounded-circle p-1">
           😊
         </button>
         <!-- Dropdown Menu -->
-        <div class="relative">
-          <button id="dropdown-toggle-<%= message.id %>" class="w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded-full">
+        <div class="position-relative">
+          <button id="dropdown-toggle-<%= message.id %>" class="btn btn-light rounded-circle p-1">
             ⋮
           </button>
           <!-- Dropdown Options -->
-          <div id="dropdown-menu-<%= message.id %>" class="dropdown-menu absolute bg-white shadow-md rounded-md p-2 hidden">
-            <button class="w-full text-left px-2 py-1 hover:bg-gray-100" onclick="copyMessage('<%= j message.content %>')">Copy Message</button>
+          <div id="dropdown-menu-<%= message.id %>" class="dropdown-menu position-absolute bg-white shadow rounded p-2 d-none">
+            <button class="dropdown-item" onclick="copyMessage('<%= j message.content %>')">Copy Message</button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Reactions Section -->
-    <div class="reaction-buttons <%= message.user == current_user ? 'reciver-reaction' : 'sender-reaction' %>"
+    <div class="reaction-buttons <%#= message.user == current_user ? 'reciver-reaction' : 'sender-reaction' %>"
          data-controller="emoji"
-         data-emoji-chat-room-id-value="<%= @chat_room.id %>"
+         data-emoji-chat-room-id-value="<%= chat_room.id %>"
          data-emoji-message-id-value="<%= message.id %>">
       <div class="hover-emoji-container">
         <button
           data-emoji-target="emojiButton"
           data-action="click->emoji#togglePicker"
-          class="reaction-button"
+          class="btn btn-light rounded-circle p-1"
           aria-label="Pick an emoji">
           😀
         </button>
@@ -74,6 +74,7 @@
     </div>
   </div>
 </div>
+
 
 <script>
   // Dropdown toggle for each message
@@ -214,5 +215,6 @@
   border-radius: 12px;
   display: inline-block;
 }
+
 
 </style>

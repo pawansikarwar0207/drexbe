@@ -1,0 +1,22 @@
+<%= turbo_stream.replace "chatroom_frame" do %>
+  <%= turbo_frame_tag "chatroom_frame" do %>
+    <% connection = current_user.sent_requests.find_by(receiver_id: @other_user.id) %>
+    <div class="text-center mt-5 <%= connection.present? ? 'd-block' : 'd-none' %>">
+      <h4 class="text-warning mb-3">Connection Request Sent!</h4>
+      <p class="text-secondary text-center mb-4">
+        Your connection request has been sent to <strong><%= @other_user.full_name %></strong>.  
+        Please wait for them to accept before you can start chatting.
+      </p>
+    </div>
+    <div class="text-center mt-4 <%= !connection.present? ? 'd-block' : 'd-none' %>">
+      <h4 class="text-danger mb-3">
+        No connection found!
+      </h4>
+      <p class="text-secondary text-center mb-4">
+        You are not connected with <strong><%= @other_user.full_name %></strong>.  
+        Click the button below to send a connection request.
+      </p>
+      <%= button_to "Connect +", connection_requests_path(receiver_id: @other_user.id), method: :post, class: "btn btn-primary btn-lg px-4" %>
+    </div>
+  <% end %>  
+<% end %>

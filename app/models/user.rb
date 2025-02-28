@@ -26,12 +26,15 @@ class User < ApplicationRecord
   has_and_belongs_to_many :chat_rooms
   has_many :messages
   has_many :reactions
+  has_many :sent_requests, class_name: "ConnectionRequest", foreign_key: "sender_id"
+  has_many :received_requests, class_name: "ConnectionRequest", foreign_key: "receiver_id"
 
   # Users who give reviews
   has_many :given_reviews, class_name: 'Review', foreign_key: 'reviewer_id', dependent: :destroy
 
   # Users who receive reviews
-  has_many :received_reviews, class_name: 'Review', foreign_key: 'reviewee_id', dependent: :destroy 
+  has_many :received_reviews, class_name: 'Review', foreign_key: 'reviewee_id', dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
 
   # for phone number verification with twilio
@@ -106,6 +109,13 @@ class User < ApplicationRecord
     ChatRoom.create.tap do |room|
       room.users << [self, other_user]
     end
+  end
+
+  def connected_with?(user)
+    ConnectionRequest.exists?(
+      ["(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) AND status = ?", 
+       self.id, user.id, user.id, self.id, "accepted"]
+    )
   end
 end
 

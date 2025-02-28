@@ -16,9 +16,6 @@ application.register("form-steps", FormStepsController)
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import LanguageModalController from "./language_modal_controller"
-application.register("language-modal", LanguageModalController)
-
 import PriceCalculatorController from "./price_calculator_controller"
 application.register("price-calculator", PriceCalculatorController)
 

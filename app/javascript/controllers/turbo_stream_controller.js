@@ -6,6 +6,7 @@ export default class extends Controller {
 
   connect() {
     // this.loadFirstUserChat(); // Automatically load the first user's chat
+    console.log('connected.........');
   }
 
   reset() {

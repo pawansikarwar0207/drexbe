@@ -20,6 +20,10 @@
     <form class="d-flex">
       <%= link_to "Browse Posts", search_results_path, class: "btn btn-browse-posts" %>
     </form>
+    
+    <%= turbo_frame_tag "notification_bell" do %>
+      <%= render "shared/bell", user: current_user %>
+    <% end %>
     <div class="d-flex align-items-center">
       <button class="nav-link" onclick="openLanguageModal()">
         <span style="font-size: 0.9rem; color: #3f357a"><%= image_tag "flags/us.png", alt: "Img", class: 'country-flag' %> EN</span>

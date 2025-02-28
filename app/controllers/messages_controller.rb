@@ -9,16 +9,36 @@ class MessagesController < ApplicationController
 
     if @message.save
       @message.update(status: 'sent') # Default to 'sent'
-      ActionCable.server.broadcast(
-        "chatroom_#{@chat_room.id}", 
-        turbo_stream.append(
-          'message_frame', 
-          partial: "messages/message", 
-          locals: { message: @message }
+
+      # Identify the recipient (assuming a chat room has exactly two participants)
+      recipient = @chat_room.users.where.not(id: current_user.id).first
+
+      # Create a notification for the recipient
+      if recipient
+        Notification.create(
+          user: recipient,
+          chat_room: @chat_room.id,
+          message: "#{current_user.full_name} sent you a message",
+          read: false
         )
+
+        # Broadcast notification update to recipient
+        Turbo::StreamsChannel.broadcast_replace_to(
+          "notifications_#{recipient.id}",
+          target: "notification_bell",
+          partial: "shared/bell",
+          locals: { user: recipient }
+        )
+      end
+
+      # Broadcast new message to chat room
+      Turbo::StreamsChannel.broadcast_append_to(
+        "chatroom_#{@chat_room.id}",
+        target: "message_frame",
+        partial: "messages/message",
+        locals: { message: @message, chat_room: @chat_room }
       )
     end
-
 
     respond_to do |format|
       format.turbo_stream
@@ -32,7 +52,6 @@ class MessagesController < ApplicationController
 
     # Find or create a reaction for the current user and message
     reaction = Reaction.find_or_initialize_by(user: current_user, message: @message)
-
     if reaction.persisted? && reaction.emoji == emoji
       reaction.destroy
     else

@@ -81,5 +81,12 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :connection_requests, only: [:create] do
+    member do
+      get 'accept', to: 'connection_requests#accept'
+      get 'reject', to: 'connection_requests#reject'
+    end
+  end
 end
 

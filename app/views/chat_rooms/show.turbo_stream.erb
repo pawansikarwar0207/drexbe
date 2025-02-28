@@ -1,3 +1,49 @@
 <%= turbo_stream.replace "chatroom_frame" do %>
-  <%= render partial: "chat_rooms/show", locals: { chat_room: @chat_room, messages: @messages } %>
+  <%= turbo_frame_tag "chatroom_frame" do %>
+    <div class="chat-header d-flex align-items-center p-3 shadow-sm bg-light">
+      <div class="user-avatar me-3">
+        <% if @other_user.profile_picture.attached? %>
+          <%= image_tag @other_user.profile_picture, class: "avatar rounded-circle" %>
+        <% else %>
+          <img src="https://storage.googleapis.com/a1aa/image/O8MiwnO96lJ0Opf2gM3iJlvzomfUBmWFPeRabNe6c6llz3UPB.jpg" alt="Avatar" class="avatar rounded-circle">
+        <% end %>
+      </div>
+      <div>
+        <h6 class="mb-0 fw-bold"><%= @other_user.full_name %></h6>
+        <small class="text-muted">Active now</small>
+      </div>
+    </div>
+
+    <!-- Chat Messages -->
+    <div class="chat-messages">
+      <%= turbo_frame_tag "message_frame" do %>
+        <div id="messages-container" class="messages-container">
+          <% @groups.each do |date, messages| %>
+            <div class="date-section text-center">
+              <div class="date-heading">
+                <%= date %>
+              </div>
+            </div>
+
+            <% messages.each do |message| %>
+              <div id="message_<%= message.id %>">
+                <%= render partial: 'messages/message', locals: { message: message, chat_room: @chat_room } %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <%= turbo_stream_from "chatroom_#{@chat_room.id}" %>
+
+    <!-- Chat Input -->
+    <div class="chat-input p-3 border-top">
+      <%= form_with model: [@chat_room, Message.new], local: false, class: "d-flex align-items-center", data: { action: 'turbo:submit-end->turbo-stream#reset' } do |form| %>
+        <div class="flex-grow-1 me-2">
+          <%= form.text_area :content, placeholder: "Type a message...", class: "form-control rounded-pill px-3", rows: 1, onkeypress: "if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); this.form.requestSubmit(); }" %>
+        </div>
+        <%= form.submit "Send", class: "btn btn-dark rounded-pill px-4" %>
+      <% end %>
+    </div>
+  <% end %>  
 <% end %>

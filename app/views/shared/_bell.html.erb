@@ -1,0 +1,28 @@
+<div class="dropdown ms-2" id="notification_bell">
+  <button class="btn btn-white position-relative" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="fas fa-bell fa-lg"></i>
+    <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+      <%= user&.notifications&.unread&.count.to_i %>
+    </span>
+  </button>
+
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+    <% user&.notifications&.unread.each do |notification|  %>
+      <li><a class="dropdown-item" href="#"><%= notification.message %></a></li>
+    <% end %>
+  </ul>
+</div>
+
+
+<%= turbo_stream_from "notifications_#{user&.id}" %>
+<style>
+#notification_bell .rounded-circle {
+  border-radius: 50% !important;
+  width: 25px;
+  height: 25px;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 6px;
+  color: #fff;
+}
+</style>

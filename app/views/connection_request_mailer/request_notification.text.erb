@@ -1,0 +1,8 @@
+Hello <%= @receiver.full_name %>,
+
+You have received a new connection request from <%= @sender.full_name %>.
+
+To accept the request, visit: <%= accept_connection_request_url(@request) %>
+To reject the request, visit: <%= reject_connection_request_url(@request) %>
+
+Thank you!

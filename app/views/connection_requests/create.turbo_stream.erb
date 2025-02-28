@@ -1,0 +1,13 @@
+<%= turbo_stream.replace "chatroom_frame" do %>
+  <%= turbo_frame_tag "chatroom_frame" do %>
+	  <div class="text-center mt-5">
+		  <i class="fas fa-paper-plane text-primary mb-3" style="font-size: 2rem;"></i>
+		  <h4 class="text-success mb-2">Request Sent!</h4>
+		  <p class="text-secondary text-center mb-3">
+		    You have sent a connection request to <strong><%= @receiver.full_name %></strong>.  
+		    Please wait for them to accept before you can start chatting.
+		  </p>
+		  <button class="btn btn-outline-secondary btn-sm" disabled>Pending Approval...</button>
+	  </div>
+	<% end %>  
+<% end %>

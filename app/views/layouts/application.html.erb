@@ -66,6 +66,7 @@
   <body>
     <%= render 'shared/header' %>
     <%= render 'shared/flash' %>
+    <%= turbo_stream_from "notifications_#{current_user&.id}" %>
     <%= yield %>
     <% unless controller_name == 'chat_rooms' || controller_name == 'sessions' || controller_name == 'registrations' %>
       <%= render 'shared/footer' %>
