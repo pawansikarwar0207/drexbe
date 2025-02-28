@@ -7,9 +7,11 @@
   </button>
 
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
-    <% user&.notifications&.unread.each do |notification|  %>
-      <li><a class="dropdown-item" href="#"><%= notification.message %></a></li>
-    <% end %>
+    <% if user&.notifications&.unread.present? %>
+      <% user&.notifications&.unread.each do |notification|  %>
+        <li><a class="dropdown-item" href="#"><%= notification.message %></a></li>
+      <% end %>
+    <% end %>  
   </ul>
 </div>
 
