@@ -5,19 +5,20 @@ class ParcelAd < ApplicationRecord
 
   has_many_attached :parcel_images
 
-  validates :departure_city, :arrival_city, :parcel_type, :parcel_weight, :parcel_quantity, :recommended_fee, :proposed_fee, :shipment_date, presence: true
+  validates :departure_city, :arrival_city, :parcel_type, :parcel_weight, :parcel_quantity, :proposed_fee, :shipment_date, presence: true
 
   validates :parcel_length, :parcel_width, :parcel_height, 
             numericality: { greater_than_or_equal_to: 0, 
                             message: "must be greater than or equal to 0" },
                             if: :requires_dimensions?
 
-  validates :recommended_fee, :proposed_fee, 
+  validates  :proposed_fee, 
             numericality: { greater_than_or_equal_to: 0, 
                             message: "must be greater than or equal to 0" }, 
             allow_nil: true
 
   scope :by_professionals, -> { joins(:user).where(users: { user_type: 'professional' }) }
+
 
   def calculate_cost
     base_rate = 10
@@ -138,6 +139,20 @@ class ParcelAd < ApplicationRecord
   rescue => e
     # Handle API errors and return failure response
     { status: "ERROR", error: e.message }
+  end
+
+  # Only calculate if all parcel details are present
+  def fee_required?
+    parcel_length.present? && parcel_width.present? && parcel_height.present? && parcel_weight.present?
+  end
+
+  # Compare proposed fee with recommended fee
+  def fee_difference
+    if proposed_fee.present? && recommended_fee.present?
+      (proposed_fee.to_f - recommended_fee.to_f).round(2)
+    else
+      nil
+    end
   end
 
 end

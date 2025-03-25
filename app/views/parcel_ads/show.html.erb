@@ -1,6 +1,6 @@
 <div class="col-lg-8 mx-auto mt-4 mb-5">
-  <%#= button_to "Create Shipment", create_shipment_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-primary btn-sm mt-2 mb-2' %>
-  <%#= button_to "Purchase Label", purchase_label_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-primary btn-sm mb-2' %>
+  <%= button_to "Create Shipment", create_shipment_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-primary btn-sm mt-2 mb-2' %>
+  <%= button_to "Purchase Label", purchase_label_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-primary btn-sm mb-2' %>
 
   <div class="shadow p-5 mt-3">
     <h1 class="card-title text-center p-3 border-bottom rounded-0">Parcel Ad Details</h1>
@@ -68,8 +68,20 @@
         </div>
       </div>  
 
-      <hr>
+      <% if @parcel_ad.recommended_fee.present? %>
+        <p><strong>Recommended Fee:</strong> $<%= @parcel_ad.recommended_fee %></p>
 
+        <% if @comparison_result[:status] == 'higher' %>
+          <p class="text-danger"><strong>Your proposed fee is $<%= @comparison_result[:difference] %> higher than the market fee.</strong></p>
+        <% elsif @comparison_result[:status] == 'lower' %>
+          <p class="text-success"><strong>Your proposed fee is $<%= @comparison_result[:difference] %> lower than the market fee.</strong></p>
+        <% else %>
+          <p class="text-info"><strong>Your proposed fee matches the market fee.</strong></p>
+        <% end %>
+      <% else %>
+        <p class="text-warning"><strong>Market fees are not available. Please check parcel details.</strong></p>
+      <% end %>
+      <hr>
       <% if @parcel_ad.parcel_images.attached? %>
         <% @parcel_ad.parcel_images.each do |image| %>
           <%= image_tag(image, class: 'img-thumbnail mt-3 mb-3 mx-2', style: 'width: auto; height: auto;') %>

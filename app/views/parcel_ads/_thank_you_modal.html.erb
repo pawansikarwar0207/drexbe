@@ -1,4 +1,4 @@
-<div class="modal fade" id="thankyouModal" tabindex="-1" aria-labelledby="thankyouModalLabel" aria-hidden="true">
+<div class="modal fade show" id="thankyouModal" tabindex="-1" aria-labelledby="thankyouModalLabel">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-center">
-        <p>Your have successfully shared your request. You can check it in your dashboard.</p>
+        <p>Your request has been successfully shared. You can check it in your dashboard.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="thankyou-ok-btn">OK</button>
@@ -17,11 +17,13 @@
 
 <script>
   // Show the modal automatically when inserted into the DOM
-  var thankyouModal = new bootstrap.Modal(document.getElementById('thankyouModal'));
-  thankyouModal.show();
+  document.addEventListener("turbo:load", () => {
+    var thankyouModal = new bootstrap.Modal(document.getElementById('thankyouModal'));
+    thankyouModal.show();
 
-  // Redirect on "OK" button click
-  document.getElementById('thankyou-ok-btn').addEventListener('click', function() {
-    window.location.href = "<%= parcel_ads_path %>";
+    // Redirect on "OK" button click
+    document.getElementById('thankyou-ok-btn').addEventListener('click', function() {
+      window.location.href = "<%= parcel_ads_path %>";
+    });
   });
 </script>

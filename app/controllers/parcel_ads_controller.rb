@@ -18,6 +18,7 @@ class ParcelAdsController < ApplicationController
 	    @parcel_ad = current_user.parcel_ads.build(parcel_ad_params)
 	    if @parcel_ad.save
 	      # redirect_to parcel_ads_path, notice: "Your ad has been successfully published."
+	      fetch_and_update_rates(@parcel_ad)
 				respond_to do |format|
           format.turbo_stream { render turbo_stream: turbo_stream.replace("thankyou-modal-container", partial: "parcel_ads/thank_you_modal") }
           format.html { redirect_to parcel_ads_path, notice: "Your request has been successfully created." }
@@ -37,6 +38,7 @@ class ParcelAdsController < ApplicationController
 
 	def show
 		@parcel_ad = ParcelAd.find(params[:id])
+		@comparison_result = compare_fees(@parcel_ad.proposed_fee, @parcel_ad.recommended_fee)
 	end
 
 	def edit
@@ -106,6 +108,34 @@ class ParcelAdsController < ApplicationController
 
     redirect_to parcel_ad_path(@parcel_ad)
   end
+
+  def fetch_and_update_rates(parcel_ad)
+	  shipment_service = ShippoService.new
+	  shipment = shipment_service.create_shipment(parcel_ad)
+
+	  # Check if shipment and rates are available
+	  if shipment && shipment['rates'].present?
+	    best_rate = shipment['rates'].min_by { |rate| rate['amount'].to_f } # Get the lowest rate
+
+	    # Update parcel_ad with recommended fee and rate ID
+	    parcel_ad.update(
+	      recommended_fee: best_rate['amount'].to_f,
+	      rate_id: best_rate['object_id'],
+	      shipment_id: shipment['object_id']
+	    )
+	  end
+	end
+
+	# Compare proposed and recommended fees
+	def compare_fees(proposed_fee, recommended_fee)
+	  if proposed_fee.to_f > recommended_fee.to_f
+	    { status: 'higher', difference: (proposed_fee.to_f - recommended_fee.to_f).round(2) }
+	  elsif proposed_fee.to_f < recommended_fee.to_f
+	    { status: 'lower', difference: (recommended_fee.to_f - proposed_fee.to_f).round(2) }
+	  else
+	    { status: 'equal', difference: 0 }
+	  end
+	end
 
 	private	
 

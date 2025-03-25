@@ -1,4 +1,6 @@
 require 'shippo'
+require 'ostruct'
+
 
 class ShipmentService
   def initialize
