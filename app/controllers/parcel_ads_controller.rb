@@ -20,7 +20,7 @@ class ParcelAdsController < ApplicationController
 	      # redirect_to parcel_ads_path, notice: "Your ad has been successfully published."
 	      fetch_and_update_rates(@parcel_ad)
 				respond_to do |format|
-          format.turbo_stream { render turbo_stream: turbo_stream.replace("thankyou-modal-container", partial: "parcel_ads/thank_you_modal") }
+          format.turbo_stream
           format.html { redirect_to parcel_ads_path, notice: "Your request has been successfully created." }
         end
 	    else
