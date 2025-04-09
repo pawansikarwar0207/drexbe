@@ -1,0 +1,35 @@
+<div class="col-lg-10 mx-auto mt-4 mb-5">
+  <h2 class="text-center mb-3">Select a Shipping Rate</h2>
+
+  <% if @rates.present? %>
+    <%= form_with url: purchase_label_parcel_ad_path(@parcel_ad), method: :post do %>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Carrier</th>
+            <th>Service</th>
+            <th>Delivery Days</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @rates.each do |rate| %>
+            <tr>
+              <td><%= radio_button_tag :rate_id, rate["object_id"] %></td>
+              <%# <td><img src="<%#= rate["provider_image_75"]" alt="<%#= rate["provider"]" height="20" /></td> %> 
+              <td><%= rate["provider"] %></td>
+              <td><%= rate["servicelevel"]["name"] rescue "N/A" %></td>
+              <td><%= rate["estimated_days"] || "N/A" %></td>
+              <td><%= number_to_currency(rate["amount"]) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= submit_tag "Purchase Label", class: 'btn btn-primary mb-2 mt-2' %>
+    <% end %>
+  <% else %>
+    <p>No rates available.</p>
+  <% end %>
+
+</div>

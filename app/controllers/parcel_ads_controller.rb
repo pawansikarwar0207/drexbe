@@ -21,7 +21,7 @@ class ParcelAdsController < ApplicationController
 	      fetch_and_update_rates(@parcel_ad)
 				respond_to do |format|
           format.turbo_stream
-          format.html { redirect_to parcel_ads_path, notice: "Your request has been successfully created." }
+          format.html { redirect_to @parcel_ad, notice: "Your request has been successfully created." }
         end
 	    else
 	      # render :new, status: :unprocessable_entity
@@ -66,48 +66,161 @@ class ParcelAdsController < ApplicationController
 	  @parcel_ad = ParcelAd.find(params[:id])
 	  shipment_service = ShipmentService.new
 
-	  begin
-	    shipment = shipment_service.create_shipment(@parcel_ad)
+	  address_from = {
+      name: @parcel_ad.parcel_sender_name,
+		  street1: @parcel_ad.address_from_street1,
+		  street2: @parcel_ad.address_from_street2.presence,
+		  city: @parcel_ad.departure_city,
+		  state: @parcel_ad.address_from_state,
+		  zip: @parcel_ad.address_from_zip,
+		  country: @parcel_ad.departure_country,
+		  phone: @parcel_ad.parcel_sender_phone,
+		  email: @parcel_ad.parcel_sender_email,
+		  is_residential: @parcel_ad.address_from_is_residential
 
-	    # Check if the shipment and rates are present
-	    if shipment && shipment['rates'].present?
-	      @shipment_id = shipment['object_id']
-	      @rate_id = shipment['rates'].first['object_id'] # Get the first rate ID
+    }
 
-	      # Update the ParcelAd with shipment_id and rate_id
-	      @parcel_ad.update(shipment_id: @shipment_id, rate_id: @rate_id)
-	      flash[:notice] = "Shipment created successfully."
-	    else
-	      flash[:alert] = "Shipment created, but no rates were available. Please check the shipment details or contact support."
-	    end
-	  rescue Shippo::Exceptions::APIServerError => e
-	    flash[:alert] = "Failed to create shipment: #{e.message}"
-	  end
+    address_to = {
+      name: @parcel_ad.parcel_receiver_name,
+		  street1: @parcel_ad.address_to_street1,
+		  street2: @parcel_ad.address_to_street2.presence,
+		  city: @parcel_ad.arrival_city,
+		  state: @parcel_ad.address_to_state,
+		  zip: @parcel_ad.address_to_zip,
+		  country: @parcel_ad.arrival_country,
+		  phone: @parcel_ad.parcel_receiver_phone,
+		  email: @parcel_ad.parcel_receiver_email,
+		  is_residential: @parcel_ad.address_to_is_residential
+    }
 
-	  redirect_to parcel_ad_path(@parcel_ad)
+    parcel = {
+		  length: @parcel_ad.parcel_length,
+		  width: @parcel_ad.parcel_width,
+		  height: @parcel_ad.parcel_height,
+		  distance_unit: "in",
+		  weight: @parcel_ad.parcel_weight,
+		  mass_unit: "lb"
+		}
+
+    begin
+	    # Create shipment via Shippo API
+	    raw_shipment = Shippo::Shipment.create(
+	      address_from: address_from,
+	      address_to: address_to,
+	      parcels: [parcel],
+	      async: false
+	    )
+
+	    # Filter supported carriers
+	  #   supported_carriers = ['USPS', 'UPS'] # <- adjust this as needed
+
+	  #   # Filter rates from supported carriers only and with no error messages
+	  #   filtered_rates = raw_shipment.rates.select do |rate|
+	  #     supported_carriers.include?(rate['provider']) && rate['messages'].blank?
+	  #   end
+
+	  #   if filtered_rates.present?
+	  #     @shipment_id = raw_shipment['object_id']
+	  #     @rate_id = filtered_rates.first['object_id'] # Choose first valid rate
+
+	  #     # Save to ParcelAd
+	  #     @parcel_ad.update(shipment_id: @shipment_id, rate_id: @rate_id)
+	  #     flash[:notice] = "Shipment created and filtered rates applied successfully."
+	  #   else
+	  #     flash[:alert] = "Shipment created, but no supported carrier rates found. Please try a different address or package."
+	  #   end
+
+	  # rescue Shippo::Exceptions::APIServerError => e
+	  #   flash[:alert] = "Failed to create shipment: #{e.message}"
+	  # end
+
+	  # redirect_to parcel_ad_path(@parcel_ad)
+	  	if raw_shipment.status == 'SUCCESS'
+			  @parcel_ad.update!(
+			    shipment_id: raw_shipment.object_id,
+			    available_rates: raw_shipment.rates.to_json
+			  )
+			  redirect_to choose_rate_parcel_ad_path(@parcel_ad)
+			else
+			  redirect_to @parcel_ad, alert: "Shipment creation failed."
+			end
+		end
 	end
 
 
-  def purchase_label
-    @parcel_ad = ParcelAd.find(params[:id])
+  # def purchase_label
+	#   @parcel_ad = ParcelAd.find(params[:id])
 
-    # Ensure the shipment was created beforehand
-    if @parcel_ad.shipment_id.present?
-      shipment_service = ShipmentService.new
-      result = shipment_service.purchase_label(@parcel_ad.shipment_id)
+	#   if @parcel_ad.rate_id.blank?
+	#     flash[:alert] = "Rate ID not found. Please create a shipment first."
+	#     return redirect_to parcel_ad_path(@parcel_ad)
+	#   end
 
-      if result.success?
-        @label_url = result.label_url
-        flash[:notice] = "Label purchased successfully. Download it here: #{@label_url}"
-      else
-        flash[:alert] = "Failed to purchase label: #{result.error_message}"
-      end
-    else
-      flash[:alert] = "Shipment not found. Please create a shipment first."
-    end
+	#   begin
+	#     transaction = Shippo::Transaction.create(
+	#       rate: @parcel_ad.rate_id,
+	#       label_file_type: "PDF",
+	#       async: false
+	#     )
 
-    redirect_to parcel_ad_path(@parcel_ad)
-  end
+	#     if transaction.status == "SUCCESS"
+	#       @parcel_ad.update(
+	#         label_url: transaction.label_url,
+	#         tracking_number: transaction.tracking_number,
+	#         tracking_url_provider: transaction.tracking_url_provider
+	#       )
+	#       flash[:notice] = "Label purchased successfully. You can now download and track the shipment."
+	#     else
+	#       error_messages = transaction.messages.map { |m| m['text'] }.join(', ')
+	#       flash[:alert] = "Label purchase failed: #{error_messages}"
+	#     end
+
+	#   rescue Shippo::Exceptions::APIServerError => e
+	#     flash[:alert] = "API error during label purchase: #{e.message}"
+	#   end
+
+	#   redirect_to parcel_ad_path(@parcel_ad)
+	# end
+
+	def purchase_label
+	  @parcel_ad = ParcelAd.find(params[:id])
+	  selected_rate_id = params[:rate_id]
+
+	  # Use Shippo to purchase the label
+	  transaction = Shippo::Transaction.create(
+	    rate: selected_rate_id,
+	    label_file_type: "PDF",
+	    async: false
+	  )
+
+	  if transaction.status == "SUCCESS"
+	    @parcel_ad.update!(
+	      label_url: transaction.label_url,
+	      tracking_number: transaction.tracking_number,
+	      tracking_url_provider: transaction.tracking_url_provider,
+	      rate_id: selected_rate_id
+	    )
+	    redirect_to @parcel_ad, notice: "Label purchased successfully."
+	  else
+	    redirect_to choose_rate_parcel_ad_path(@parcel_ad), alert: "Failed to purchase label."
+	  end
+	end
+
+
+	# parcel_ads_controller.rb
+	def choose_rate
+	  @parcel_ad = ParcelAd.find(params[:id])
+
+	  if @parcel_ad.available_rates.present?
+	    @rates = JSON.parse(@parcel_ad.available_rates)
+	  else
+	    redirect_to @parcel_ad, alert: "Rates not found."
+	  end
+	end
+
+
+
+
 
   def fetch_and_update_rates(parcel_ad)
 	  shipment_service = ShippoService.new
@@ -164,6 +277,26 @@ class ParcelAdsController < ApplicationController
 			:time, 
 			:special_instructions,
 			:proposed_fee,
+			:address_from_street1,
+			:address_from_street2,
+			:address_from_street3,
+			:address_from_state,
+			:address_from_zip,
+			:address_from_street_no,
+			:address_from_is_residential,
+			:parcel_sender_name,
+			:parcel_sender_phone,
+			:parcel_sender_email,
+			:address_to_street1,
+			:address_to_street2,
+			:address_to_street3,
+			:address_to_state,
+			:address_to_zip,
+			:address_to_street_no,
+			:address_to_is_residential,
+			:parcel_receiver_name,
+			:parcel_receiver_phone,
+			:parcel_receiver_email,
 		   parcel_images: []
 		)
 	end

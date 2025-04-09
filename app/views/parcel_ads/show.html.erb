@@ -1,19 +1,49 @@
 <div class="col-lg-8 mx-auto mt-4 mb-5">
-  <%= button_to "Create Shipment", create_shipment_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-primary btn-sm mt-2 mb-2' %>
-  <%= button_to "Purchase Label", purchase_label_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-primary btn-sm mb-2' %>
+  <div class="d-flex justify-content-end">
+    <%= button_to "Create Shipment", create_shipment_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-success btn-sm mt-2 mb-2 mx-2' %>
+    <%#= button_to "Purchase Label", purchase_label_parcel_ad_path(@parcel_ad), method: :post, data: { turbo: false }, class: 'btn btn-primary btn-sm mb-2 mt-2' %>
+  </div>
 
   <div class="shadow p-5 mt-3">
     <h1 class="card-title text-center p-3 border-bottom rounded-0">Parcel Ad Details</h1>
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
-          <h5 class="fw-bold">Parcel Location :</h5>
-          <p><strong>From Country : </strong> <%= @parcel_ad.departure_country %></p>
-          <p><strong>From City : </strong> <%= @parcel_ad.departure_city %></p>
-
-          <p><strong>To Country : </strong> <%= @parcel_ad.arrival_country %></p>
-          <p><strong>TO City : </strong> <%= @parcel_ad.arrival_city %></p>
+          <h5 class="fw-bold">Sender Details :</h5>
+          <p><strong>Name : </strong> <%= @parcel_ad.parcel_sender_name || 'NA' %></p>
+          <p><strong>Email : </strong> <%= @parcel_ad.parcel_sender_email || 'NA' %></p>
+          <p><strong>Phone : </strong> <%= @parcel_ad.parcel_sender_phone || 'NA' %></p>
+          <p><strong>Street 1 : </strong> <%= @parcel_ad.address_from_street1 || 'NA' %></p>
+          <p><strong>Street 2 : </strong> <%= @parcel_ad.address_from_street2 || 'NA' %></p>
+          <p><strong>Street 3 : </strong> <%= @parcel_ad.address_from_street3 || 'NA' %></p>
+          <p><strong>Street No. : </strong> <%= @parcel_ad.address_from_street_no || 'NA' %></p>
+          <p><strong>City : </strong> <%= @parcel_ad.departure_city %></p>
+          <p><strong>State : </strong> <%= @parcel_ad.address_from_state || 'NA' %></p>
+          <p><strong>Country : </strong> <%= @parcel_ad.departure_country %></p>
+          <p><strong>ZipCode : </strong> <%= @parcel_ad.address_from_zip || 'NA' %></p>
+          <p><strong>Residential : </strong> <%= @parcel_ad.address_from_is_residential %></p>
         </div>
+
+        <div class="col-md-6">
+          <h5 class="fw-bold">Receiver Details :</h5>
+          <p><strong>Name : </strong> <%= @parcel_ad.parcel_receiver_name || 'NA' %></p>
+          <p><strong>Email : </strong> <%= @parcel_ad.parcel_receiver_email || 'NA' %></p>
+          <p><strong>Phone : </strong> <%= @parcel_ad.parcel_receiver_phone || 'NA' %></p>
+          <p><strong>Street 1 : </strong> <%= @parcel_ad.address_to_street1 || 'NA' %></p>
+          <p><strong>Street 2 : </strong> <%= @parcel_ad.address_to_street2 || 'NA' %></p>
+          <p><strong>Street 3 : </strong> <%= @parcel_ad.address_to_street3 || 'NA' %></p>
+          <p><strong>Street No. : </strong> <%= @parcel_ad.address_to_street_no || 'NA' %></p>
+          <p><strong>City : </strong> <%= @parcel_ad.departure_city %></p>
+          <p><strong>State : </strong> <%= @parcel_ad.address_to_state || 'NA' %></p>
+          <p><strong>Country : </strong> <%= @parcel_ad.departure_country %></p>
+          <p><strong>ZipCode : </strong> <%= @parcel_ad.address_to_zip || 'NA' %></p>
+          <p><strong>Residential : </strong> <%= @parcel_ad.address_to_is_residential %></p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div>
         <% if @parcel_ad.parcel_weight.present? || @parcel_ad.parcel_height.present? || @parcel_ad.parcel_length.present? || @parcel_ad.parcel_width.present? %>
           <div class="col-md-6">
             <h5 class="fw-bold">Parcel Dimension :</h5>
@@ -61,9 +91,6 @@
 
       <div class="row">
         <div class="col-md-6  mt-3">
-          <p><strong>Recommended Fee : </strong> <%= number_to_currency(@parcel_ad.recommended_fee) %></p>
-        </div>
-        <div class="col-md-6  mt-3">
           <p><strong>Proposed Fee : </strong> <%= number_to_currency(@parcel_ad.proposed_fee) %></p>
         </div>
       </div>  
@@ -87,8 +114,48 @@
           <%= image_tag(image, class: 'img-thumbnail mt-3 mb-3 mx-2', style: 'width: auto; height: auto;') %>
         <% end %>
       <% end %>
+
+      <div class="row">
+         <div class="col-lg-6">
+           <% if @parcel_ad.shipment_id.present? %>
+            <h5 class="mb-2"><strong>Shipment Details</strong></h5>
+            <p><strong>Shipment ID:</strong> <%= @parcel_ad.shipment_id %></p>
+            <p><strong>Rate ID:</strong> <%= @parcel_ad.rate_id %></p>
+
+            <%# If you store more info like carrier or estimated delivery %>
+            <% if @parcel_ad.respond_to?(:carrier_name) %>
+              <p><strong>Carrier:</strong> <%= @parcel_ad.carrier_name %></p>
+              <p><strong>Service Level:</strong> <%= @parcel_ad.service_level %></p>
+              <p><strong>Estimated Delivery:</strong> <%= @parcel_ad.estimated_days %> business days</p>
+            <% end %>
+          <% else %>
+            <p>No shipment has been created yet.</p>
+          <% end %>
+         </div>
+
+         <div class="col-lg-6">
+           <% if @parcel_ad.label_url.present? %>
+            <h5 class="mb-2"><strong>Shipping Label:</strong></h5>
+            <%= link_to "Download Label", @parcel_ad.label_url, target: "_blank", class: "btn btn-success btn-sm" %>
+
+            <% if @parcel_ad.tracking_number.present? %>
+              <div class="mt-2">
+                <p><strong>Tracking Number:</strong> <%= @parcel_ad.tracking_number %></p>
+                <% if @parcel_ad.tracking_url_provider.present? %>
+                  <p>
+                    <%= link_to "Track Shipment", @parcel_ad.tracking_url_provider, target: "_blank", class: "btn btn-outline-primary btn-sm" %>
+                  </p>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+         </div>
+      </div>
+
+      <hr>
+
       <div> 
-        <%= link_to 'Back to Ad List', parcel_ads_path, class: "btn btn-secondary mt-3 mb-3 rounded-0" %>
+        <%= link_to 'Back to Ad List', parcel_ads_path, class: "btn btn-secondary mt-3 mb-3" %>
       </div>
     </div>
   </div>

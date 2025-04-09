@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     member do
       post :create_shipment
       post :purchase_label
+      get :choose_rate
     end
   end
  
