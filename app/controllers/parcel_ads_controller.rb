@@ -218,10 +218,6 @@ class ParcelAdsController < ApplicationController
 	  end
 	end
 
-
-
-
-
   def fetch_and_update_rates(parcel_ad)
 	  shipment_service = ShippoService.new
 	  shipment = shipment_service.create_shipment(parcel_ad)
@@ -248,6 +244,12 @@ class ParcelAdsController < ApplicationController
 	  else
 	    { status: 'equal', difference: 0 }
 	  end
+	end
+
+	def email_preview
+	  @parcel_ad = ParcelAd.find(params[:id])
+	  @subject = "Your parcel status has changed"
+	  render html: ParcelTrackingMailer.status_changed(@parcel_ad).deliver_now
 	end
 
 	private	

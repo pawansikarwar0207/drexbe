@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       post :create_shipment
       post :purchase_label
       get :choose_rate
+      get :email_preview
     end
   end
  
@@ -71,6 +72,8 @@ Rails.application.routes.draw do
   get 'sender_works', to: 'home#sender_works'
   get 'buyer_works', to: 'home#buyer_works'
   get 'privacy_policy', to: 'home#privacy_policy'
+
+  get 'track/:tracking_number', to: 'tracking#show', as: :track
 
   resources :chat_rooms, only: [:index, :show] do
     resources :messages, only: [:create] do

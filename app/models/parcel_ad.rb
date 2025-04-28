@@ -1,7 +1,22 @@
 require 'shippo'
 
 class ParcelAd < ApplicationRecord
+  enum tracking_status: {
+    pending: 0,
+    confirmed: 1,
+    in_transit: 2,
+    out_for_delivery: 3,
+    delivered: 4,
+    cancelled: 5
+  }
+
+  before_create :generate_tracking_number
+  after_update :send_status_change_notification, if: :saved_change_to_tracking_status?
+  after_update :record_tracking_event, if: :saved_change_to_tracking_status?
+
   belongs_to :user
+
+  has_many :tracking_events, dependent: :destroy
 
   has_many_attached :parcel_images
 
@@ -29,8 +44,24 @@ class ParcelAd < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["arrival_city", "arrival_country", "bonus", "created_at", "departure_city", "departure_country", "description", "id", "insure_shipment", "label_url", "parcel_height", "parcel_length", "parcel_quantity", "parcel_type", "parcel_weight", "parcel_width", "proposed_fee", "rate_id", "recommended_fee", "service_type", "shipment_date", "shipment_id", "updated_at", "user_id"]
   end
+
+  def record_tracking_event
+    tracking_events.create!(
+      status: tracking_status,
+      description: "Status changed to #{tracking_status.humanize}",
+      occurred_at: Time.current
+    )
+  end
   
   private
+
+  def generate_tracking_number
+    self.tracking_number = "TRK-#{Time.current.strftime('%Y%m%d')}#{SecureRandom.hex(3).upcase}"
+  end
+
+  def send_status_change_notification
+    TrackingNotifierService.call(self)
+  end
 
   def requires_dimensions?
     parcel_type != 'Document'

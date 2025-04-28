@@ -1,0 +1,11 @@
+<% full_url = "#{request.base_url}/track/#{tracking_number}" %>
+
+<% qrcode = RQRCode::QRCode.new(full_url) %>
+
+<%= raw qrcode.as_svg(
+      offset: 0,
+      color: '000',
+      shape_rendering: 'crispEdges',
+      module_size: 3,    # 👈 smaller number = smaller QR code
+      standalone: true
+    ) %>

@@ -1,0 +1,67 @@
+<div class="col-lg-10 mx-auto mt-5 mb-5">
+  <h1 class="mb-4 text-center">📦 Track Your Parcel</h1>
+
+  <% if @parcel_ad.tracking_number.present? && @parcel_ad.tracking_status.present? %>
+    <div class="mb-4">
+      <div class="card-body">
+        <h5 class="card-title mt-5">Tracking Number</h5>
+        <p class="card-text"><strong><%= @parcel_ad.tracking_number %></strong></p>
+
+        <h5 class="card-title mt-4">Current Status</h5>
+        <span class="badge bg-<%= bootstrap_status_class(@parcel_ad.tracking_status) %> fs-6">
+          <%= friendly_status_label(@parcel_ad.tracking_status) %>
+        </span>
+
+        <p class="text-muted mt-2">
+          Last updated: <%= @parcel_ad.tracking_status_updated_at&.strftime('%b %d, %Y %I:%M %p') || "N/A" %>
+        </p>
+      </div>
+    </div>
+
+    <% if @parcel_ad.tracking_events.any? %>
+      <h4 class="mb-3">Tracking History</h4>
+      <ul class="timeline list-unstyled">
+        <% @parcel_ad.tracking_events.order(occurred_at: :desc).each do |event| %>
+          <li class="mb-4 border-start border-3 ps-3">
+            <span class="fw-bold"><%= event.occurred_at.strftime('%b %d, %Y %I:%M %p') %></span><br>
+            <span class="badge bg-secondary"><%= friendly_status_label(event.status) %></span>
+            <div><%= event.description %></div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% else %>
+    <div class="alert alert-warning text-center">
+      🚫 Tracking information is currently unavailable for this parcel.
+    </div>
+  <% end %>
+</div>
+
+
+<style>
+	.timeline {
+	  position: relative;
+	  padding-left: 1.5rem;
+	}
+	.timeline::before {
+	  content: "";
+	  position: absolute;
+	  left: 0.3rem;
+	  top: 0;
+	  bottom: 0;
+	  width: 4px;
+	  background: #dee2e6;
+	}
+	.timeline li::before {
+	  content: "";
+	  position: absolute;
+	  left: -0.5rem;
+	  top: 0.3rem;
+	  width: 1rem;
+	  height: 1rem;
+	  background: #0d6efd;
+	  border-radius: 50%;
+	}
+
+</style>
+

@@ -1,0 +1,32 @@
+<%= content_for :title, "Parcel Tracking - Status Preview" %>
+
+<div class="container mx-auto p-4">
+  <h1 class="text-3xl font-bold mb-4 text-center">Parcel Tracking - Email Preview</h1>
+
+  <div class="bg-white shadow-lg rounded-lg p-6">
+    <!-- Parcel Info -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold mb-2">Parcel Information</h2>
+      <p><strong>Parcel ID:</strong> <%= @parcel_ad.tracking_number %></p>
+      <p><strong>Status:</strong> <span class="text-xl font-bold text-green-500"><%= @parcel_ad.tracking_status.humanize %></span></p>
+      <p><strong>Updated At:</strong> <%= @parcel_ad.tracking_status_updated_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+    </div>
+
+    <!-- Email Preview -->
+    <div class="bg-gray-100 p-4 rounded-lg">
+      <h2 class="text-xl font-semibold mb-2">Email Preview</h2>
+      <p><strong>Subject:</strong> <%= @subject %></p>
+      <div class="mt-4">
+        <h3 class="text-lg font-medium">Message Body:</h3>
+        <div class="mt-2">
+          <p class="text-sm text-gray-700">Parcel <strong><%= @parcel_ad.tracking_number %></strong> is now <strong><%= @parcel_ad.tracking_status.humanize %></strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Button (for actual tracking) -->
+    <div class="mt-6 text-center">
+      <%= link_to "Go to Tracking Page", track_path(@parcel_ad.tracking_number), class: "btn btn-primary px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" %>
+    </div>
+  </div>
+</div>
