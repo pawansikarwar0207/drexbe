@@ -22,6 +22,24 @@
           <% end %>
         </div>
       </div>
+      <div> 
+        <!-- Hidden Stripe Keys -->
+        <div class="stripe_keys" 
+             data-public_key="<%= Rails.application.credentials.dig(:stripe, :public_key) %>" 
+             data-url="<%= create_payment_intent_parcel_ad_path(@parcel_ad) %>"
+             data-id="<%= @parcel_ad.id %>"></div>
+
+        <% if @parcel_ad.payment_status != 'paid' %>
+          <!-- Pay Now Button -->
+          <button id="pay-button" class="btn btn-primary">Pay Now</button>
+        <% else %>
+          <!-- Payment Success Message -->
+          <div class="alert alert-success mt-2">
+            ✅ Payment Completed
+          </div>
+        <% end %>
+      </div>
+
       <div class="row">
         <div class="col-md-6">
           <h5 class="fw-bold">Sender Details :</h5>
@@ -176,4 +194,159 @@
       </div>
     </div>
   </div>
+
+  <!-- 🔥 Bootstrap Modal -->
+  <div class="modal fade mt-5" id="cardModal" tabindex="-1" aria-labelledby="cardModalLabel" aria-hidden="true">
+    <div class="modal-dialog shadow" style="min-height: auto;max-height: auto;">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="cardModalLabel">Enter Card Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Card Number</label>
+            <div id="card-number-element" class="form-control"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Expiration Date</label>
+            <div id="card-expiry-element" class="form-control"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">CVC</label>
+            <div id="card-cvc-element" class="form-control"></div>
+          </div>
+
+          <div id="card-errors" class="text-danger mt-2"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button id="save-card-button" type="button" class="btn btn-success">Save Card & Pay</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const publicKey = document.querySelector('.stripe_keys').dataset.public_key;
+  const url = document.querySelector('.stripe_keys').dataset.url;
+  const parcelAdId = document.querySelector('.stripe_keys').dataset.id;
+
+  const stripe = Stripe(publicKey);
+  const elements = stripe.elements();
+
+  const style = {
+    base: {
+      fontSize: '16px',
+      color: '#32325d',
+      '::placeholder': {
+        color: '#aab7c4',
+      },
+    },
+    invalid: {
+      color: '#fa755a',
+      iconColor: '#fa755a',
+    },
+  };
+
+  // 👇 Separate Stripe elements
+  const cardNumber = elements.create('cardNumber', { style });
+  const cardExpiry = elements.create('cardExpiry', { style });
+  const cardCvc = elements.create('cardCvc', { style });
+
+  cardNumber.mount('#card-number-element');
+  cardExpiry.mount('#card-expiry-element');
+  cardCvc.mount('#card-cvc-element');
+
+  const payButton = document.getElementById("pay-button");
+  const saveCardButton = document.getElementById("save-card-button");
+
+  // Open Modal on Pay Now
+  payButton.addEventListener("click", () => {
+    document.getElementById('card-errors').textContent = ''; // Clear previous errors
+    let cardModal = new bootstrap.Modal(document.getElementById('cardModal'));
+    cardModal.show();
+  });
+
+  // Save Card & Pay
+  saveCardButton.addEventListener("click", async () => {
+    saveCardButton.disabled = true;
+    saveCardButton.textContent = "Processing...";
+
+    // Create Payment Method (only cardNumber is needed here)
+    const { error: methodError, paymentMethod } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardNumber,
+    });
+
+    if (methodError) {
+      document.getElementById('card-errors').textContent = methodError.message;
+      saveCardButton.disabled = false;
+      saveCardButton.textContent = "Save Card & Pay";
+      return;
+    }
+
+    // Fetch client_secret from server
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+      },
+    });
+
+    // 🔥 If user is not signed in (401), redirect to login
+    if (response.status === 401) {
+      alert("Please sign in to proceed with payment.");
+      let cardModal = bootstrap.Modal.getInstance(document.getElementById('cardModal'));
+      cardModal.hide();
+      window.location.href = "/users/sign_in";
+      return;
+    }
+
+    const data = await response.json();
+
+    // Confirm Payment using saved card
+    const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(data.client_secret, {
+      payment_method: paymentMethod.id
+    });
+
+    if (confirmError) {
+      document.getElementById('card-errors').textContent = confirmError.message;
+      saveCardButton.disabled = false;
+      saveCardButton.textContent = "Save Card & Pay";
+    } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      // Send parcel_ad_id when confirming payment
+      const updateResponse = await fetch(`/parcel_ads/${parcelAdId}/confirm_payment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+          payment_intent_id: paymentIntent.id
+        })
+      });
+
+      const updateData = await updateResponse.json();
+
+      if (updateData.status === 'success') {
+        alert("✅ Payment Successful and Parcel Ad Updated!");
+        let cardModal = bootstrap.Modal.getInstance(document.getElementById('cardModal'));
+        cardModal.hide();
+        window.location.reload();
+      } else {
+        alert("Payment successful, but there was an issue updating the Parcel Ad.");
+      }
+    }
+  });
+});
+
+
+</script>

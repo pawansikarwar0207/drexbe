@@ -147,6 +147,63 @@ class ParcelAdsController < ApplicationController
 		end
 	end
 
+	def create_payment_intent
+	  parcel_ad = ParcelAd.find(params[:id])
+
+	  # 🚩 1️⃣ Check if user is signed in
+	  unless current_user
+	    render json: { error: 'You must be logged in to pay.' }, status: :unauthorized and return
+	  end
+
+	  user = current_user
+
+	  # 2️⃣ Create Stripe Customer (if user doesn't have one)
+	  if user.stripe_customer_id.blank?
+	    customer = Stripe::Customer.create({
+	      email: user.email,
+	      name: user.first_name,
+	    })
+
+	    user.update!(stripe_customer_id: customer.id)
+	  else
+	    customer = Stripe::Customer.retrieve(user.stripe_customer_id)
+	  end
+
+	  # 3️⃣ Create Payment Intent associated with customer
+	  amount = (parcel_ad.recommended_fee * 100).to_i
+
+	  payment_intent = Stripe::PaymentIntent.create({
+	    amount: amount,
+	    currency: 'usd',
+	    customer: customer.id, # Link payment to customer
+	  })
+
+	  # 4️⃣ Save intent on ParcelAd
+	  parcel_ad.update!(payment_intent_id: payment_intent.id)
+
+	  render json: { client_secret: payment_intent.client_secret }
+	end
+
+	def confirm_payment
+	  parcel_ad = ParcelAd.find(params[:id])
+
+	  # Retrieve payment intent using the ID
+	  payment_intent = Stripe::PaymentIntent.retrieve(parcel_ad.payment_intent_id)
+
+	  if payment_intent.status == 'succeeded'
+	    # Payment is successful, update the ParcelAd status
+	    parcel_ad.update(
+	      payment_status: 'paid',
+	      paid_at: Time.current,
+	      payment_intent_id: payment_intent.id
+	    )
+
+	    # Optionally, send a confirmation email or notify the user here
+	    render json: { status: 'success', message: 'Payment successful, your parcel ad is now paid!' }
+	  else
+	    render json: { status: 'failed', message: 'Payment failed. Please try again.' }, status: :unprocessable_entity
+	  end
+	end
 
   # def purchase_label
 	#   @parcel_ad = ParcelAd.find(params[:id])

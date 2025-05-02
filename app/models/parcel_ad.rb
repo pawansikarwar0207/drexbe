@@ -53,6 +53,11 @@ class ParcelAd < ApplicationRecord
     )
   end
   
+  def price
+    # Calculate the price based on your business logic, e.g. using recommended_fee, proposed_fee, or custom logic
+    self.recommended_fee || self.proposed_fee
+  end
+  
   private
 
   def generate_tracking_number

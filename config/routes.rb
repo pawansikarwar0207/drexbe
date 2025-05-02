@@ -51,6 +51,8 @@ Rails.application.routes.draw do
       post :purchase_label
       get :choose_rate
       get :email_preview
+      post :create_payment_intent
+      post :confirm_payment
     end
   end
  
