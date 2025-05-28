@@ -8,13 +8,46 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <a class="nav-link" href="<%= new_traveler_path %>"><small><em>i</em></small> Traveler</a>
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <small><em>i</em></small> Traveler
+          </a>
+          <ul class="dropdown-menu rounded-0">
+            <li><a class="dropdown-item" href="<%= new_traveler_path %>">Propose Carry Service</a></li>
+            <li><a class="dropdown-item" href="<%= travelers_path %>">See post</a></li>
+            <li><a class="dropdown-item" href="<%= how_it_works_path %>">How does it work</a></li>
+          </ul>
+        </div>
+        <%# <a class="nav-link" href="<%#= new_traveler_path"><small><em>i</em></small> Traveler</a> %>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<%= new_parcel_ad_path %>"><small><em>i</em></small> Send</a>
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <small><em>i</em></small> Send
+          </a>
+          <ul class="dropdown-menu rounded-0">
+            <li><a class="dropdown-item" href="<%= new_parcel_ad_path %>">Parcel Details</a></li>
+            <li><a class="dropdown-item" href="<%= parcel_ads_path %>">See post</a></li>
+            <li><a class="dropdown-item" href="<%= how_it_works_path %>">How does it work</a></li>
+          </ul>
+        </div>
+        <%# <a class="nav-link" href="<%= new_parcel_ad_path"><small><em>i</em></small> Send</a> %>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<%= new_buy_for_me_path %>">Buy <small>For Me</small></a>
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Buy <small>For Me</small>
+          </a>
+          <ul class="dropdown-menu rounded-0">
+            <li><a class="dropdown-item" href="<%= new_buy_for_me_path %>">Items details</a></li>
+            <li><a class="dropdown-item" href="<%= buy_for_mes_path %>">See post</a></li>
+            <li><a class="dropdown-item" href="<%= how_it_works_path %>">How does it work</a></li>
+          </ul>
+        </div>
+        <%# <a class="nav-link" href="<%= new_buy_for_me_path">Buy <small>For Me</small></a> %>
+      </li>
+      <li>
+        <a href="<%= commitment_path %>" class="nav-link">Our commitments</a>
       </li>
     </ul>
     <form class="d-flex">

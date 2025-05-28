@@ -20,20 +20,56 @@ class ParcelAd < ApplicationRecord
 
   has_many_attached :parcel_images
 
-  validates :departure_city, :arrival_city, :parcel_type, :parcel_weight, :parcel_quantity, :proposed_fee, :shipment_date, presence: true
+  validates :departure_city, :arrival_city, :parcel_type, :parcel_weight, :parcel_quantity, :proposed_fee, presence: true
 
   validates :parcel_length, :parcel_width, :parcel_height, 
-            numericality: { greater_than_or_equal_to: 0, 
+             numericality: { greater_than_or_equal_to: 0,
+                            allow_nil: true, 
                             message: "must be greater than or equal to 0" },
                             if: :requires_dimensions?
 
   validates  :proposed_fee, 
-            numericality: { greater_than_or_equal_to: 0, 
+              numericality: { greater_than_or_equal_to: 0, 
                             message: "must be greater than or equal to 0" }, 
-            allow_nil: true
+                            allow_nil: true
 
   scope :by_professionals, -> { joins(:user).where(users: { user_type: 'professional' }) }
 
+  REMOVAL_TYPE = [
+    'At the foot of the vehicle',
+    'Handing - 1 person',
+    'Handing - 2 person'
+  ]
+
+  DELIEVERY_TYPE = [
+    'At the foot of the vehicle',
+    'Handing - 1 person',
+    'Handing - 2 person'
+  ]
+
+  PARCEL_WEIGHT = [
+    '- 5 kg',
+    '5 to 30 kg',
+    '30 to 50 kg',
+    '50 to 100 kg',
+    '+ 100 kg'
+  ]
+
+  # PARCEL_FORMAT = [
+  #   'Size S - Fits in shoe box (phone, keys, blanket, etc.)',
+  #   'Size M - Fits in cabin suitcase (computer, case of wine, vinyl turntable, etc.)',
+  #   'Size L - This is the equivalent of 4 small cabin suitcase. (Fits in the trunk of a car (painting, television, travel cot, etc.)',
+  #   'Size XL - Fits in an estate car or minivan (chest of drawers, armchair, coffee table, etc.)',
+  #   'Size XXL - Require a small utility vehicle (scooter, wardrobe, sofa, bed, etc.)'
+  # ]
+
+  PARCEL_FORMAT = [
+    'Size S',
+    'Size M',
+    'Size L',
+    'Size XL',
+    'Size XXL'
+  ]
 
   def calculate_cost
     base_rate = 10

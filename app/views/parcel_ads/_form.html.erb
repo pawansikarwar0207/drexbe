@@ -1,422 +1,232 @@
-<div class="container py-4 shadow-sm mt-3 mb-5" style="max-width: 870px;" data-controller="form-steps autocomplete">
-  <!-- Page 1 -->
-  <div class="page active" id="page1">
-    <div class="bg-white rounded">
-      <!-- Header -->
-      <div class="d-flex justify-content-between align-items-center mb-4" id="header-section" data-target="form-steps.step1">
-        <button class="btn" id="back-button" data-action="click->form-steps#abandon">
-          <span>
-            <i class="fas fa-chevron-left" data-form-steps-target="backIcon" id="back-icon"></i>
-          </span>
-        </button>
-        <div class="text-center">
-          <h1 class="h4 purple-text mb-0 fw-bold">Fast, Affordable, Reliable</h1>
-          <h2 class="h5 purple-text fw-bold">Share Your Shipment</h2>
-        </div>
-        <span></span>
-      </div>
+<div class="container shadow py-4 mt-3 mb-5" style="max-width: 700px;" data-controller="form-steps autocomplete multi-step">
+  <%= form_with(model: @parcel_ad, local: false, data: { turbo: true, controller: "form-logic submission" }) do |form| %>
+    <div id="form-errors"></div>
+     <div class="col-md-8 mx-auto mt-5" data-controller="multi-step">
+        <!-- Step 1: (Departure details) -->
+        <div data-multi-step-target="step">
+          <div class="mb-2">
+            <h4>Departure Info</h4>
+            <%= form.label :departure, "Address", class: "mt-2 mb-2 fw-bold" %>
+            <%= form.text_field :departure_city, class: 'form-control border', placeholder: 'Departure', 
+                              id: 'departure_city_select', 
+                              autocomplete: 'off', 
+                              value: params[:departure_city].present? ? params[:departure_city] : '', 
+                              data: { target: 'autocomplete.departureCity' } %>
+            <%= form.hidden_field :departure_country, id: 'departure_country', data: { target: 'autocomplete.departureCountry' } %>
+          </div>
+      
+          <div class="search-items">
+            <%= form.label :removal_type, "Type of removal", class: "mt-2 mb-2 fw-bold" %>
+            <%= form.select :removal_type, ParcelAd::REMOVAL_TYPE, { prompt: 'Choose a removal type' }, { class: 'form-select' } %>
+          </div>
 
-      <!-- Content -->
-      <div class="row mb-4">
-        <div class="col-md-6 hero-text">
-          <ul class="list-disc fs-5 mt-2">
-            <li class="mb-2 ">Send,Receive,Buy and Carry become Easy and Secure.Make DrexBe
-              your first choice</li>
-            <li class="mb-2">
-             Enjoy same-day delivery for urgent shipments and save other
-              70% compared to other platforms!
-            </li>
-          </ul>
-          <%= link_to how_it_works_path, class: "rounded btn hero-button " do %>
-            See how it works
-            <span class="arrow">
-              <i class="bi bi-arrow-down-right"></i>
-            </span>
-          <% end %>
-        </div>
-        <div class="col-md-6 mt-2 mt-md-0">
-          <div class="illustration">
-             <%= image_tag "sender001.png", alt:"Shopping Illustration", style: "max-width: 75%; height: auto;" %>
+          <!-- Toggle Switch -->
+          <div class="form-check form-switch d-flex align-items-center mb-3 mt-3">
+            <input type="checkbox" class="form-check-input me-2"
+                   id="toggleSenderDetails"
+                   data-action="change->multi-step#toggleSenderDetails">
+            <label for="toggleSenderDetails" class="form-check-label">I have the sender's contact details</label>
+          </div>
+
+          <!-- Sender Info (hidden by default) -->
+          <div data-multi-step-target="senderDetails" data-form-logic-target="senderDetails" style="display: none;">
+            <div class="mb-2">
+              <%= form.label :parcel_sender_name, "Sender's Name", class: "fw-bold" %>
+              <%= form.text_field :parcel_sender_name, class: "form-control", autocomplete: 'off' %>
+            </div>
+            <div class="mb-2">
+              <%= form.label :parcel_sender_phone, "Sender's Phone", class: "fw-bold" %>
+              <%= form.text_field :parcel_sender_phone, class: "form-control", autocomplete: 'off' %>
+            </div>
+            <div class="mb-2">
+              <%#= form.label :parcel_sender_email, "Sender's Email", class: "fw-bold" %>
+              <%#= form.email_field :parcel_sender_email, class: "form-control" %>
+            </div>
+            <div class="mb-2">
+              <%= form.label :removal_description, "Removal Instructions", class: "fw-bold" %>
+              <%= form.text_area :removal_description, class: "form-control" %>
+              <small>This information is private and will only be shared with the carrier after booking.</small>
+            </div>
+          </div>
+
+          <!-- Navigation buttons -->
+          <div class="d-flex justify-content-end mt-4">
+            <button type="button" data-action="click->multi-step#next" class="btn btn-primary">Next</button>
           </div>
         </div>
-      </div>
 
-      <!-- Location Bar -->
-      <%= form_with(model: @parcel_ad, local: false, data: { turbo: true }) do |form| %>
-        <!-- Display validation errors -->
-        <div id="form-errors"></div>
+        <!-- Step 2: (Arrival details) -->
+        <div data-multi-step-target="step" class="d-none">
+          <h4>Arrival Info</h4>
+            <div class="mb-2">
+              <%= form.label :departure, "Address", class: "mt-2 mb-2 fw-bold" %>
+              <%= form.text_field :arrival_city, class: 'form-control', placeholder: 'Arrival', 
+                                id: 'arrival_city_select', 
+                                autocomplete: 'off', 
+                                value: params[:arrival_city].present? ? params[:arrival_city] : '', 
+                                data: { target: 'autocomplete.arrivalCity' } %>
+              <%= form.hidden_field :arrival_country, id: 'arrival_country', data: { target: 'autocomplete.arrivalCountry' } %>
+            </div>
 
-        <div class="form-step" id="step-1" data-form-steps-target="step1">
-          <div class="mt-5" >
-            <div class="trip-type-section">
-              <div class="mt-4 row g-0 mb-3 form-control rounded-0">
-                <div class="search-item col-md-3">
-                  <%= form.text_field :departure_city, class: 'form-control fw-bold', placeholder: 'Pick up from', 
-                                    id: 'departure_city_select', 
-                                    autocomplete: 'off', 
-                                    value: params[:departure_city].present? ? params[:departure_city] : '', 
-                                    data: { target: 'autocomplete.departureCity' } %>
-                <%= form.hidden_field :departure_country, id: 'departure_country', data: { target: 'autocomplete.departureCountry' } %>
-                </div>
-                <div class="search-item col-md-3">
-                <%= form.text_field :arrival_city, class: 'form-control fw-bold', placeholder: 'Deliver to', 
-                                    id: 'arrival_city_select', 
-                                    autocomplete: 'off', 
-                                    value: params[:arrival_city].present? ? params[:arrival_city] : '', 
-                                    data: { target: 'autocomplete.arrivalCity' } %>
-                <%= form.hidden_field :arrival_country, id: 'arrival_country', data: { target: 'autocomplete.arrivalCountry' } %>
-                </div>
-                <div class="search-item col-md-3">
-                  <%# <i class="fas fa-calendar-alt"></i> %>
-                  <%= form.date_field :shipment_date, class: 'form-control flatpickr fw-bold', id: 'date_field', 
-                                            placeholder: 'Today', data: { target: 'autocomplete.dateField' } %>
-                </div>
+            <div class="search-items">
+              <%= form.label :delievery_type, "Delivery type", class: "mt-2 mb-2 fw-bold" %>
+              <%= form.select :delievery_type, ParcelAd::DELIEVERY_TYPE, { prompt: 'Choose a delivery type' }, { class: 'form-select' } %>
+            </div>
+
+            <!-- Toggle Switch -->
+            <div class="form-check form-switch d-flex align-items-center mb-3 mt-3">
+              <input type="checkbox" class="form-check-input me-2"
+                     id="toggleReceiverDetails"
+                     data-action="change->multi-step#toggleReceiverDetails">
+              <label for="toggleReceiverDetails" class="form-check-label">I have the recipient's contact details</label>
+            </div>
+
+            <!-- Receiver Info (hidden by default) -->
+            <div data-multi-step-target="receiverDetails" data-form-logic-target="receiverDetails" style="display: none;">
+              <div class="mb-2">
+                <%= form.label :parcel_receiver_name, "Receiver's Name", class: "fw-bold" %>
+                <%= form.text_field :parcel_receiver_name, class: "form-control", autocomplete: 'off' %>
               </div>
-
-              <div class="">
-                <div class="mb-3">
-                  <%= form.label :time, "Select Time", class: "fw-bold d-block mb-2 mx-1" %>
-                  <div class="input-group">
-                    <span class="input-group-text bg-light rounded-0">
-                      <i class="bi bi-clock text-primary"></i>
-                    </span>
-                    <%= form.text_field :time, 
-                      class: "form-control form-control-sm rounded-0", 
-                      id: "time", 
-                      placeholder: "HH:MM", 
-                      data: { controller: "time-picker" } 
-                    %>
-                  </div>
-                </div>
+              <div class="mb-2">
+                <%= form.label :parcel_receiver_phone, "Receiver's Phone", class: "fw-bold" %>
+                <%= form.text_field :parcel_receiver_phone, class: "form-control", autocomplete: 'off' %>
+              </div>
+              <div class="mb-2">
+                <%#= form.label :parcel_receiver_email, "Receiver's Email", class: "fw-bold" %>
+                <%#= form.email_field :parcel_receiver_email, class: "form-control" %>
+              </div>
+              <div class="mb-2">
+                <%= form.label :delievery_instruction, "Delivery Instructions", class: "fw-bold" %>
+                <%= form.text_area :delievery_instruction, class: "form-control" %>
+                <small>This information is private and will only be shared with the carrier after booking.</small>
               </div>
             </div>
+
+            <!-- Navigation buttons -->
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" data-action="click->multi-step#prev" class="btn btn-outline-secondary">Back</button>
+              <button type="button" data-action="click->multi-step#next" class="btn btn-primary">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Packages (Packages) -->
+        <div data-multi-step-target="step" class="d-none">
+          <h4>Packages Info</h4>
+          <div class="">
+            <%#= form.label :parcel_images, "Parcel Images" %>
+            <%= form.file_field :parcel_images, multiple: true, class: 'form-control', id: 'parcel_images_input', data: { form_logic_target: "parcelImagesInput" } %>
+            <small class="text-danger">Up to 7 photos, JPG, PNG and GIF format up to 7MB</small>
           </div>
+          <div id="parcel_images_preview" class="mt-3" data-form-logic-target="parcelImagesPreview"></div>
 
-          <div class="trip-type-section border-top">
-            <h3 class="text-white mx-3"> Sender Details </h3>
-            <div class="row mt-3 mx-1">
-              <div class="col-lg-4">
-                <%= form.text_field :address_from_street1, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Departure Street 1' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :address_from_street2, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Departure Street 2' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :address_from_street3, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Departure Street 3' %>
-              </div>
-            </div>
-
-            <div class="row mt-3 mx-1">
-              <div class="col-lg-4">
-                <%= form.text_field :address_from_state, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Departure State' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :address_from_zip, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Departure ZipCode' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :address_from_street_no, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Departure Street No' %>
-              </div>
-            </div>
-
-            <div class="mt-3 mx-1">
-              <%= form.label :address_from_is_residential, "Is Residential", class: "mx-3" %>
-              <%= form.check_box :address_from_is_residential %>
-            </div>
-
-            <div class="row mt-3 mx-1">
-              <div class="col-lg-4">
-                <%= form.text_field :parcel_sender_name, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Sender Name' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :parcel_sender_phone, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Sender Phone Number' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :parcel_sender_email, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Sender Email Address' %>
-              </div>
-            </div>
-          </div>
-
-          <div class="trip-type-section border-top">
-            <h3 class="text-white mx-3"> Receiver Details </h3>
-            <div class="row mt-3 mx-1">
-              <div class="col-lg-4">
-                <%= form.text_field :address_to_street1, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Arrival Street 1' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :address_to_street2, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Arrival Street 2' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :address_to_street3, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Arrival Street 3' %>
-              </div>
-            </div>
-
-            <div class="row mt-3 mx-1">
-              <div class="col-lg-4">
-                <%= form.text_field :address_to_state, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Arrival State' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :address_to_zip, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Arrival ZipCode' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :address_to_street_no, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Arrival Street No' %>
-              </div>
-            </div>
-
-            <div class="mt-3 mx-1">
-              <%= form.label :address_to_is_residential, "Is Residential", class: "mx-3" %>
-              <%= form.check_box :address_to_is_residential %>
-            </div>
-
-            <div class="row mt-3 mx-1">
-              <div class="col-lg-4">
-                <%= form.text_field :parcel_receiver_name, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Receiver Name' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :parcel_receiver_phone, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Receiver Phone Number' %>
-              </div>
-              <div class="col-lg-4">
-                <%= form.text_field :parcel_receiver_email, class: "form-control mt-2 mb-2 rounded-0", placeholder: 'Receiver Email Address' %>
-              </div>
-            </div>
-          </div>
-
-
-          <!-- Item Types -->
-          <div class="mb-4 px-4 mt-4">
-            <h6 class="mb-3">Items Type</h6>
-            <div id="parcel_type_buttons" class="btn-group d-flex flex-wrap justify-content-between" role="group" aria-label="Parcel Type">
-              <button type="button" class="parcel-type-button" data-value="Document">
-                <i class="fas fa-file-alt"></i> Document
-              </button>
-              <button type="button" class="parcel-type-button active" data-value="Parcel">
-                <i class="fas fa-box"></i> Parcel
-              </button>
-              <button type="button" class="parcel-type-button" data-value="Pallet">
-                <i class="fas fa-pallet"></i> Pallets
-              </button>
-              <button type="button" class="parcel-type-button" data-value="Electronics">
-                <i class="fas fa-tv"></i> Electronics
-              </button>
-              <button type="button" class="parcel-type-button" data-value="Clothing">
-                <i class="fas fa-tshirt"></i> Clothing
-              </button>
-            </div>
-            <!-- Hidden field to store the selected parcel type -->
-            <%= form.hidden_field :parcel_type, id: 'selected_parcel_type' %>
-          </div>
-
-          <!-- Dimensions -->
-          <div class="row mb-4 row px-4">
-            <div class="col">
-              <%= form.label :parcel_length, "Length (cm)", class: 'form-label' %>
-              <%= form.number_field :parcel_length, class: 'form-control', placeholder: 'cm', min: 0  %>
-            </div>
-
-            <div class="col">
-              <%= form.label :parcel_width, "Width (cm)", class: 'form-label' %>
-              <%= form.number_field :parcel_width, class: 'form-control', placeholder: 'cm', min: 0  %>
-            </div>
-
-            <div class="col">
-              <%= form.label :parcel_height, "Height (cm)", class: 'form-label' %>
-              <%= form.number_field :parcel_height, class: 'form-control', placeholder: 'cm', min: 0  %>
-            </div>
-
-            <div class="col">
-              <%= form.label :parcel_weight, "Weight (kg)", class: 'form-label' %>
-              <%= form.number_field :parcel_weight, class: 'form-control', placeholder: 'kg', min: 0  %>
-            </div>
-
-            <div class="col">
+          <div class="row">
+            <div class="col-lg-3">
               <%= form.label :parcel_quantity, "Quantity", class: 'form-label' %>
               <%= form.number_field :parcel_quantity, class: 'form-control', placeholder: 'pcs', min: 0 , value: @parcel_ad.parcel_quantity || 0, id: 'parcel_quantity' %>
               <%# <div id="quantity_display" class="mt-2 fw-bold">Quantity: 0</div> %>
             </div>
-          </div>
-
-          <!-- Fees -->
-          <div class="row mb-4 px-4">
-            <div class="col-md-6">
-              <%= form.label :proposed_fee, "Proposed Fee", class: 'form-label' %>
-              <div class="input-group">
-                <span class="input-group-text">$</span> <!-- Currency symbol -->
-                <%= form.number_field :proposed_fee, class: 'form-control', placeholder: 'Proposal fee' %>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <%= form.label :recommended_fee, "Recommended Fee", class: 'form-label' %>
-              <div class="input-group">
-                <span class="input-group-text">$</span> <!-- Currency symbol -->
-                <%= form.number_field :recommended_fee, class: 'form-control', placeholder: 'Recommended fee' %>
-              </div>
+            <div class="col-lg-9">
+              <%= form.label :parcel_type, "Object", class: 'form-label' %>
+              <%= form.text_field :parcel_type, class: 'form-control', placeholder: 'Ex: Sofa, armchair...', autocomplete: 'off' %>
             </div>
           </div>
 
-          <!-- Add Another Parcel -->
-          <div class="mb-4 mt-4 px-4">
-            <%= link_to "#", class:"add-parcel-btn rounded text-decoration-none" do %>
-              <span class="plus">+ Add Another Parcel</span>
-            <% end %>
+          <!-- Toggle Switch -->
+          <div class="form-check form-switch d-flex align-items-center mb-3 mt-3">
+            <input type="checkbox" class="form-check-input me-2"
+                   id="toggleParcelDetails"
+                   data-action="change->multi-step#toggleParcelDetails">
+            <label for="toggleParcelDetails" class="form-check-label">I know the exact dimensions</label>
           </div>
 
-          <!-- Next button -->
-          <div class="d-flex justify-content-end">
-            <button class="btn purple-btn" id="next-button" data-action="click->form-steps#next">Next</button>
+          <!-- Parcel Info (hidden by default) -->
+          <div data-multi-step-target="parcelDetails" data-form-logic-target="parcelDetails" style="display: none;">
+            <div class="row">
+              <div class="col-lg-4">
+                <%= form.label :parcel_length, "Length (cm)", class: "fw-bold mb-2 mt-2" %>
+                <%= form.text_field :parcel_length, class: "form-control", placeholder: 'Ex: 20', autocomplete: 'off' %>
+              </div>
+              <div class="col-lg-4">
+                <%= form.label :parcel_width, "Width (cm)", class: "fw-bold mb-2 mt-2" %>
+                <%= form.text_field :parcel_width, class: "form-control", placeholder: 'Ex: 80', autocomplete: 'off' %>
+              </div>
+              <div class="col-lg-4">
+                <%= form.label :parcel_height, "Height (cm)", class: "fw-bold mb-2 mt-2" %>
+                <%= form.text_field :parcel_height, class: "form-control", placeholder: 'Ex: 30', autocomplete: 'off' %>
+              </div>
+            </div>
+          </div>
+
+          <div class="col mt-2">
+            <%= form.label :parcel_format, "Format", class: 'form-label' %>
+            <%= form.select :parcel_format, ParcelAd::PARCEL_FORMAT, {prompt: true}, {class: 'form-select'}  %>
+          </div>
+
+          <div class="col mt-2">
+            <%= form.label :parcel_weight, "Weight", class: 'form-label' %>
+            <%= form.select :parcel_weight, ParcelAd::PARCEL_WEIGHT, {prompt: true}, {class: 'form-select'}  %>
+          </div>
+
+          <div class="col mt-2">
+            <%= form.label :description, "Additional information", class: 'form-label' %>
+            <%= form.text_area :description, class: "form-control", placeholder: "Ex: The longest box is 2m15, the heaviest is a sofa" %>
+          </div>
+
+          <!-- Navigation buttons -->
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" data-action="click->multi-step#prev" class="btn btn-outline-secondary">Back</button>
+            <button type="button" data-action="click->multi-step#next" class="btn btn-primary">Next</button>
           </div>
         </div>
 
-        <!-- Step 2: Special Instructions -->
-        <div class="form-step px-4" id="step-2" style="display: none;" data-form-steps-target="step2">
-          <!-- File Upload -->
-          <div class="mb-4 px-4">
-            <%= form.label :parcel_images, "Parcel Images" %> <small class="text-danger fw-bold">(You can upload multiple images)</small>
-            <%= form.file_field :parcel_images, multiple: true, class: 'form-control', id: 'parcel_images_input' %>
+        <!-- Step 4: Price (Price) -->
+        <div data-multi-step-target="step" class="d-none">
+          <h4>Pricing Info</h4>
+          <div class="col">
+            <%= form.label :proposed_fee, "Proposed Fee", class: 'form-label' %>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <%= form.number_field :proposed_fee, id: 'proposed_fee', class: 'form-control', placeholder: 'Proposal fee', autocomplete: 'off', data: { form_logic_target: "proposedFee" } %>
+            </div>
           </div>
-          <div id="parcel_images_preview" class="mt-3"></div>
-
-          <!-- Insurance -->
-          <div class="mb-4 px-4">
-            <div class="form-check">
-              <%= form.check_box :insure_shipment, { class: 'form-check-input', id: 'insurance' }, true, false %>
-              <label class="form-check-label" for="insurance"
-                >Insure my package</label
-              >
+          <div class="col mt-2">
+            <%= form.label :recommended_fee, "Recommended Fee", class: 'form-label' %>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <%= form.number_field :recommended_fee, id: 'recommended_fee', class: 'form-control', placeholder: 'Recommended fee', autocomplete: 'off', data: { form_logic_target: "recommendedFee" } %>
             </div>
           </div>
 
-          <h4 class="p-3 text-white" style="background-color: #332F87;">Special Instructions</h4>
-          <div class="mb-4">
-            <%= form.text_area :special_instructions, class: "form-control", placeholder: "Please drop your parcel to my place. 24 hours before my trip and keep it open." %>
-          </div>
+          <div id="fee-comparison-result" class="mt-3" data-form-logic-target="feeComparisonResult"></div>
 
-          <!-- Submit Button -->
-          <div class="d-flex justify-content-between">
-            <button class="btn btn-secondary" id="prev-button" data-action="form-steps#prev">Back</button>
-            <%= form.submit "Submit", class: "btn btn-primary", style:"background-color: #332F87;" %>
+          <!-- Submit button -->
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" data-action="click->multi-step#prev" class="btn btn-outline-secondary">Back</button>
+            <%= form.submit 'Submit', class: 'btn btn-success' %>
           </div>
         </div>
-      <% end %>
     </div>
-  </div>
+  <% end %>
 </div>
 
-
-  <!-- Abandon Confirmation Modal -->
-<div class="modal fade" id="abandonModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body text-center p-4">
-        <h5 class="mb-3">Abandon The Post?</h5>
-        <p class="text-muted">If you go back, your post will not be saved.</p>
-        <%= link_to 'Abandon The Post', root_path, class:"btn purple-btn w-100 mt-2 mb-2", id:"abandon-post", data: { action: "click->form-steps#abandon" } %>
-        <button class="btn text-muted w-100" data-bs-dismiss="modal">
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ThankYou Modal -->
-<div id="thankyou-modal-container"></div>
-
-<script>
-  document.addEventListener('turbo:load', () => {
-    // Select parcel type buttons and hidden field
-    const buttons = document.querySelectorAll(".parcel-type-button");
-    const hiddenField = document.getElementById("selected_parcel_type");
-
-    buttons.forEach(button => {
-      button.addEventListener("click", function() {
-        // Remove active class from all buttons
-        buttons.forEach(btn => btn.classList.remove("active"));
-        // Add active class to the clicked button
-        this.classList.add("active");
-        // Update the hidden field with the selected value
-        hiddenField.value = this.getAttribute("data-value");
-
-        // Toggle dimension fields based on selected parcel type
-        toggleDimensionFields();
-      });
-    });
-
-    // Toggle dimension fields visibility
-    const dimensionFields = [
-      document.querySelector('[name="parcel_ad[parcel_length]"]'),
-      document.querySelector('[name="parcel_ad[parcel_width]"]'),
-      document.querySelector('[name="parcel_ad[parcel_height]"]'),
-      document.querySelector('[name="parcel_ad[parcel_weight]"]')
-    ];
-
-    function toggleDimensionFields() {
-      const isDocument = hiddenField.value === 'Document';
-      dimensionFields.forEach(field => {
-        field.closest('.col-md-2').style.display = isDocument ? 'none' : '';
-        if (isDocument) {
-          field.value = ''; // Clear value if 'Document' type
-        }
-      });
-    }
-
-    // Initial call to set the correct visibility on page load
-    toggleDimensionFields();
-
-    // Update the quantity display dynamically
-    const quantityInput = document.getElementById("parcel_quantity");
-    const quantityDisplay = document.getElementById("quantity_display");
-
-    quantityInput.addEventListener("input", function() {
-      const quantityValue = quantityInput.value || 0;
-      quantityDisplay.textContent = `Quantity: ${quantityValue}`;
-    });
-
-    // Preview uploaded parcel images
-    const parcelImagesInput = document.getElementById('parcel_images_input');
-    const previewContainer = document.getElementById('parcel_images_preview');
-
-    parcelImagesInput.addEventListener('change', function(event) {
-      previewContainer.innerHTML = '';
-      const files = event.target.files;
-
-      if (files.length > 0) {
-        Array.from(files).forEach(file => {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.classList.add('img-thumbnail', 'mr-2', 'mx-2', 'mb-2');
-            img.style.width = '100px';
-            previewContainer.appendChild(img);
-          };
-          reader.readAsDataURL(file);
-        });
-      }
-    });
-  });
-  function showPage(pageId) {
-    document.querySelectorAll(".page").forEach((page) => {
-      page.classList.remove("active");
-    });
-    document.getElementById(pageId).classList.add("active");
-    if (pageId === "page1") {
-      const modal = bootstrap.Modal.getInstance(
-        document.getElementById("abandonModal")
-        );
-      if (modal) modal.hide();
-    }
+<style>
+  .img-thumbnail-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
   }
-
-  function showAbandonModal() {
-    const modal = new bootstrap.Modal(
-      document.getElementById("abandonModal")
-      );
-    modal.show();
+  .img-thumbnail-wrapper span {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0 5px;
+    font-weight: bold;
+    z-index: 10;
   }
+</style>
 
-  function showSubmitModal() {
-    const modal = new bootstrap.Modal(
-      document.getElementById("submitModal")
-      );
-    modal.show();
-  }
-</script>

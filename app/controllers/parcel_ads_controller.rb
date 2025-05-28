@@ -6,11 +6,17 @@ class ParcelAdsController < ApplicationController
 	# before_action :check_professional_user, only: [:new, :create]
 
 	def index
-		@parcel_ads = ParcelAd.all.order(created_at: :desc)
+		@parcel_ads = ParcelAd.includes(user: { 
+      profile_picture_attachment: :blob,
+      passport_document_attachment: :blob,
+      identity_card_document_attachment: :blob
+    })
+    .order(created_at: :desc)
 	end
 
 	def new
 		@parcel_ad = ParcelAd.new
+		@comparison_result = compare_fees(@parcel_ad.proposed_fee, @parcel_ad.recommended_fee)
 	end
 
 	def create
@@ -18,11 +24,12 @@ class ParcelAdsController < ApplicationController
 	    @parcel_ad = current_user.parcel_ads.build(parcel_ad_params)
 	    if @parcel_ad.save
 	      # redirect_to parcel_ads_path, notice: "Your ad has been successfully published."
-	      fetch_and_update_rates(@parcel_ad)
-				respond_to do |format|
-          format.turbo_stream
-          format.html { redirect_to @parcel_ad, notice: "Your request has been successfully created." }
-        end
+	      # fetch_and_update_rates(@parcel_ad)
+				# respond_to do |format|
+        #   format.turbo_stream
+        #   format.html { redirect_to @parcel_ad, notice: "Your request has been successfully created." }
+        # end
+        render turbo_stream: turbo_stream.replace("form_container", partial: "parcels/thank_you")
 	    else
 	      # render :new, status: :unprocessable_entity
 				respond_to do |format|
@@ -43,6 +50,7 @@ class ParcelAdsController < ApplicationController
 
 	def edit
 		@parcel_ad = ParcelAd.find(params[:id])
+		@comparison_result = compare_fees(@parcel_ad.proposed_fee, @parcel_ad.recommended_fee)
 	end
 
 	def update
@@ -356,6 +364,11 @@ class ParcelAdsController < ApplicationController
 			:parcel_receiver_name,
 			:parcel_receiver_phone,
 			:parcel_receiver_email,
+			:removal_description, 
+			:removal_type,
+			:delievery_type, 
+			:delievery_instruction, 
+			:parcel_format,
 		   parcel_images: []
 		)
 	end

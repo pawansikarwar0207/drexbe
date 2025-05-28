@@ -38,10 +38,10 @@
 						    	<%= link_to 'Show', buy_for_me_path(product), class: "dropdown-item" %>
 						    </li>
 						    <li>
-						    	<%= link_to 'Edit', edit_buy_for_me_path(product), class: "dropdown-item" %>
+						    	<%#= link_to 'Edit', edit_buy_for_me_path(product), class: "dropdown-item" %>
 						    </li>
 						    <li>
-						    	<%= link_to 'Delete', buy_for_me_path(product), method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+						    	<%#= link_to 'Delete', buy_for_me_path(product), method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
 						    </li>
 						  </ul>
 						</div>
@@ -50,7 +50,8 @@
 	    <% end %>
 	  </tbody>
 	</table>
-
-	<%= link_to 'New Buy for Me', new_buy_for_me_path, class: 'btn btn-primary' %>
+	<% if current_user.role == 'admin' %>
+		<%= link_to 'New Buy for Me', new_buy_for_me_path, class: 'btn btn-primary' %>
+	<% end %>
 
 </div>

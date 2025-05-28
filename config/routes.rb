@@ -67,6 +67,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create, :new, :index, :destroy]
   end
 
+  get '/commitment', to: 'home#commitment'
   get 'get_cities', to: 'home#get_cities'
   get '/search_results', to: 'home#search_results'
   get '/filter_search_results', to: 'home#filter_search_results'
