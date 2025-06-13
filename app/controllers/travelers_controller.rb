@@ -4,6 +4,11 @@ class TravelersController < ApplicationController
 
   def index
     @travelers = Traveler.all
+
+    # respond_to do |format|
+    #   format.html # if you still want the HTML page
+    #   format.json { render json: @travelers }
+    # end
   end
 
   def show
@@ -48,6 +53,15 @@ class TravelersController < ApplicationController
   def destroy
     @traveler.destroy
     redirect_to travelers_url, notice: 'Traveler was successfully destroyed.'
+  end
+
+  def map
+    @travelers = Traveler.all
+
+    respond_to do |format|
+      format.html # if you still want the HTML page
+      format.json { render json: @travelers }
+    end
   end
 
   def search_results

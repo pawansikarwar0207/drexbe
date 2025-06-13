@@ -30,6 +30,10 @@ Rails.application.routes.draw do
     delete 'remove_identity_card', to: 'users/registrations#remove_identity_card', as: :remove_identity_card
   end
 
+  # get 'travelers/map', to: 'travelers#map', as: 'travelers_map'
+  
+  get 'geocode', to: 'geocode#search'
+
   # get 'search_travelers', to: 'search#index'
 
   # get 'special_instruction', to: 'special_instruction#travelers'
@@ -43,7 +47,6 @@ Rails.application.routes.draw do
       patch :update_special_instruction  # This will handle the form submission for special instructions
     end
   end
-
 
   resources :parcel_ads do
     member do
@@ -77,6 +80,10 @@ Rails.application.routes.draw do
   get 'privacy_policy', to: 'home#privacy_policy'
 
   get 'track/:tracking_number', to: 'tracking#show', as: :track
+
+  namespace :api do
+    resources :travelers, only: [:index]
+  end
 
   resources :chat_rooms, only: [:index, :show] do
     resources :messages, only: [:create] do

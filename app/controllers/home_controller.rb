@@ -77,10 +77,22 @@ class HomeController < ApplicationController
       end
     end
 
-    render 'search_results'
+    # render 'search_results'
+
+    respond_to do |format|
+      format.html do
+        render 'search_results'
+      end
+
+      format.json do
+        render json: {
+          travelers: @travelers.as_json(only: [:id, :departure_city, :departure_country, :arrival_city, :arrival_country, :name, :travel_date]),
+          parcel_ads: @parcel_ads.as_json(only: [:id, :departure_city, :departure_country, :arrival_city, :arrival_country, :parcel_sender_name, :shipment_date]),
+          buy_for_mes: @buy_for_mes.as_json(only: [:id, :departure_city, :departure_country, :arrival_city, :arrival_country, :buyer_name, :shopping_date])
+        }
+      end
+    end
   end
-
-
 
   def get_cities
     query = params[:query]
