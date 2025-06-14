@@ -4,4 +4,4 @@ import "controllers"
 import * as bootstrap from "bootstrap"
 
 import "@rails/actioncable"
-import "leaflet/dist/leaflet.css";
+// import "leaflet/dist/leaflet";
